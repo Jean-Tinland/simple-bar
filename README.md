@@ -4,16 +4,10 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 ## Features
 
-- Show active workspace number _(with multi-display support)_
+- Show current app name & title
+- Show active workspace number
 - Battery indicator
-- WiFi strength indicator
-- Connected WiFi name
-- System load
 - Date and time
-
-### TODO
-
-- Volume
 
 ## Screenshot
 
@@ -24,19 +18,12 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 Clone this repo to your Übersicht widgets directory with the following command.
 
 ```bash
-$ git clone git@github.com:AlexNaga/yabar.git $HOME/Library/Application\ Support/Übersicht/widgets/yabar
+$ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
-
-## Dependencies
-
-- [SF Mono Fonts](https://developer.apple.com/fonts/) (optional)
 
 ## Usage
 
-There are two different widget styles. Enable one of the following widget in Übersicht.
-
-- `yabar-main-0-jsx`
-- `yabar-main-1-jsx`
+After cloning the project, simply activate "simple-bar-index-jsx" in Übersicht's widgets list.
 
 ### Refreshing yabai workspaces widget
 
@@ -44,9 +31,7 @@ The widgets for displaying yabai workspaces aren't refreshing automatically (to 
 
 ```sh
 yabai -m signal --add event=space_changed \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"yabar-workspace-jsx\"'"
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-index-jsx\"'"
 yabai -m signal --add event=display_changed \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"yabar-workspace-jsx\"'"
-yabai -m signal --add event=application_front_switched \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"yabar-workspace-jsx\"'"
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-index-jsx\"'"
 ```
