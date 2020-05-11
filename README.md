@@ -4,14 +4,14 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 ## Features
 
-- Show current app name & title
 - Show active workspace number
+- Show current app name & title
 - Battery indicator
-- Date and time
+- Date and time (en-UK & 24h format)
 
 ## Screenshot
 
-![img](./img/screenshot_0.png)
+![img](./preview.jpg)
 
 ## Installation
 
