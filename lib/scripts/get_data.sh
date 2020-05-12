@@ -18,16 +18,11 @@ elif [ "$BATTERY_STATUS" == "AC" ]; then
   BATTERY_CHARGING="true"
 fi
 
-PROCESS_APP="$(lsappinfo info -only name `lsappinfo front`)"
-PROCESS_APP=${PROCESS_APP//LSDisplayName\"=\"/ }
-PROCESS_APP=${PROCESS_APP//\"/ }
+PROCESS=$(/usr/local/bin/yabai -m query --windows --space)
 
 echo $(cat <<-EOF
   {
-    "process": {
-      "app": "$PROCESS_APP",
-      "title": ""
-    },
+    "process": $PROCESS,
     "spaces": $SPACES_AND_DISPLAY,
     "time": "$TIME",
     "battery": {

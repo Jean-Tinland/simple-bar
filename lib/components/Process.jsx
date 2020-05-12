@@ -1,10 +1,11 @@
 const Process = ({ output }) => {
   if (!output) return null;
-  const { app, title } = output;
+  const [currentApp] = output.filter((app) => app.focused === 1);
+  if (!currentApp) return null;
+  const { app, title } = currentApp;
   return (
     <div className="process">
-      {app}
-      {/* / {title} */}
+      {app} / {title}
     </div>
   );
 };
