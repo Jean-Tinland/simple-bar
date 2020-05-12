@@ -4,7 +4,6 @@ DISPLAYS=$(/usr/local/bin/yabai -m query --displays)
 SPACES=$(/usr/local/bin/yabai -m query --spaces)
 
 SPACES_AND_DISPLAY="{ \"displays\": $DISPLAYS, \"spaces\": $SPACES }"
-
 export LC_TIME="en_US.UTF-8"
 TIME=$(date +"%H:%M")
 
@@ -19,11 +18,16 @@ elif [ "$BATTERY_STATUS" == "AC" ]; then
   BATTERY_CHARGING="true"
 fi
 
-CURRENT_PROCESS=$(/usr/local/bin/yabai -m query --windows --window)
+PROCESS_APP="$(lsappinfo info -only name `lsappinfo front`)"
+PROCESS_APP=${PROCESS_APP//LSDisplayName\"=\"/ }
+PROCESS_APP=${PROCESS_APP//\"/ }
 
 echo $(cat <<-EOF
   {
-    "process": $CURRENT_PROCESS,
+    "process": {
+      "app": "$PROCESS_APP",
+      "title": ""
+    },
     "spaces": $SPACES_AND_DISPLAY,
     "time": "$TIME",
     "battery": {

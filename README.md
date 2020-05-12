@@ -27,7 +27,7 @@ After cloning the project, simply activate "simple-bar-index-jsx" in Übersicht'
 
 ### Refreshing yabai workspaces widget
 
-The widgets for displaying yabai workspaces aren't refreshing automatically (to preserve battery). To refresh them, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
+The widgets for displaying yabai workspaces aren't refreshing automatically. To refresh them, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
 
 ```sh
 yabai -m signal --add event=space_changed \

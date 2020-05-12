@@ -3,7 +3,8 @@ const Process = ({ output }) => {
   const { app, title } = output;
   return (
     <div className="process">
-      {app} / {title}
+      {app}
+      {/* / {title} */}
     </div>
   );
 };
