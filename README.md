@@ -1,4 +1,4 @@
-# yabar
+# simple-bar
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht).
 
