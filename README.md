@@ -1,12 +1,13 @@
 # simple-bar
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht).
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht).\
+This project is a Work In Progress so everything is not fully optimized or perfectly functional.
 
 ## Features
 
 - Show workspace number & current space
 - Show current app name & title
-- Battery indicator
+- Battery indicator (icon not updating for now)
 - Date and time (en-UK & 24h format)
 
 ## Screenshot
@@ -24,6 +25,20 @@ $ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application
 ## Usage
 
 After cloning the project, simply activate "simple-bar-index-jsx" in Übersicht's widgets list.
+
+## Customization
+
+If you want to customize the colors used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your colors in it.
+
+```javascript
+export const Theme = {
+  main: '#1B222D',
+  minor: '#39465E',
+  accent: '#FFD484',
+  red: '#E78482',
+  easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+};
+```
 
 ## Refresh bar on workspace change
 

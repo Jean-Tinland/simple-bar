@@ -16,6 +16,15 @@ import { Theme } from './lib/styles/Theme.js';
 
 const refreshFrequency = 10000;
 
+const parseJson = (json) => {
+  try {
+    return JSON.parse(json);
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
 const className = `
   .simple-bar {
     position: fixed;
@@ -58,7 +67,8 @@ const command = 'bash simple-bar/lib/scripts/get_data.sh';
 const render = ({ output, error }) => {
   console.log({ output, error });
   if (!output || error) return <div className="simple-bar simple-bar--empty">Something went wrong...</div>;
-  const data = JSON.parse(output);
+  const data = parseJson(output);
+  if (!data) return <div className="simple-bar simple-bar--empty">JSON error...</div>;
   const { process, spaces, time, battery } = data;
   return (
     <div className="simple-bar">
