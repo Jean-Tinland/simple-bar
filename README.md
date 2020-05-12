@@ -4,7 +4,7 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 ## Features
 
-- Show active workspace number
+- Show workspace number & current space
 - Show current app name & title
 - Battery indicator
 - Date and time (en-UK & 24h format)
@@ -25,9 +25,10 @@ $ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application
 
 After cloning the project, simply activate "simple-bar-index-jsx" in Übersicht's widgets list.
 
-### Refreshing yabai workspaces widget
+## Refresh bar on workspace change
 
-The widgets for displaying yabai workspaces aren't refreshing automatically. To refresh them, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
+The widgets for displaying yabai workspaces aren't refreshing automatically.\
+To refresh them, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
 
 ```sh
 yabai -m signal --add event=space_changed \
