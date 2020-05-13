@@ -20,6 +20,9 @@ fi
 
 PROCESS=$(/usr/local/bin/yabai -m query --windows --space)
 
+WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
+WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
+
 echo $(cat <<-EOF
   {
     "process": $PROCESS,
@@ -29,6 +32,10 @@ echo $(cat <<-EOF
         "percentage": "$BATTERY_PERCENTAGE",
         "charging": "$BATTERY_CHARGING",
         "remaining": "$BATTERY_REMAINING"
+    },
+    "wifi": {
+        "status": "$WIFI_STATUS",
+        "ssid": "$WIFI_SSID"
     }
   }
 EOF

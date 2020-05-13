@@ -8,6 +8,7 @@ This project is a Work In Progress so everything is not fully optimized or funct
 - Show workspace number & current space
 - Show current app name & title
 - Battery level & charging indicator
+- Wifi (active/inactive) & wifi name
 - Date and time (en-UK & 24h format)
 
 ## Screenshot

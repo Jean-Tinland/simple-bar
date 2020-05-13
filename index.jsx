@@ -4,13 +4,15 @@ import Time from './lib/components/Time.jsx';
 import DateDisplay from './lib/components/Date.jsx';
 import Divider from './lib/components/Divider.jsx';
 import Battery from './lib/components/Battery.jsx';
+import Wifi from './lib/components/Wifi.jsx';
 import {
   SpacesDisplayStyles,
   ProcessStyles,
   DateStyles,
   TimeStyles,
   DividerStyles,
-  BatteryStyles
+  BatteryStyles,
+  WifiStyles
 } from './lib/styles/Styles.js';
 import { Theme } from './lib/styles/Theme.js';
 
@@ -60,6 +62,7 @@ const className = `
   ${TimeStyles}
   ${DividerStyles}
   ${BatteryStyles}
+  ${WifiStyles}
 `;
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh';
@@ -69,7 +72,8 @@ const render = ({ output, error }) => {
   if (!output || error) return <div className="simple-bar simple-bar--empty">Something went wrong...</div>;
   const data = parseJson(output);
   if (!data) return <div className="simple-bar simple-bar--empty">JSON error...</div>;
-  const { process, spaces, time, battery } = data;
+  const { process, spaces, time, battery, wifi } = data;
+  console.log(wifi);
   return (
     <div className="simple-bar">
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -77,6 +81,8 @@ const render = ({ output, error }) => {
       <Process output={process} />
       <div className="simple-bar__data">
         <Battery output={battery} />
+        <Divider />
+        <Wifi output={wifi} />
         <Divider />
         <DateDisplay />
         <Divider />
