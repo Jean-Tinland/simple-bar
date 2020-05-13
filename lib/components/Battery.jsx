@@ -4,7 +4,7 @@ const getTransform = (value) => {
   let transform = `0.${value}`;
   if (value === '100') transform = '1';
   if (value < 10) transform = `0.0${percentage}`;
-  return `scale(${transform})`;
+  return `scaleX(${transform})`;
 };
 
 const Battery = ({ output }) => {
