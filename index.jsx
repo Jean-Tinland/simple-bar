@@ -54,7 +54,7 @@ const className = `
     padding-right: 7px;
   }
   .simple-bar__data > *:not(:last-of-type) {
-    margin-right: 10px;
+    margin-right: 5px;
   }
   ${SpacesDisplayStyles}
   ${ProcessStyles}
