@@ -1,5 +1,12 @@
 import { Charging } from './Icons.jsx';
 
+const getTransform = (value) => {
+  let transform = `0.${value}`;
+  if (value === '100') transform = '1';
+  if (value < 10) transform = `0.0${percentage}`;
+  return `scale(${transform})`;
+};
+
 const Battery = ({ output }) => {
   if (!output) return;
   const { percentage, charging /*, remaining */ } = output;
@@ -8,9 +15,7 @@ const Battery = ({ output }) => {
 
   const classes = isLowBattery ? 'battery battery--low' : 'battery';
 
-  const transformValue = `scaleX(${
-    percentage === '100' ? '1' : percentage < 10 ? `0.0${percentage}` : `0.${percentage}`
-  })`;
+  const transformValue = getTransform(percentage);
 
   return (
     <div className={classes}>

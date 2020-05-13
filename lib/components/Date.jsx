@@ -1,7 +1,7 @@
 const DateDisplay = () => {
-  var options = { weekday: 'long', month: 'long', day: 'numeric' };
-  var today = new Date();
-  return <div className="date">{today.toLocaleDateString('en-UK', options)}</div>;
+  const options = { weekday: 'long', month: 'long', day: 'numeric' };
+  const now = new Date().toLocaleDateString('en-UK', options);
+  return <div className="date">{now}</div>;
 };
 
 export default DateDisplay;
