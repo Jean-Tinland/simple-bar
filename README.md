@@ -1,7 +1,7 @@
 # simple-bar
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht).\
-This project is a Work In Progress so everything is not fully optimized or perfectly functional.
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar) and [yabar](https://github.com/AlexNaga/yabar).\
+This project is a Work In Progress so everything is not fully optimized or functional.\
 
 ## Features
 

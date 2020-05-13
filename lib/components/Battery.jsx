@@ -23,6 +23,4 @@ const Battery = ({ output }) => {
   );
 };
 
-// https://www.flaticon.com/packs/battery-status
-
 export default Battery;
