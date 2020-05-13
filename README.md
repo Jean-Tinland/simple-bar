@@ -7,7 +7,7 @@ This project is a Work In Progress so everything is not fully optimized or perfe
 
 - Show workspace number & current space
 - Show current app name & title
-- Battery indicator (icon not updating for now)
+- Battery level & charging indicator
 - Date and time (en-UK & 24h format)
 
 ## Screenshot
