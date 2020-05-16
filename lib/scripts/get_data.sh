@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-DISPLAYS=$(/usr/local/bin/yabai -m query --displays)
-SPACES=$(/usr/local/bin/yabai -m query --spaces)
-
-SPACES_AND_DISPLAY="{ \"displays\": $DISPLAYS, \"spaces\": $SPACES }"
 export LC_TIME="en_US.UTF-8"
 TIME=$(date +"%H:%M")
 
@@ -18,15 +14,11 @@ elif [ "$BATTERY_STATUS" == "AC" ]; then
   BATTERY_CHARGING="true"
 fi
 
-PROCESS=$(/usr/local/bin/yabai -m query --windows --space)
-
 WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
 WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
 
 echo $(cat <<-EOF
   {
-    "process": $PROCESS,
-    "spaces": $SPACES_AND_DISPLAY,
     "time": "$TIME",
     "battery": {
         "percentage": "$BATTERY_PERCENTAGE",

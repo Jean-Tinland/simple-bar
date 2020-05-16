@@ -25,7 +25,11 @@ $ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application
 
 ## Usage
 
-After cloning the project, simply activate "simple-bar-index-jsx" in Übersicht's widgets list.
+After cloning the project, simply activate all three "simple-bar" widgets in Übersicht's widgets list.
+
+- `simple-bar-process-jsx`
+- `simple-bar-spaces-jsx`
+- `simple-bar-data-jsx`
 
 ## Customization
 
@@ -37,6 +41,7 @@ export const Theme = {
   minor: '#39465E',
   accent: '#FFD484',
   red: '#E78482',
+  font: 'Helvetica Neue, sans-serif',
   easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
 };
 ```
@@ -48,7 +53,7 @@ To refresh them, you can add these lines utilizing [yabai's signals](https://git
 
 ```sh
 yabai -m signal --add event=space_changed \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-index-jsx\"'"
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 yabai -m signal --add event=display_changed \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-index-jsx\"'"
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 ```
