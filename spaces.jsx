@@ -1,17 +1,11 @@
 import SpacesDisplay from './lib/components/SpacesDisplay.jsx';
 import { SpacesDisplayStyles } from './lib/styles/Styles.js';
+
+import { parseJson } from './lib/utils.js';
+
 import { Theme } from './lib/styles/Theme.js';
 
 const refreshFrequency = false;
-
-const parseJson = (json) => {
-  try {
-    return JSON.parse(json);
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-};
 
 const className = `
   .simple-bar__error {

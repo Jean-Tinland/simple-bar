@@ -3,26 +3,13 @@ import DateDisplay from './lib/components/Date.jsx';
 import Divider from './lib/components/Divider.jsx';
 import Battery from './lib/components/Battery.jsx';
 import Wifi from './lib/components/Wifi.jsx';
-import {
-  ProcessStyles,
-  DateStyles,
-  TimeStyles,
-  DividerStyles,
-  BatteryStyles,
-  WifiStyles
-} from './lib/styles/Styles.js';
+
+import { parseJson } from './lib/utils.js';
+
+import { DateStyles, TimeStyles, DividerStyles, BatteryStyles, WifiStyles } from './lib/styles/Styles.js';
 import { Theme } from './lib/styles/Theme.js';
 
 const refreshFrequency = 10000;
-
-const parseJson = (json) => {
-  try {
-    return JSON.parse(json);
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-};
 
 const className = `
   .simple-bar__error {
