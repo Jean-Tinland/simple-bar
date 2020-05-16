@@ -47,7 +47,6 @@ const render = ({ output, error }) => {
   const data = parseJson(output);
   if (!data) return <div className="simple-bar__error">JSON error...</div>;
   const { time, battery, wifi, sound } = data;
-  console.log(sound);
   return (
     <div className="simple-bar__data">
       <Battery output={battery} />
