@@ -5,7 +5,7 @@ import { parseJson } from './lib/utils.js';
 import { ProcessStyles } from './lib/styles/Styles.js';
 import { Theme } from './lib/styles/Theme.js';
 
-const refreshFrequency = false;
+const refreshFrequency = 5000;
 
 const className = `
   .simple-bar {
