@@ -1,15 +1,35 @@
+import { appIcons } from '../data.js';
+
 export const refreshFrequency = false;
 
+const appExclusions = ['Finder', 'iTerm2'];
+
+const OpenedApps = ({ apps }) => {
+  if (apps.length === 0) return null;
+  return apps.map((el) => {
+    // if (appIcons[el.app] === undefined) return <span> - {el.app}</span>;
+    const Icon = appIcons[el.app] || appIcons['Default'];
+    return <Icon />;
+  });
+};
+
 const SpacesDisplay = ({ output }) => {
-  const { displays, spaces } = output;
+  const { displays, spaces, windows } = output;
+
   if (!output) return <div className="spaces-display spaces-display--empty" />;
+
   return displays.map((display, i) => (
     <div key={i} className="spaces-display">
       {spaces.map((space, i) => {
-        const classes = space.focused ? 'space space--focused' : 'space';
+        const { index, focused } = space;
+
+        const classes = focused ? 'space space--focused' : 'space';
+
+        const apps = windows.filter((app) => app.space === index && !appExclusions.includes(app.app));
+
         return display.index === space.display ? (
           <span key={i} className={classes}>
-            {space.index}
+            {index} <OpenedApps apps={apps} />
           </span>
         ) : null;
       })}

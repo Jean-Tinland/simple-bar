@@ -1,11 +1,11 @@
-import Process from './lib/components/Process.jsx';
+import Process from './lib/components/Process.jsx'
 
-import { parseJson } from './lib/utils.js';
+import { parseJson } from './lib/utils.js'
 
-import { ProcessStyles } from './lib/styles/Styles.js';
-import { Theme } from './lib/styles/Theme.js';
+import { ProcessStyles } from './lib/styles/Styles.js'
+import { Theme } from './lib/styles/Theme.js'
 
-const refreshFrequency = 5000;
+const refreshFrequency = 10000
 
 const className = `
   .simple-bar {
@@ -22,26 +22,26 @@ const className = `
     font-family: ${Theme.font};
     font-size: 12px;
     background-color: ${Theme.main};
+    z-index: 0;
   }
   .simple-bar--empty {
     text-align: center;
   }
   ${ProcessStyles}
-`;
+`
 
-const command = 'bash simple-bar/lib/scripts/get_process.sh';
+const command = 'bash simple-bar/lib/scripts/get_process.sh'
 
 const render = ({ output, error }) => {
-  console.log({ output, error });
-  if (!output || error) return <div className="simple-bar simple-bar--empty">Something went wrong...</div>;
-  const data = parseJson(output);
-  if (!data) return <div className="simple-bar simple-bar--empty">JSON error...</div>;
-  const { process } = data;
+  if (!output || error) return <div className="simple-bar simple-bar--empty">Something went wrong...</div>
+  const data = parseJson(output)
+  if (!data) return <div className="simple-bar simple-bar--empty">JSON error...</div>
+  const { process } = data
   return (
     <div className="simple-bar">
       <Process output={process} />
     </div>
-  );
-};
+  )
+}
 
-export { command, refreshFrequency, className, render };
+export { command, refreshFrequency, className, render }

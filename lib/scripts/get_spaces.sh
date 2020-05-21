@@ -2,12 +2,14 @@
 
 DISPLAYS=$(/usr/local/bin/yabai -m query --displays)
 SPACES=$(/usr/local/bin/yabai -m query --spaces)
+WINDOWS=$(/usr/local/bin/yabai -m query --windows)
 
-SPACES_AND_DISPLAY="{ \"displays\": $DISPLAYS, \"spaces\": $SPACES }"
+DATA="{ \"displays\": $DISPLAYS, \"spaces\": $SPACES, \"windows\": $WINDOWS }"
+
 
 echo $(cat <<-EOF
   {
-    "spaces": $SPACES_AND_DISPLAY
+    "spaces": $DATA
   }
 EOF
 )
