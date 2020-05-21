@@ -27,7 +27,7 @@ $ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application
 
 ## Font
 
-I'm using `[JetBrains Mono](https://www.jetbrains.com/lp/mono/)` as main font and device default monospaced font as fallback.
+I'm using [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as main font and device default monospaced font as fallback.
 
 ## Usage
 
