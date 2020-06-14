@@ -3,7 +3,7 @@ import { Charging } from './Icons.jsx'
 const getTransform = (value) => {
   let transform = `0.${value}`
   if (value === '100') transform = '1'
-  if (value < 10) transform = `0.0${percentage}`
+  if (value < 10) transform = `0.0${value}`
   return `scaleX(${transform})`
 }
 
