@@ -5,7 +5,7 @@ This project is a Work In Progress so everything is not fully optimized or funct
 
 ## Features
 
-- Show workspace number & current space (multiple displays is not tested yet)
+- Show workspace number & current space (more detailed explanations in dual display support section)
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Battery level & charging indicator
@@ -111,3 +111,7 @@ yabai -m signal --add event=space_changed action="osascript -e 'tell application
 yabai -m signal --add event=display_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
+
+## Dual display support
+
+In order to support spaces display with a second monitor, you'll need to activate `simple-bar-spaces-2-jsx` only on your secondary monitor and `simple-bar-spaces-jsx` on your main.
