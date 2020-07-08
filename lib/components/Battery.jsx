@@ -11,7 +11,7 @@ const Battery = ({ output }) => {
   if (!output) return
   const { percentage, charging /*, remaining */ } = output
   const isCharging = charging === 'true'
-  const isLowBattery = percentage < 10
+  const isLowBattery = !isCharging && percentage < 10
 
   const classes = isLowBattery ? 'battery battery--low' : 'battery'
 
