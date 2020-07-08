@@ -59,6 +59,12 @@ export const Theme = {
 }
 ```
 
+### pywal
+
+To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.
+
+### Icons
+
 Now to add new icons you'll need to get a `.svg` with a `0 0 24 24` viewBox. Then you can simply add it to the `simple-bar > lib > components > Icons.jsx` :
 
 ```javascript
