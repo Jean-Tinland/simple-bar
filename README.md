@@ -3,6 +3,8 @@
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).\
 This project is a Work In Progress so everything is not fully optimized or functional.
 
+Pywal integration was added thanks to [Amar Paul](https://github.com/Amar1729).
+
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
@@ -58,6 +60,12 @@ export const Theme = {
   easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
 }
 ```
+
+### Pywal
+
+To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.
+
+### Icons
 
 Now to add new icons you'll need to get a `.svg` with a `0 0 24 24` viewBox. Then you can simply add it to the `simple-bar > lib > components > Icons.jsx` :
 
