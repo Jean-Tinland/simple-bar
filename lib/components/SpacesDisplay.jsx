@@ -6,8 +6,10 @@ const appExclusions = ['Finder', 'iTerm2']
 
 const OpenedApps = ({ apps }) => {
   if (apps.length === 0) return null
-  return apps.map((el) => {
-    const Icon = appIcons[el.app] || appIcons['Default']
+  return apps.map((app) => {
+    const { minimized, app: name } = app
+    if (minimized === 1) return null
+    const Icon = appIcons[name] || appIcons['Default']
     return <Icon />
   })
 }
@@ -18,7 +20,6 @@ const SpacesDisplay = ({ output, displayId }) => {
   if (!output) return <div className="spaces-display spaces-display--empty" />
 
   return displays.map((display, i) => {
-    console.log(display)
     if (display.index !== displayId) return null
     return (
       <div key={i} className="spaces-display">
