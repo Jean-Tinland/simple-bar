@@ -10,7 +10,8 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 ## Features
 
 - Show workspace number & current space (more detailed explanations in dual display support section)
-- Create and/or navigate to workspace on click
+- Navigate to workspace on click
+- Create new workspace on "+" click (**only with SIP disabled**)
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Battery level & charging indicator
@@ -45,7 +46,7 @@ After cloning the project, simply activate all three "simple-bar" widgets in Üb
 
 ### Clickable elements
 
-The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on or off.
+The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on/off or on the spaces to go directly to a specific space. The "Add space" button will only be shown if you have **disabled SIP**
 
 ## Customization
 
@@ -126,6 +127,8 @@ To refresh them on space or display change, you can add these lines utilizing [y
 yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 yabai -m signal --add event=display_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# uncomment next line to enable spaces widget refresh on your 2nd monitor
+# yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
 
 ## Dual display support
