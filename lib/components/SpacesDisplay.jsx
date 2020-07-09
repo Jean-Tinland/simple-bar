@@ -9,7 +9,6 @@ const appExclusions = ['Finder', 'iTerm2']
 const goToSpace = (index) => () => run(`/usr/local/bin/yabai -m space --focus ${index}`)
 
 const createSpace = (index) => () => {
-  console.log(index)
   run('/usr/local/bin/yabai -m space --create')
   goToSpace(index + 1)()
 }
