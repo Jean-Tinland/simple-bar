@@ -45,7 +45,7 @@ After cloning the project, simply activate all three "simple-bar" widgets in Üb
 
 ### Clickable elements
 
-The wifi element in `simple-bar-data-jsx` is clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on or off.
+The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on or off.
 
 ## Customization
 
