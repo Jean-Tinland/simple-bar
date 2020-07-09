@@ -10,11 +10,13 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 ## Features
 
 - Show workspace number & current space (more detailed explanations in dual display support section)
+- Create and/or navigate to workspace on click
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Battery level & charging indicator
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
+- Wifi toggle on click (added thanks to [Amar Paul](https://github.com/Amar1729))
 - Date and time (en-UK & 24h format)
 
 ## Screenshot
