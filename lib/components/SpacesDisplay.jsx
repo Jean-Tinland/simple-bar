@@ -1,11 +1,20 @@
+import { run } from 'uebersicht'
 import { appIcons } from '../data.js'
+import { Add } from './Icons.jsx'
 
 export const refreshFrequency = false
 
 const appExclusions = ['Finder', 'iTerm2']
 
+const goToSpace = (index) => () => run(`/usr/local/bin/yabai -m space --focus ${index}`)
+
+const createSpace = (index) => () => {
+  console.log(index)
+  run('/usr/local/bin/yabai -m space --create')
+  goToSpace(index + 1)()
+}
+
 const OpenedApps = ({ apps }) => {
-  console.log(apps)
   if (apps.length === 0) return null
   return apps.map((app) => {
     const { minimized, app: name } = app
@@ -32,11 +41,14 @@ const SpacesDisplay = ({ output, displayId }) => {
           const apps = windows.filter((app) => app.space === index && !appExclusions.includes(app.app))
 
           return display.index === space.display ? (
-            <span key={i} className={classes}>
+            <span key={i} className={classes} onClick={goToSpace(index)}>
               {index} <OpenedApps apps={apps} />
             </span>
           ) : null
         })}
+        <div className="space space--add" onClick={createSpace(spaces.length)}>
+          <Add />
+        </div>
       </div>
     )
   })
