@@ -5,7 +5,6 @@ export const refreshFrequency = false
 const appExclusions = ['Finder', 'iTerm2']
 
 const OpenedApps = ({ apps }) => {
-  console.log(apps)
   if (apps.length === 0) return null
   return apps.map((app) => {
     const { minimized, app: name } = app
