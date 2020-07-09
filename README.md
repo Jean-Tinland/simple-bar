@@ -41,6 +41,10 @@ After cloning the project, simply activate all three "simple-bar" widgets in Üb
 - `simple-bar-spaces-jsx`
 - `simple-bar-data-jsx`
 
+### Clickable elements
+
+The wifi element in `simple-bar-data-jsx` is clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on or off.
+
 ## Customization
 
 If you want to customize the colors or fonts used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your settings in it.
