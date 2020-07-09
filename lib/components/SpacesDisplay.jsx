@@ -24,11 +24,11 @@ const OpenedApps = ({ apps }) => {
   })
 }
 
-const SpacesDisplay = ({ output, displayId }) => {
+const SpacesDisplay = ({ output, SIP, displayId }) => {
   const { displays, spaces, windows } = output
 
   if (!output) return <div className="spaces-display spaces-display--empty" />
-
+  const SIPDisabled = SIP === 'System Integrity Protection status: disabled.'
   return displays.map((display, i) => {
     if (display.index !== displayId) return null
     return (
@@ -46,9 +46,11 @@ const SpacesDisplay = ({ output, displayId }) => {
             </span>
           ) : null
         })}
-        <div className="space space--add" onClick={createSpace(spaces.length)}>
-          <Add />
-        </div>
+        {SIPDisabled && (
+          <div className="space space--add" onClick={createSpace(spaces.length)}>
+            <Add />
+          </div>
+        )}
       </div>
     )
   })
