@@ -7,10 +7,10 @@ const refreshData = () =>
 const toggleWifi = (isActive) => {
   if (isActive) {
     run(`networksetup -setairportpower en0 off`)
-    run(`osascript -e 'tell app "System Events" to display notification "disabling wifi." with title "simple-bar"'`)
+    run(`osascript -e 'tell app "System Events" to display notification "Disabling wifi..." with title "simple-bar"'`)
   } else {
     run(`networksetup -setairportpower en0 on`)
-    run(`osascript -e 'tell app "System Events" to display notification "enabling wifi." with title "simple-bar"'`)
+    run(`osascript -e 'tell app "System Events" to display notification "Enabling wifi..." with title "simple-bar"'`)
   }
   refreshData()
 }
