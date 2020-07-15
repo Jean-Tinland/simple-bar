@@ -13,7 +13,7 @@ const className = `
     position: fixed;
     top: 0;
     left: 0;
-    padding: 4px;
+    padding: 4px 5px;
     color: white;
     font-size: 11px;
     font-family: ${Theme.font};

@@ -20,7 +20,7 @@ const className = `
     display: flex;
     align-items: center;
     margin-left: auto;
-    padding: 4px 5px;
+    padding: 3px 5px;
     color: ${Theme.main};
     font-family: ${Theme.font};
     font-size: 12px;
