@@ -60,7 +60,19 @@ export const Clock = (props) => (
 
 export const Add = (props) => (
   <Icon {...props}>
-    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+    <path d="M24 10.29v3.42H13.71V24H10.3V13.71H0V10.3h10.29V0h3.42v10.29H24z" />
+  </Icon>
+)
+
+export const Remove = (props) => (
+  <Icon {...props}>
+    <path d="M3.85714 24H20.1429V5.33333H3.85714V24ZM21.5 1.33333H16.75L15.3929 0H8.60714L7.25 1.33333H2.5V4H21.5V1.33333Z" />
+  </Icon>
+)
+
+export const Cancel = (props) => (
+  <Icon {...props}>
+    <path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zM2.4 12a9.6 9.6 0 0 1 15.5-7.6L4.4 18a9.5 9.5 0 0 1-2-5.9zm9.6 9.6c-2.2 0-4.3-.8-5.9-2L19.6 6A9.6 9.6 0 0 1 12 21.6z" />
   </Icon>
 )
 
