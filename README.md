@@ -123,6 +123,14 @@ export const appIcons = {
 
 As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
 
+## Manage excluded app from spaces display
+
+To prevent specific apps icon to show in `SpacesDisplay` file, add/remove app name in `appExclusions` array :
+
+```javascript
+const appExclusions = ['Finder', 'iTerm2']
+```
+
 ## Refresh bar on app or workspace change
 
 The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
