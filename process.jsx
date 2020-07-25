@@ -24,6 +24,12 @@ const className = `
     background-color: ${Theme.main};
     z-index: 0;
   }
+  @media (prefers-color-scheme: light) {
+    .simple-bar {
+      color: ${Theme.main};
+      background-color: rgba(255, 255, 255, 0.65);
+    }
+  }
   .simple-bar--empty {
     text-align: center;
   }
@@ -39,6 +45,7 @@ const render = ({ output, error }) => {
   const { process } = data
   return (
     <div className="simple-bar">
+      <div className="simple-bar__background" />
       <Process output={process} />
     </div>
   )

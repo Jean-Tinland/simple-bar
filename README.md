@@ -9,6 +9,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
 
+- Now Synchronised with system theme
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
 - Create new workspace on "+" click (**only with SIP disabled**)
@@ -119,7 +120,7 @@ export const appIcons = {
 
 As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
 
-## Refresh bar on workspace change
+## Refresh bar on app or workspace change
 
 The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
 To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
