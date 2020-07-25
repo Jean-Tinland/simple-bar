@@ -8,14 +8,15 @@ const appExclusions = ['Finder', 'iTerm2']
 
 const goToSpace = (index) => run(`/usr/local/bin/yabai -m space --focus ${index}`)
 
-const createSpace = (index) => () => {
-  run('/usr/local/bin/yabai -m space --create')
-  goToSpace(index + 1)
-}
+const createSpace = (index) => () => run('/usr/local/bin/yabai -m space --create').then(() => goToSpace(index + 1))
 
 const removeSpace = (index, focusedSpace) => {
-  goToSpace(index)
-  run('/usr/local/bin/yabai -m space --destroy').then(() => goToSpace(focusedSpace))
+  if (focusedSpace !== index) {
+    goToSpace(index)
+    run('/usr/local/bin/yabai -m space --destroy').then(() => goToSpace(focusedSpace))
+  } else {
+    run('/usr/local/bin/yabai -m space --destroy')
+  }
 }
 
 const OpenedApps = ({ apps }) => {
@@ -44,9 +45,7 @@ const SpacesDisplay = ({ output, SIP, displayId, dispatch, removing }) => {
   const { displays, spaces, windows } = output
   let focusedSpace
 
-  const toggleRemoveMode = () => {
-    dispatch({ type: removing ? 'STOP-REMOVING' : 'START-REMOVING' })
-  }
+  const toggleRemoveMode = () => dispatch({ type: removing ? 'STOP-REMOVING' : 'START-REMOVING' })
 
   if (!output) return <div className="spaces-display spaces-display--empty" />
 
@@ -73,9 +72,7 @@ const SpacesDisplay = ({ output, SIP, displayId, dispatch, removing }) => {
 
           const classes = focused ? 'space space--focused' : 'space'
 
-          if (focused) {
-            focusedSpace = index
-          }
+          if (focused) focusedSpace = index
 
           const apps = windows.filter((app) => app.space === index && !appExclusions.includes(app.app))
 

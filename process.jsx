@@ -45,7 +45,6 @@ const render = ({ output, error }) => {
   const { process } = data
   return (
     <div className="simple-bar">
-      <div className="simple-bar__background" />
       <Process output={process} />
     </div>
   )
