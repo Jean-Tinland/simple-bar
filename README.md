@@ -24,7 +24,10 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Screenshot
 
+Dark theme:
 ![img](./preview.jpg)
+Light theme:
+![img](./preview-light.jpg)
 
 ## Installation
 
