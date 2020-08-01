@@ -11,7 +11,7 @@ import { Theme } from './lib/styles/Theme.js'
 
 const refreshFrequency = 10000
 
-const className = `
+const className = /* css */ `
   .simple-bar__error,
   .simple-bar__data {
     position: fixed;

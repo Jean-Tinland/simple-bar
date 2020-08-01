@@ -7,7 +7,7 @@ import { Theme } from './lib/styles/Theme.js'
 
 const refreshFrequency = false
 
-const className = `
+const className = /* css */ `
   .simple-bar {
     position: fixed;
     top: 0;
@@ -27,7 +27,7 @@ const className = `
   @media (prefers-color-scheme: light) {
     .simple-bar {
       color: ${Theme.main};
-      background-color: rgba(255, 255, 255, 0.65);
+      background-color: white;
     }
   }
   .simple-bar--empty {

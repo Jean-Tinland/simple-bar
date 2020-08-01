@@ -7,7 +7,7 @@ import { Theme } from './lib/styles/Theme.js'
 
 const refreshFrequency = false
 
-const className = `
+const className = /* css */ `
   .simple-bar__error,
   .simple-bar__spaces {
     position: fixed;
