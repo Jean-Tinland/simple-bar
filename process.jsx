@@ -43,7 +43,6 @@ const render = ({ output, error }) => {
   const data = parseJson(output)
   if (!data) return <div className="simple-bar simple-bar--empty">JSON error...</div>
   const { process } = data
-  console.log(process)
   return (
     <div className="simple-bar">
       <Process output={process} />
