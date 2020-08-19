@@ -9,7 +9,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
 
-- Now Synchronised with system theme
+- Synchronised with system theme
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
 - Create new workspace on "+" click (**only with SIP disabled**)
