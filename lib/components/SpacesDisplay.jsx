@@ -19,11 +19,20 @@ const removeSpace = (index, focusedSpace) => {
   }
 }
 
+const buildClassName = (focused, fullscreen) => {
+  let classes = ['space']
+  if (focused === 1) classes.push('space--focused')
+  if (fullscreen === 1) classes.push('space--fullscreen')
+  classes = classes.join(' ')
+  return classes
+}
+
 const OpenedApps = ({ apps }) => {
   if (apps.length === 0) return null
   return apps
     .sort((a, b) => a.app.localeCompare(b.app))
     .map((app, i) => {
+      console.log(app)
       const { minimized, focused, app: name } = app
       if (minimized === 1) return null
       const Icon = appIcons[name] || appIcons['Default']
@@ -53,6 +62,7 @@ const SpacesDisplay = ({ output, SIP, displayId, dispatch, removing }) => {
 
   const classes = removing ? 'spaces-display spaces-display--removing' : 'spaces-display'
 
+  console.log({ displays, spaces, windows })
   return displays.map((display, i) => {
     if (display.index !== displayId) return null
     return (
@@ -68,13 +78,15 @@ const SpacesDisplay = ({ output, SIP, displayId, dispatch, removing }) => {
             </div>
           ))}
         {spaces.map((space, i) => {
-          const { index, focused } = space
+          const { index, focused, 'native-fullscreen': fullscreen } = space
 
-          const classes = focused ? 'space space--focused' : 'space'
+          const classes = buildClassName(focused, fullscreen)
 
           if (focused) focusedSpace = index
 
-          const apps = windows.filter((app) => app.space === index && !appExclusions.includes(app.app))
+          const apps = windows.filter(
+            (app) => app.space === index && (app['native-fullscreen'] === 1 || !appExclusions.includes(app.app))
+          )
 
           return display.index === space.display ? (
             <span key={i} className={classes} onClick={handleSpaceClick(removing, index, focusedSpace)}>
