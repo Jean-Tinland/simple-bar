@@ -14,7 +14,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Navigate to workspace on click
 - Create new workspace on "+" click [**only with SIP disabled**]
 - Move workspace on space hover (1s delay) [**only with SIP disabled**]
-- Destroy workspace. Activate "remove-mode" by clicking on "Bin" icon [**only with SIP disabled**]
+- Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Battery level & charging indicator
