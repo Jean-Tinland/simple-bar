@@ -6,7 +6,7 @@ import { goToSpace } from '../yabai'
 
 const EXCLUSIONS = ['Finder', 'iTerm2']
 
-const Space = ({ space, display, windows, SIPDisabled, spacesLength, focusedSpace }) => {
+const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }) => {
   if (display.index !== space.display) return null
   const { index, focused, 'native-fullscreen': fullscreen } = space
 
@@ -40,7 +40,7 @@ const Space = ({ space, display, windows, SIPDisabled, spacesLength, focusedSpac
       <div className="space__inner" onClick={onClick}>
         {index} <OpenedApps apps={apps} />
       </div>
-      {SIPDisabled && <SpaceOptions index={index} focusedSpace={focusedSpace} />}
+      {SIPDisabled && <SpaceOptions index={index} focusedSpace={focusedSpace} displayId={displayId} />}
     </div>
   )
 }

@@ -25,12 +25,12 @@ const Spaces = ({ output, SIP, displayId }) => {
             display={display}
             windows={windows}
             SIPDisabled={SIPDisabled}
-            spacesLength={spacesLength}
             focusedSpace={focusedSpace}
+            displayId={displayId}
           />
         ))}
         {SIPDisabled && (
-          <div className="spaces__add" onClick={createSpace}>
+          <div className="spaces__add" onClick={createSpace(displayId)}>
             <Add />
           </div>
         )}

@@ -2,10 +2,10 @@ import { Remove, ChevronLeft, ChevronRight } from './Icons.jsx'
 
 import { removeSpace, swapSpace } from '../yabai'
 
-const SpaceOptions = ({ index, focusedSpace }) => {
+const SpaceOptions = ({ index, focusedSpace, displayId }) => {
   const onRemoveClick = (e) => {
     e.stopPropagation()
-    removeSpace(index, focusedSpace)
+    removeSpace(index, focusedSpace, displayId)
   }
   const onChevronClick = (direction) => (e) => {
     const target = e.target.closest('.space')
