@@ -12,8 +12,9 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Synchronised with system theme
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
-- Create new workspace on "+" click (**only with SIP disabled**)
-- Destroy workspace. Activate "remove-mode" by clicking on "Bin" icon (**only with SIP disabled**)
+- Create new workspace on "+" click [**only with SIP disabled**]
+- Move workspace on space hover (1s delay) [**only with SIP disabled**]
+- Destroy workspace. Activate "remove-mode" by clicking on "Bin" icon [**only with SIP disabled**]
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Battery level & charging indicator
@@ -22,12 +23,14 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Wifi toggle on click (added thanks to [Amar Paul](https://github.com/Amar1729))
 - Date and time (en-UK & 24h format)
 
-## Screenshot
+## Preview
 
-Dark theme:
-![img](./preview.jpg)
-Light theme:
-![img](./preview-light.jpg)
+Dark theme:\
+![img](./preview.png)
+Light theme:\
+![img](./preview-light.png)
+Space creation/removal:\
+![img](./add-remove-space.gif)
 
 ## Installation
 
