@@ -1,5 +1,6 @@
 import { run } from 'uebersicht'
 import { Wifi, WifiOff } from './Icons.jsx'
+import { classnames } from '../utils.js'
 
 const refreshData = () =>
   run(`osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "simple-bar-data-jsx"'`)
@@ -28,7 +29,9 @@ const render = ({ output }) => {
   const isActive = status === 'active'
   const name = renderName(ssid)
 
-  const classes = isActive ? 'wifi' : 'wifi wifi--inactive'
+  const classes = classnames('wifi', {
+    'wifi--inactive': !isActive
+  })
 
   const Icon = isActive ? Wifi : WifiOff
 

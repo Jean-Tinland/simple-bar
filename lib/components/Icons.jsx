@@ -76,6 +76,18 @@ export const Cancel = (props) => (
   </Icon>
 )
 
+export const ChevronRight = (props) => (
+  <Icon {...props}>
+    <path d="M12.75 12L4.5 3.75 8.25 0l12 12-12 12-3.75-3.75L12.75 12z" />
+  </Icon>
+)
+
+export const ChevronLeft = (props) => (
+  <Icon {...props}>
+    <path d="M11.25 12l8.25-8.25L15.75 0l-12 12 12 12 3.75-3.75L11.25 12z" />
+  </Icon>
+)
+
 export const Figma = (props) => (
   <Icon {...props}>
     <path d="M8 24c.5 0 1 0 1.5-.3a4 4 0 0 0 1.3-.7c.4-.4.7-.7.9-1.2.2-.4.3-.8.3-1.3V17H8c-.5 0-1 0-1.5.3a4 4 0 0 0-1.3.7c-.4.4-.7.7-.9 1.2a3.1 3.1 0 0 0 0 2.6c.2.5.5.8.9 1.2.3.3.8.6 1.3.7L8 24zM4 12.5c0-1.2.4-2.3 1.2-3.2C5.9 8.5 6.9 8 8 8h4v9H8c-1 0-2-.5-2.8-1.3-.8-.9-1.2-2-1.2-3.2zM4 4a4 4 0 0 1 4-4h4v8H8a4 4 0 0 1-4-4zM12 0h4a4 4 0 1 1 0 8h-4V0z" />

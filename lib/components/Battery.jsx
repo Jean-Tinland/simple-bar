@@ -1,4 +1,5 @@
 import { Charging } from './Icons.jsx'
+import { classnames } from '../utils.js'
 
 const getTransform = (value) => {
   let transform = `0.${value}`
@@ -13,7 +14,9 @@ const Battery = ({ output }) => {
   const isCharging = charging === 'true'
   const isLowBattery = !isCharging && percentage < 20
 
-  const classes = isLowBattery ? 'battery battery--low' : 'battery'
+  const classes = classnames('battery', {
+    'battery--low': isLowBattery
+  })
 
   const transformValue = getTransform(percentage)
 
