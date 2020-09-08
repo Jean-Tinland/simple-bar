@@ -5,6 +5,8 @@ import { removeSpace, swapSpace } from '../yabai'
 const SpaceOptions = ({ index, focusedSpace, displayId }) => {
   const onRemoveClick = (e) => {
     e.stopPropagation()
+    const target = e.target.closest('.space')
+    target.classList.remove('space--hovered')
     removeSpace(index, focusedSpace, displayId)
   }
   const onChevronClick = (direction) => (e) => {
