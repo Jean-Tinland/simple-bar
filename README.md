@@ -27,10 +27,18 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 Dark theme:\
 ![img](./preview.png)
+
 Light theme:\
 ![img](./preview-light.png)
-Space creation/removal:\
-![img](./add-remove-space.gif)
+
+Create space:\
+![img](./add-space.gif)
+
+Move space:\
+![img](./move-space.gif)
+
+Remove space:\
+![img](./remove-space.gif)
 
 ## Installation
 
