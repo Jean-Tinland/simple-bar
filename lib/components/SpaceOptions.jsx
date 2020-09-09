@@ -10,10 +10,6 @@ const SpaceOptions = ({ index, displayId }) => {
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
     target.classList.add('space--removing')
-    setTimeout(() => {
-      if (!target) return
-      target.style.display = 'none'
-    }, 320)
     removeSpace(index, displayId)
   }
   const onChevronClick = (direction) => (e) => {
