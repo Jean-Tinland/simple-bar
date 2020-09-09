@@ -19,10 +19,10 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
     target.classList.remove('space--hovered')
   }
   const onClick = (e) => {
+    goToSpace(index, focusedSpace)
     clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.add('space--clicked')
-    goToSpace(index, focusedSpace)
   }
 
   const classes = classnames('space', {

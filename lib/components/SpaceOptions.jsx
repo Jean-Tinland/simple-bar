@@ -5,17 +5,17 @@ import { removeSpace, swapSpace } from '../yabai.js'
 
 const SpaceOptions = ({ index, displayId }) => {
   const onRemoveClick = (e) => {
+    removeSpace(index, displayId)
     e.stopPropagation()
     clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
-    removeSpace(index, displayId)
   }
   const onChevronClick = (direction) => (e) => {
+    swapSpace(index, direction)
     clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
-    swapSpace(index, direction)
   }
   const onMouseDown = (e) => e.preventDefault()
   const onMouseLeave = (e) => {
