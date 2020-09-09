@@ -1,13 +1,13 @@
 import Space from './Space.jsx'
 import { Add } from './Icons.jsx'
 
-import { createSpace } from '../yabai'
+import { clickEffect } from '../utils.js'
+import { createSpace } from '../yabai.js'
 
 export const refreshFrequency = false
 
 const Spaces = ({ output, SIP, displayId }) => {
   const { displays, spaces, windows } = output
-  const spacesLength = spaces.filter((space) => space.display === displayId).length
   let focusedSpace
 
   if (!output) return <div className="spaces-display spaces-display--empty" />
@@ -16,6 +16,10 @@ const Spaces = ({ output, SIP, displayId }) => {
 
   return displays.map((display, i) => {
     if (display.index !== displayId) return null
+    const onClick = (e) => {
+      clickEffect(e)
+      createSpace(displayId)
+    }
     return (
       <div key={i} className="spaces">
         {spaces.map((space, i) => (
@@ -30,7 +34,7 @@ const Spaces = ({ output, SIP, displayId }) => {
           />
         ))}
         {SIPDisabled && (
-          <div className="spaces__add" onClick={createSpace(displayId)}>
+          <div className="spaces__add" onClick={onClick}>
             <Add />
           </div>
         )}

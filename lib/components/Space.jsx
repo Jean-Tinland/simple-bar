@@ -1,6 +1,6 @@
 import OpenedApps from './OpenedApps.jsx'
 import SpaceOptions from './SpaceOptions.jsx'
-import { classnames } from '../utils.js'
+import { classnames, clickEffect } from '../utils.js'
 
 import { goToSpace } from '../yabai'
 
@@ -19,6 +19,7 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
     target.classList.remove('space--hovered')
   }
   const onClick = (e) => {
+    clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.add('space--clicked')
     goToSpace(index, focusedSpace)
@@ -40,7 +41,7 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
       <div className="space__inner" onClick={onClick}>
         {index} <OpenedApps apps={apps} />
       </div>
-      {SIPDisabled && <SpaceOptions index={index} focusedSpace={focusedSpace} displayId={displayId} />}
+      {SIPDisabled && <SpaceOptions index={index} displayId={displayId} />}
     </div>
   )
 }

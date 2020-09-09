@@ -1,6 +1,6 @@
 import { run } from 'uebersicht'
 import { Wifi, WifiOff } from './Icons.jsx'
-import { classnames } from '../utils.js'
+import { classnames, clickEffect } from '../utils.js'
 
 const refreshData = () =>
   run(`osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "simple-bar-data-jsx"'`)
@@ -34,7 +34,10 @@ const render = ({ output }) => {
 
   const Icon = isActive ? Wifi : WifiOff
 
-  const clicked = () => toggleWifi(isActive)
+  const clicked = (e) => {
+    clickEffect(e)
+    toggleWifi(isActive)
+  }
 
   return (
     <div className={classes} onClick={clicked}>

@@ -1,15 +1,18 @@
 import { Remove, ChevronLeft, ChevronRight } from './Icons.jsx'
 
-import { removeSpace, swapSpace } from '../yabai'
+import { clickEffect } from '../utils.js'
+import { removeSpace, swapSpace } from '../yabai.js'
 
-const SpaceOptions = ({ index, focusedSpace, displayId }) => {
+const SpaceOptions = ({ index, displayId }) => {
   const onRemoveClick = (e) => {
     e.stopPropagation()
+    clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
-    removeSpace(index, focusedSpace, displayId)
+    removeSpace(index, displayId)
   }
   const onChevronClick = (direction) => (e) => {
+    clickEffect(e)
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
     swapSpace(index, direction)
