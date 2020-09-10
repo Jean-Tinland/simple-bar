@@ -8,7 +8,9 @@ const EXCLUSIONS = ['Finder', 'iTerm2']
 
 const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }) => {
   if (display.index !== space.display) return null
-  const { index, focused, 'native-fullscreen': fullscreen } = space
+  const { index, label, focused, 'native-fullscreen': fullscreen } = space
+
+  console.log(space)
 
   const onMouseEnter = (e) => {
     const target = e.target.closest('.space')
@@ -36,10 +38,12 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
     (app) => app.space === index && (app['native-fullscreen'] === 1 || !EXCLUSIONS.includes(app.app))
   )
 
+  const spaceLabel = label && label !== '' ? label : index
+
   return (
     <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="space__inner" onClick={onClick}>
-        {index} <OpenedApps apps={apps} />
+        {spaceLabel} <OpenedApps apps={apps} />
       </div>
       {SIPDisabled && <SpaceOptions index={index} displayId={displayId} />}
     </div>
