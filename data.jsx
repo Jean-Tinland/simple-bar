@@ -42,14 +42,14 @@ const render = ({ output, error }) => {
   if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
   const data = parseJson(output)
   if (!data) return <div className="simple-bar__error">JSON error...</div>
-  const { time, battery, wifi, sound } = data
+  const { battery, wifi, sound } = data
   return (
     <div className="simple-bar__data">
       <Battery output={battery} />
       <Sound output={sound} />
       <Wifi output={wifi} />
       <DateDisplay />
-      <Time output={time} />
+      <Time />
     </div>
   )
 }
