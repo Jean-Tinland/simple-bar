@@ -62,7 +62,7 @@ After cloning the project, simply activate all three "simple-bar" widgets in Üb
 
 ### Clickable elements
 
-The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. If you have an interaction shortcut enabled (`Übersicht > Preferences`), you can click the wifi element to toggle wifi on/off or on the spaces to go directly to a specific space. The "Add space" button will only be shown if you have **disabled SIP**
+The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. You can click the wifi element to toggle wifi on/off or on the spaces to go directly to a specific space. Leave you cursor for 1 second over a space in order to show the "move" & "remove" buttons. These buttons and the "Add space" button will only be shown if you have **disabled SIP**
 
 ## Customization
 
@@ -79,7 +79,11 @@ export const Theme = {
   blue: '#6DB3CE',
   magenta: '#AD82CB',
   cyan: '#7EDDDE',
+  lightGrey: 'rgba(0, 0, 0, 0.1)',
   font: 'JetBrains Mono, monospace',
+  lightShadow: '0 5px 10px rgba(0,0,0,0.24)',
+  mediumShadow: '0 8px 30px rgba(0,0,0,0.24)',
+  largeShadow: '0 30px 60px rgba(0,0,0,0.24)',
   easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
 }
 ```
