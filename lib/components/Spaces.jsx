@@ -12,7 +12,7 @@ const Spaces = ({ output, SIP, displayId }) => {
 
   if (!output) return <div className="spaces-display spaces-display--empty" />
 
-  const SIPDisabled = SIP === 'System Integrity Protection status: disabled.'
+  const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
 
   return displays.map((display, i) => {
     if (display.index !== displayId) return null

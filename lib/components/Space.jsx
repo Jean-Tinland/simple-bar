@@ -10,8 +10,6 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
   if (display.index !== space.display) return null
   const { index, label, focused, 'native-fullscreen': fullscreen } = space
 
-  console.log(space)
-
   const onMouseEnter = (e) => {
     const target = e.target.closest('.space')
     target.classList.add('space--hovered')
