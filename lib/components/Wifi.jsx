@@ -1,5 +1,5 @@
 import { run } from 'uebersicht'
-import { Wifi, WifiOff } from './Icons.jsx'
+import { WifiIcon, WifiOffIcon } from './Icons.jsx'
 import { classnames, clickEffect } from '../utils.js'
 
 const refreshData = () =>
@@ -32,7 +32,7 @@ const render = ({ output }) => {
     'wifi--inactive': !isActive
   })
 
-  const Icon = isActive ? Wifi : WifiOff
+  const Icon = isActive ? WifiIcon : WifiOffIcon
 
   const clicked = (e) => {
     clickEffect(e)

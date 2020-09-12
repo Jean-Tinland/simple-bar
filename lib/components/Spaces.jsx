@@ -1,5 +1,5 @@
 import Space from './Space.jsx'
-import { Add } from './Icons.jsx'
+import { AddIcon } from './Icons.jsx'
 
 import { clickEffect } from '../utils.js'
 import { createSpace } from '../yabai.js'
@@ -35,7 +35,7 @@ const Spaces = ({ output, SIP, displayId }) => {
         ))}
         {SIPDisabled && (
           <div className="spaces__add" onClick={onClick}>
-            <Add />
+            <AddIcon />
           </div>
         )}
       </div>

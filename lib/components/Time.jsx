@@ -1,4 +1,4 @@
-import { Clock } from './Icons.jsx'
+import { ClockIcon } from './Icons.jsx'
 
 const Time = () => {
   const options = {
@@ -9,7 +9,7 @@ const Time = () => {
   const time = new Date().toLocaleString('en-UK', options)
   return (
     <div className="time">
-      <Clock className="time__icon" />
+      <ClockIcon className="time__icon" />
       {time}
     </div>
   )

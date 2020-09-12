@@ -1,4 +1,4 @@
-import { Charging } from './Icons.jsx'
+import { ChargingIcon } from './Icons.jsx'
 import { classnames } from '../utils.js'
 
 const getTransform = (value) => {
@@ -22,7 +22,7 @@ const Battery = ({ output }) => {
 
   return (
     <div className={classes}>
-      {isCharging && <Charging className="battery__charging-icon" />}
+      {isCharging && <ChargingIcon className="battery__charging-icon" />}
       <div className="battery__icon">
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
       </div>

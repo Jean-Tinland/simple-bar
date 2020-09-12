@@ -4,128 +4,128 @@ const Icon = ({ width = 24, height = 24, children, ...props }) => (
   </svg>
 )
 
-export const Charging = (props) => (
+export const ChargingIcon = (props) => (
   <Icon {...props}>
     <path d="M7 2v11h3v9l7-12h-4l3-8z" />
   </Icon>
 )
 
-export const Wifi = (props) => (
+export const WifiIcon = (props) => (
   <Icon {...props}>
     <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
   </Icon>
 )
 
-export const WifiOff = (props) => (
+export const WifiOffIcon = (props) => (
   <Icon {...props}>
     <path d="M21 11l2-2c-3.73-3.73-8.87-5.15-13.7-4.31l2.58 2.58c3.3-.02 6.61 1.22 9.12 3.73zM9 17l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm10-4c-1.08-1.08-2.36-1.85-3.72-2.33l3.02 3.02.7-.69zM3.41 1.64L2 3.05 5.05 6.1C3.59 6.83 2.22 7.79 1 9l2 2c1.23-1.23 2.65-2.16 4.17-2.78l2.24 2.24C7.79 10.89 6.27 11.74 5 13l2 2c1.35-1.35 3.11-2.04 4.89-2.06l7.08 7.08 1.41-1.41L3.41 1.64z" />
   </Icon>
 )
 
-export const VolumeHigh = (props) => (
+export const VolumeHighIcon = (props) => (
   <Icon {...props}>
     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
   </Icon>
 )
 
-export const VolumeLow = (props) => (
+export const VolumeLowIcon = (props) => (
   <Icon {...props}>
     <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z" />
   </Icon>
 )
 
-export const NoVolume = (props) => (
+export const NoVolumeIcon = (props) => (
   <Icon {...props}>
     <path d="M7 9v6h4l5 5V4l-5 5H7z" />
   </Icon>
 )
 
-export const VolumeMuted = (props) => (
+export const VolumeMutedIcon = (props) => (
   <Icon {...props}>
     <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
   </Icon>
 )
 
-export const Date = (props) => (
+export const DateIcon = (props) => (
   <Icon {...props}>
     <path d="M21 3h-3V1h-2v2H8V1H6v2H3v18h18V3zm-2 16H5V8h14v11zM7 10h5v5H7v-5z" />
   </Icon>
 )
 
-export const Calendar = (props) => (
+export const CalendarIcon = (props) => (
   <Icon {...props}>
     <path d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z" />
   </Icon>
 )
 
-export const Mail = (props) => (
+export const MailIcon = (props) => (
   <Icon {...props}>
     <path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z" />
   </Icon>
 )
 
-export const Reminders = (props) => (
+export const RemindersIcon = (props) => (
   <Icon {...props}>
     <path d="M4 22h-4v-4h4v4zm0-12h-4v4h4v-4zm0-8h-4v4h4v-4zm3 0v4h17v-4h-17zm0 12h17v-4h-17v4zm0 8h17v-4h-17v4z" />
   </Icon>
 )
 
-export const Notes = (props) => (
+export const NotesIcon = (props) => (
   <Icon {...props}>
     <path d="M2 0v24h20v-24h-20zm18 22h-16v-15h16v15zm-3-4h-10v-1h10v1zm0-3h-10v-1h10v1zm0-3h-10v-1h10v1z" />
   </Icon>
 )
 
-export const Safari = (props) => (
+export const SafariIcon = (props) => (
   <Icon {...props}>
     <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm1.476 14.955c.988-.405 1.757-1.211 2.116-2.216l2.408-6.739-6.672 2.387c-1.006.36-1.811 1.131-2.216 2.119l-3.065 7.494 7.429-3.045zm-.122-4.286c.551.551.551 1.446 0 1.996-.551.551-1.445.551-1.996 0-.551-.55-.551-1.445 0-1.996.551-.551 1.445-.551 1.996 0z" />
   </Icon>
 )
 
-export const Clock = (props) => (
+export const ClockIcon = (props) => (
   <Icon {...props}>
     <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
   </Icon>
 )
 
-export const Add = (props) => (
+export const AddIcon = (props) => (
   <Icon {...props}>
     <path d="M24 10.29v3.42H13.71V24H10.3V13.71H0V10.3h10.29V0h3.42v10.29H24z" />
   </Icon>
 )
 
-export const Remove = (props) => (
+export const RemoveIcon = (props) => (
   <Icon {...props}>
     <path d="M3.85714 24H20.1429V5.33333H3.85714V24ZM21.5 1.33333H16.75L15.3929 0H8.60714L7.25 1.33333H2.5V4H21.5V1.33333Z" />
   </Icon>
 )
 
-export const Cancel = (props) => (
+export const CancelIcon = (props) => (
   <Icon {...props}>
     <path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zM2.4 12a9.6 9.6 0 0 1 15.5-7.6L4.4 18a9.5 9.5 0 0 1-2-5.9zm9.6 9.6c-2.2 0-4.3-.8-5.9-2L19.6 6A9.6 9.6 0 0 1 12 21.6z" />
   </Icon>
 )
 
-export const ChevronRight = (props) => (
+export const ChevronRightIcon = (props) => (
   <Icon {...props}>
     <path d="M12.75 12L4.5 3.75 8.25 0l12 12-12 12-3.75-3.75L12.75 12z" />
   </Icon>
 )
 
-export const ChevronLeft = (props) => (
+export const ChevronLeftIcon = (props) => (
   <Icon {...props}>
     <path d="M11.25 12l8.25-8.25L15.75 0l-12 12 12 12 3.75-3.75L11.25 12z" />
   </Icon>
 )
 
-export const Figma = (props) => (
+export const FigmaIcon = (props) => (
   <Icon {...props}>
     <path d="M8 24c.5 0 1 0 1.5-.3a4 4 0 0 0 1.3-.7c.4-.4.7-.7.9-1.2.2-.4.3-.8.3-1.3V17H8c-.5 0-1 0-1.5.3a4 4 0 0 0-1.3.7c-.4.4-.7.7-.9 1.2a3.1 3.1 0 0 0 0 2.6c.2.5.5.8.9 1.2.3.3.8.6 1.3.7L8 24zM4 12.5c0-1.2.4-2.3 1.2-3.2C5.9 8.5 6.9 8 8 8h4v9H8c-1 0-2-.5-2.8-1.3-.8-.9-1.2-2-1.2-3.2zM4 4a4 4 0 0 1 4-4h4v8H8a4 4 0 0 1-4-4zM12 0h4a4 4 0 1 1 0 8h-4V0z" />
     <path d="M20 12.5a5 5 0 0 1-.7 2.5c-.4.7-1 1.3-1.8 1.7-.7.3-1.5.4-2.3.2-.8-.2-1.5-.6-2-1.2-.6-.6-1-1.4-1.1-2.3a5 5 0 0 1 .2-2.6c.3-.8.8-1.5 1.5-2 .6-.5 1.4-.8 2.2-.8 1 0 2 .5 2.8 1.3.8.9 1.2 2 1.2 3.2z" />
   </Icon>
 )
 
-export const Zeplin = (props) => (
+export const ZeplinIcon = (props) => (
   <Icon {...props}>
     <path
       fillRule="evenodd"
@@ -165,13 +165,13 @@ export const Zeplin = (props) => (
   </Icon>
 )
 
-export const Code = (props) => (
+export const CodeIcon = (props) => (
   <Icon {...props}>
     <path d="M8.54 14.69L2.6 19.3 0 18.02V5.99l2.58-1.3L8.5 9.33 17.85 0 24 2.44v19.08L17.88 24l-9.34-9.31zm9.12 1.62V7.7L12.06 12l5.6 4.3zM2.8 14.76l2.94-2.66L2.8 9.18v5.58z" />
   </Icon>
 )
 
-export const GoogleChrome = (props) => (
+export const GoogleChromeIcon = (props) => (
   <Icon {...props}>
     <path d="M12 7.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z" />
     <path d="M12 17.99a6 6 0 0 1-5.94-5.18L1.92 5.64v-.02l-.47.67c-.11.21-.23.42-.33.64l-.22.52c-.15.38-.29.76-.4 1.15l-.14.48c-.06.22-.1.44-.15.67l-.08.47-.08.66-.04.52c-.02.4-.02.8 0 1.2l.04.52.08.66.08.47.15.67.13.48.2.62.21.54.22.52.33.63.15.3.07.1c.13.23.28.45.42.66l.24.35c.14.2.3.38.45.57l.31.37.43.43c.14.14.28.29.43.42l.37.31.56.45.35.24c.22.15.43.3.66.42l.1.07.3.15c.2.12.42.23.64.33l.06.03.3.13c.81.34 1.66.59 2.53.75l3.42-5.94c-.4.08-.81.13-1.24.13v.01z" />
@@ -180,13 +180,13 @@ export const GoogleChrome = (props) => (
   </Icon>
 )
 
-export const Skype = (props) => (
+export const SkypeIcon = (props) => (
   <Icon {...props}>
     <path d="M23.3 14.55C25.06 6.74 18.2-.35 10.18 1 5.81-1.7 0 1.36 0 6.55c0 1.2.33 2.33.91 3.3C-.7 17.69 6.2 24.69 14.22 23.23c.94.5 2 .78 3.14.78a6.55 6.55 0 0 0 5.95-9.45zm-11.2 5.33c-2.35 0-4.63-.57-5.99-2.5-2.02-2.85.64-4.28 1.95-3.2 1.1.93.75 3.15 3.95 3.15 1.41 0 3.15-.6 3.15-2 0-2.82-6.24-1.49-8.73-4.55a3.77 3.77 0 0 1 .04-4.55c1.95-2.51 7.68-2.67 10.14-.77 2.28 1.76 1.66 4.1-.17 4.1-2.2 0-1.05-2.89-4.61-2.89-2.58 0-3.6 1.84-1.78 2.73 2.42 1.2 8.75.83 8.75 5.6 0 3.36-3.25 4.88-6.7 4.88z" />
   </Icon>
 )
 
-export const Music = (props) => (
+export const MusicIcon = (props) => (
   <Icon {...props}>
     <path
       fillRule="evenodd"
@@ -196,7 +196,7 @@ export const Music = (props) => (
   </Icon>
 )
 
-export const SequelPro = (props) => (
+export const SequelProIcon = (props) => (
   <Icon {...props}>
     <path d="M24 16.2c0 3.76-5.37 6.8-12 6.8S0 19.96 0 16.2c0-3.75 5.37-6.8 12-6.8s12 3.05 12 6.8z" />
     <path d="M20.62 15.58c0 2.6-3.72 4.7-8.31 4.7-4.6 0-8.31-2.1-8.31-4.7s3.72-4.7 8.3-4.7c4.6 0 8.32 2.1 8.32 4.7z" />
@@ -207,13 +207,13 @@ export const SequelPro = (props) => (
   </Icon>
 )
 
-export const Slack = (props) => (
+export const SlackIcon = (props) => (
   <Icon {...props}>
     <path d="M8.8 12.7a2.5 2.5 0 0 0-2.5 2.5v6.3a2.5 2.5 0 0 0 5 0v-6.3c0-1.4-1-2.5-2.5-2.5zM0 15.2a2.5 2.5 0 0 0 5 0v-2.6H2.6A2.5 2.5 0 0 0 0 15.2zM8.8 0a2.5 2.5 0 0 0 0 5h2.6V2.5c0-1.4-1.2-2.5-2.6-2.5zM2.5 11.4h6.3a2.5 2.5 0 0 0 0-5H2.5a2.5 2.5 0 0 0 0 5zM21.5 6.3a2.5 2.5 0 0 0-2.6 2.5v2.6h2.6a2.5 2.5 0 0 0 0-5zM12.6 2.5v6.3a2.5 2.5 0 0 0 5 0V2.5a2.5 2.5 0 0 0-5 0zM17.7 21.5c0-1.4-1.1-2.5-2.5-2.5h-2.6v2.5a2.5 2.5 0 0 0 5 0zM21.5 12.6h-6.3a2.5 2.5 0 0 0 0 5.1h6.3a2.5 2.5 0 0 0 0-5z" />
   </Icon>
 )
 
-export const AndroidMessages = (props) => (
+export const AndroidMessagesIcon = (props) => (
   <Icon {...props}>
     <path d="M.61 5.7a.3.3 0 0 1 0-.48l2.42-1.86a.3.3 0 0 1 .48.24V7.3a.3.3 0 0 1-.48.24L.6 5.69z" />
     <path
@@ -224,19 +224,19 @@ export const AndroidMessages = (props) => (
   </Icon>
 )
 
-export const Caprine = (props) => (
+export const CaprineIcon = (props) => (
   <Icon {...props}>
     <path d="M12 0C5.37 0 0 4.97 0 11.11c0 3.5 1.74 6.62 4.47 8.65V24l4.09-2.24c1.09.3 2.24.46 3.44.46 6.63 0 12-4.97 12-11.1C24 4.97 18.63 0 12 0zm1.2 14.96l-3.06-3.26-5.97 3.26L10.73 8l3.13 3.26L19.76 8l-6.57 6.96z" />
   </Icon>
 )
 
-export const Firefox = (props) => (
+export const FirefoxIcon = (props) => (
   <Icon {...props}>
     <path d="M23.76 8.17a.2.2 0 0 0-.2.12l-.27.6c-.1-.79-.3-2.05-.55-2.87a5.44 5.44 0 0 0-1.22-2.13.19.19 0 0 0-.23-.03.2.2 0 0 0-.1.21l.2.95a7.75 7.75 0 0 0-2.66-1.9A9.43 9.43 0 0 0 4.5 5.09c-.16-.13-.4-.36-.52-.7-.25-.59-.37-1.25-.37-1.26a.2.2 0 0 0-.13-.15.2.2 0 0 0-.2.04c-1.44 1.39-1.3 3.55-1.25 4.04-.17.19-.68.76-1.2 1.58A8.17 8.17 0 0 0 0 11.5c0 .09.04.17.11.2a.2.2 0 0 0 .23-.04l.42-.45c-.05.18-.1.37-.13.59-.2.94-.14 2.4-.13 2.46 0 .1.06.17.15.19a.2.2 0 0 0 .22-.11l.25-.53c.18 1.28.89 4.01 3.59 6.53a11.3 11.3 0 0 0 7.63 2.93c2.77 0 5.38-.99 7.56-2.86 2.57-2.21 3.53-5.38 3.88-7.64.38-2.45.16-4.34.15-4.43a.2.2 0 0 0-.17-.17zm-4.4.08c.01 0 .28.35.34 1.24.04.67-.1 1.74-.19 2.33l-.52-.6a.2.2 0 0 0-.23-.06.2.2 0 0 0-.12.2c0 .02.18 1.53-.12 2.85a4.12 4.12 0 0 1-.55 1.36l.07-1a.2.2 0 0 0-.15-.2.2.2 0 0 0-.22.11c-.01.02-.92 1.97-3.4 2.74-.36.11-.72.17-1.1.17a5.95 5.95 0 0 1-3.21-1.16h.17c.98 0 1.73-.41 2.34-.75.16-.1.3-.18.45-.25a3.28 3.28 0 0 1 1.59-.47c.16 0 .29-.1.33-.25.1-.38-.36-1.05-.92-1.36a1.88 1.88 0 0 0-.94-.22c-.57 0-1.28.18-2.3.45a2.1 2.1 0 0 1-.55.08 1.7 1.7 0 0 1-1.27-.56c-.32-.34-.5-.8-.48-1.17.01-.18.08-.36.5-.36.37 0 .78.15.78.16h.07c.11 0 .2-.08.2-.19v-.03L9.88 9.6c.2-.13.67-.44 1.12-.77 1.1-.8 1.26-1.1 1.14-1.34-.16-.32-.57-.37-1.05-.43-.27-.04-.58-.08-.86-.17-.58-.2-.96-.7-1.05-.82a1.2 1.2 0 0 1 .1-.75c.2-.33.83-.83 1.06-1a.2.2 0 0 0 .08-.2.2.2 0 0 0-.17-.15c-.02 0-.6-.06-1.57.25-.78.27-1.39.7-1.6.85a7.99 7.99 0 0 0-.5-.07A7.82 7.82 0 0 1 17.05 3.8l-1.33.22a.2.2 0 0 0-.16.19c-.01.09.05.17.13.2.02 0 1.78.56 3.1 1.57.29.23.56.53.8.88.21.47.38.96.5 1.45l-.44-.35a.2.2 0 0 0-.26.02.2.2 0 0 0-.01.27zm0 0" />
   </Icon>
 )
 
-export const Terminal = (props) => (
+export const TerminalIcon = (props) => (
   <Icon {...props}>
     <path d="M5.03 14.83l1.42 1.41L10.69 12 6.45 7.76 5.03 9.17 7.86 12l-2.83 2.83zM15 14h-4v2h4v-2z" />
     <path
@@ -247,7 +247,7 @@ export const Terminal = (props) => (
   </Icon>
 )
 
-export const Spark = (props) => (
+export const SparkIcon = (props) => (
   <Icon {...props}>
     <path
       fillRule="evenodd"
@@ -257,7 +257,7 @@ export const Spark = (props) => (
   </Icon>
 )
 
-export const Spotify = (props) => (
+export const SpotifyIcon = (props) => (
   <Icon {...props}>
     <path
       fillRule="evenodd"
@@ -267,7 +267,7 @@ export const Spotify = (props) => (
   </Icon>
 )
 
-export const Default = (props) => (
+export const DefaultIcon = (props) => (
   <Icon {...props}>
     <path
       fillRule="evenodd"

@@ -1,4 +1,4 @@
-import { Date as DateIcon } from './Icons.jsx'
+import { DateIcon } from './Icons.jsx'
 
 const DateDisplay = () => {
   const options = {

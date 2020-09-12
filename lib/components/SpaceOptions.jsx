@@ -1,4 +1,4 @@
-import { Remove, ChevronLeft, ChevronRight } from './Icons.jsx'
+import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from './Icons.jsx'
 
 import { clickEffect } from '../utils.js'
 import { removeSpace, swapSpace } from '../yabai.js'
@@ -30,17 +30,17 @@ const SpaceOptions = ({ index, displayId }) => {
         onMouseDown={onMouseDown}
         onClick={onChevronClick('left')}
       >
-        <ChevronLeft />
+        <ChevronLeftIcon />
       </div>
       <div
         className="space-options__option space-options__option--move-next"
         onMouseDown={onMouseDown}
         onClick={onChevronClick('right')}
       >
-        <ChevronRight />
+        <ChevronRightIcon />
       </div>
       <div className="space-options__option space-options__option--remove" onClick={onRemoveClick}>
-        <Remove />
+        <RemoveIcon />
       </div>
     </span>
   )
