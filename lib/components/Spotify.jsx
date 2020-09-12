@@ -3,8 +3,8 @@ import { run } from 'uebersicht'
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
 import { refreshData, clickEffect, truncate } from '../utils'
 
-const togglePlay = (isActive) => {
-  if (isActive) {
+const togglePlay = (isPaused) => {
+  if (isPaused) {
     run(`osascript -e 'tell application "Spotify" to play'`).then(refreshData)
   } else {
     run(`osascript -e 'tell application "Spotify" to pause'`).then(refreshData)
