@@ -3,10 +3,11 @@ import DateDisplay from './lib/components/Date.jsx'
 import Battery from './lib/components/Battery.jsx'
 import Sound from './lib/components/Sound.jsx'
 import Wifi from './lib/components/Wifi.jsx'
+import Spotify from './lib/components/Spotify.jsx'
 
 import { parseJson } from './lib/utils.js'
 
-import { DateStyles, TimeStyles, BatteryStyles, WifiStyles, SoundStyles } from './lib/styles/Styles.js'
+import { DateStyles, TimeStyles, BatteryStyles, WifiStyles, SoundStyles, SpotifyStyles } from './lib/styles/Styles.js'
 import { Theme } from './lib/styles/Theme.js'
 
 const refreshFrequency = 10000
@@ -34,6 +35,7 @@ const className = /* css */ `
   ${BatteryStyles}
   ${WifiStyles}
   ${SoundStyles}
+  ${SpotifyStyles}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
@@ -42,9 +44,10 @@ const render = ({ output, error }) => {
   if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
   const data = parseJson(output)
   if (!data) return <div className="simple-bar__error">JSON error...</div>
-  const { battery, wifi, sound } = data
+  const { battery, wifi, sound, spotify } = data
   return (
     <div className="simple-bar__data">
+      <Spotify output={spotify} />
       <Battery output={battery} />
       <Sound output={sound} />
       <Wifi output={wifi} />
