@@ -1,9 +1,6 @@
 import { run } from 'uebersicht'
 import { WifiIcon, WifiOffIcon } from './Icons.jsx'
-import { classnames, clickEffect } from '../utils.js'
-
-const refreshData = () =>
-  run(`osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "simple-bar-data-jsx"'`)
+import { classnames, clickEffect, refreshData } from '../utils.js'
 
 const toggleWifi = (isActive) => {
   if (isActive) {

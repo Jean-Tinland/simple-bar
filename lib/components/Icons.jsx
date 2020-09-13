@@ -52,6 +52,22 @@ export const DateIcon = (props) => (
   </Icon>
 )
 
+export const PlayingIcon = (props) => (
+  <Icon {...props}>
+    <path d="M3 22v-20l18 10-18 10z" />
+  </Icon>
+)
+
+export const PausedIcon = (props) => (
+  <Icon {...props}>
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M4.16667 2H8.83333C9.47767 2 10 2.50368 10 3.125V20.875C10 21.4963 9.47767 22 8.83333 22H4.16667C3.52233 22 3 21.4963 3 20.875V3.125C3 2.50368 3.52233 2 4.16667 2ZM15.1667 2H19.8333C20.4777 2 21 2.50368 21 3.125V20.875C21 21.4963 20.4777 22 19.8333 22H15.1667C14.5223 22 14 21.4963 14 20.875V3.125C14 2.50368 14.5223 2 15.1667 2Z"
+    />
+  </Icon>
+)
+
 export const CalendarIcon = (props) => (
   <Icon {...props}>
     <path d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z" />
