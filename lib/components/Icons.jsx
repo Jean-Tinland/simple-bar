@@ -61,8 +61,8 @@ export const PlayingIcon = (props) => (
 export const PausedIcon = (props) => (
   <Icon {...props}>
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M4.16667 2H8.83333C9.47767 2 10 2.50368 10 3.125V20.875C10 21.4963 9.47767 22 8.83333 22H4.16667C3.52233 22 3 21.4963 3 20.875V3.125C3 2.50368 3.52233 2 4.16667 2ZM15.1667 2H19.8333C20.4777 2 21 2.50368 21 3.125V20.875C21 21.4963 20.4777 22 19.8333 22H15.1667C14.5223 22 14 21.4963 14 20.875V3.125C14 2.50368 14.5223 2 15.1667 2Z"
     />
   </Icon>
