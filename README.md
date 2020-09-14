@@ -24,6 +24,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Wifi (active/inactive) & wifi name
 - Wifi toggle on click (added thanks to [Amar Paul](https://github.com/Amar1729))
 - Date and time (en-UK & 24h format)
+- Day progress indicator (from midnight to midnight) in time widget
 
 ## Preview
 
