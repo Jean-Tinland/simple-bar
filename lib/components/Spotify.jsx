@@ -23,7 +23,6 @@ const Spotify = ({ output }) => {
     clickEffect(e)
     togglePlay(!isPlaying)
   }
-
   const onMouseEnter = (e) => {
     const target = e.target.closest('.spotify')
     if (!target) return
@@ -37,7 +36,6 @@ const Spotify = ({ output }) => {
       transition: `transform ${timing}ms linear`
     })
   }
-
   const onMouseLeave = (e) => {
     const target = e.target.closest('.spotify')
     target && target.querySelector('.spotify__slider').removeAttribute('style')
