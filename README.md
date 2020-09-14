@@ -69,9 +69,9 @@ The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx
 
 ## Customization
 
-### Colors
+### Colors & theme
 
-If you want to customize the colors or fonts used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your settings in it.
+If you want to customize the colors, shadow & fonts used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your settings in it.
 
 ```javascript
 export const Theme = {
@@ -95,7 +95,7 @@ export const Theme = {
 
 ### Time format (AM/PM or 24h)
 
-If you rather not display time in 24h format, you can simple change this line "`hour12: false`" by "`hour12: true`":
+If you rather not display time in 24h format, you can simply change this line "`hour12: false`" by "`hour12: true`":
 
 ```javascript
 const Time = () => {
