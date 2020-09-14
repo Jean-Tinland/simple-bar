@@ -1,7 +1,7 @@
 import { run } from 'uebersicht'
 
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
-import { refreshData, clickEffect } from '../utils'
+import { refreshData, clickEffect, classnames } from '../utils'
 
 const togglePlay = (isPaused) => {
   if (isPaused) {
@@ -41,9 +41,20 @@ const Spotify = ({ output }) => {
     target && target.querySelector('.spotify__slider').removeAttribute('style')
   }
 
+  const classes = classnames('spotify', {
+    'spotify--playing': isPlaying
+  })
+
   return (
-    <div className="spotify" onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
+      <div className="spotify__specter">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="spotify__inner">
         <div className="spotify__slider">
           {trackName} - {artistName}
