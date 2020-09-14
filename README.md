@@ -17,6 +17,8 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
+- Spotify current track (added thanks to [jamieweavis](https://github.com/jamieweavis))
+- Pause Spotify track on click (added thanks to [jamieweavis](https://github.com/jamieweavis))
 - Battery level & charging indicator
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
