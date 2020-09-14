@@ -91,6 +91,21 @@ export const Theme = {
 }
 ```
 
+### Time format (AM/PM or 24h)
+
+If you rather not display time in 24h format, you can simple change this line "`hour12: false`" by "`hour12: true`":
+
+```javascript
+const Time = () => {
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  }
+  /* ... */
+}
+```
+
 ### Pywal
 
 To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.
