@@ -20,7 +20,7 @@ const className = /* css */ `
     box-sizing: border-box;
     color: white;
     font-family: ${Theme.font};
-    font-size: 12px;
+    font-size: 11px;
     background-color: ${Theme.main};
     z-index: 0;
   }

@@ -24,7 +24,7 @@ const className = /* css */ `
     padding: 4px 5px;
     color: ${Theme.main};
     font-family: ${Theme.font};
-    font-size: 12px;
+    font-size: 11px;
     z-index: 1;
   }
   .simple-bar__data > *:not(:last-of-type) {
