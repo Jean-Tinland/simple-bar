@@ -69,6 +69,8 @@ The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx
 
 ## Customization
 
+### Colors
+
 If you want to customize the colors or fonts used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your settings in it.
 
 ```javascript
