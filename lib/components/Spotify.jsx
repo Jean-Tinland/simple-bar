@@ -1,7 +1,7 @@
 import { run } from 'uebersicht'
 
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
-import { refreshData, clickEffect, truncate } from '../utils'
+import { refreshData, clickEffect } from '../utils'
 
 const togglePlay = (isPaused) => {
   if (isPaused) {
@@ -19,15 +19,38 @@ const Spotify = ({ output }) => {
   const isPlaying = playerState === 'playing'
   const Icon = isPlaying ? PlayingIcon : PausedIcon
 
-  const clicked = (e) => {
+  const onClick = (e) => {
     clickEffect(e)
     togglePlay(!isPlaying)
   }
 
+  const onMouseEnter = (e) => {
+    const target = e.target.closest('.spotify')
+    if (!target) return
+    const inner = target.querySelector('.spotify__inner')
+    const slider = target.querySelector('.spotify__slider')
+    const delta = inner.clientWidth - slider.clientWidth
+    if (delta > 0) return
+    const timing = Math.round((Math.abs(delta) * 100) / 4)
+    Object.assign(slider.style, {
+      transform: `translateX(${delta}px)`,
+      transition: `transform ${timing}ms linear`
+    })
+  }
+
+  const onMouseLeave = (e) => {
+    const target = e.target.closest('.spotify')
+    target && target.querySelector('.spotify__slider').removeAttribute('style')
+  }
+
   return (
-    <div className="spotify" onClick={clicked}>
+    <div className="spotify" onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
-      {truncate(trackName, 16)} - {truncate(artistName, 16)}
+      <div className="spotify__inner">
+        <div className="spotify__slider">
+          {trackName} - {artistName}
+        </div>
+      </div>
     </div>
   )
 }
