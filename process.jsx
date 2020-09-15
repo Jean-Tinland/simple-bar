@@ -21,7 +21,7 @@ const className = /* css */ `
     color: white;
     font-family: ${Theme.font};
     font-size: 11px;
-    background-color: ${Theme.main};
+    background-color: ${Theme.background};
     z-index: 0;
   }
   @media (prefers-color-scheme: light) {
