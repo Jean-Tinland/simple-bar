@@ -48,7 +48,7 @@ Remove space:\
 Clone this repo to your Übersicht widgets directory with the following command.
 
 ```bash
-$ git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+$ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
 ## Font
