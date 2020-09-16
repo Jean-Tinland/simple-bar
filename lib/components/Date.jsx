@@ -2,8 +2,8 @@ import { DateIcon } from './Icons.jsx'
 
 const DateDisplay = () => {
   const options = {
-    weekday: 'long',
-    month: 'long',
+    weekday: 'short',
+    month: 'short',
     day: 'numeric'
   }
   const now = new Date().toLocaleDateString('en-UK', options)
