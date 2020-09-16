@@ -3,8 +3,6 @@
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).\
 This project is a Work In Progress so everything is not fully optimized or functional.
 
-Pywal integration was added thanks to [Amar Paul](https://github.com/Amar1729).
-
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
@@ -42,6 +40,12 @@ Move space:\
 
 Remove space:\
 ![img](./remove-space.gif)
+
+## Compatibility & requirements
+
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht).\
+As I'm working on Catalina, I haven't tested this widget on older versions of macos and on macos 11 Big Sur either.\
+You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.
 
 ## Installation
 
@@ -229,3 +233,9 @@ yabai -m signal --add event=window_title_changed action="osascript -e 'tell appl
 ## Dual display support
 
 In order to support spaces display with a second monitor, you'll need to activate `simple-bar-spaces-2-jsx` only on your secondary monitor and `simple-bar-spaces-jsx` on your main.
+
+## Special thanks
+
+- Pywal integration was added thanks to [Amar Paul](https://github.com/Amar1729).
+- Spotify current track & play/pause toggle on click added thanks to [jamieweavis](https://github.com/jamieweavis)
+- Large selection of icons added thanks to [jamieweavis](https://github.com/jamieweavis) and [MikoMagni](https//github.com/MikoMagni)
