@@ -4,8 +4,11 @@ import { classnames } from '../utils.js'
 const OpenedApps = ({ apps }) => {
   if (apps.length === 0) return null
   return apps
-    .sort((a, b) => a.app.localeCompare(b.app))
+    .sort((a, b) => a.id > b.id)
     .map((app, i) => {
+      if (app.app === 'Google Chrome') {
+        console.log(app)
+      }
       const { minimized, focused, app: name } = app
       if (minimized === 1) return null
       const Icon = appIcons[name] || appIcons['Default']
