@@ -199,6 +199,9 @@ yabai -m signal --add event=window_destroyed action="osascript -e 'tell applicat
 yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 # Uncomment next line to enable spaces widget refresh on your 2nd monitor
 # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
+
+# Refresh process widget when current window title changes
+yabai -m signal --add event=window_title_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
 
 **If simple-bar is not refreshed when you switch space or when you focus another window, try to replace these signal by these:**
@@ -227,6 +230,7 @@ yabai -m signal --add event=window_destroyed action="osascript -e 'tell applicat
 # Uncomment next line to enable spaces widget refresh on your 2nd monitor
 # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
 
+# Refresh process widget when current window title changes
 yabai -m signal --add event=window_title_changed action="osascript -e 'tell application \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
 
