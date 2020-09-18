@@ -10,7 +10,7 @@ const getTransform = (value) => {
 
 const Battery = ({ output }) => {
   if (!output) return
-  const { percentage, charging /*, remaining */ } = output
+  const { percentage, charging } = output
   const isCharging = charging === 'true'
   const isLowBattery = !isCharging && percentage < 20
 
