@@ -1,8 +1,8 @@
 import Specter from './Specter.jsx'
 import { GoogleChromeIcon, PlayingIcon } from './Icons.jsx'
 
-const ChromeTrack = ({ output }) => {
-  if (!output || output === '') return null
+const ChromeTrack = ({ output, spotifyStatus }) => {
+  if (!output || output === '' || spotifyStatus === 'true') return null
 
   const onMouseEnter = (e) => {
     const target = e.target.closest('.chrome-track')
