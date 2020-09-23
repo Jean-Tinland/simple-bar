@@ -1,5 +1,6 @@
 import { run } from 'uebersicht'
 
+import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
 import { refreshData, clickEffect, classnames } from '../utils'
 
@@ -48,13 +49,7 @@ const Spotify = ({ output }) => {
   return (
     <div className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
-      <div className="spotify__specter">
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-      </div>
+      {isPlaying && <Specter />}
       <div className="spotify__inner">
         <div className="spotify__slider">
           {trackName} - {artistName}

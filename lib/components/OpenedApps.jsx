@@ -6,9 +6,6 @@ const OpenedApps = ({ apps }) => {
   return apps
     .sort((a, b) => a.id > b.id)
     .map((app, i) => {
-      if (app.app === 'Google Chrome') {
-        console.log(app)
-      }
       const { minimized, focused, app: name } = app
       if (minimized === 1) return null
       const Icon = appIcons[name] || appIcons['Default']
