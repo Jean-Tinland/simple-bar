@@ -15,12 +15,13 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
-- Spotify current track (added thanks to [jamieweavis](https://github.com/jamieweavis))
-- Pause Spotify track on click (added thanks to [jamieweavis](https://github.com/jamieweavis))
+- Spotify current track (only if Spotify is open)
+- Pause Spotify track on click
+- Google Chrome current YouTube track (only if Google Chrome with a YouTube tab is open)
 - Battery level & charging indicator
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
-- Wifi toggle on click (added thanks to [Amar Paul](https://github.com/Amar1729))
+- Wifi toggle on click
 - Date and time (en-UK & 24h format)
 - Day progress indicator (from midnight to midnight) in time widget
 
@@ -255,5 +256,6 @@ In order to support spaces display with a second monitor, you'll need to activat
 ## Special thanks
 
 - Pywal integration was added thanks to [Amar Paul](https://github.com/Amar1729).
+- Wifi toggle on click also added thanks to [Amar Paul](https://github.com/Amar1729).
 - Spotify current track & play/pause toggle on click added thanks to [jamieweavis](https://github.com/jamieweavis)
 - Large selection of icons added thanks to [jamieweavis](https://github.com/jamieweavis) and [MikoMagni](https//github.com/MikoMagni)
