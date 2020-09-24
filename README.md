@@ -17,13 +17,15 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Show current app name & title
 - Spotify current track (only if Spotify is open)
 - Pause Spotify track on click
-- Google Chrome current YouTube track (only if Google Chrome with a YouTube tab is open)
+- Browser (Google Chrome, Safari or Firefox) current YouTube track (only if a supported browser with a YouTube tab is open and Spotify is not open)(\*)
 - Battery level & charging indicator
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
 - Wifi toggle on click
 - Date and time (en-UK & 24h format)
 - Day progress indicator (from midnight to midnight) in time widget
+
+(\*) An alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
 
 ## Preview
 
