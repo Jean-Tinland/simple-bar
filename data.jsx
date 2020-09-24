@@ -4,7 +4,7 @@ import Battery from './lib/components/Battery.jsx'
 import Sound from './lib/components/Sound.jsx'
 import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
-import ChromeTrack from './lib/components/ChromeTrack.jsx'
+import BrowserTrack from './lib/components/BrowserTrack.jsx'
 
 import { parseJson } from './lib/utils.js'
 
@@ -15,7 +15,7 @@ import {
   WifiStyles,
   SoundStyles,
   SpotifyStyles,
-  ChromeTrackStyles,
+  BrowserTrackStyles,
   SpecterStyles
 } from './lib/styles/Styles.js'
 import { Theme } from './lib/styles/Theme.js'
@@ -46,7 +46,7 @@ const className = /* css */ `
   ${WifiStyles}
   ${SoundStyles}
   ${SpotifyStyles}
-  ${ChromeTrackStyles}
+  ${BrowserTrackStyles}
   ${SpecterStyles}
 `
 
@@ -56,10 +56,10 @@ const render = ({ output, error }) => {
   if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
   const data = parseJson(output)
   if (!data) return <div className="simple-bar__error">JSON error...</div>
-  const { battery, wifi, sound, spotify, chromeTrack } = data
+  const { battery, wifi, sound, spotify, browserTrack } = data
   return (
     <div className="simple-bar__data">
-      <ChromeTrack output={chromeTrack} spotifyStatus={spotify.spotifyIsRunning} />
+      <BrowserTrack output={browserTrack} spotifyStatus={spotify.spotifyIsRunning} />
       <Spotify output={spotify} />
       <Battery output={battery} />
       <Sound output={sound} />
