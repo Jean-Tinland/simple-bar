@@ -42,16 +42,16 @@ if application "Safari" is running then
 else
 end if
 
-if application "Firefox" is running then
-  tell application "Firefox"
-    set theTitle to (name of windows whose name contains "- YouTube") as text
+-- if application "Firefox" is running then
+--   tell application "Firefox"
+--     set theTitle to (name of windows whose name contains "- YouTube") as text
     
-    if "- YouTube" is in theTitle then
-      if activeTab is 0 then set titleString to " " & text 1 thru -11 of theTitle
-      set browser to "firefox"
-      set activeTab to 1
-    end if
-  end tell
-end if
+--     if "- YouTube" is in theTitle then
+--       if activeTab is 0 then set titleString to " " & text 1 thru -11 of theTitle
+--       set browser to "firefox"
+--       set activeTab to 1
+--     end if
+--   end tell
+-- end if
 
 return "{ \"browser\": \"" & browser & "\", \"title\": \"" & titleString & "\" }"
