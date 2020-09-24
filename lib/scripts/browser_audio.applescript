@@ -1,20 +1,29 @@
 set browser to ""
-set titleString to ""
-set activeTab to 0
+set title_string to ""
+set active_tab to 0
+
+on replace_chars(this_text, search_string, replacement_string)
+ set AppleScript's text item delimiters to the search_string
+ set the item_list to every text item of this_text
+ set AppleScript's text item delimiters to the replacement_string
+ set this_text to the item_list as string
+ set AppleScript's text item delimiters to ""
+ return this_text
+end replace_chars
 
 if application "Google Chrome" is running then
   tell application "Google Chrome"
     set windowList to every window
 
     repeat with the_window in windowList
-      set tabList to every tab in the_window
+      set tab_list to every tab in the_window
 
-      repeat with theTab in tabList
-        set theTitle to the title of theTab
-        if "- YouTube" is in theTitle then
-          if activeTab is 0 then set titleString to " " & text 1 thru -11 of theTitle
+      repeat with the_tab in tab_list
+        set the_title to the title of the_tab
+        if "- YouTube" is in the_title then
+          if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
           set browser to "chrome"
-          set activeTab to 1
+          set active_tab to 1
         end if
       end repeat
     end repeat
@@ -27,14 +36,14 @@ if application "Safari" is running then
     set windowList to every window
 
     repeat with the_window in windowList
-      set tabList to every tab in the_window
+      set tab_list to every tab in the_window
 
-      repeat with theTab in tabList
-        set theTitle to the name of theTab
-        if "- YouTube" is in theTitle then
-          if activeTab is 0 then set titleString to " " & text 1 thru -11 of theTitle
+      repeat with the_tab in tab_list
+        set the_title to the name of the_tab
+        if "- YouTube" is in the_title then
+          if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
           set browser to "safari"
-          set activeTab to 1
+          set active_tab to 1
         end if
       end repeat
     end repeat
@@ -44,14 +53,14 @@ end if
 
 -- if application "Firefox" is running then
 --   tell application "Firefox"
---     set theTitle to (name of windows whose name contains "- YouTube") as text
+--     set the_title to (name of windows whose name contains "- YouTube") as text
     
---     if "- YouTube" is in theTitle then
---       if activeTab is 0 then set titleString to " " & text 1 thru -11 of theTitle
+--     if "- YouTube" is in the_title then
+--       if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
 --       set browser to "firefox"
---       set activeTab to 1
+--       set active_tab to 1
 --     end if
 --   end tell
 -- end if
 
-return "{ \"browser\": \"" & browser & "\", \"title\": \"" & titleString & "\" }"
+return "{ \"browser\": \"" & browser & "\", \"title\": \"" & replace_chars(title_string, "\"", "Ò") & "\" }"
