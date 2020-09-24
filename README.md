@@ -17,7 +17,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Show current app name & title
 - Spotify current track (only if Spotify is open)
 - Pause Spotify track on click
-- Browser (Google Chrome, Safari or Firefox) current YouTube track (only if a supported browser with a YouTube tab is open and Spotify is not open)(\*)
+- Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*)
 - Battery level & charging indicator
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
