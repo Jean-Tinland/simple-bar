@@ -9,8 +9,9 @@ const getIcon = (volume, muted) => {
 }
 
 const Sound = ({ output }) => {
-  if (!output) return
+  if (!output) return null
   const { volume, muted } = output
+  if (volume === 'missing value' || muted === 'missing value') return null
 
   const Icon = getIcon(volume, muted)
 
