@@ -53,7 +53,6 @@ const className = /* css */ `
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
 
 const render = ({ output, error }) => {
-  console.log(output, error)
   if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
   const data = parseJson(output)
   if (!data) return <div className="simple-bar__error">JSON error...</div>
