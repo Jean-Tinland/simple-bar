@@ -4,7 +4,7 @@ import { classnames, clickEffect } from '../utils.js'
 
 import { goToSpace } from '../yabai'
 
-const EXCLUSIONS = ['Finder', 'iTerm2']
+const EXCLUSIONS = ['Finder', 'iTerm2', 'Hyper']
 
 const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }) => {
   if (display.index !== space.display) return null
