@@ -2,7 +2,7 @@ set browser to ""
 set title_string to ""
 set active_tab to 0
 
-on replace_chars(this_text, search_string, replacement_string)
+to replace_chars(this_text, search_string, replacement_string)
  set AppleScript's text item delimiters to the search_string
  set the item_list to every text item of this_text
  set AppleScript's text item delimiters to the replacement_string

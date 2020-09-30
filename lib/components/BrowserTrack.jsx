@@ -8,11 +8,10 @@ const getIcon = (browser) => {
   return DefaultIcon
 }
 
-const BrowserTrack = ({ output, spotifyStatus }) => {
-  if (!output || spotifyStatus === 'true') return null
-
-  const { browser, title } = output
-  if (browser === '' || title === '') return null
+const BrowserTrack = ({ output }) => {
+  if (!output) return null
+  const { browser, title, spotifyStatus } = output
+  if (!browser || !title || browser === '' || title === '' || spotifyStatus === 'true') return null
 
   const onMouseEnter = (e) => {
     const target = e.target.closest('.browser-track')

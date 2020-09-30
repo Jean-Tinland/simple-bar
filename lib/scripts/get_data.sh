@@ -24,7 +24,11 @@ if [ "$SPOTIFY_IS_RUNNING" == true ]; then
   SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string')
 fi
 
-BROWSER_TRACK=$(osascript ./simple-bar/lib/scripts/browser_audio.applescript)
+BROWSER_TRACK="{}"
+
+if GET_BROWSER_TRACK=$(osascript ./simple-bar/lib/scripts/browser_audio.applescript 2>&1); then
+  BROWSER_TRACK=$GET_BROWSER_TRACK
+fi
 
 echo $(cat <<-EOF
   {

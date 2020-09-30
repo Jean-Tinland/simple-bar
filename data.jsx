@@ -60,7 +60,7 @@ const render = ({ output, error }) => {
   const { battery, wifi, sound, spotify, browserTrack } = data
   return (
     <div className="simple-bar__data">
-      <BrowserTrack output={browserTrack} spotifyStatus={spotify.spotifyIsRunning} />
+      <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Battery output={battery} />
       <Sound output={sound} />
