@@ -18,17 +18,11 @@ const className = /* css */ `
     align-items: center;
     padding: 4px 5px;
     box-sizing: border-box;
-    color: white;
+    color: ${Theme.white};
     font-family: ${Theme.font};
     font-size: 12px;
     background-color: ${Theme.main};
     z-index: 0;
-  }
-  @media (prefers-color-scheme: light) {
-    .simple-bar {
-      color: ${Theme.main};
-      background-color: white;
-    }
   }
   .simple-bar--empty {
     text-align: center;

@@ -14,11 +14,10 @@ elif [ "$BATTERY_STATUS" == "AC" ]; then
   BATTERY_CHARGING="true"
 fi
 
-WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
-WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
+# WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
+# WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
 
-VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
-MUTED=$(osascript -e 'set ovol to output muted of (get volume settings)')
+VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
 
 echo $(cat <<-EOF
   {
@@ -28,13 +27,8 @@ echo $(cat <<-EOF
       "charging": "$BATTERY_CHARGING",
       "remaining": "$BATTERY_REMAINING"
     },
-    "wifi": {
-      "status": "$WIFI_STATUS",
-      "ssid": "$WIFI_SSID"
-    },
-    "sound": {
-      "volume": "$VOLUME",
-      "muted": "$MUTED"
+    "vpn": {
+      "status": "$VPN_STATUS"
     }
   }
 EOF

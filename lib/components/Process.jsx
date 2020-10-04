@@ -5,7 +5,7 @@ const Process = ({ output }) => {
   const { app, title } = currentApp
   return (
     <div className="process">
-      {app} / {title}
+      {app} 
     </div>
   )
 }

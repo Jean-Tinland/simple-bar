@@ -14,7 +14,7 @@ const className = /* css */ `
     top: 0;
     left: 0;
     padding: 4px;
-    color: white;
+    color: ${Theme.white};
     font-size: 11px;
     font-family: ${Theme.font};
     z-index: 1;
