@@ -1,18 +1,15 @@
 import { run } from 'uebersicht'
-import { Wifi, WifiOff } from './Icons.jsx'
-
-const refreshData = () =>
-  run(`osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "simple-bar-data-jsx"'`)
+import { WifiIcon, WifiOffIcon } from './Icons.jsx'
+import { classnames, clickEffect, refreshData } from '../utils.js'
 
 const toggleWifi = (isActive) => {
   if (isActive) {
-    run(`networksetup -setairportpower en0 off`)
+    run(`networksetup -setairportpower en0 off`).then(refreshData)
     run(`osascript -e 'tell app "System Events" to display notification "Disabling wifi..." with title "simple-bar"'`)
   } else {
-    run(`networksetup -setairportpower en0 on`)
+    run(`networksetup -setairportpower en0 on`).then(refreshData)
     run(`osascript -e 'tell app "System Events" to display notification "Enabling wifi..." with title "simple-bar"'`)
   }
-  refreshData()
 }
 
 const renderName = (name) => {
@@ -28,11 +25,16 @@ const render = ({ output }) => {
   const isActive = status === 'active'
   const name = renderName(ssid)
 
-  const classes = isActive ? 'wifi' : 'wifi wifi--inactive'
+  const classes = classnames('wifi', {
+    'wifi--inactive': !isActive
+  })
 
-  const Icon = isActive ? Wifi : WifiOff
+  const Icon = isActive ? WifiIcon : WifiOffIcon
 
-  const clicked = () => toggleWifi(isActive)
+  const clicked = (e) => {
+    clickEffect(e)
+    toggleWifi(isActive)
+  }
 
   return (
     <div className={classes} onClick={clicked}>

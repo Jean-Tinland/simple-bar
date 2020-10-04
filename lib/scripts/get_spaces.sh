@@ -7,17 +7,17 @@ SIP=$(csrutil status)
 
 if [ -z "$DISPLAYS" ]
 then
-      DISPLAYS=""
+      DISPLAYS="[]"
 fi
 
 if [ -z "$SPACES" ]
 then
-      SPACES=""
+      SPACES="[]"
 fi
 
 if [ -z "$WINDOWS" ]
 then
-      WINDOWS=""
+      WINDOWS="[]"
 fi
 
 DATA="{ \"displays\": $DISPLAYS, \"spaces\": $SPACES, \"windows\": $WINDOWS }"

@@ -20,8 +20,8 @@ const className = /* css */ `
     box-sizing: border-box;
     color: ${Theme.white};
     font-family: ${Theme.font};
-    font-size: 12px;
-    background-color: ${Theme.main};
+    font-size: 11px;
+    background-color: ${Theme.background};
     z-index: 0;
   }
   .simple-bar--empty {

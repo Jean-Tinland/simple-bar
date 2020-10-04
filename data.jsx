@@ -1,11 +1,25 @@
 import Time from './lib/components/Time.jsx'
 import DateDisplay from './lib/components/Date.jsx'
 import Battery from './lib/components/Battery.jsx'
+import Sound from './lib/components/Sound.jsx'
+import Wifi from './lib/components/Wifi.jsx'
+import Spotify from './lib/components/Spotify.jsx'
+import BrowserTrack from './lib/components/BrowserTrack.jsx'
 import VPN from './lib/components/VPN.jsx'
 
 import { parseJson } from './lib/utils.js'
 
-import { DateStyles, TimeStyles, BatteryStyles, VPNStyles } from './lib/styles/Styles.js'
+import {
+  DateStyles,
+  TimeStyles,
+  BatteryStyles,
+  WifiStyles,
+  SoundStyles,
+  SpotifyStyles,
+  BrowserTrackStyles,
+  SpecterStyles,
+  VPNStyles
+} from './lib/styles/Styles.js'
 import { Theme } from './lib/styles/Theme.js'
 
 const refreshFrequency = 10000
@@ -22,7 +36,7 @@ const className = /* css */ `
     padding: 4px 5px;
     color: ${Theme.main};
     font-family: ${Theme.font};
-    font-size: 12px;
+    font-size: 11px;
     z-index: 1;
   }
   .simple-bar__data > *:not(:last-of-type) {
@@ -32,6 +46,11 @@ const className = /* css */ `
   ${TimeStyles}
   ${BatteryStyles}
   ${VPNStyles}
+  ${WifiStyles}
+  ${SoundStyles}
+  ${SpotifyStyles}
+  ${BrowserTrackStyles}
+  ${SpecterStyles}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
@@ -40,13 +59,15 @@ const render = ({ output, error }) => {
   if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
   const data = parseJson(output)
   if (!data) return <div className="simple-bar__error">JSON error...</div>
-  const { time, battery, vpn } = data
+  const { battery, spotify, browserTrack, vpn } = data
   return (
     <div className="simple-bar__data">
+      <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
+      <Spotify output={spotify} />
       <Battery output={battery} />
       <VPN output={vpn} />
       <DateDisplay />
-      <Time output={time} />
+      <Time />
     </div>
   )
 }

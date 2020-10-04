@@ -1,4 +1,5 @@
-import { Charging } from './Icons.jsx'
+import { ChargingIcon } from './Icons.jsx'
+import { classnames } from '../utils.js'
 
 const getTransform = (value) => {
   let transform = `0.${value}`
@@ -8,18 +9,20 @@ const getTransform = (value) => {
 }
 
 const Battery = ({ output }) => {
-  if (!output) return
-  const { percentage, charging /*, remaining */ } = output
+  if (!output) return null
+  const { percentage, charging } = output
   const isCharging = charging === 'true'
   const isLowBattery = !isCharging && percentage < 20
 
-  const classes = isLowBattery ? 'battery battery--low' : 'battery'
+  const classes = classnames('battery', {
+    'battery--low': isLowBattery
+  })
 
   const transformValue = getTransform(percentage)
 
   return (
     <div className={classes}>
-      {isCharging && <Charging className="battery__charging-icon" />}
+      {isCharging && <ChargingIcon className="battery__charging-icon" />}
       <div className="battery__icon">
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
       </div>
