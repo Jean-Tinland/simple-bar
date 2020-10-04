@@ -15,7 +15,7 @@ const togglePlay = (isPaused) => {
 const Spotify = ({ output }) => {
   if (!output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
-  if (spotifyIsRunning === 'false') return null
+  if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
 
   const isPlaying = playerState === 'playing'
   const Icon = isPlaying ? PlayingIcon : PausedIcon

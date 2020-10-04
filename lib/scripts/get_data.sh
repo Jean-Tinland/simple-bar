@@ -16,7 +16,7 @@ WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
 VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
 MUTED=$(osascript -e 'set ovol to output muted of (get volume settings)')
 
-SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"')
+SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
 if [ "$SPOTIFY_IS_RUNNING" == true ]; then
   SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string')
