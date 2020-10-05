@@ -15,6 +15,7 @@ WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
 
 VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
 MUTED=$(osascript -e 'set ovol to output muted of (get volume settings)')
+MIC=$(osascript -e 'set ovol to input volume of (get volume settings)')
 
 SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
@@ -43,6 +44,9 @@ echo $(cat <<-EOF
     "sound": {
       "volume": "$VOLUME",
       "muted": "$MUTED"
+    },
+    "mic": {
+      "volume": "$MIC"
     },
     "spotify": {
       "spotifyIsRunning": "$SPOTIFY_IS_RUNNING",
