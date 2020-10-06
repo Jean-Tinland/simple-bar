@@ -1,6 +1,12 @@
 import { ClockIcon } from './Icons.jsx'
 
+import { getSettings } from '../settings.js'
+
 const Time = () => {
+  const settings = getSettings()
+  const { timeWidget } = settings.widgets
+  if (!timeWidget) return null
+
   const options = {
     hour: 'numeric',
     minute: 'numeric',

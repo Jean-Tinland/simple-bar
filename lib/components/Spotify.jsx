@@ -1,8 +1,10 @@
 import { run } from 'uebersicht'
-
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
+
 import { refreshData, clickEffect, classnames } from '../utils'
+
+import { getSettings } from '../settings.js'
 
 const togglePlay = (isPaused) => {
   if (isPaused) {
@@ -13,7 +15,9 @@ const togglePlay = (isPaused) => {
 }
 
 const Spotify = ({ output }) => {
-  if (!output) return null
+  const settings = getSettings()
+  const { spotifyWidget } = settings.widgets
+  if (!spotifyWidget || !output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
   if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
 

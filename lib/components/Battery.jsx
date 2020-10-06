@@ -1,6 +1,8 @@
 import { ChargingIcon } from './Icons.jsx'
 import { classnames } from '../utils.js'
 
+import { getSettings } from '../settings.js'
+
 const getTransform = (value) => {
   let transform = `0.${value}`
   if (value === '100') transform = '1'
@@ -9,7 +11,10 @@ const getTransform = (value) => {
 }
 
 const Battery = ({ output }) => {
-  if (!output) return null
+  const settings = getSettings()
+  const { batteryWidget } = settings.widgets
+  if (!batteryWidget || !output) return null
+
   const { percentage, charging } = output
   const isCharging = charging === 'true'
   const isLowBattery = !isCharging && percentage < 20

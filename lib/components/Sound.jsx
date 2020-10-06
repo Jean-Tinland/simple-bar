@@ -1,5 +1,7 @@
 import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from './Icons.jsx'
 
+import { getSettings } from '../settings.js'
+
 const getIcon = (volume, muted) => {
   let Icon = VolumeHighIcon
   if (volume < 50) Icon = VolumeLowIcon
@@ -9,7 +11,10 @@ const getIcon = (volume, muted) => {
 }
 
 const Sound = ({ output }) => {
-  if (!output) return null
+  const settings = getSettings()
+  const { soundWidget } = settings.widgets
+  if (!soundWidget || !output) return null
+
   const { volume, muted } = output
   if (volume === 'missing value' || muted === 'missing value') return null
 

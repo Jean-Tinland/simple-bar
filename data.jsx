@@ -6,59 +6,48 @@ import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 
-import { parseJson } from './lib/utils.js'
+import { parseJson, getTheme } from './lib/utils.js'
 
-import {
-  DateStyles,
-  TimeStyles,
-  BatteryStyles,
-  WifiStyles,
-  SoundStyles,
-  SpotifyStyles,
-  BrowserTrackStyles,
-  SpecterStyles
-} from './lib/styles/Styles.js'
-import { Theme } from './lib/styles/Theme.js'
+import { styles } from './lib/styles/Styles.js'
 
 const refreshFrequency = 10000
 
+const theme = getTheme()
+const Styles = styles[theme]
+
 const className = /* css */ `
-  .simple-bar__error,
-  .simple-bar__data {
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    padding: 4px 5px;
-    color: ${Theme.main};
-    font-family: ${Theme.font};
-    font-size: 11px;
-    z-index: 1;
-  }
-  .simple-bar__data > *:not(:last-of-type) {
-    margin-right: 5px;
-  }
-  ${DateStyles}
-  ${TimeStyles}
-  ${BatteryStyles}
-  ${WifiStyles}
-  ${SoundStyles}
-  ${SpotifyStyles}
-  ${BrowserTrackStyles}
-  ${SpecterStyles}
+  ${Styles.BaseStyles}
+  ${Styles.DateStyles}
+  ${Styles.TimeStyles}
+  ${Styles.BatteryStyles}
+  ${Styles.WifiStyles}
+  ${Styles.SoundStyles}
+  ${Styles.SpotifyStyles}
+  ${Styles.BrowserTrackStyles}
+  ${Styles.SpecterStyles}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
 
 const render = ({ output, error }) => {
-  if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
+  if (!output || error) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--empty">
+        <span>simple-bar-data.jsx: Something went wrong...</span>
+      </div>
+    )
+  }
   const data = parseJson(output)
-  if (!data) return <div className="simple-bar__error">JSON error...</div>
+  if (!data) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--empty">
+        <span>simple-bar-data.jsx: JSON error...</span>
+      </div>
+    )
+  }
   const { battery, wifi, sound, spotify, browserTrack } = data
   return (
-    <div className="simple-bar__data">
+    <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Battery output={battery} />

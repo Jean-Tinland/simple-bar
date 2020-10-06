@@ -1,6 +1,12 @@
 import { DateIcon } from './Icons.jsx'
 
+import { getSettings } from '../settings.js'
+
 const DateDisplay = () => {
+  const settings = getSettings()
+  const { dateWidget } = settings.widgets
+  if (!dateWidget) return null
+
   const options = {
     weekday: 'short',
     month: 'short',

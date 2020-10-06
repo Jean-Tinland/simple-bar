@@ -1,6 +1,8 @@
 import Specter from './Specter.jsx'
 import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from './Icons.jsx'
 
+import { getSettings } from '../settings.js'
+
 const getIcon = (browser) => {
   if (browser === 'chrome') return GoogleChromeIcon
   if (browser === 'safari') return SafariIcon
@@ -9,7 +11,10 @@ const getIcon = (browser) => {
 }
 
 const BrowserTrack = ({ output }) => {
-  if (!output) return null
+  const settings = getSettings()
+  const { browserTrackWidget } = settings.widgets
+  if (!browserTrackWidget || !output) return null
+
   const { browser, title, spotifyStatus } = output
   if (!browser || !title || browser === '' || title === '' || spotifyStatus === 'true') return null
 
