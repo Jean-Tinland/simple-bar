@@ -32,10 +32,17 @@ const className = `
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
 
 const render = ({ output, error }) => {
-  if (!output || error) {
+  if (error) {
     return (
       <div className="simple-bar simple-bar--data simple-bar--empty">
         <span>simple-bar-data.jsx: Something went wrong...</span>
+      </div>
+    )
+  }
+  if (!output) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--loading simple-bar--empty">
+        <span>simple-bar-data.jsx: Loading...</span>
       </div>
     )
   }

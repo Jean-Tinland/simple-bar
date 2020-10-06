@@ -18,10 +18,17 @@ const command = 'bash simple-bar/lib/scripts/get_spaces.sh'
 
 const render = (state) => {
   const { output, error } = state
-  if (!output || error) {
+  if (error) {
     return (
       <div className="simple-bar simple-bar--spaces simple-bar--empty">
         <span>simple-bar-spaces.jsx: Something went wrong...</span>
+      </div>
+    )
+  }
+  if (!output) {
+    return (
+      <div className="simple-bar simple-bar--spaces simple-bar--loading simple-bar--empty">
+        <span>simple-bar-spaces.jsx: Loading...</span>
       </div>
     )
   }

@@ -19,10 +19,17 @@ const className = `
 const command = 'bash simple-bar/lib/scripts/get_process.sh'
 
 const render = ({ output, error }) => {
-  if (!output || error) {
+  if (error) {
     return (
       <div className="simple-bar simple-bar--process simple-bar--empty">
         <span>simple-bar-process.jsx: Something went wrong...</span>
+      </div>
+    )
+  }
+  if (!output) {
+    return (
+      <div className="simple-bar simple-bar--process simple-bar--loading simple-bar--empty">
+        <span>simple-bar-process.jsx: Loading...</span>
       </div>
     )
   }
