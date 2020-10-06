@@ -5,7 +5,7 @@ import { parseJson, getTheme } from './lib/utils.js'
 
 import { styles } from './lib/styles/Styles.js'
 
-const refreshFrequency = false
+const refreshFrequency = true
 
 const theme = getTheme()
 const Styles = styles[theme]
