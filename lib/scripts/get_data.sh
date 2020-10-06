@@ -21,8 +21,8 @@ SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of 
 
 if [ "$SPOTIFY_IS_RUNNING" == true ]; then
   SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string')
-  SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string')
-  SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string')
+  SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string' | tr \" \')
+  SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' | tr \" \')
 fi
 
 BROWSER_TRACK="{}"
