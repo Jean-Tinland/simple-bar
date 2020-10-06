@@ -2,6 +2,7 @@ import Time from './lib/components/Time.jsx'
 import DateDisplay from './lib/components/Date.jsx'
 import Battery from './lib/components/Battery.jsx'
 import Sound from './lib/components/Sound.jsx'
+import Mic from './lib/components/Mic.jsx'
 import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
@@ -15,12 +16,13 @@ const refreshFrequency = 10000
 const theme = getTheme()
 const Styles = styles[theme]
 
-const className = /* css */ `
+const className = `
   ${Styles.BaseStyles}
   ${Styles.DateStyles}
   ${Styles.TimeStyles}
   ${Styles.BatteryStyles}
   ${Styles.WifiStyles}
+  ${Styles.MicStyles}
   ${Styles.SoundStyles}
   ${Styles.SpotifyStyles}
   ${Styles.BrowserTrackStyles}
@@ -45,12 +47,13 @@ const render = ({ output, error }) => {
       </div>
     )
   }
-  const { battery, wifi, sound, spotify, browserTrack } = data
+  const { battery, wifi, mic, sound, spotify, browserTrack } = data
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Battery output={battery} />
+      <Mic output={mic} />
       <Sound output={sound} />
       <Wifi output={wifi} />
       <DateDisplay />

@@ -10,7 +10,7 @@ const refreshFrequency = false
 const theme = getTheme()
 const Styles = styles[theme]
 
-const className = /* css */ `
+const className = `
   ${Styles.BaseStyles}
   ${Styles.ProcessStyles}
   ${Styles.SettingsStyles}
