@@ -1,13 +1,12 @@
 # simple-bar
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).\
-This project is a Work In Progress so everything is not fully optimized or functional.
 
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
 
-- Synchronised with system theme
+- 3 themes (dark/light/auto)(\*)
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
 - Create new workspace on "+" click [**only with SIP disabled**]
@@ -15,38 +14,52 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
+- Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
 - Spotify current track (only if Spotify is open)
 - Pause Spotify track on click
-- Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*)
+- Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*\*\*)
 - Battery level & charging indicator
+- Microphone mute/unmute toggle on click
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
 - Wifi toggle on click
 - Date and time (en-UK & 24h format)
 - Day progress indicator (from midnight to midnight) in time widget
 
-(\*) An alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
+(\*) You'll need to manually refresh simple-bar when system theme switch its own theme.\
+(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on simple-bar widget.\
+(\*\*\*) An alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
 
 ## Preview
 
 Dark theme:\
-![img](./preview.png)
+![img](./images/preview.png)
 
 Light theme:\
-![img](./preview-light.png)
+![img](./images/preview-light.png)
 
 Create space:\
-![img](./add-space.gif)
+![img](./images/add-space.gif)
 
 Move space:\
-![img](./move-space.gif)
+![img](./images/move-space.gif)
 
 Remove space:\
-![img](./remove-space.gif)
+![img](./images/remove-space.gif)
+
+Settings module:\
+![img](./images/settings-module.png)
+
+Enable/disable widgets:\
+![img](./images/toggle-widgets.gif)
+
+Switch theme:\
+![img](./images/switch-theme.gif)
 
 ## Compatibility & requirements
 
 In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht).\
+Both tools must be up to date.\
 As I'm working on Catalina, I haven't tested this widget on older versions of macos and on macos 11 Big Sur either.\
 You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.
 
@@ -261,3 +274,4 @@ In order to support spaces display with a second monitor, you'll need to activat
 - Wifi toggle on click also added thanks to [Amar Paul](https://github.com/Amar1729).
 - Spotify current track & play/pause toggle on click added thanks to [jamieweavis](https://github.com/jamieweavis)
 - Large selection of icons added thanks to [jamieweavis](https://github.com/jamieweavis) and [MikoMagni](https//github.com/MikoMagni)
+- Microphone mute & unmute added thanks to [izifortune](https://github.com/izifortune)
