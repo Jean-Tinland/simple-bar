@@ -7,6 +7,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 ## Features
 
 - 3 themes (dark/light/auto)(\*)
+- Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*\*)
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
 - Create new workspace on "+" click [**only with SIP disabled**]

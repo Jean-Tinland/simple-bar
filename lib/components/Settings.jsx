@@ -12,7 +12,6 @@ const Settings = () => {
 
   const closeSettings = () => {
     setVisible(false)
-    console.log('click')
   }
 
   const onKeydown = useCallback((e) => {
@@ -41,6 +40,23 @@ const Settings = () => {
           <CloseIcon className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__inner">
+          <div className="settings__inner-title">Global</div>
+          <div className="settings__items">
+            {Object.keys(settings.global).map((key) => {
+              if (key === 'theme') return null
+              const setting = settings.global[key]
+              const onGlobalChange = (e) => setSettings('global', key, e.target.checked)
+              return (
+                <div key={key} className="settings__item">
+                  <input id={key} type="checkbox" defaultChecked={setting} onChange={onGlobalChange} />
+                  <label htmlFor={key}>{settingsLabels[key]}</label>
+                </div>
+              )
+            })}
+          </div>
+          <div className="settings__tips">
+            "No bar background" is visually better with the "Floating bar" option activated
+          </div>
           <div className="settings__inner-title">Widgets</div>
           <div className="settings__items">
             {Object.keys(settings.widgets).map((key) => {

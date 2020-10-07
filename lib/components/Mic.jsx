@@ -1,4 +1,4 @@
-import { MicOn, MicOff } from './Icons.jsx'
+import { MicOnIcon, MicOffIcon } from './Icons.jsx'
 import { run } from 'uebersicht'
 
 import { clickEffect, refreshData } from '../utils.js'
@@ -26,15 +26,15 @@ const Mic = ({ output }) => {
   const { volume } = output
   if (volume === 'missing value') return null
 
-  const Icon = volume !== '0' ? MicOn : MicOff
+  const Icon = volume !== '0' ? MicOnIcon : MicOffIcon
 
-  const clicked = (e) => {
+  const onClick = (e) => {
     clickEffect(e)
     toggleMic(volume)
   }
 
   return (
-    <div className="mic" onClick={clicked}>
+    <div className="mic" onClick={onClick}>
       <Icon className="mic__icon" />
       {volume}%
     </div>

@@ -2,6 +2,7 @@ import Process from './lib/components/Process.jsx'
 import Settings from './lib/components/Settings.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
+import { getSettings } from './lib/settings.js'
 
 import { styles } from './lib/styles/Styles.js'
 
@@ -10,10 +11,15 @@ const refreshFrequency = false
 const theme = getTheme()
 const Styles = styles[theme]
 
+const settings = getSettings()
+
 const className = `
   ${Styles.BaseStyles}
   ${Styles.ProcessStyles}
   ${Styles.SettingsStyles}
+
+  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_process.sh'

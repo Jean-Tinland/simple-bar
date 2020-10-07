@@ -8,6 +8,7 @@ import Spotify from './lib/components/Spotify.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
+import { getSettings } from './lib/settings.js'
 
 import { styles } from './lib/styles/Styles.js'
 
@@ -15,6 +16,8 @@ const refreshFrequency = 10000
 
 const theme = getTheme()
 const Styles = styles[theme]
+
+const settings = getSettings()
 
 const className = `
   ${Styles.BaseStyles}
@@ -27,6 +30,10 @@ const className = `
   ${Styles.SpotifyStyles}
   ${Styles.BrowserTrackStyles}
   ${Styles.SpecterStyles}
+
+  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+  ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
+  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
