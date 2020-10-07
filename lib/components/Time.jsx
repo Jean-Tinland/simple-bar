@@ -4,13 +4,15 @@ import { getSettings } from '../settings.js'
 
 const Time = () => {
   const settings = getSettings()
-  const { timeWidget } = settings.widgets
+  const { widgets, timeWidgetOptions } = settings
+  const { timeWidget } = widgets
   if (!timeWidget) return null
 
+  const { hour12, dayProgress } = timeWidgetOptions
   const options = {
     hour: 'numeric',
     minute: 'numeric',
-    hour12: false
+    hour12
   }
   const time = new Date().toLocaleString('en-UK', options)
 
@@ -26,7 +28,7 @@ const Time = () => {
     <div className="time">
       <ClockIcon className="time__icon" />
       {time}
-      <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />
+      {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
     </div>
   )
 }

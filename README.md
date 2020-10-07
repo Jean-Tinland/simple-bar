@@ -23,7 +23,8 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
 - Wifi toggle on click
-- Date and time (en-UK & 24h format)
+- Date (en-UK & short or long format, you can ajust it to your preference in simple-bar settings)
+- Time (en-UK & 24h or 12h format, you can ajust it to your preference in simple-bar settings)
 - Day progress indicator (from midnight to midnight) in time widget
 
 (\*) You'll need to manually refresh simple-bar when system theme switch its own theme.\
@@ -111,21 +112,6 @@ export const Theme = {
   mediumShadow: '0 8px 30px rgba(0, 0, 0, 0.24)',
   largeShadow: '0 30px 60px rgba(0, 0, 0, 0.24)',
   easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-}
-```
-
-### Time format (AM/PM or 24h)
-
-If you rather not display time in 24h format, you can simply change this line "`hour12: false`" by "`hour12: true`":
-
-```javascript
-const Time = () => {
-  const options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  }
-  /* ... */
 }
 ```
 

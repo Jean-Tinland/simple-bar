@@ -87,6 +87,32 @@ const Settings = () => {
               <label htmlFor="light">Light</label>
             </div>
           </div>
+          <div className="settings__inner-title">Time</div>
+          <div className="settings__items">
+            {Object.keys(settings.timeWidgetOptions).map((key) => {
+              const setting = settings.timeWidgetOptions[key]
+              const onTimeWidgetOptionsChange = (e) => setSettings('timeWidgetOptions', key, e.target.checked, 'data')
+              return (
+                <div key={key} className="settings__item">
+                  <input id={key} type="checkbox" defaultChecked={setting} onChange={onTimeWidgetOptionsChange} />
+                  <label htmlFor={key}>{settingsLabels[key]}</label>
+                </div>
+              )
+            })}
+          </div>
+          <div className="settings__inner-title">Date</div>
+          <div className="settings__items">
+            {Object.keys(settings.dateWidgetOptions).map((key) => {
+              const setting = settings.dateWidgetOptions[key]
+              const onDateWidgetOptionsChange = (e) => setSettings('dateWidgetOptions', key, e.target.checked, 'data')
+              return (
+                <div key={key} className="settings__item">
+                  <input id={key} type="checkbox" defaultChecked={setting} onChange={onDateWidgetOptionsChange} />
+                  <label htmlFor={key}>{settingsLabels[key]}</label>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>
