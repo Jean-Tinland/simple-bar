@@ -1,5 +1,5 @@
 import Specter from './Specter.jsx'
-import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from './Icons.jsx'
+import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon, MicrosoftEdgeIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
 
@@ -12,10 +12,12 @@ const getIcon = (browser) => {
 
 const BrowserTrack = ({ output }) => {
   const settings = getSettings()
-  const { browserTrackWidget } = settings.widgets
+  const { widgets, browserTrackWidgetOptions } = settings
+  const { browserTrackWidget } = widgets
   if (!browserTrackWidget || !output) return null
 
   const { browser, title, spotifyStatus } = output
+  const { showSpecter } = browserTrackWidgetOptions
   if (!browser || !title || browser === '' || title === '' || spotifyStatus === 'true') return null
 
   const onMouseEnter = (e) => {
@@ -44,7 +46,7 @@ const BrowserTrack = ({ output }) => {
         <Icon />
         <PlayingIcon />
       </div>
-      <Specter />
+      {showSpecter && <Specter />}
       <div className="browser-track__inner">
         <div className="browser-track__slider">{title}</div>
       </div>

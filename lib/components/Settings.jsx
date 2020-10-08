@@ -133,12 +133,35 @@ const Settings = () => {
           <div className="settings__items">
             {Object.keys(settings.spotifyWidgetOptions).map((key) => {
               const setting = settings.spotifyWidgetOptions[key]
-              const onSpotifyWidgetOptionsChange = (e) =>
+              const onSpotifyWidgetOptionsChange = (e) => {
                 setSettings('spotifyWidgetOptions', key, e.target.checked, 'data')
+              }
+              const code = `spotifyWidgetOptions-${key}`
               return (
-                <div key={key} className="settings__item">
-                  <input id={key} type="checkbox" defaultChecked={setting} onChange={onSpotifyWidgetOptionsChange} />
-                  <label htmlFor={key}>{settingsLabels[key]}</label>
+                <div key={code} className="settings__item">
+                  <input id={code} type="checkbox" defaultChecked={setting} onChange={onSpotifyWidgetOptionsChange} />
+                  <label htmlFor={code}>{settingsLabels[key]}</label>
+                </div>
+              )
+            })}
+          </div>
+          <div className="settings__inner-title">Browser Track</div>
+          <div className="settings__items">
+            {Object.keys(settings.browserTrackWidgetOptions).map((key) => {
+              const setting = settings.browserTrackWidgetOptions[key]
+              const onBrowserTrackWidgetOptionsChange = (e) => {
+                setSettings('browserTrackWidgetOptions', key, e.target.checked, 'data')
+              }
+              const code = `browserTrackWidgetOptions-${key}`
+              return (
+                <div key={code} className="settings__item">
+                  <input
+                    id={code}
+                    type="checkbox"
+                    defaultChecked={setting}
+                    onChange={onBrowserTrackWidgetOptionsChange}
+                  />
+                  <label htmlFor={code}>{settingsLabels[key]}</label>
                 </div>
               )
             })}

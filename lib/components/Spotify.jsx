@@ -16,7 +16,8 @@ const togglePlay = (isPaused) => {
 
 const Spotify = ({ output }) => {
   const settings = getSettings()
-  const { widgets: spotifyWidget, spotifyWidgetOptions } = settings
+  const { widgets, spotifyWidgetOptions } = settings
+  const { spotifyWidget } = widgets
   if (!spotifyWidget || !output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
   const { showSpecter } = spotifyWidgetOptions
