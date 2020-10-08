@@ -30,9 +30,9 @@ const Battery = ({ output }) => {
       <div className="battery__icon">
         {isCharging && (
           <div className="battery__charging-icon">
-            <ChargingIcon className="battery__charging-icon__outline-left" />
-            <ChargingIcon className="battery__charging-icon__fill" />
-            <ChargingIcon className="battery__charging-icon__outline-right" />
+            <ChargingIcon className="battery__charging-icon-outline-left" />
+            <ChargingIcon className="battery__charging-icon-fill" />
+            <ChargingIcon className="battery__charging-icon-outline-right" />
           </div>
         )}
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
