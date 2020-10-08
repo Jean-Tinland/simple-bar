@@ -16,9 +16,10 @@ const togglePlay = (isPaused) => {
 
 const Spotify = ({ output }) => {
   const settings = getSettings()
-  const { spotifyWidget } = settings.widgets
+  const { widgets: spotifyWidget, spotifyWidgetOptions } = settings
   if (!spotifyWidget || !output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
+  const { showSpecter } = spotifyWidgetOptions
   if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
 
   const isPlaying = playerState === 'playing'
@@ -53,7 +54,7 @@ const Spotify = ({ output }) => {
   return (
     <div className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
-      {isPlaying && <Specter />}
+      {showSpecter && isPlaying && <Specter />}
       <div className="spotify__inner">
         <div className="spotify__slider">
           {trackName} - {artistName}
