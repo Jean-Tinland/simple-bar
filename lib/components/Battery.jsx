@@ -27,8 +27,14 @@ const Battery = ({ output }) => {
 
   return (
     <div className={classes}>
-      {isCharging && <ChargingIcon className="battery__charging-icon" />}
       <div className="battery__icon">
+        {isCharging && (
+          <div className="battery__charging-icon">
+            <ChargingIcon className="battery__charging-icon__outline-left" />
+            <ChargingIcon className="battery__charging-icon__fill" />
+            <ChargingIcon className="battery__charging-icon__outline-right" />
+          </div>
+        )}
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
       </div>
       {percentage}%
