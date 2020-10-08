@@ -129,6 +129,20 @@ const Settings = () => {
               )
             })}
           </div>
+          <div className="settings__inner-title">Spotify</div>
+          <div className="settings__items">
+            {Object.keys(settings.spotifyWidgetOptions).map((key) => {
+              const setting = settings.spotifyWidgetOptions[key]
+              const onSpotifyWidgetOptionsChange = (e) =>
+                setSettings('spotifyWidgetOptions', key, e.target.checked, 'data')
+              return (
+                <div key={key} className="settings__item">
+                  <input id={key} type="checkbox" defaultChecked={setting} onChange={onSpotifyWidgetOptionsChange} />
+                  <label htmlFor={key}>{settingsLabels[key]}</label>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>
