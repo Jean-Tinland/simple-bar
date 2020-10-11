@@ -3,6 +3,8 @@ import { run } from 'uebersicht'
 import { VPNIcon, VPNOffIcon } from './Icons.jsx'
 import { classnames, clickEffect, refreshData } from '../utils.js'
 
+import { getSettings } from '../settings.js'
+
 const toggleVPN = (isConnected) => {
   if (isConnected) {
     run(`osascript -e 'tell application "Viscosity" to disconnect "office VPN"'`).then(refreshData)
@@ -13,6 +15,10 @@ const toggleVPN = (isConnected) => {
 
 const render = ({ output }) => {
   if (!output) return null
+  const settings = getSettings()
+  const { vpnWidget } = settings.widgets
+  if (!vpnWidget) return null
+
   const { status } = output
   const isConnected = status === "Connected"
 

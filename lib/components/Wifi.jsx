@@ -2,6 +2,8 @@ import { run } from 'uebersicht'
 import { WifiIcon, WifiOffIcon } from './Icons.jsx'
 import { classnames, clickEffect, refreshData } from '../utils.js'
 
+import { getSettings } from '../settings.js'
+
 const toggleWifi = (isActive) => {
   if (isActive) {
     run(`networksetup -setairportpower en0 off`).then(refreshData)
@@ -21,6 +23,10 @@ const renderName = (name) => {
 
 const render = ({ output }) => {
   if (!output) return null
+  const settings = getSettings()
+  const { wifiWidget } = settings.widgets
+  if (!wifiWidget) return null
+
   const { status, ssid } = output
   const isActive = status === 'active'
   const name = renderName(ssid)
@@ -31,13 +37,13 @@ const render = ({ output }) => {
 
   const Icon = isActive ? WifiIcon : WifiOffIcon
 
-  const clicked = (e) => {
+  const onClick = (e) => {
     clickEffect(e)
     toggleWifi(isActive)
   }
 
   return (
-    <div className={classes} onClick={clicked}>
+    <div className={classes} onClick={onClick}>
       <Icon className="wifi__icon" />
       {name}
     </div>

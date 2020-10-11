@@ -2,70 +2,77 @@ import Time from './lib/components/Time.jsx'
 import DateDisplay from './lib/components/Date.jsx'
 import Battery from './lib/components/Battery.jsx'
 import Sound from './lib/components/Sound.jsx'
+import Mic from './lib/components/Mic.jsx'
 import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 import VPN from './lib/components/VPN.jsx'
 
-import { parseJson } from './lib/utils.js'
+import { parseJson, getTheme } from './lib/utils.js'
+import { getSettings } from './lib/settings.js'
 
-import {
-  DateStyles,
-  TimeStyles,
-  BatteryStyles,
-  WifiStyles,
-  SoundStyles,
-  SpotifyStyles,
-  BrowserTrackStyles,
-  SpecterStyles,
-  VPNStyles
-} from './lib/styles/Styles.js'
-import { Theme } from './lib/styles/Theme.js'
+import { styles } from './lib/styles/Styles.js'
 
 const refreshFrequency = 10000
 
-const className = /* css */ `
-  .simple-bar__error,
-  .simple-bar__data {
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    padding: 4px 5px;
-    color: ${Theme.main};
-    font-family: ${Theme.font};
-    font-size: 11px;
-    z-index: 1;
-  }
-  .simple-bar__data > *:not(:last-of-type) {
-    margin-right: 5px;
-  }
-  ${DateStyles}
-  ${TimeStyles}
-  ${BatteryStyles}
-  ${VPNStyles}
-  ${WifiStyles}
-  ${SoundStyles}
-  ${SpotifyStyles}
-  ${BrowserTrackStyles}
-  ${SpecterStyles}
+const theme = getTheme()
+const Styles = styles[theme]
+
+const settings = getSettings()
+
+const className = `
+  ${Styles.BaseStyles}
+  ${Styles.DateStyles}
+  ${Styles.TimeStyles}
+  ${Styles.BatteryStyles}
+  ${Styles.WifiStyles}
+  ${Styles.MicStyles}
+  ${Styles.SoundStyles}
+  ${Styles.SpotifyStyles}
+  ${Styles.BrowserTrackStyles}
+  ${Styles.SpecterStyles}
+  ${Styles.VPNStyles}
+
+  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+  ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
+  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
 
 const render = ({ output, error }) => {
-  if (!output || error) return <div className="simple-bar__error">Something went wrong...</div>
+  if (error) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--empty">
+        <span>simple-bar-data.jsx: Something went wrong...</span>
+      </div>
+    )
+  }
+  if (!output) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--loading simple-bar--empty">
+        <span>simple-bar-data.jsx: Loading...</span>
+      </div>
+    )
+  }
   const data = parseJson(output)
-  if (!data) return <div className="simple-bar__error">JSON error...</div>
-  const { battery, spotify, browserTrack, vpn } = data
+  if (!data) {
+    return (
+      <div className="simple-bar simple-bar--data simple-bar--empty">
+        <span>simple-bar-data.jsx: JSON error...</span>
+      </div>
+    )
+  }
+  const { battery, wifi, mic, sound, spotify, browserTrack, vpn } = data
   return (
-    <div className="simple-bar__data">
+    <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Battery output={battery} />
       <VPN output={vpn} />
+      <Mic output={mic} />
+      <Sound output={sound} />
+      <Wifi output={wifi} />
       <DateDisplay />
       <Time />
     </div>

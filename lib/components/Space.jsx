@@ -13,10 +13,14 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
   const onMouseEnter = (e) => {
     const target = e.target.closest('.space')
     target.classList.add('space--hovered')
+    if (e.metaKey) {
+      target.classList.add('space--no-delay')
+    }
   }
   const onMouseLeave = (e) => {
     const target = e.target.closest('.space')
     target.classList.remove('space--hovered')
+    target.classList.remove('space--no-delay')
   }
   const onClick = (e) => {
     goToSpace(index, focusedSpace)

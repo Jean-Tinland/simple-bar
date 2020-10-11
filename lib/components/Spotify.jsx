@@ -1,8 +1,10 @@
 import { run } from 'uebersicht'
-
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
+
 import { refreshData, clickEffect, classnames } from '../utils'
+
+import { getSettings } from '../settings.js'
 
 const togglePlay = (isPaused) => {
   if (isPaused) {
@@ -13,8 +15,12 @@ const togglePlay = (isPaused) => {
 }
 
 const Spotify = ({ output }) => {
-  if (!output) return null
+  const settings = getSettings()
+  const { widgets, spotifyWidgetOptions } = settings
+  const { spotifyWidget } = widgets
+  if (!spotifyWidget || !output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
+  const { showSpecter } = spotifyWidgetOptions
   if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
 
   const isPlaying = playerState === 'playing'
@@ -49,7 +55,7 @@ const Spotify = ({ output }) => {
   return (
     <div className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
-      {isPlaying && <Specter />}
+      {showSpecter && isPlaying && <Specter />}
       <div className="spotify__inner">
         <div className="spotify__slider">
           {trackName} - {artistName}

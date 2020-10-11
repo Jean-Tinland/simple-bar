@@ -14,13 +14,16 @@ WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
 WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
 
 VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
+VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
+MUTED=$(osascript -e 'set ovol to output muted of (get volume settings)')
+MIC=$(osascript -e 'set ovol to input volume of (get volume settings)')
 
 SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
 if [ "$SPOTIFY_IS_RUNNING" == true ]; then
   SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string')
-  SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string')
-  SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string')
+  SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string' | tr \" \')
+  SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' | tr \" \')
 fi
 
 BROWSER_TRACK="{}"
@@ -45,6 +48,9 @@ echo $(cat <<-EOF
     "sound": {
       "volume": "$VOLUME",
       "muted": "$MUTED"
+    },
+    "mic": {
+      "volume": "$MIC"
     },
     "spotify": {
       "spotifyIsRunning": "$SPOTIFY_IS_RUNNING",
