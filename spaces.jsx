@@ -7,6 +7,7 @@ import { styles } from './lib/styles/Styles.js'
 
 const refreshFrequency = false
 
+const theme = getTheme()
 const Styles = styles[theme]
 
 const settings = getSettings()
