@@ -18,6 +18,8 @@ const className = `
 
   ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
   ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
+  ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
+  ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_spaces.sh'
