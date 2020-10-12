@@ -120,7 +120,19 @@ const Settings = () => {
           <div className="settings__items">
             {Object.keys(settings.dateWidgetOptions).map((key) => {
               const setting = settings.dateWidgetOptions[key]
-              const onDateWidgetOptionsChange = (e) => setSettings('dateWidgetOptions', key, e.target.checked, 'data')
+              const isCheckbox = typeof setting !== 'string'
+              const onDateWidgetOptionsChange = (e) => {
+                const value = isCheckbox ? e.target.checked : e.target.value
+                setSettings('dateWidgetOptions', key, value, 'data')
+              }
+              if (!isCheckbox) {
+                return (
+                  <div key={key} className="settings__item settings__item--text-input">
+                    <label htmlFor={key}>{settingsLabels[key]}</label>
+                    <input id={key} type="text" defaultValue={setting} onChange={onDateWidgetOptionsChange} />
+                  </div>
+                )
+              }
               return (
                 <div key={key} className="settings__item">
                   <input id={key} type="checkbox" defaultChecked={setting} onChange={onDateWidgetOptionsChange} />

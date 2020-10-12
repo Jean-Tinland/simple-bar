@@ -8,7 +8,7 @@ const DateDisplay = () => {
   const { dateWidget } = widgets
   if (!dateWidget) return null
 
-  const { shortDateFormat } = dateWidgetOptions
+  const { shortDateFormat, locale } = dateWidgetOptions
   const formatOptions = shortDateFormat ? 'short' : 'long'
 
   const options = {
@@ -16,7 +16,9 @@ const DateDisplay = () => {
     month: formatOptions,
     day: 'numeric'
   }
-  const now = new Date().toLocaleDateString('en-UK', options)
+
+  const _locale = locale.length >= 5 ? locale : 'en-UK'
+  const now = new Date().toLocaleDateString(_locale, options)
   return (
     <div className="date">
       <DateIcon className="date__icon" />
