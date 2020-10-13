@@ -26,9 +26,7 @@ if [ "$SPOTIFY_IS_RUNNING" == true ]; then
 fi
 
 MUSIC_PROCESS="Music"
-if [[ $(sw_vers -productVersion) == 10.15* ]]; then
-  MUSIC_PROCESS="Music"
-else
+if [[ $(sw_vers -productVersion) != 10.15* ]]; then
   MUSIC_PROCESS="iTunes"
 fi
 
