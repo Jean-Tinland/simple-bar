@@ -17,8 +17,8 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - For each space display an icon for every opened app (see "Customization" below to add icons)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
-- Spotify current track (only if Spotify is open)
-- Pause Spotify track on click
+- Spotify or Music/iTunes current track (only if Spotify or Music/iTunes is open)
+- Pause Spotify or Music/iTunes track on click
 - Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*\*\*)
 - Battery level & charging indicator
 - Microphone mute/unmute toggle on click

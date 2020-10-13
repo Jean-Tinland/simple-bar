@@ -141,7 +141,7 @@ const Settings = () => {
               )
             })}
           </div>
-          <div className="settings__inner-title">Spotify</div>
+          <div className="settings__inner-title">{settingsLabels.showSpecter}</div>
           <div className="settings__items">
             {Object.keys(settings.spotifyWidgetOptions).map((key) => {
               const setting = settings.spotifyWidgetOptions[key]
@@ -152,13 +152,23 @@ const Settings = () => {
               return (
                 <div key={code} className="settings__item">
                   <input id={code} type="checkbox" defaultChecked={setting} onChange={onSpotifyWidgetOptionsChange} />
-                  <label htmlFor={code}>{settingsLabels[key]}</label>
+                  <label htmlFor={code}>Spotify</label>
                 </div>
               )
             })}
-          </div>
-          <div className="settings__inner-title">Browser Track</div>
-          <div className="settings__items">
+            {Object.keys(settings.musicWidgetOptions).map((key) => {
+              const setting = settings.musicWidgetOptions[key]
+              const onMusicWidgetOptionsChange = (e) => {
+                setSettings('musicWidgetOptions', key, e.target.checked, 'data')
+              }
+              const code = `musicWidgetOptions-${key}`
+              return (
+                <div key={code} className="settings__item">
+                  <input id={code} type="checkbox" defaultChecked={setting} onChange={onMusicWidgetOptionsChange} />
+                  <label htmlFor={code}>Music/Itunes</label>
+                </div>
+              )
+            })}
             {Object.keys(settings.browserTrackWidgetOptions).map((key) => {
               const setting = settings.browserTrackWidgetOptions[key]
               const onBrowserTrackWidgetOptionsChange = (e) => {
@@ -173,7 +183,7 @@ const Settings = () => {
                     defaultChecked={setting}
                     onChange={onBrowserTrackWidgetOptionsChange}
                   />
-                  <label htmlFor={code}>{settingsLabels[key]}</label>
+                  <label htmlFor={code}>Browser</label>
                 </div>
               )
             })}

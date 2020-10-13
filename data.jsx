@@ -5,6 +5,7 @@ import Sound from './lib/components/Sound.jsx'
 import Mic from './lib/components/Mic.jsx'
 import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
+import Music from './lib/components/Music.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
@@ -28,6 +29,7 @@ const className = `
   ${Styles.MicStyles}
   ${Styles.SoundStyles}
   ${Styles.SpotifyStyles}
+  ${Styles.MusicStyles}
   ${Styles.BrowserTrackStyles}
   ${Styles.SpecterStyles}
 
@@ -63,11 +65,12 @@ const render = ({ output, error }) => {
       </div>
     )
   }
-  const { battery, wifi, mic, sound, spotify, browserTrack } = data
+  const { battery, wifi, mic, sound, spotify, music, browserTrack } = data
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
+      <Music output={music} />
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
