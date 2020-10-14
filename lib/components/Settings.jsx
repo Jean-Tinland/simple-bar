@@ -22,6 +22,8 @@ const Settings = () => {
 
   const onThemeChange = (e) => setSettings('global', 'theme', e.target.value)
 
+  const onExclusionsChange = (e) => setSettings('spacesDisplay', 'exclusions', e.target.value, 'spaces')
+
   useEffect(() => {
     document.addEventListener('keydown', onKeydown)
     return () => document.removeEventListener('keydown', onKeydown)
@@ -57,6 +59,21 @@ const Settings = () => {
           <div className="settings__tips">
             "No bar background" is visually better with the "Floating bar" option activated
           </div>
+          <div className="settings__inner-title">Spaces Display</div>
+          <div className="settings__items">
+            <div className="settings__item settings__item--text-input">
+              <label htmlFor="exclusions">Exclusions</label>
+              <input
+                id="exclusions"
+                name="exclusions"
+                type="text"
+                defaultValue={settings.spacesDisplay.exclusions}
+                placeholder="example: Finder, iTerm2"
+                onChange={onExclusionsChange}
+              />
+            </div>
+          </div>
+          <div className="settings__tips">Each exclusion must be separated by a comma and a space ", "</div>
           <div className="settings__inner-title">Widgets</div>
           <div className="settings__items">
             {Object.keys(settings.widgets).map((key) => {
