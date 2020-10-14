@@ -14,7 +14,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Create new workspace on "+" click [**only with SIP disabled**]
 - Move workspace on space hover (1s delay) [**only with SIP disabled**]
 - Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
-- For each space display an icon for every opened app (see "Customization" below to add icons)
+- For each space display an icon for every opened app (you can exclude specific apps in settings)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
 - Spotify or Music/iTunes current track (only if Spotify or Music/iTunes is open)
@@ -166,14 +166,6 @@ export const appIcons = {
 ```
 
 As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
-
-## Manage excluded app from spaces display
-
-To prevent specific apps icon to show in `SpacesDisplay` file, add/remove app name in `appExclusions` array :
-
-```javascript
-const appExclusions = ['Finder', 'iTerm2']
-```
 
 ## Refresh bar on app or workspace change
 
