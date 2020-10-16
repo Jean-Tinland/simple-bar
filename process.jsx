@@ -5,6 +5,7 @@ import { parseJson, getTheme } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
 
 import { styles } from './lib/styles/Styles.js'
+import CustomStyles from './lib/styles/CustomStyles.js'
 
 const refreshFrequency = false
 
@@ -22,6 +23,8 @@ const className = `
   ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
   ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
   ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
+
+  ${CustomStyles}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_process.sh'
