@@ -26,6 +26,19 @@ if [ "$SPOTIFY_IS_RUNNING" == true ]; then
   SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' | tr \" \')
 fi
 
+MUSIC_PROCESS="Music"
+if [[ $(sw_vers -productVersion) != 10.15* ]]; then
+  MUSIC_PROCESS="iTunes"
+fi
+
+MUSIC_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "'$MUSIC_PROCESS'"' 2>&1)
+
+if [ "$MUSIC_IS_RUNNING" == true ]; then
+  MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string')
+  MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' | tr \" \')
+  MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' | tr \" \')
+fi
+
 BROWSER_TRACK="{}"
 
 if GET_BROWSER_TRACK=$(osascript ./simple-bar/lib/scripts/browser_audio.applescript 2>&1); then
@@ -57,6 +70,13 @@ echo $(cat <<-EOF
       "playerState": "$SPOTIFY_PLAYER_STATE",
       "trackName": "$SPOTIFY_TRACK_NAME",
       "artistName": "$SPOTIFY_ARTIST_NAME"
+    },
+    "music": {
+      "processName": "$MUSIC_PROCESS",
+      "musicIsRunning": "$MUSIC_IS_RUNNING",
+      "playerState": "$MUSIC_PLAYER_STATE",
+      "trackName": "$MUSIC_TRACK_NAME",
+      "artistName": "$MUSIC_ARTIST_NAME"
     },
     "browserTrack": $BROWSER_TRACK
   }

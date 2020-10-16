@@ -22,6 +22,8 @@ const Settings = () => {
 
   const onThemeChange = (e) => setSettings('global', 'theme', e.target.value)
 
+  const onExclusionsChange = (e) => setSettings('spacesDisplay', 'exclusions', e.target.value, 'spaces')
+
   useEffect(() => {
     document.addEventListener('keydown', onKeydown)
     return () => document.removeEventListener('keydown', onKeydown)
@@ -57,6 +59,21 @@ const Settings = () => {
           <div className="settings__tips">
             "No bar background" is visually better with the "Floating bar" option activated
           </div>
+          <div className="settings__inner-title">Spaces Display</div>
+          <div className="settings__items">
+            <div className="settings__item settings__item--text-input">
+              <label htmlFor="exclusions">Exclusions</label>
+              <input
+                id="exclusions"
+                name="exclusions"
+                type="text"
+                defaultValue={settings.spacesDisplay.exclusions}
+                placeholder="example: Finder, iTerm2"
+                onChange={onExclusionsChange}
+              />
+            </div>
+          </div>
+          <div className="settings__tips">Each exclusion must be separated by a comma and a space ", "</div>
           <div className="settings__inner-title">Widgets</div>
           <div className="settings__items">
             {Object.keys(settings.widgets).map((key) => {
@@ -120,7 +137,19 @@ const Settings = () => {
           <div className="settings__items">
             {Object.keys(settings.dateWidgetOptions).map((key) => {
               const setting = settings.dateWidgetOptions[key]
-              const onDateWidgetOptionsChange = (e) => setSettings('dateWidgetOptions', key, e.target.checked, 'data')
+              const isCheckbox = typeof setting !== 'string'
+              const onDateWidgetOptionsChange = (e) => {
+                const value = isCheckbox ? e.target.checked : e.target.value
+                setSettings('dateWidgetOptions', key, value, 'data')
+              }
+              if (!isCheckbox) {
+                return (
+                  <div key={key} className="settings__item settings__item--text-input">
+                    <label htmlFor={key}>{settingsLabels[key]}</label>
+                    <input id={key} type="text" defaultValue={setting} onChange={onDateWidgetOptionsChange} />
+                  </div>
+                )
+              }
               return (
                 <div key={key} className="settings__item">
                   <input id={key} type="checkbox" defaultChecked={setting} onChange={onDateWidgetOptionsChange} />
@@ -129,7 +158,7 @@ const Settings = () => {
               )
             })}
           </div>
-          <div className="settings__inner-title">Spotify</div>
+          <div className="settings__inner-title">{settingsLabels.showSpecter}</div>
           <div className="settings__items">
             {Object.keys(settings.spotifyWidgetOptions).map((key) => {
               const setting = settings.spotifyWidgetOptions[key]
@@ -140,13 +169,23 @@ const Settings = () => {
               return (
                 <div key={code} className="settings__item">
                   <input id={code} type="checkbox" defaultChecked={setting} onChange={onSpotifyWidgetOptionsChange} />
-                  <label htmlFor={code}>{settingsLabels[key]}</label>
+                  <label htmlFor={code}>Spotify</label>
                 </div>
               )
             })}
-          </div>
-          <div className="settings__inner-title">Browser Track</div>
-          <div className="settings__items">
+            {Object.keys(settings.musicWidgetOptions).map((key) => {
+              const setting = settings.musicWidgetOptions[key]
+              const onMusicWidgetOptionsChange = (e) => {
+                setSettings('musicWidgetOptions', key, e.target.checked, 'data')
+              }
+              const code = `musicWidgetOptions-${key}`
+              return (
+                <div key={code} className="settings__item">
+                  <input id={code} type="checkbox" defaultChecked={setting} onChange={onMusicWidgetOptionsChange} />
+                  <label htmlFor={code}>Music/Itunes</label>
+                </div>
+              )
+            })}
             {Object.keys(settings.browserTrackWidgetOptions).map((key) => {
               const setting = settings.browserTrackWidgetOptions[key]
               const onBrowserTrackWidgetOptionsChange = (e) => {
@@ -161,7 +200,7 @@ const Settings = () => {
                     defaultChecked={setting}
                     onChange={onBrowserTrackWidgetOptionsChange}
                   />
-                  <label htmlFor={code}>{settingsLabels[key]}</label>
+                  <label htmlFor={code}>Browser</label>
                 </div>
               )
             })}

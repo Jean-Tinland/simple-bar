@@ -2,13 +2,15 @@ import OpenedApps from './OpenedApps.jsx'
 import SpaceOptions from './SpaceOptions.jsx'
 import { classnames, clickEffect } from '../utils.js'
 
-import { goToSpace } from '../yabai'
-
-const EXCLUSIONS = ['Finder', 'iTerm2', 'Hyper']
+import { goToSpace } from '../yabai.js'
+import { getSettings } from '../settings.js'
 
 const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }) => {
   if (display.index !== space.display) return null
   const { index, label, focused, 'native-fullscreen': fullscreen } = space
+  const settings = getSettings()
+  const { spacesDisplay } = settings
+  const exclusions = spacesDisplay.exclusions.split(', ')
 
   const onMouseEnter = (e) => {
     const target = e.target.closest('.space')
@@ -37,7 +39,7 @@ const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }
   if (focused) focusedSpace = index
 
   const apps = windows.filter(
-    (app) => app.space === index && (app['native-fullscreen'] === 1 || !EXCLUSIONS.includes(app.app))
+    (app) => app.space === index && (app['native-fullscreen'] === 1 || !exclusions.includes(app.app))
   )
 
   const spaceLabel = label && label !== '' ? label : index

@@ -1,6 +1,7 @@
 # simple-bar
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).\
+Demo & presentation here: [website](https://www.simple-bar.com/en/)
 
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
@@ -13,11 +14,11 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Create new workspace on "+" click [**only with SIP disabled**]
 - Move workspace on space hover (1s delay) [**only with SIP disabled**]
 - Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
-- For each space display an icon for every opened app (see "Customization" below to add icons)
+- For each space display an icon for every opened app (you can exclude specific apps in settings)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
-- Spotify current track (only if Spotify is open)
-- Pause Spotify track on click
+- Spotify or Music/iTunes current track (only if Spotify or Music/iTunes is open)
+- Pause Spotify or Music/iTunes track on click
 - Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*\*\*)
 - Battery level & charging indicator
 - Microphone mute/unmute toggle on click
@@ -165,14 +166,6 @@ export const appIcons = {
 ```
 
 As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
-
-## Manage excluded app from spaces display
-
-To prevent specific apps icon to show in `SpacesDisplay` file, add/remove app name in `appExclusions` array :
-
-```javascript
-const appExclusions = ['Finder', 'iTerm2']
-```
 
 ## Refresh bar on app or workspace change
 

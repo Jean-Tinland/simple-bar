@@ -5,6 +5,7 @@ import Sound from './lib/components/Sound.jsx'
 import Mic from './lib/components/Mic.jsx'
 import Wifi from './lib/components/Wifi.jsx'
 import Spotify from './lib/components/Spotify.jsx'
+import Music from './lib/components/Music.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 import VPN from './lib/components/VPN.jsx'
 
@@ -12,6 +13,7 @@ import { parseJson, getTheme } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
 
 import { styles } from './lib/styles/Styles.js'
+import CustomStyles from './lib/styles/CustomStyles.js'
 
 const refreshFrequency = 10000
 
@@ -29,6 +31,7 @@ const className = `
   ${Styles.MicStyles}
   ${Styles.SoundStyles}
   ${Styles.SpotifyStyles}
+  ${Styles.MusicStyles}
   ${Styles.BrowserTrackStyles}
   ${Styles.SpecterStyles}
   ${Styles.VPNStyles}
@@ -36,6 +39,10 @@ const className = `
   ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
   ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
   ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
+  ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
+  ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
+
+  ${CustomStyles}
 `
 
 const command = 'bash simple-bar/lib/scripts/get_data.sh'
@@ -63,11 +70,12 @@ const render = ({ output, error }) => {
       </div>
     )
   }
-  const { battery, wifi, mic, sound, spotify, browserTrack, vpn } = data
+  const { battery, wifi, mic, sound, spotify, music, browserTrack, vpn } = data
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
+      <Music output={music} />
       <Battery output={battery} />
       <VPN output={vpn} />
       <Mic output={mic} />
