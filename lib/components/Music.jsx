@@ -21,7 +21,7 @@ const Spotify = ({ output }) => {
   if (!musicWidget || !output) return null
   const { processName, playerState, trackName, artistName, musicIsRunning } = output
   const { showSpecter } = musicWidgetOptions
-  if (musicIsRunning === 'false' || trackName === '' || artistName === '') return null
+  if (musicIsRunning === 'false' || trackName === '') return null
 
   const isPlaying = playerState === 'playing'
   const Icon = isPlaying ? PlayingIcon : PausedIcon
