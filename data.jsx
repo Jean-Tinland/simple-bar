@@ -8,7 +8,7 @@ import Spotify from './lib/components/Spotify.jsx'
 import Music from './lib/components/Music.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
 
-import { parseJson, getTheme } from './lib/utils.js'
+import { parseJson, getTheme, getActiveWidgets } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
 
 import { styles } from './lib/styles/Styles.js'
@@ -43,7 +43,9 @@ const className = `
   ${CustomStyles}
 `
 
-const command = 'bash simple-bar/lib/scripts/get_data.sh'
+const activeWidgets = getActiveWidgets()
+
+const command = `bash simple-bar/lib/scripts/get_data.sh "${activeWidgets}"`
 
 const render = ({ output, error }) => {
   if (error) {
