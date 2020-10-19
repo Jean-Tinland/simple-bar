@@ -22,7 +22,7 @@ const Settings = () => {
 
   const onThemeChange = (e) => setSettings('global', 'theme', e.target.value)
 
-  const onExclusionsChange = (e) => setSettings('spacesDisplay', 'exclusions', e.target.value, 'spaces')
+  const onExclusionsChange = (e) => setSettings('spacesDisplay', 'exclusions', e.target.value)
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown)
@@ -78,7 +78,7 @@ const Settings = () => {
           <div className="settings__items">
             {Object.keys(settings.widgets).map((key) => {
               const setting = settings.widgets[key]
-              const onWidgetChange = (e) => setSettings('widgets', key, e.target.checked, 'data')
+              const onWidgetChange = (e) => setSettings('widgets', key, e.target.checked)
               return (
                 <div key={key} className="settings__item">
                   <input id={key} type="checkbox" defaultChecked={setting} onChange={onWidgetChange} />
@@ -124,7 +124,7 @@ const Settings = () => {
           <div className="settings__items">
             {Object.keys(settings.timeWidgetOptions).map((key) => {
               const setting = settings.timeWidgetOptions[key]
-              const onTimeWidgetOptionsChange = (e) => setSettings('timeWidgetOptions', key, e.target.checked, 'data')
+              const onTimeWidgetOptionsChange = (e) => setSettings('timeWidgetOptions', key, e.target.checked)
               return (
                 <div key={key} className="settings__item">
                   <input id={key} type="checkbox" defaultChecked={setting} onChange={onTimeWidgetOptionsChange} />
@@ -140,7 +140,7 @@ const Settings = () => {
               const isCheckbox = typeof setting !== 'string'
               const onDateWidgetOptionsChange = (e) => {
                 const value = isCheckbox ? e.target.checked : e.target.value
-                setSettings('dateWidgetOptions', key, value, 'data')
+                setSettings('dateWidgetOptions', key, value)
               }
               if (!isCheckbox) {
                 return (
@@ -163,7 +163,7 @@ const Settings = () => {
             {Object.keys(settings.spotifyWidgetOptions).map((key) => {
               const setting = settings.spotifyWidgetOptions[key]
               const onSpotifyWidgetOptionsChange = (e) => {
-                setSettings('spotifyWidgetOptions', key, e.target.checked, 'data')
+                setSettings('spotifyWidgetOptions', key, e.target.checked)
               }
               const code = `spotifyWidgetOptions-${key}`
               return (
@@ -176,7 +176,7 @@ const Settings = () => {
             {Object.keys(settings.musicWidgetOptions).map((key) => {
               const setting = settings.musicWidgetOptions[key]
               const onMusicWidgetOptionsChange = (e) => {
-                setSettings('musicWidgetOptions', key, e.target.checked, 'data')
+                setSettings('musicWidgetOptions', key, e.target.checked)
               }
               const code = `musicWidgetOptions-${key}`
               return (
@@ -189,7 +189,7 @@ const Settings = () => {
             {Object.keys(settings.browserTrackWidgetOptions).map((key) => {
               const setting = settings.browserTrackWidgetOptions[key]
               const onBrowserTrackWidgetOptionsChange = (e) => {
-                setSettings('browserTrackWidgetOptions', key, e.target.checked, 'data')
+                setSettings('browserTrackWidgetOptions', key, e.target.checked)
               }
               const code = `browserTrackWidgetOptions-${key}`
               return (
