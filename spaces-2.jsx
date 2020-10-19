@@ -8,10 +8,10 @@ import CustomStyles from './lib/styles/CustomStyles.js'
 
 const refreshFrequency = false
 
-const theme = getTheme()
-const Styles = styles[theme]
-
 const settings = getSettings()
+
+const theme = getTheme(settings)
+const Styles = styles[theme]
 
 const className = `
   ${Styles.BaseStyles}

@@ -16,10 +16,10 @@ import CustomStyles from './lib/styles/CustomStyles.js'
 
 const refreshFrequency = 10000
 
-const theme = getTheme()
-const Styles = styles[theme]
-
 const settings = getSettings()
+
+const theme = getTheme(settings)
+const Styles = styles[theme]
 
 const className = `
   ${Styles.BaseStyles}
@@ -43,7 +43,7 @@ const className = `
   ${CustomStyles}
 `
 
-const activeWidgets = getActiveWidgets()
+const activeWidgets = getActiveWidgets(settings)
 
 const command = `bash simple-bar/lib/scripts/get_data.sh "${activeWidgets}"`
 
