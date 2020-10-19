@@ -13,9 +13,9 @@ end replace_chars
 
 if application "Google Chrome" is running then
   tell application "Google Chrome"
-    set windowList to every window
+    set window_list to every window
 
-    repeat with the_window in windowList
+    repeat with the_window in window_list
       set tab_list to every tab in the_window
 
       repeat with the_tab in tab_list
@@ -28,14 +28,13 @@ if application "Google Chrome" is running then
       end repeat
     end repeat
   end tell
-else
 end if
 
 if application "Microsoft Edge" is running then
   tell application "Microsoft Edge"
-    set windowList to every window
+    set window_list to every window
 
-    repeat with the_window in windowList
+    repeat with the_window in window_list
       set tab_list to every tab in the_window
 
       repeat with the_tab in tab_list
@@ -48,14 +47,13 @@ if application "Microsoft Edge" is running then
       end repeat
     end repeat
   end tell
-else
 end if
 
 if application "Safari" is running then
   tell application "Safari"
-    set windowList to every window
+    set window_list to every window
 
-    repeat with the_window in windowList
+    repeat with the_window in window_list
       set tab_list to every tab in the_window
 
       repeat with the_tab in tab_list
@@ -68,7 +66,6 @@ if application "Safari" is running then
       end repeat
     end repeat
   end tell
-else
 end if
 
 -- if application "Firefox" is running then

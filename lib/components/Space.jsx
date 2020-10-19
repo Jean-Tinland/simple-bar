@@ -5,8 +5,8 @@ import { classnames, clickEffect } from '../utils.js'
 import { goToSpace } from '../yabai.js'
 import { getSettings } from '../settings.js'
 
-const Space = ({ space, display, windows, SIPDisabled, focusedSpace, displayId }) => {
-  if (display.index !== space.display) return null
+const Space = ({ space, display, windows, focusedSpace, displayId, SIPDisabled }) => {
+  if (display !== space.display) return null
   const { index, label, focused, 'native-fullscreen': fullscreen } = space
   const settings = getSettings()
   const { spacesDisplay } = settings

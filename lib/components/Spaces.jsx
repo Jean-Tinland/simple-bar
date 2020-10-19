@@ -7,15 +7,15 @@ import { createSpace } from '../yabai.js'
 export const refreshFrequency = false
 
 const Spaces = ({ output, SIP, displayId }) => {
-  const { displays, spaces, windows } = output
-  let focusedSpace
-
   if (!output) return <div className="spaces-display spaces-display--empty" />
+  const { spaces, windows } = output
 
+  let focusedSpace
+  const displays = [...new Set(spaces.map((space) => space.display))]
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
 
   return displays.map((display, i) => {
-    if (display.index !== displayId) return null
+    if (display !== displayId) return null
     const onClick = (e) => {
       clickEffect(e)
       createSpace(displayId)
@@ -25,12 +25,12 @@ const Spaces = ({ output, SIP, displayId }) => {
         {spaces.map((space, i) => (
           <Space
             key={i}
-            space={space}
             display={display}
+            space={space}
             windows={windows}
-            SIPDisabled={SIPDisabled}
             focusedSpace={focusedSpace}
             displayId={displayId}
+            SIPDisabled={SIPDisabled}
           />
         ))}
         {SIPDisabled && (
