@@ -67,7 +67,7 @@ const Settings = () => {
                 type="text"
                 defaultValue={settings.spacesDisplay.exclusions}
                 placeholder="example: Finder, iTerm2"
-                onChange={onExclusionsChange}
+                onBlur={onExclusionsChange}
               />
             </div>
           </div>
@@ -144,7 +144,7 @@ const Settings = () => {
                 return (
                   <div key={key} className="settings__item settings__item--text-input">
                     <label htmlFor={key}>{settingsLabels[key]}</label>
-                    <input id={key} type="text" defaultValue={setting} onChange={onDateWidgetOptionsChange} />
+                    <input id={key} type="text" defaultValue={setting} onBlur={onDateWidgetOptionsChange} />
                   </div>
                 )
               }
