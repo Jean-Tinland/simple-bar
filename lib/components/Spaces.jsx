@@ -10,7 +10,6 @@ const Spaces = ({ output, SIP, displayId }) => {
   if (!output) return <div className="spaces-display spaces-display--empty" />
   const { spaces, windows } = output
 
-  let focusedSpace
   const displays = [...new Set(spaces.map((space) => space.display))]
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
 
@@ -28,7 +27,6 @@ const Spaces = ({ output, SIP, displayId }) => {
             display={display}
             space={space}
             windows={windows}
-            focusedSpace={focusedSpace}
             displayId={displayId}
             SIPDisabled={SIPDisabled}
           />

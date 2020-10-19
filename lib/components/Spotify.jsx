@@ -1,10 +1,12 @@
-import { run } from 'uebersicht'
+import { React, run } from 'uebersicht'
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from './Icons.jsx'
 
 import { refreshData, clickEffect, classnames } from '../utils'
 
 import { getSettings } from '../settings.js'
+
+const { useRef } = React
 
 const togglePlay = (isPaused) => {
   if (isPaused) {
@@ -15,6 +17,7 @@ const togglePlay = (isPaused) => {
 }
 
 const Spotify = ({ output }) => {
+  const ref = useRef()
   const settings = getSettings()
   const { widgets, spotifyWidgetOptions } = settings
   const { spotifyWidget } = widgets
@@ -30,8 +33,8 @@ const Spotify = ({ output }) => {
     clickEffect(e)
     togglePlay(!isPlaying)
   }
-  const onMouseEnter = (e) => {
-    const target = e.target.closest('.spotify')
+  const onMouseEnter = () => {
+    const target = ref.current
     if (!target) return
     const inner = target.querySelector('.spotify__inner')
     const slider = target.querySelector('.spotify__slider')
@@ -43,8 +46,8 @@ const Spotify = ({ output }) => {
       transition: `transform ${timing}ms linear`
     })
   }
-  const onMouseLeave = (e) => {
-    const target = e.target.closest('.spotify')
+  const onMouseLeave = () => {
+    const target = ref.current
     target && target.querySelector('.spotify__slider').removeAttribute('style')
   }
 
@@ -53,7 +56,7 @@ const Spotify = ({ output }) => {
   })
 
   return (
-    <div className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div ref={ref} className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="spotify__icon" />
       {showSpecter && isPlaying && <Specter />}
       <div className="spotify__inner">

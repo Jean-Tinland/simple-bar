@@ -10,9 +10,7 @@ const Settings = () => {
   const [visible, setVisible] = useState(false)
   const settings = getSettings()
 
-  const closeSettings = () => {
-    setVisible(false)
-  }
+  const closeSettings = () => setVisible(false)
 
   const onKeydown = useCallback((e) => {
     if ((e.ctrlKey || e.metaKey) && (e.which === 188 || e.keyCode === 188)) {
