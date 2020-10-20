@@ -16,13 +16,13 @@ const toggleCaffeinate = (caffeinate) => {
   if (caffeinate === '') {
     run('caffeinate &')
     run(
-      `osascript -e 'tell app "System Events" to display notification "Enable caffeinate..." with title "simple-bar"'`
+      `osascript -e 'tell app "System Events" to display notification "Enabling caffeinate..." with title "simple-bar"'`
     )
     refreshData()
   } else {
     run(`kill ${caffeinate}`).then(refreshData)
     run(
-      `osascript -e 'tell app "System Events" to display notification "Disabled caffeinate..." with title "simple-bar"'`
+      `osascript -e 'tell app "System Events" to display notification "Disabling caffeinate..." with title "simple-bar"'`
     )
   }
 }
