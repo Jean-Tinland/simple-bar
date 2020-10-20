@@ -1,16 +1,16 @@
 import { run } from 'uebersicht'
 import { WifiIcon, WifiOffIcon } from './Icons.jsx'
-import { classnames, clickEffect, refreshData } from '../utils.js'
+import { classnames, clickEffect, notification, refreshData } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
 const toggleWifi = (isActive) => {
   if (isActive) {
     run(`networksetup -setairportpower en0 off`).then(refreshData)
-    run(`osascript -e 'tell app "System Events" to display notification "Disabling wifi..." with title "simple-bar"'`)
+    notification('Disabling wifi...')
   } else {
     run(`networksetup -setairportpower en0 on`).then(refreshData)
-    run(`osascript -e 'tell app "System Events" to display notification "Enabling wifi..." with title "simple-bar"'`)
+    notification('Enabling wifi...')
   }
 }
 

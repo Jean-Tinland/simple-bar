@@ -1,7 +1,7 @@
 import { run } from 'uebersicht'
 
 import { CoffeeIcon, ChargingIcon } from './Icons.jsx'
-import { classnames, clickEffect, refreshData } from '../utils.js'
+import { classnames, clickEffect, notification, refreshData } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
@@ -15,15 +15,11 @@ const getTransform = (value) => {
 const toggleCaffeinate = (caffeinate) => {
   if (caffeinate === '') {
     run('caffeinate &')
-    run(
-      `osascript -e 'tell app "System Events" to display notification "Enabling caffeinate..." with title "simple-bar"'`
-    )
+    notification('Enabling caffeinate...')
     refreshData()
   } else {
     run(`kill ${caffeinate}`).then(refreshData)
-    run(
-      `osascript -e 'tell app "System Events" to display notification "Disabling caffeinate..." with title "simple-bar"'`
-    )
+    notification('Disabling caffeinate...')
   }
 }
 
