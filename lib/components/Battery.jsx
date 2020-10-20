@@ -1,5 +1,7 @@
-import { ChargingIcon } from './Icons.jsx'
-import { classnames } from '../utils.js'
+import { run } from 'uebersicht'
+
+import { CoffeeIcon, ChargingIcon } from './Icons.jsx'
+import { classnames, clickEffect, refreshData } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
@@ -10,12 +12,27 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
+const toggleCaffeinate = (caffeinate) => {
+  if (caffeinate === '') {
+    run('caffeinate &')
+    run(
+      `osascript -e 'tell app "System Events" to display notification "Enable caffeinate..." with title "simple-bar"'`
+    )
+    refreshData()
+  } else {
+    run(`kill ${caffeinate}`).then(refreshData)
+    run(
+      `osascript -e 'tell app "System Events" to display notification "Disabled caffeinate..." with title "simple-bar"'`
+    )
+  }
+}
+
 const Battery = ({ output }) => {
   const settings = getSettings()
   const { batteryWidget } = settings.widgets
   if (!batteryWidget || !output) return null
 
-  const { percentage, charging } = output
+  const { percentage, charging, caffeinate } = output
   const isCharging = charging === 'true'
   const isLowBattery = !isCharging && percentage < 20
 
@@ -25,8 +42,13 @@ const Battery = ({ output }) => {
 
   const transformValue = getTransform(percentage)
 
+  const onClick = (e) => {
+    clickEffect(e)
+    toggleCaffeinate(caffeinate)
+  }
+
   return (
-    <div className={classes}>
+    <div className={classes} onClick={onClick}>
       <div className="battery__icon">
         {isCharging && (
           <div className="battery__charging-icon">
@@ -37,7 +59,7 @@ const Battery = ({ output }) => {
         )}
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
       </div>
-      {percentage}%
+      {percentage}%{caffeinate !== '' && <CoffeeIcon className="battery__caffeinate-icon" />}
     </div>
   )
 }
