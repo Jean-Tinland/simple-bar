@@ -33,7 +33,8 @@ const Battery = ({ output }) => {
   const isLowBattery = !isCharging && percentage < 20
 
   const classes = classnames('battery', {
-    'battery--low': isLowBattery
+    'battery--low': isLowBattery,
+    'battery--caffeinate': caffeinate !== ''
   })
 
   const transformValue = getTransform(percentage)
@@ -45,6 +46,7 @@ const Battery = ({ output }) => {
 
   return (
     <div className={classes} onClick={onClick}>
+      {caffeinate !== '' && <CoffeeIcon className="battery__caffeinate-icon" />}
       <div className="battery__icon">
         {isCharging && (
           <div className="battery__charging-icon">
@@ -55,7 +57,7 @@ const Battery = ({ output }) => {
         )}
         <div className="battery__icon-filler" style={{ transform: transformValue }} />
       </div>
-      {percentage}%{caffeinate !== '' && <CoffeeIcon className="battery__caffeinate-icon" />}
+      {percentage}%
     </div>
   )
 }
