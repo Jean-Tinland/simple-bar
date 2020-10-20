@@ -72,17 +72,17 @@ const render = ({ output, error }) => {
       </div>
     )
   }
-  const { battery, wifi, mic, sound, spotify, music, browserTrack, vpn } = data
+  const { battery, vpn, wifi, mic, sound, spotify, music, browserTrack } = data
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Music output={music} />
       <Battery output={battery} />
-      <VPN output={vpn} />
       <Mic output={mic} />
       <Sound output={sound} />
       <Wifi output={wifi} />
+      <VPN output={vpn} />
       <DateDisplay />
       <Time />
     </div>

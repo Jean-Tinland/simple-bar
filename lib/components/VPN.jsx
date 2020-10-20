@@ -1,4 +1,3 @@
-// import styles from "./styles.jsx";
 import { run } from 'uebersicht'
 import { VPNIcon, VPNOffIcon } from './Icons.jsx'
 import { classnames, clickEffect, refreshData } from '../utils.js'

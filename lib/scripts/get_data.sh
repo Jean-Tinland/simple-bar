@@ -5,6 +5,12 @@ ACTIVE_WIDGETS="$1"
 if [[ $ACTIVE_WIDGETS == *"batteryWidget"* ]]; then
   BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
   BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
+  
+  CAFFEINATE=caffeinate
+  CAFFEINATE_PID=""
+  if pgrep $CAFFEINATE &> /dev/null; then
+    CAFFEINATE_PID=$(pgrep $CAFFEINATE)
+  fi
 
   BATTERY_CHARGING=""
   if [ "$BATTERY_STATUS" == "Ba" ]; then
@@ -15,7 +21,11 @@ if [[ $ACTIVE_WIDGETS == *"batteryWidget"* ]]; then
 fi
 
 if [[ $ACTIVE_WIDGETS == *"vpnWidget"* ]]; then
-  VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
+  VPN_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1)
+
+  if [ "$VPN_IS_RUNNING" == true ]; then
+    VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
+  fi
 fi
 
 if [[ $ACTIVE_WIDGETS == *"wifiWidget"* ]]; then
@@ -68,7 +78,8 @@ echo $(cat <<-EOF
   {
     "battery": {
       "percentage": "$BATTERY_PERCENTAGE",
-      "charging": "$BATTERY_CHARGING"
+      "charging": "$BATTERY_CHARGING",
+      "caffeinate": "$CAFFEINATE_PID"
     },
     "vpn": {
       "status": "$VPN_STATUS"

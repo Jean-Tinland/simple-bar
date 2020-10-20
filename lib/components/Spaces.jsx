@@ -1,3 +1,5 @@
+import { React } from 'uebersicht'
+
 import Space from './Space.jsx'
 import { AddIcon } from './Icons.jsx'
 
@@ -6,16 +8,18 @@ import { createSpace } from '../yabai.js'
 
 export const refreshFrequency = false
 
+const { useState } = React
+
 const Spaces = ({ output, SIP, displayId }) => {
-  const { displays, spaces, windows } = output
-  let focusedSpace
-
+  const [clickedSpace, setClickedSpace] = useState()
   if (!output) return <div className="spaces-display spaces-display--empty" />
+  const { spaces, windows } = output
 
+  const displays = [...new Set(spaces.map((space) => space.display))]
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
 
   return displays.map((display, i) => {
-    if (display.index !== displayId) return null
+    if (display !== displayId) return null
     const onClick = (e) => {
       clickEffect(e)
       createSpace(displayId)
@@ -25,12 +29,13 @@ const Spaces = ({ output, SIP, displayId }) => {
         {spaces.map((space, i) => (
           <Space
             key={i}
-            space={space}
             display={display}
+            space={space}
             windows={windows}
-            SIPDisabled={SIPDisabled}
-            focusedSpace={focusedSpace}
+            clickedSpace={clickedSpace}
+            setClickedSpace={setClickedSpace}
             displayId={displayId}
+            SIPDisabled={SIPDisabled}
           />
         ))}
         {SIPDisabled && (

@@ -1,7 +1,11 @@
+import { React } from 'uebersicht'
+
 import Specter from './Specter.jsx'
 import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon, MicrosoftEdgeIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
+
+const { useRef } = React
 
 const getIcon = (browser) => {
   if (browser === 'chrome') return GoogleChromeIcon
@@ -12,6 +16,7 @@ const getIcon = (browser) => {
 }
 
 const BrowserTrack = ({ output }) => {
+  const ref = useRef()
   const settings = getSettings()
   const { widgets, browserTrackWidgetOptions } = settings
   const { browserTrackWidget } = widgets
@@ -21,8 +26,8 @@ const BrowserTrack = ({ output }) => {
   const { showSpecter } = browserTrackWidgetOptions
   if (!browser || !title || browser === '' || title === '' || spotifyStatus === 'true') return null
 
-  const onMouseEnter = (e) => {
-    const target = e.target.closest('.browser-track')
+  const onMouseEnter = () => {
+    const target = ref.current
     if (!target) return
     const inner = target.querySelector('.browser-track__inner')
     const slider = target.querySelector('.browser-track__slider')
@@ -34,15 +39,15 @@ const BrowserTrack = ({ output }) => {
       transition: `transform ${timing}ms linear`
     })
   }
-  const onMouseLeave = (e) => {
-    const target = e.target.closest('.browser-track')
+  const onMouseLeave = () => {
+    const target = ref.current
     target && target.querySelector('.browser-track__slider').removeAttribute('style')
   }
 
   const Icon = getIcon(browser)
 
   return (
-    <div className="browser-track" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div ref={ref} className="browser-track" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="browser-track__icons">
         <Icon />
         <PlayingIcon />

@@ -3,25 +3,20 @@ import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from './Icons.jsx'
 import { clickEffect } from '../utils.js'
 import { removeSpace, swapSpace } from '../yabai.js'
 
-const SpaceOptions = ({ index, displayId }) => {
+const SpaceOptions = ({ index, setHovered, displayId }) => {
   const onRemoveClick = (e) => {
     removeSpace(index, displayId)
     e.stopPropagation()
     clickEffect(e)
-    const target = e.target.closest('.space')
-    target.classList.remove('space--hovered')
+    setHovered(false)
   }
   const onChevronClick = (direction) => (e) => {
     swapSpace(index, direction)
     clickEffect(e)
-    const target = e.target.closest('.space')
-    target.classList.remove('space--hovered')
+    setHovered(false)
   }
   const onMouseDown = (e) => e.preventDefault()
-  const onMouseLeave = (e) => {
-    const target = e.target.closest('.space')
-    target.classList.remove('space--hovered')
-  }
+  const onMouseLeave = () => setHovered(false)
 
   return (
     <span className="space-options" onMouseLeave={onMouseLeave}>
