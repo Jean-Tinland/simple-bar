@@ -1,5 +1,3 @@
-import { React } from 'uebersicht'
-
 import Space from './Space.jsx'
 import { AddIcon } from './Icons.jsx'
 
@@ -8,10 +6,7 @@ import { createSpace } from '../yabai.js'
 
 export const refreshFrequency = false
 
-const { useState } = React
-
 const Spaces = ({ output, SIP, displayId }) => {
-  const [clickedSpace, setClickedSpace] = useState()
   if (!output) return <div className="spaces-display spaces-display--empty" />
   const { spaces, windows } = output
 
@@ -32,8 +27,6 @@ const Spaces = ({ output, SIP, displayId }) => {
             display={display}
             space={space}
             windows={windows}
-            clickedSpace={clickedSpace}
-            setClickedSpace={setClickedSpace}
             displayId={displayId}
             SIPDisabled={SIPDisabled}
           />
