@@ -12,9 +12,9 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
-const toggleCaffeinate = (caffeinate) => {
+const toggleCaffeinate = (caffeinate, option) => {
   if (caffeinate === '') {
-    run('caffeinate &')
+    run(`caffeinate ${option} &`)
     notification('Enabling caffeinate...')
     refreshData()
   } else {
@@ -25,7 +25,9 @@ const toggleCaffeinate = (caffeinate) => {
 
 const Battery = ({ output }) => {
   const settings = getSettings()
-  const { batteryWidget } = settings.widgets
+  const { widgets, batteryWidgetOptions } = settings
+  const { batteryWidget } = widgets
+  const { caffeinateOption } = batteryWidgetOptions
   if (!batteryWidget || !output) return null
 
   const { percentage, charging, caffeinate } = output
@@ -41,7 +43,7 @@ const Battery = ({ output }) => {
 
   const onClick = (e) => {
     clickEffect(e)
-    toggleCaffeinate(caffeinate)
+    toggleCaffeinate(caffeinate, caffeinateOption)
   }
 
   return (
