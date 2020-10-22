@@ -1,5 +1,6 @@
 import Process from './lib/components/Process.jsx'
 import Settings from './lib/components/Settings.jsx'
+import Error from './lib/components/Error.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
@@ -30,28 +31,12 @@ const className = `
 const command = 'bash simple-bar/lib/scripts/get_process.sh'
 
 const render = ({ output, error }) => {
-  if (error) {
-    return (
-      <div className="simple-bar simple-bar--process simple-bar--empty">
-        <span>simple-bar-process.jsx: Something went wrong...</span>
-      </div>
-    )
-  }
-  if (!output) {
-    return (
-      <div className="simple-bar simple-bar--process simple-bar--loading simple-bar--empty">
-        <span>simple-bar-process.jsx: Loading...</span>
-      </div>
-    )
-  }
+  if (error) return <Error widget="process" type="error" />
+  if (!output) return <Error widget="process" type="noOutput" />
+
   const data = parseJson(output)
-  if (!data) {
-    return (
-      <div className="simple-bar simple-bar--process simple-bar--empty">
-        <span>simple-bar-process.jsx: JSON error...</span>
-      </div>
-    )
-  }
+  if (!data) return <Error widget="process" type="noData" />
+
   const { process } = data
   return (
     <div className="simple-bar simple-bar--process">

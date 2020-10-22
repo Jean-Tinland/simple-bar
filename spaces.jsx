@@ -1,4 +1,5 @@
 import Spaces from './lib/components/Spaces.jsx'
+import Error from './lib/components/Error.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
@@ -29,28 +30,12 @@ const command = 'bash simple-bar/lib/scripts/get_spaces.sh'
 
 const render = (state) => {
   const { output, error } = state
-  if (error) {
-    return (
-      <div className="simple-bar simple-bar--spaces simple-bar--empty">
-        <span>simple-bar-spaces.jsx: Something went wrong...</span>
-      </div>
-    )
-  }
-  if (!output) {
-    return (
-      <div className="simple-bar simple-bar--spaces simple-bar--loading simple-bar--empty">
-        <span>simple-bar-spaces.jsx: Loading...</span>
-      </div>
-    )
-  }
+  if (error) return <Error widget="spaces" type="error" />
+  if (!output) return <Error widget="spaces" type="noOutput" />
+
   const data = parseJson(output)
-  if (!data) {
-    return (
-      <div className="simple-bar simple-bar--spaces simple-bar--empty">
-        <span>simple-bar-spaces.jsx: JSON error...</span>
-      </div>
-    )
-  }
+  if (!data) return <Error widget="spaces" type="noData" />
+
   return (
     <div className="simple-bar simple-bar--spaces">
       <Spaces output={data.spaces} SIP={data.SIP} displayId={1} />
