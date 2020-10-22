@@ -11,9 +11,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*\*)
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
-- Create new workspace on "+" click [**only with SIP disabled**]
-- Move workspace on space hover (1s delay) [**only with SIP disabled**]
-- Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
+- Create new workspace on "+" click, move or destroy workspace on space hover (1s delay / instant with `cmd` key pressed) [**only with SIP disabled**]
 - For each space display an icon for every opened app (you can exclude specific apps in settings)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
@@ -21,6 +19,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Pause Spotify or Music/iTunes track on click
 - Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*\*\*)
 - Battery level & charging indicator
+- Keep mac awake on battery widget click (setup Caffeinate options in settings)
 - Microphone mute/unmute toggle on click
 - Sound level & mute indicator
 - Wifi (active/inactive) & wifi name
