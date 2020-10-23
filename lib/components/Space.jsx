@@ -9,7 +9,7 @@ import { getSettings } from '../settings.js'
 
 const { useState } = React
 
-const Space = ({ space, display, windows, clickedSpace, setClickedSpace, displayId, SIPDisabled }) => {
+const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
   if (display !== space.display) return null
@@ -30,15 +30,13 @@ const Space = ({ space, display, windows, clickedSpace, setClickedSpace, display
     if (focused === 1) return
     goToSpace(index)
     clickEffect(e)
-    setClickedSpace(index)
   }
 
   const classes = classnames('space', {
     'space--focused': focused === 1,
     'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
-    'space--no-delay': noDelay,
-    'space--clicked': clickedSpace === index
+    'space--no-delay': noDelay
   })
 
   const apps = windows.filter(

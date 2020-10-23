@@ -1,7 +1,6 @@
 # simple-bar
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).\
-Demo & presentation here: [website](https://www.simple-bar.com/en/)
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.simple-bar.com/en/).
 
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
@@ -11,60 +10,28 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*\*)
 - Show workspace number & current space (more detailed explanations in dual display support section)
 - Navigate to workspace on click
-- Create new workspace on "+" click [**only with SIP disabled**]
-- Move workspace on space hover (1s delay) [**only with SIP disabled**]
-- Destroy workspace on space hover (1s delay) [**only with SIP disabled**]
 - For each space display an icon for every opened app (you can exclude specific apps in settings)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
-- Spotify or Music/iTunes current track (only if Spotify or Music/iTunes is open)
-- Pause Spotify or Music/iTunes track on click
-- Google Chrome, Safari or Firefox current YouTube track (only if a browser with a YouTube tab is open and Spotify is not open)(\*\*\*)
-- Battery level & charging indicator
-- Microphone mute/unmute toggle on click
-- Sound level & mute indicator
-- Wifi (active/inactive) & wifi name
-- Wifi toggle on click
-- Date (en-UK & short or long format, you can ajust it to your preference in simple-bar settings)
-- Time (en-UK & 24h or 12h format, you can ajust it to your preference in simple-bar settings)
-- Day progress indicator (from midnight to midnight) in time widget
+- Spotify, Music/iTunes, browser current track
+- Battery, microphone, sound level, wifi, date, time widgets
+- **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover (1s delay / instant with `cmd` key pressed)
 
 (\*) You'll need to manually refresh simple-bar when system theme switch its own theme.\
-(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on simple-bar widget.\
-(\*\*\*) An alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
-
-## Preview
-
-Dark theme:\
-![img](./images/preview.png)
-
-Light theme:\
-![img](./images/preview-light.png)
-
-Create space:\
-![img](./images/add-space.gif)
-
-Move space:\
-![img](./images/move-space.gif)
-
-Remove space:\
-![img](./images/remove-space.gif)
-
-Settings module:\
-![img](./images/settings-module.png)
-
-Enable/disable widgets:\
-![img](./images/toggle-widgets.gif)
-
-Switch theme:\
-![img](./images/switch-theme.gif)
+(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on simple-bar widget.
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht).\
-Both tools must be up to date.\
-As I'm working on Catalina, I haven't tested this widget on older versions of macos and on macos 11 Big Sur either.\
-You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of theme must be up to date.\
+As I'm working on Catalina, **I haven't tested this widget on older versions of macos and on macos 11 Big Sur either**.\
+You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.\
+On the first simple-bar execution, an alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
+
+## Preview
+
+![img](./images/preview.jpg)
+
+You'll find more information & images on [simple-bar website](https://www.simple-bar.com/en/).
 
 ## Installation
 
@@ -73,8 +40,6 @@ Clone this repo to your Übersicht widgets directory with the following command.
 ```bash
 $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
-
-## Font
 
 I'm using [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as main font and device default monospaced font as fallback.
 
@@ -86,9 +51,53 @@ After cloning the project, simply activate all three "simple-bar" widgets in Üb
 - `simple-bar-spaces-jsx`
 - `simple-bar-data-jsx`
 
-### Clickable elements
+## Clickable elements
 
 The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. You can click the wifi element to toggle wifi on/off or on the spaces to go directly to a specific space. Leave you cursor for 1 second over a space in order to show the "move" & "remove" buttons. These buttons and the "Add space" button will only be shown if you have **disabled SIP**
+
+## Refresh bar on app or workspace change
+
+The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
+To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
+
+```sh
+# Refresh spaces widget on space change
+yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Refresh spaces widget on display focus change
+yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Refresh process widget on space change
+yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# Uncomment next line to enable spaces widget refresh on your 2nd monitor
+# yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
+
+# Refresh process widget on when focused application changes
+yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# Refresh spaces widget on when focused application changes
+yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Uncomment next line to enable spaces widget refresh on your 2nd monitor
+# yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
+
+# Refresh process widget on when focused application changes
+yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# Refresh spaces widget on when focused application changes
+yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Uncomment next line to enable spaces widget refresh on your 2nd monitor
+# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
+
+# Refresh process widget on when an application window is closed
+yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# Refresh spaces widget on when an application window is closed
+yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Uncomment next line to enable spaces widget refresh on your 2nd monitor
+# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
+
+# Refresh process widget when current window title changes
+yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+```
+
+## Dual display support
+
+In order to support spaces display with a second monitor, you'll need to activate `simple-bar-spaces-2-jsx` only on your secondary monitor and `simple-bar-spaces-jsx` on your main.
 
 ## Customization
 
@@ -167,86 +176,10 @@ export const appIcons = {
 
 As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
 
-## Refresh bar on app or workspace change
+### Override default styles
 
-The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
-To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
-
-```sh
-# Refresh spaces widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on display focus change
-yabai -m signal --add event=display_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh process widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_focused action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget when current window title changes
-yabai -m signal --add event=window_title_changed action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-```
-
-**If simple-bar is not refreshed when you switch space or when you focus another window, try to replace these signal by these:**
-
-```sh
-# Refresh spaces widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on display focus change
-yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh process widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
-
-# Refresh process widget when current window title changes
-yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-```
-
-## Dual display support
-
-In order to support spaces display with a second monitor, you'll need to activate `simple-bar-spaces-2-jsx` only on your secondary monitor and `simple-bar-spaces-jsx` on your main.
+You'll find a `CustomStyles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 ## Special thanks
 
