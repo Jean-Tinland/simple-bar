@@ -1,4 +1,4 @@
-import { classnames } from '../utils.js'
+import { classnames, refreshSpaces, refreshProcess, refreshData } from '../utils.js'
 
 const message = {
   error: 'Something went wrong...',
@@ -10,6 +10,12 @@ const Error = ({ widget, type }) => {
   const classes = classnames(`simple-bar simple-bar--${widget} simple-bar--empty`, {
     'simple-bar--loading': type === 'noOutput'
   })
+
+  if (type === 'error') {
+    if (widget === 'spaces') refreshSpaces()
+    if (widget === 'process') refreshProcess()
+    if (widget === 'data') refreshData()
+  }
 
   return (
     <div className={classes}>
