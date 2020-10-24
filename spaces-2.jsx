@@ -32,11 +32,11 @@ const command = `${shell} simple-bar/lib/scripts/get_spaces.sh`
 
 const render = (state) => {
   const { output, error } = state
-  if (error) return <Error widget="spaces" type="error" />
-  if (!output) return <Error widget="spaces" type="noOutput" />
+  if (error) return <Error widget="spaces-2" type="error" />
+  if (!output) return <Error widget="spaces-2" type="noOutput" />
 
   const data = parseJson(output)
-  if (!data) return <Error widget="spaces" type="noData" />
+  if (!data) return <Error widget="spaces-2" type="noData" />
 
   return (
     <div className="simple-bar simple-bar--spaces">
