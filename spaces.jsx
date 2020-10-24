@@ -26,7 +26,9 @@ const className = `
   ${CustomStyles}
 `
 
-const command = 'bash simple-bar/lib/scripts/get_spaces.sh'
+const { shell } = settings.global
+
+const command = `${shell} simple-bar/lib/scripts/get_spaces.sh`
 
 const render = (state) => {
   const { output, error } = state

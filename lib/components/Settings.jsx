@@ -12,7 +12,9 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
       return (
         <div className="settings__item-option" key={option}>
           <input name={code} id={option} value={option} type="radio" defaultChecked={option === defaultValue} />
-          <label htmlFor={option}>{option} theme</label>
+          <label htmlFor={option}>
+            {option} {label}
+          </label>
         </div>
       )
     })
@@ -85,7 +87,7 @@ const Settings = () => {
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
                 {Object.keys(settings[key]).map((subKey) => {
-                  const { label, type, options, placeholder } = settingsData[subKey]
+                  const { title, label, type, options, placeholder } = settingsData[subKey]
                   const defaultValue = settings[key][subKey]
                   const classes = classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
@@ -98,17 +100,20 @@ const Settings = () => {
                     }
                   }
                   return (
-                    <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
-                      <Item
-                        code={subKey}
-                        defaultValue={defaultValue}
-                        type={type}
-                        label={label}
-                        options={options}
-                        placeholder={placeholder}
-                        onChange={onChange}
-                      />
-                    </div>
+                    <>
+                      {title && <div className="settings__item-title">{title}</div>}
+                      <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
+                        <Item
+                          code={subKey}
+                          defaultValue={defaultValue}
+                          type={type}
+                          label={label}
+                          options={options}
+                          placeholder={placeholder}
+                          onChange={onChange}
+                        />
+                      </div>
+                    </>
                   )
                 })}
                 {infos &&
