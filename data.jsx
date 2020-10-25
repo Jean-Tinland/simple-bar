@@ -47,8 +47,9 @@ const className = `
 `
 
 const activeWidgets = getActiveWidgets(settings)
+const { shell } = settings.global
 
-const command = `bash simple-bar/lib/scripts/get_data.sh "${activeWidgets}"`
+const command = `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}"`
 
 const render = ({ output, error }) => {
   if (error) return <Error widget="data" type="error" />

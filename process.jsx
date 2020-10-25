@@ -28,7 +28,9 @@ const className = `
   ${CustomStyles}
 `
 
-const command = 'bash simple-bar/lib/scripts/get_process.sh'
+const { shell } = settings.global
+
+const command = `${shell} simple-bar/lib/scripts/get_process.sh`
 
 const render = ({ output, error }) => {
   if (error) return <Error widget="process" type="error" />
