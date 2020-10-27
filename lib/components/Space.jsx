@@ -2,7 +2,7 @@ import { React } from 'uebersicht'
 
 import OpenedApps from './OpenedApps.jsx'
 import SpaceOptions from './SpaceOptions.jsx'
-import { classnames, clickEffect } from '../utils.js'
+import { classnames, clickEffect, filterApps } from '../utils.js'
 
 import { goToSpace } from '../yabai.js'
 import { getSettings } from '../settings.js'
@@ -40,11 +40,7 @@ const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
     'space--no-delay': noDelay
   })
 
-  const apps = windows.filter(
-    (app) =>
-      app.space === index &&
-      (app['native-fullscreen'] === 1 || (!exclusions.includes(app.app) && !titleExclusions.includes(app.title)))
-  )
+  const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
 
   const spaceLabel = label && label !== '' ? label : index
 
