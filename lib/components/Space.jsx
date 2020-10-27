@@ -17,6 +17,7 @@ const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
   const settings = getSettings()
   const { spacesDisplay } = settings
   const exclusions = spacesDisplay.exclusions.split(', ')
+  const titleExclusions = spacesDisplay.titleExclusions.split(', ')
 
   const onMouseEnter = (e) => {
     setHovered(true)
@@ -40,7 +41,9 @@ const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
   })
 
   const apps = windows.filter(
-    (app) => app.space === index && (app['native-fullscreen'] === 1 || !exclusions.includes(app.app))
+    (app) =>
+      app.space === index &&
+      (app['native-fullscreen'] === 1 || (!exclusions.includes(app.app) && !titleExclusions.includes(app.title)))
   )
 
   const spaceLabel = label && label !== '' ? label : index
