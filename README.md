@@ -22,7 +22,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of theme must be up to date.\
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date.\
 As I'm working on Catalina, **I haven't tested this widget on older versions of macos and on macos 11 Big Sur either**.\
 You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.\
 On the first simple-bar execution, an alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.

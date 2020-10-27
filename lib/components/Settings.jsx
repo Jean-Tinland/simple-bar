@@ -87,11 +87,12 @@ const Settings = () => {
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
                 {Object.keys(settings[key]).map((subKey) => {
-                  const { title, label, type, options, placeholder } = settingsData[subKey]
+                  const { title, label, type, options, placeholder, fullWidth } = settingsData[subKey]
                   const defaultValue = settings[key][subKey]
                   const classes = classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
-                    'settings__item--text': type === 'text'
+                    'settings__item--text': type === 'text',
+                    'settings__item--full-width': fullWidth
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
