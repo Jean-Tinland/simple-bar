@@ -117,13 +117,16 @@ const Settings = () => {
                     </>
                   )
                 })}
-                {infos &&
-                  infos.length &&
-                  infos.map((info, i) => (
-                    <div key={i} className="settings__tips">
-                      {info}
-                    </div>
-                  ))}
+                {infos && infos.length && (
+                  <div className="settings__infos">
+                    <div className="settings__infos-title">Tips</div>
+                    {infos.map((info, i) => (
+                      <div key={i} className="settings__info">
+                        {info}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )
           })}
