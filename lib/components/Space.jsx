@@ -33,21 +33,22 @@ const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
     clickEffect(e)
   }
 
+  const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
+
   const classes = classnames('space', {
     'space--focused': focused === 1,
     'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
-    'space--no-delay': noDelay
+    'space--no-delay': noDelay,
+    'space--empty': apps.length === 0
   })
-
-  const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
 
   const spaceLabel = label && label !== '' ? label : index
 
   return (
     <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="space__inner" onClick={onClick}>
-        {spaceLabel} <OpenedApps apps={apps} />
+        <span className="space__label">{spaceLabel}</span> <OpenedApps apps={apps} />
       </div>
       {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayId={displayId} />}
     </div>
