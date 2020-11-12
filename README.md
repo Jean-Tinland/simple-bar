@@ -67,37 +67,25 @@ yabai -m signal --add event=space_changed action="osascript -e 'tell application
 yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 # Refresh process widget on space change
 yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
 
 # Refresh process widget on when focused application changes
 yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 # Refresh spaces widget on when focused application changes
 yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
 
 # Refresh process widget on when focused application changes
 yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 # Refresh spaces widget on when focused application changes
 yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
 
 # Refresh process widget on when an application window is closed
 yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 # Refresh spaces widget on when an application window is closed
 yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Uncomment next line to enable spaces widget refresh on your 2nd monitor
-# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-2-jsx\"'"
 
 # Refresh process widget when current window title changes
 yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
-
-## Dual display support
-
-In order to support spaces display with a second monitor, you'll need to activate `simple-bar-spaces-2-jsx` only on your secondary monitor and `simple-bar-spaces-jsx` on your main.
 
 ## Customization
 

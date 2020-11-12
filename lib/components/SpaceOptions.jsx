@@ -3,9 +3,9 @@ import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from './Icons.jsx'
 import { clickEffect } from '../utils.js'
 import { removeSpace, swapSpace } from '../yabai.js'
 
-const SpaceOptions = ({ index, setHovered, displayId }) => {
+const SpaceOptions = ({ index, setHovered, displayIndex }) => {
   const onRemoveClick = (e) => {
-    removeSpace(index, displayId)
+    removeSpace(index, displayIndex)
     e.stopPropagation()
     clickEffect(e)
     setHovered(false)

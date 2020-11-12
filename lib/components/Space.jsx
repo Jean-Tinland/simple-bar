@@ -9,7 +9,7 @@ import { getSettings } from '../settings.js'
 
 const { useState } = React
 
-const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
+const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
   if (display !== space.display) return null
@@ -50,7 +50,7 @@ const Space = ({ space, display, windows, displayId, SIPDisabled }) => {
       <div className="space__inner" onClick={onClick}>
         <span className="space__label">{spaceLabel}</span> <OpenedApps apps={apps} />
       </div>
-      {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayId={displayId} />}
+      {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
     </div>
   )
 }

@@ -34,13 +34,14 @@ const render = (state) => {
   const { output, error } = state
   if (error) return <Error widget="spaces" type="error" />
   if (!output) return <Error widget="spaces" type="noOutput" />
-
+  const displayId = parseInt(window.location.pathname.replace(/^\//, ''), 10)
   const data = parseJson(output)
   if (!data) return <Error widget="spaces" type="noData" />
+  const displayIndex = data.displays.find((d) => d.id === displayId).index
 
   return (
     <div className="simple-bar simple-bar--spaces">
-      <Spaces output={data.spaces} SIP={data.SIP} displayId={1} />
+      <Spaces output={data.spaces} SIP={data.SIP} displayIndex={displayIndex} />
     </div>
   )
 }
