@@ -13,7 +13,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
   if (display !== space.display) return null
-  const { index, label, focused, 'native-fullscreen': fullscreen } = space
+  const { index, label, focused, 'native-fullscreen': fullscreen, type } = space
   const settings = getSettings()
   const { spacesDisplay } = settings
   const exclusions = spacesDisplay.exclusions.split(', ')
@@ -48,7 +48,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
   return (
     <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="space__inner" onClick={onClick}>
-        <span className="space__label">{spaceLabel}</span> <OpenedApps apps={apps} />
+        <span className="space__label">{spaceLabel}</span> <OpenedApps type={type} apps={apps} />
       </div>
       {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
     </div>
