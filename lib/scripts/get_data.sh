@@ -59,7 +59,7 @@ fi
 
 if contains $ACTIVE_WIDGETS "musicWidget"; then
   MUSIC_PROCESS="Music"
-  if contains $(sw_vers -productVersion) "10.15"; then
+  if [ $(sw_vers -productVersion) = "10.15" ]; then
     MUSIC_PROCESS="iTunes"
   fi
 
