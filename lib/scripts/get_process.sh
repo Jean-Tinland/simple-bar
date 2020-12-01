@@ -1,4 +1,6 @@
-PROCESS=$(/usr/local/bin/yabai -m query --windows --space | sed 's/inf/0/g')
+YABAI_PATH=$(which yabai)
+
+PROCESS=$($YABAI_PATH -m query --windows --space | sed 's/inf/0/g')
 
 if [ -z "$PROCESS" ]; then
   PROCESS="[]"
