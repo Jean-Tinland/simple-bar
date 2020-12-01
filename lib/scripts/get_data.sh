@@ -59,9 +59,9 @@ if contains $ACTIVE_WIDGETS "musicWidget"; then
   MUSIC_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "'$MUSIC_PROCESS'"' 2>&1)
 
   if [ "$MUSIC_IS_RUNNING" = true ]; then
-    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string' 2>&1)
-    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' | tr \" \' 2>&1)
-    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' | tr \" \' 2>&1)
+    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string' 2>/dev/null )
+    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' 2>/dev/null || echo "unknown track" | tr \" \' )
+    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' 2>/dev/null || echo "unknown artist" | tr \" \' )
   fi
 fi
 
