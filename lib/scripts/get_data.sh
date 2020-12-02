@@ -51,9 +51,9 @@ if contains $ACTIVE_WIDGETS "spotifyWidget"; then
   SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
   if [ "$SPOTIFY_IS_RUNNING" = true ]; then
-    SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string')
-    SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string' | tr \" \')
-    SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' | tr \" \')
+    SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string' 2>&1)
+    SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string' | tr \" \' 2>&1)
+    SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' | tr \" \' 2>&1)
   fi
 fi
 
@@ -66,9 +66,9 @@ if contains $ACTIVE_WIDGETS "musicWidget"; then
   MUSIC_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "'$MUSIC_PROCESS'"' 2>&1)
 
   if [ "$MUSIC_IS_RUNNING" = true ]; then
-    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string')
-    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' | tr \" \')
-    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' | tr \" \')
+    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string' 2>&1)
+    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' | tr \" \' 2>&1)
+    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' | tr \" \' 2>&1)
   fi
 fi
 

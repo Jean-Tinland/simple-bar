@@ -1,18 +1,20 @@
-SPACES=$(/usr/local/bin/yabai -m query --spaces)
-WINDOWS=$(/usr/local/bin/yabai -m query --windows | sed 's/inf/0/g' )
-DISPLAYS=$(/usr/local/bin/yabai -m query --displays)
+YABAI_PATH=$(which yabai)
+
+SPACES=$($YABAI_PATH -m query --spaces)
+WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g' )
+DISPLAYS=$($YABAI_PATH -m query --displays)
 SIP=$(csrutil status)
 
 if [ -z "$SPACES" ]; then
-  SPACES=$(/usr/local/bin/yabai -m query --spaces)
+  SPACES=$($YABAI_PATH -m query --spaces)
 fi
 
 if [ -z "$WINDOWS" ]; then
-  WINDOWS=$(/usr/local/bin/yabai -m query --windows | sed 's/inf/0/g')
+  WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g')
 fi
 
 if [ -z "$DISPLAYS" ]; then
-  DISPLAYS=$(/usr/local/bin/yabai -m query --displays)
+  DISPLAYS=$($YABAI_PATH -m query --displays)
 fi
 
 echo $(cat <<-EOF
