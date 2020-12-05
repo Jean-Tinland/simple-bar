@@ -26,9 +26,9 @@ const className = `
   ${CustomStyles}
 `
 
-const { shell } = settings.global
+const { yabaiPath, shell } = settings.global
 
-const command = `${shell} simple-bar/lib/scripts/get_spaces.sh`
+const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
 
 const render = (state) => {
   const { output, error } = state
