@@ -29,6 +29,7 @@ const className = `
 `
 
 const { yabaiPath, shell } = settings.global
+const { processWidget } = settings.widgets
 
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
@@ -42,7 +43,7 @@ const render = ({ output, error }) => {
   const { process } = data
   return (
     <div className="simple-bar simple-bar--process">
-      <Process output={process} />
+      {processWidget && <Process output={process} />}
       <Settings />
     </div>
   )
