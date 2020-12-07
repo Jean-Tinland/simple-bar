@@ -40,6 +40,10 @@ if contains $ACTIVE_WIDGETS "micWidget"; then
   MIC=$(osascript -e 'set ovol to input volume of (get volume settings)')
 fi
 
+if contains $ACTIVE_WIDGETS "keyboardWidget"; then
+  KEYBOARD=$(defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g')
+fi
+
 if contains $ACTIVE_WIDGETS "spotifyWidget"; then
   SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
@@ -89,6 +93,9 @@ echo $(cat <<-EOF
     },
     "mic": {
       "volume": "$MIC"
+    },
+    "keyboard" : {
+      "layout": "$KEYBOARD"
     },
     "spotify": {
       "spotifyIsRunning": "$SPOTIFY_IS_RUNNING",

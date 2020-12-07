@@ -4,6 +4,7 @@ import Battery from './lib/components/Battery.jsx'
 import Sound from './lib/components/Sound.jsx'
 import Mic from './lib/components/Mic.jsx'
 import Wifi from './lib/components/Wifi.jsx'
+import Keyboard from './lib/components/Keyboard.jsx'
 import Spotify from './lib/components/Spotify.jsx'
 import Music from './lib/components/Music.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
@@ -28,6 +29,7 @@ const className = `
   ${Styles.TimeStyles}
   ${Styles.BatteryStyles}
   ${Styles.WifiStyles}
+  ${Styles.KeyboardStyles}
   ${Styles.MicStyles}
   ${Styles.SoundStyles}
   ${Styles.SpotifyStyles}
@@ -56,7 +58,7 @@ const render = ({ output, error }) => {
   const data = parseJson(output)
   if (!data) return <Error widget="data" type="noData" />
 
-  const { battery, wifi, mic, sound, spotify, music, browserTrack } = data
+  const { battery, wifi, keyboard, mic, sound, spotify, music, browserTrack } = data
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
@@ -66,6 +68,7 @@ const render = ({ output, error }) => {
       <Mic output={mic} />
       <Sound output={sound} />
       <Wifi output={wifi} />
+      <Keyboard output={keyboard} />
       <DateDisplay />
       <Time />
     </div>
