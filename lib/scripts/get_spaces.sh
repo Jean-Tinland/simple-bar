@@ -1,4 +1,4 @@
-YABAI_PATH=$(which yabai)
+YABAI_PATH=$1
 
 SPACES=$($YABAI_PATH -m query --spaces)
 WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g' )

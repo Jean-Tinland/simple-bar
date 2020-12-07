@@ -1,4 +1,4 @@
-YABAI_PATH=$(which yabai)
+YABAI_PATH=$1
 
 PROCESS=$($YABAI_PATH -m query --windows --space | sed 's/inf/0/g')
 

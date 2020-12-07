@@ -28,21 +28,22 @@ const className = `
   ${CustomStyles}
 `
 
-const { shell } = settings.global
+const { yabaiPath, shell } = settings.global
+const { processWidget } = settings.widgets
 
-const command = `${shell} simple-bar/lib/scripts/get_process.sh`
+const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
-  if (error) return <Error widget="process" type="error" />
-  if (!output) return <Error widget="process" type="noOutput" />
+  if (error) return <Error widget="process" type="error" withSettings />
+  if (!output) return <Error widget="process" type="noOutput" withSettings />
 
   const data = parseJson(output)
-  if (!data) return <Error widget="process" type="noData" />
+  if (!data) return <Error widget="process" type="noData" withSettings />
 
   const { process } = data
   return (
     <div className="simple-bar simple-bar--process">
-      <Process output={process} />
+      {processWidget && <Process output={process} />}
       <Settings />
     </div>
   )

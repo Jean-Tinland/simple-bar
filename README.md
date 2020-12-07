@@ -43,6 +43,10 @@ $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application
 
 I'm using [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as main font and device default monospaced font as fallback.
 
+### For users with a custom yabai install (path)
+
+There is a setting in the settings module allowing a custom yabai path.
+
 ## Usage
 
 After cloning the project, simply activate all three "simple-bar" widgets in Übersicht's widgets list.
