@@ -101,7 +101,7 @@ const Settings = () => {
                     }
                   }
                   return (
-                    <>
+                    <div key={subKey}>
                       {title && <div className="settings__item-title">{title}</div>}
                       <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
                         <Item
@@ -114,7 +114,7 @@ const Settings = () => {
                           onChange={onChange}
                         />
                       </div>
-                    </>
+                    </div>
                   )
                 })}
                 {infos && infos.length && (
