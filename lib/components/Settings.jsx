@@ -23,7 +23,16 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
     return (
       <>
         <label htmlFor={code}>{label}</label>
-        <input id={code} type="text" defaultValue={defaultValue} placeholder={placeholder} onBlur={onChange} />
+        <input
+          id={code}
+          type="text"
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onBlur={onChange}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+        />
       </>
     )
   }

@@ -4,13 +4,13 @@ import { classnames, clickEffect, notification, refreshData } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
-const toggleWifi = (isActive) => {
+const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
-    run(`networksetup -setairportpower en0 off`).then(refreshData)
-    notification('Disabling wifi...')
+    run(`networksetup -setairportpower ${networkDevice} off`).then(refreshData)
+    notification('Disabling network...')
   } else {
-    run(`networksetup -setairportpower en0 on`).then(refreshData)
-    notification('Enabling wifi...')
+    run(`networksetup -setairportpower ${networkDevice} on`).then(refreshData)
+    notification('Enabling network...')
   }
 }
 
@@ -21,7 +21,7 @@ const renderName = (name) => {
   return name
 }
 
-const render = ({ output }) => {
+const render = ({ output, networkDevice }) => {
   if (!output) return null
   const settings = getSettings()
   const { wifiWidget } = settings.widgets
@@ -39,7 +39,7 @@ const render = ({ output }) => {
 
   const onClick = (e) => {
     clickEffect(e)
-    toggleWifi(isActive)
+    toggleWifi(isActive, networkDevice)
   }
 
   return (

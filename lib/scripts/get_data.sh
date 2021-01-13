@@ -1,4 +1,5 @@
 ACTIVE_WIDGETS="$1"
+NETWORK_DEVICE="$2"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
@@ -27,8 +28,8 @@ if contains $ACTIVE_WIDGETS "batteryWidget"; then
 fi
 
 if contains $ACTIVE_WIDGETS "wifiWidget"; then
-  WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
-  WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
+  WIFI_STATUS=$(ifconfig $NETWORK_DEVICE | grep status | cut -c 10-)
+  WIFI_SSID=$(networksetup -getairportnetwork $NETWORK_DEVICE | cut -c 24-)
 fi
 
 if contains $ACTIVE_WIDGETS "soundWidget"; then

@@ -48,8 +48,9 @@ const className = `
 
 const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global
+const { networkDevice } = settings.networkWidgetOptions
 
-const command = `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}"`
+const command = `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}"`
 
 const render = ({ output, error }) => {
   if (error) return <Error widget="data" type="error" />
@@ -67,7 +68,7 @@ const render = ({ output, error }) => {
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
-      <Wifi output={wifi} />
+      <Wifi output={wifi} networkDevice={networkDevice} />
       <Keyboard output={keyboard} />
       <DateDisplay />
       <Time />
