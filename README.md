@@ -4,34 +4,56 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
+## Table of content
+
+- [Features](#features)
+- [Compatibility & requirements](#compatibility)
+- [Preview](#preview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Settings](#settings)
+- [Clickable elements](#clickable-elements)
+- [Refresh bar on app or workspace change](#refresh-bar)
+- [Customization](#customization)
+- [Special thanks](#special-thanks)
+
+<a name="features"></a>
+
 ## Features
 
 - 3 themes (dark/light/auto)(\*)
 - Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*\*)
-- Show workspace number & current space (more detailed explanations in dual display support section)
+- Display workspace number & current space
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps in settings)
 - Show current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
 - Spotify, Music/iTunes, browser current track
 - Battery, microphone, sound level, wifi, date, time widgets
-- **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover (1s delay / instant with `cmd` key pressed)
+- **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
-(\*) You'll need to manually refresh simple-bar when system theme switch its own theme.\
-(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on simple-bar widget.
+(\*) Unfortunatly not so "auto" anymore. You'll need to manually refresh **simple-bar** when system theme switch its own theme.\
+(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.
+
+<a name="compatibility"></a>
 
 ## Compatibility & requirements
 
 In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date.\
-`simple-bar` has been tested and is fully working on both Catalina & Big Sur.
+Becareful, for Big Sur users, some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).\
+`simple-bar` has been tested and is working on both Catalina & Big Sur.
 You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.\
-On the first simple-bar execution, an alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with simple-bar opened). It is required to agree to this in order to make the CurrentTrack widget work.
+On the first **simple-bar** execution, an alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with **simple-bar** opened). It is required to agree to this in order to make the CurrentTrack widget work.
+
+<a name="preview"></a>
 
 ## Preview
 
 ![img](./images/preview.jpg)
 
 You'll find more information & images on [simple-bar website](https://www.simple-bar.com/en/).
+
+<a name="installation"></a>
 
 ## Installation
 
@@ -47,17 +69,40 @@ I'm using [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as main font and 
 
 There is a setting in the settings module allowing a custom yabai path.
 
+<a name="usage"></a>
+
 ## Usage
 
-After cloning the project, simply activate all three "simple-bar" widgets in Übersicht's widgets list.
+After cloning the project, simply activate all three **simple-bar** widgets in Übersicht's widgets list.
 
 - `simple-bar-process-jsx`
 - `simple-bar-spaces-jsx`
 - `simple-bar-data-jsx`
 
+<a name="settings"></a>
+
+## Settings
+
+As explained at the begining of this README file, Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. You may want to click at the top center of the screen, where the process name of the current app is displayed in order to easily get focus on **simple-bar** before pressing `cmd + ,`.
+
+In this settings module you'll find all the customization options available from layout to specific widgets show/hide toggle.
+
+<a name="clickable-elements"></a>
+
 ## Clickable elements
 
-The spaces and wifi elements in `simple-bar-spaces-jsx` and `simple-bar-data-jsx` are clickable. You can click the wifi element to toggle wifi on/off or on the spaces to go directly to a specific space. Leave you cursor for 1 second over a space in order to show the "move" & "remove" buttons. These buttons and the "Add space" button will only be shown if you have **disabled SIP**
+Some elements of **simple-bar** are interactives :
+
+- Toggle caffeinate mode on battery widget click (prevent your mac to sleep while activate)
+- Toggle wifi on/off on wifi widget click
+- Toggle microphone on microphone widget click
+- Play/pause Spotify current song on Spotify widget click
+- Play/pause Music/iTunes current song on Music widget click
+- Open Calendar app on date widget click
+- Remove, move spaces on space hover (1s delay / instant while `cmd` key is pressed) (**Only with SIP disabled**)
+- Add space on "plus" button click (**Only with SIP disabled**)
+
+<a name="refresh-bar"></a>
 
 ## Refresh bar on app or workspace change
 
@@ -91,6 +136,8 @@ yabai -m signal --add event=window_destroyed action="osascript -e 'tell applicat
 yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 ```
 
+<a name="customization"></a>
+
 ## Customization
 
 ### Colors & theme
@@ -120,11 +167,12 @@ export const Theme = {
 
 ### Pywal
 
-To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.
+To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.\
+As I am not using this myself, I may have missed some problems, feel free to open an issue about it anytime.
 
 ### Icons
 
-Now to add new icons you'll need to get a `.svg` with a `0 0 24 24` viewBox. Then you can simply add it to the `simple-bar > lib > components > Icons.jsx` :
+Now to add new icons you'll need to get a `.svg` with a `0 0 24 24` viewBox. Then you can simply add it to the `simple-bar > lib > components > Icons.jsx`:
 
 ```javascript
 export const Caprine = (props) => (
@@ -173,6 +221,8 @@ As you can see if there is no icon defined for a running process, there is a def
 You'll find a `CustomStyles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
+<a name="special-thanks"></a>
+
 ## Special thanks
 
 - Pywal integration was added thanks to [Amar Paul](https://github.com/Amar1729).
@@ -181,3 +231,4 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Large selection of icons added thanks to [jamieweavis](https://github.com/jamieweavis), [MikoMagni](https://github.com/MikoMagni) and [anujc4](https://github.com/anujc4)
 - Microphone mute & unmute added thanks to [izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [theshortcut](https://github.com/theshortcut)
+- Everyone opening issues that are helping me improve this little project
