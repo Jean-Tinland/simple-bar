@@ -60,8 +60,8 @@ if (weatherWidget) {
 }
 
 const command = () => {
-  const location = getLocation()
-  if (!location) refreshData()
+  const location = weatherWidget ? getLocation() : ''
+  if (weatherWidget && !location) refreshData()
   return run(`${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${location}"`)
 }
 
