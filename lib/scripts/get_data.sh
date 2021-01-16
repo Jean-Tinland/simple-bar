@@ -1,5 +1,6 @@
 ACTIVE_WIDGETS="$1"
 NETWORK_DEVICE="$2"
+WEATHER_LOCATION="$3"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
@@ -9,12 +10,19 @@ contains() {
   fi
 }
 
+WEATHER="{}"
+if contains $ACTIVE_WIDGETS "weatherWidget"; then
+  if [ "$WEATHER_LOCATION" != "" ]; then
+    WEATHER=$(curl -s "wttr.in/$WEATHER_LOCATION?format=j1")
+  fi
+fi
+
 if contains $ACTIVE_WIDGETS "batteryWidget"; then
-    BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
-    BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
-    
-    CAFFEINATE=caffeinate
-    CAFFEINATE_PID=""
+  BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
+  BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
+  
+  CAFFEINATE=caffeinate
+  CAFFEINATE_PID=""
   if pgrep $CAFFEINATE 2>&1 >/dev/null; then
     CAFFEINATE_PID=$(pgrep $CAFFEINATE)
   fi
@@ -79,6 +87,9 @@ fi
 
 echo $(cat <<-EOF
   {
+    "weather": {
+      "data": $WEATHER
+    },
     "battery": {
       "percentage": "$BATTERY_PERCENTAGE",
       "charging": "$BATTERY_CHARGING",

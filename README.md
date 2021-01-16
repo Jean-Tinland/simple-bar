@@ -30,10 +30,12 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
 - Spotify, Music/iTunes, browser current track
 - Battery, microphone, sound level, wifi, date, time widgets
+- Weather & keyboard language input widgets (disabled by default)(\*\*\*)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (\*) Unfortunatly not so "auto" anymore. You'll need to manually refresh **simple-bar** when system theme switch its own theme.\
-(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.
+(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
+(\*\*\*) You'll be prompted to let Übersicht use you geolocation.
 
 <a name="compatibility"></a>
 
