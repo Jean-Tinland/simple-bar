@@ -13,7 +13,7 @@ contains() {
 WEATHER="{}"
 if contains $ACTIVE_WIDGETS "weatherWidget"; then
   if [ "$WEATHER_LOCATION" != "" ]; then
-    WEATHER=$(curl -s "wttr.in/$WEATHER_LOCATION?format=j1")
+    WEATHER=$(curl -s "wttr.in/$WEATHER_LOCATION?format=j1" 2>/dev/null || echo "{}")
   fi
 fi
 
