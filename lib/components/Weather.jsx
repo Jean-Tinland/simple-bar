@@ -15,7 +15,7 @@ const refreshWeather = (e) => {
   notification('Opening forecast from wttr.in...')
 }
 
-const Weather = ({ output, unit }) => {
+const Weather = ({ output }) => {
   const settings = getSettings()
   const { weatherWidget } = settings.widgets
   if (!weatherWidget || !output) return null
@@ -23,7 +23,9 @@ const Weather = ({ output, unit }) => {
   const { data } = output
   if (!data.current_condition) return null
 
-  const location = getLocation()
+  const { unit, customLocation } = settings.weatherWidgetOptions
+  const userLocation = customLocation !== '' ? customLocation : undefined
+  const location = userLocation || getLocation()
 
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F

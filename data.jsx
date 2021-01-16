@@ -53,16 +53,19 @@ const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global
 const { weatherWidget } = settings.widgets
 const { networkDevice } = settings.networkWidgetOptions
-const { unit } = settings.weatherWidgetOptions
+const { customLocation } = settings.weatherWidgetOptions
+const userLocation = customLocation !== '' ? customLocation : undefined
 
-if (weatherWidget) {
+if (weatherWidget && !userLocation) {
   window.geolocation.getCurrentPosition(setLocation)
 }
 
 const command = () => {
   const location = weatherWidget ? getLocation() : ''
-  if (weatherWidget && !location) refreshData()
-  return run(`${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${location}"`)
+  if (weatherWidget && (!location || location === '') && !userLocation) refreshData()
+  return run(
+    `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${userLocation || location}"`
+  )
 }
 
 const render = ({ output, error }) => {
@@ -74,15 +77,12 @@ const render = ({ output, error }) => {
 
   const { weather, battery, wifi, keyboard, mic, sound, spotify, music, browserTrack } = data
 
-  let location
-  if (weatherWidget && !location) location = getLocation()
-
   return (
     <div className="simple-bar simple-bar--data">
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Music output={music} />
-      <Weather output={weather} unit={unit} />
+      <Weather output={weather} />
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
