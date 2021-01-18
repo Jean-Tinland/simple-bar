@@ -1,4 +1,4 @@
-import { classnames, clickEffect, getLocation, notification } from '../utils.js'
+import { classnames, clickEffect, getLocation, notification, setLocation } from '../utils.js'
 import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
@@ -27,6 +27,7 @@ const Weather = ({ output }) => {
   const { unit, hideLocation, customLocation } = settings.weatherWidgetOptions
   const userLocation = customLocation !== '' ? customLocation : undefined
   const location = userLocation || getLocation()
+  if (!location) window.geolocation.getCurrentPosition(setLocation)
 
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F
