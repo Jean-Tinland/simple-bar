@@ -1,12 +1,13 @@
 import { classnames, clickEffect, getLocation, notification } from '../utils.js'
-import { SunIcon, CloudIcon, RainIcon, SnowIcon } from './Icons.jsx'
+import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
 
-const getIcon = (description) => {
+const getIcon = (description, atNight) => {
   if (description.includes('snow')) return SnowIcon
   if (description.includes('rain')) return RainIcon
   if (description.includes('cloud')) return CloudIcon
+  if (atNight) return MoonIcon
   return SunIcon
 }
 
@@ -23,7 +24,7 @@ const Weather = ({ output }) => {
   const { data } = output
   if (!data.current_condition) return null
 
-  const { unit, customLocation } = settings.weatherWidgetOptions
+  const { unit, hideLocation, customLocation } = settings.weatherWidgetOptions
   const userLocation = customLocation !== '' ? customLocation : undefined
   const location = userLocation || getLocation()
 
@@ -36,6 +37,7 @@ const Weather = ({ output }) => {
   const sunriseData = astronomy[0].sunrise.replace(' AM', '').split(':')
   const sunsetData = astronomy[0].sunset.replace(' PM', '').split(':')
 
+  const now = new Date()
   const nowIntervalStart = new Date()
   nowIntervalStart.setHours(nowIntervalStart.getHours() - 1)
   const nowIntervalStop = new Date()
@@ -45,7 +47,10 @@ const Weather = ({ output }) => {
   const sunsetTime = new Date()
   sunsetTime.setHours(parseInt(sunsetData[0]) + 12, parseInt(sunsetData[1]), 0, 0)
 
-  const Icon = getIcon(description)
+  const atNight = sunriseTime >= now || now >= sunsetTime
+
+  const Icon = getIcon(description, atNight)
+  const label = hideLocation ? '' : `${location}, `
 
   const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
   const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
@@ -59,7 +64,8 @@ const Weather = ({ output }) => {
     <a className={classes} href={`https://wttr.in/${location}`} onClick={refreshWeather}>
       <div className="weather__gradient" />
       <Icon className="weather__icon" />
-      {location}, {temperature}°{unit}
+      {label}
+      {temperature}°{unit}
     </a>
   )
 }
