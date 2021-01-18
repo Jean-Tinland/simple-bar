@@ -5,8 +5,9 @@ import { clickEffect } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
-const openCalendarApp = () => {
-  run('open -a Calendar')
+const openCalendarApp = (calendarApp) => {
+  const appName = calendarApp ? calendarApp : 'Calendar'
+  run(`open -a ${appName}`)
 }
 
 const DateDisplay = () => {
@@ -15,7 +16,7 @@ const DateDisplay = () => {
   const { dateWidget } = widgets
   if (!dateWidget) return null
 
-  const { shortDateFormat, locale } = dateWidgetOptions
+  const { shortDateFormat, locale, calendarApp } = dateWidgetOptions
   const formatOptions = shortDateFormat ? 'short' : 'long'
 
   const options = {
@@ -26,7 +27,7 @@ const DateDisplay = () => {
 
   const onClick = (e) => {
     clickEffect(e)
-    openCalendarApp()
+    openCalendarApp(calendarApp)
   }
 
   const _locale = locale.length >= 5 ? locale : 'en-UK'

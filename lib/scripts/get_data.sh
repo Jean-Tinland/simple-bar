@@ -1,4 +1,6 @@
 ACTIVE_WIDGETS="$1"
+NETWORK_DEVICE="$2"
+WEATHER_LOCATION="$3"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
@@ -8,12 +10,19 @@ contains() {
   fi
 }
 
-if contains $ACTIVE_WIDGETS "batteryWidget"; then
-    BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
-    BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
+WEATHER="{}"
+if contains $ACTIVE_WIDGETS "weatherWidget"; then
+  if [ "$WEATHER_LOCATION" != "" ]; then
+    WEATHER=$(curl -s "wttr.in/$WEATHER_LOCATION?format=j1" 2>/dev/null || echo "{}")
+  fi
+fi
 
-    CAFFEINATE=caffeinate
-    CAFFEINATE_PID=""
+if contains $ACTIVE_WIDGETS "batteryWidget"; then
+  BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
+  BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
+  
+  CAFFEINATE=caffeinate
+  CAFFEINATE_PID=""
   if pgrep $CAFFEINATE 2>&1 >/dev/null; then
     CAFFEINATE_PID=$(pgrep $CAFFEINATE)
   fi
@@ -34,8 +43,8 @@ if contains $ACTIVE_WIDGETS "vpnWidget"; then
 fi
 
 if contains $ACTIVE_WIDGETS "wifiWidget"; then
-  WIFI_STATUS=$(ifconfig en0 | grep status | cut -c 10-)
-  WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
+  WIFI_STATUS=$(ifconfig $NETWORK_DEVICE | grep status | cut -c 10-)
+  WIFI_SSID=$(networksetup -getairportnetwork $NETWORK_DEVICE | cut -c 24-)
 fi
 
 if contains $ACTIVE_WIDGETS "soundWidget"; then
@@ -55,7 +64,7 @@ if contains $ACTIVE_WIDGETS "spotifyWidget"; then
   SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
   if [ "$SPOTIFY_IS_RUNNING" = true ]; then
-    SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null)
+    SPOTIFY_PLAYER_STATE=$(osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped")
     SPOTIFY_TRACK_NAME=$(osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null | tr \" \' || echo "unknown track")
     SPOTIFY_ARTIST_NAME=$(osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null | tr \" \' || echo "unknown artist")
   fi
@@ -70,9 +79,9 @@ if contains $ACTIVE_WIDGETS "musicWidget"; then
   MUSIC_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "'$MUSIC_PROCESS'"' 2>&1)
 
   if [ "$MUSIC_IS_RUNNING" = true ]; then
-    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string' 2>/dev/null )
-    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' 2>/dev/null | tr \" \' || echo "unknown track" )
-    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' 2>/dev/null | tr \" \' || echo "unknown artist" )
+    MUSIC_PLAYER_STATE=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to player state as string' 2>/dev/null)
+    MUSIC_TRACK_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to name of current track as string' 2>/dev/null | tr \" \' || echo "unknown track")
+    MUSIC_ARTIST_NAME=$(osascript -e 'tell application "'$MUSIC_PROCESS'" to artist of current track as string' 2>/dev/null | tr \" \' || echo "unknown artist")
   fi
 fi
 
@@ -85,6 +94,9 @@ fi
 
 echo $(cat <<-EOF
   {
+    "weather": {
+      "data": $WEATHER
+    },
     "battery": {
       "percentage": "$BATTERY_PERCENTAGE",
       "charging": "$BATTERY_CHARGING",

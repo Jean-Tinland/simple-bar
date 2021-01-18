@@ -1,6 +1,6 @@
 import { React, run } from 'uebersicht'
 import Specter from './Specter.jsx'
-import { PlayingIcon, PausedIcon } from './Icons.jsx'
+import { PlayingIcon, PausedIcon, StoppedIcon } from './Icons.jsx'
 
 import { refreshData, clickEffect, classnames } from '../utils'
 
@@ -16,18 +16,26 @@ const togglePlay = (isPaused) => {
   }
 }
 
+const getIcon = (playerState) => {
+  if (playerState === 'stopped') return StoppedIcon
+  if (playerState === 'playing') return PlayingIcon
+  return PausedIcon
+}
+
 const Spotify = ({ output }) => {
   const ref = useRef()
   const settings = getSettings()
   const { widgets, spotifyWidgetOptions } = settings
   const { spotifyWidget } = widgets
+
   if (!spotifyWidget || !output) return null
   const { playerState, trackName, artistName, spotifyIsRunning } = output
   const { showSpecter } = spotifyWidgetOptions
+
   if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
 
   const isPlaying = playerState === 'playing'
-  const Icon = isPlaying ? PlayingIcon : PausedIcon
+  const Icon = getIcon(playerState)
 
   const onClick = (e) => {
     clickEffect(e)
