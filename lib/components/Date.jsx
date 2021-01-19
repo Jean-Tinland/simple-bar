@@ -7,7 +7,7 @@ import { getSettings } from '../settings.js'
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp ? calendarApp : 'Calendar'
-  run(`open -a ${appName}`)
+  run(`open -a "${appName}"`)
 }
 
 const DateDisplay = () => {
