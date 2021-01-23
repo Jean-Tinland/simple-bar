@@ -24,7 +24,7 @@ const Weather = ({ output }) => {
   const { data } = output
   if (!data.current_condition) return null
 
-  const { unit, hideLocation, customLocation } = settings.weatherWidgetOptions
+  const { unit, hideLocation, hideGradient, customLocation } = settings.weatherWidgetOptions
   const userLocation = customLocation !== '' ? customLocation : undefined
   const location = userLocation || getLocation()
   if (!location) window.geolocation.getCurrentPosition(setLocation)
@@ -63,7 +63,7 @@ const Weather = ({ output }) => {
 
   return (
     <a className={classes} href={`https://wttr.in/${location}`} onClick={refreshWeather}>
-      <div className="weather__gradient" />
+      {!hideGradient && <div className="weather__gradient" />}
       <Icon className="weather__icon" />
       {label}
       {temperature}°{unit}
