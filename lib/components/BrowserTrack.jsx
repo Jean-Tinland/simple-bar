@@ -1,7 +1,7 @@
 import { React } from 'uebersicht'
 
 import Specter from './Specter.jsx'
-import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon, MicrosoftEdgeIcon } from './Icons.jsx'
+import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
 
@@ -11,7 +11,6 @@ const getIcon = (browser) => {
   if (browser === 'chrome') return GoogleChromeIcon
   if (browser === 'safari') return SafariIcon
   if (browser === 'firefox') return FirefoxIcon
-  if (browser === 'edge') return MicrosoftEdgeIcon
   return DefaultIcon
 }
 
