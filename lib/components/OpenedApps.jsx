@@ -11,11 +11,13 @@ const OpenedApps = ({ type, apps }) => {
       return a.id > b.id
     })
     .map((app, i) => {
-      const { minimized, focused, app: name } = app
+      const { minimized, focused, app: name, 'zoom-parent': zoomParent, 'zoom-fullscreen': zoomFullscreen } = app
+      console.log({ zoomFullscreen, zoomParent })
       if (minimized === 1) return null
       const Icon = appIcons[name] || appIcons['Default']
       const classes = classnames('space__icon', {
-        'space__icon--focused': focused === 1
+        'space__icon--focused': focused === 1,
+        'space__icon--fullscreen': zoomParent === 1 || zoomFullscreen === 1
       })
       return <Icon className={classes} key={i} />
     })
