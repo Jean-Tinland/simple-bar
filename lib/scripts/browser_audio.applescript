@@ -30,25 +30,6 @@ if application "Google Chrome" is running then
   end tell
 end if
 
-if application "Microsoft Edge" is running then
-  tell application "Microsoft Edge"
-    set window_list to every window
-
-    repeat with the_window in window_list
-      set tab_list to every tab in the_window
-
-      repeat with the_tab in tab_list
-        set the_title to the title of the_tab
-        if "- YouTube" is in the_title then
-          if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
-          set browser to "edge"
-          set active_tab to 1
-        end if
-      end repeat
-    end repeat
-  end tell
-end if
-
 if application "Safari" is running then
   tell application "Safari"
     set window_list to every window

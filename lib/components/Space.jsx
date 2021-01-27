@@ -13,6 +13,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
   if (display !== space.display) return null
+
   const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
   const settings = getSettings()
   const { spacesDisplay } = settings
@@ -35,7 +36,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
 
   const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
 
-  const classes = classnames('space', {
+  const classes = classnames(`space space--${type}`, {
     'space--focused': focused === 1,
     'space--visible': visible === 1,
     'space--fullscreen': fullscreen === 1,

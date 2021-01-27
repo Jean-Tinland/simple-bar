@@ -65,7 +65,7 @@ Clone this repo to your Übersicht widgets directory with the following command.
 $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-I'm using [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as main font and device default monospaced font as fallback.
+[JetBrains Mono](https://www.jetbrains.com/lp/mono/) is used by default. You can set your own font in the "Global" settings tab.
 
 ### For users with a custom yabai install (path)
 
@@ -116,6 +116,8 @@ To refresh them on space or display change, you can add these lines utilizing [y
 yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 # Refresh spaces widget on display focus change
 yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+# Refresh spaces widget on window resize
+yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 # Refresh process widget on space change
 yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 
