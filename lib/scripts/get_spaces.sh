@@ -1,8 +1,7 @@
 YABAI_PATH=$1
 
 SPACES=$($YABAI_PATH -m query --spaces)
-WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g' )
-WINDOWS=$(echo ${WINDOWS} | tr -d '\n')
+WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g; s/\\.//g; s/\n//g')
 DISPLAYS=$($YABAI_PATH -m query --displays)
 SIP=$(csrutil status)
 
