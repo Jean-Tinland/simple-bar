@@ -10,6 +10,7 @@ import Keyboard from './lib/components/Keyboard.jsx'
 import Spotify from './lib/components/Spotify.jsx'
 import Music from './lib/components/Music.jsx'
 import BrowserTrack from './lib/components/BrowserTrack.jsx'
+import VPN from './lib/components/VPN.jsx'
 import Error from './lib/components/Error.jsx'
 
 import { parseJson, getTheme, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils.js'
@@ -39,6 +40,7 @@ const className = `
   ${Styles.MusicStyles}
   ${Styles.BrowserTrackStyles}
   ${Styles.SpecterStyles}
+  ${Styles.VPNStyles}
 
   ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
   ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
@@ -75,7 +77,7 @@ const render = ({ output, error }) => {
   const data = parseJson(output)
   if (!data) return <Error widget="data" type="noData" />
 
-  const { weather, battery, wifi, keyboard, mic, sound, spotify, music, browserTrack } = data
+  const { weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
 
   return (
     <div className="simple-bar simple-bar--data">
@@ -86,6 +88,7 @@ const render = ({ output, error }) => {
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
+      <VPN output={vpn} />
       <Wifi output={wifi} networkDevice={networkDevice} />
       <Keyboard output={keyboard} />
       <DateDisplay />
