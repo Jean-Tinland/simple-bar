@@ -22,6 +22,7 @@ const className = `
   ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
   ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
   ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
+  ${settings.global.inlineSpacesOptions ? Styles.InlineSpacesOptionsOverride : ''}
 
   ${CustomStyles}
 `
