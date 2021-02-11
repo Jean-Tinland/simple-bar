@@ -4,22 +4,24 @@ import { classnames, clickEffect, refreshData } from '../utils.js'
 
 import { getSettings } from '../settings.js'
 
-const toggleVPN = (isConnected) => {
+const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
-    run(`osascript -e 'tell application "Viscosity" to disconnect "office VPN"'`).then(refreshData)
+    run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`).then(refreshData)
+    notification(`Disabling Viscosity ${vpnConnectionName} network...`)
   } else {
-    run(`osascript -e 'tell application "Viscosity" to connect "office VPN"'`).then(refreshData)
+    run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`).then(refreshData)
+    notification(`Enabling Viscosity ${vpnConnectionName} network...`)
   }
 }
 
-const render = ({ output }) => {
-  if (!output) return null
+const render = ({ output, vpnConnectionName }) => {
+  if (!output || vpnConnectionName === '') return null
   const settings = getSettings()
   const { vpnWidget } = settings.widgets
   if (!vpnWidget) return null
 
   const { status } = output
-  const isConnected = status === "Connected"
+  const isConnected = status === 'Connected'
 
   const classes = classnames('vpn', {
     'vpn--disconnected': !isConnected
@@ -29,7 +31,7 @@ const render = ({ output }) => {
 
   const clicked = (e) => {
     clickEffect(e)
-    toggleVPN(isConnected)
+    toggleVPN(isConnected, vpnConnectionName)
   }
 
   return (
@@ -38,6 +40,6 @@ const render = ({ output }) => {
       {status}
     </div>
   )
-};
+}
 
 export default render

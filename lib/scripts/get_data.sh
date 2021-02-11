@@ -1,6 +1,7 @@
 ACTIVE_WIDGETS="$1"
 NETWORK_DEVICE="$2"
 WEATHER_LOCATION="$3"
+VPN_CONNECTION_NAME="$4"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
@@ -37,8 +38,8 @@ fi
 
 if contains $ACTIVE_WIDGETS "vpnWidget"; then
   VPN_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1)
-  if [ "$VPN_IS_RUNNING" == true ]; then
-    VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
+  if [ "$VPN_IS_RUNNING" = true ]; then
+    VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "'$VPN_CONNECTION_NAME'"' 2>/dev/null)
   fi
 fi
 

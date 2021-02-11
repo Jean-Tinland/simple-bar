@@ -31,8 +31,11 @@ const { yabaiPath, shell } = settings.global
 
 const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
 
-const render = (state) => {
-  const { output, error } = state
+const render = ({ output, error }) => {
+  if (error) {
+    console.log('Error in spaces.jsx', error)
+    return <Error widget="spaces" type="error" />
+  }
   if (error) return <Error widget="spaces" type="error" />
   if (!output) return <Error widget="spaces" type="noOutput" />
   const data = parseJson(output)

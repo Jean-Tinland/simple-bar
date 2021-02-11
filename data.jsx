@@ -55,6 +55,7 @@ const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global
 const { weatherWidget } = settings.widgets
 const { networkDevice } = settings.networkWidgetOptions
+const { vpnConnectionName } = settings.vpnWidgetOptions
 const { customLocation } = settings.weatherWidgetOptions
 const userLocation = customLocation !== '' ? customLocation : undefined
 
@@ -66,12 +67,17 @@ const command = () => {
   const location = weatherWidget ? getLocation() : ''
   if (weatherWidget && (!location || location === '') && !userLocation) refreshData()
   return run(
-    `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${userLocation || location}"`
+    `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${
+      userLocation || location
+    }" "${vpnConnectionName}"`
   )
 }
 
 const render = ({ output, error }) => {
-  if (error) return <Error widget="data" type="error" />
+  if (error) {
+    console.log('Error in data.jsx', error)
+    return <Error widget="data" type="error" />
+  }
   if (!output) return <Error widget="data" type="noOutput" />
 
   const data = parseJson(output)
@@ -88,7 +94,7 @@ const render = ({ output, error }) => {
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
-      <VPN output={vpn} />
+      <VPN output={vpn} vpnConnectionName={vpnConnectionName} />
       <Wifi output={wifi} networkDevice={networkDevice} />
       <Keyboard output={keyboard} />
       <DateDisplay />

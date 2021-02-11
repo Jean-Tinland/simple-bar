@@ -34,7 +34,10 @@ const { processWidget } = settings.widgets
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
-  if (error) return <Error widget="process" type="error" withSettings />
+  if (error) {
+    console.log('Error in process.jsx', error)
+    return <Error widget="process" type="error" withSettings />
+  }
   if (!output) return <Error widget="process" type="noOutput" withSettings />
 
   const data = parseJson(output)
