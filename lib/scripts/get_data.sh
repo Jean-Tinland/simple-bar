@@ -35,6 +35,13 @@ if contains $ACTIVE_WIDGETS "batteryWidget"; then
   fi
 fi
 
+if contains $ACTIVE_WIDGETS "vpnWidget"; then
+  VPN_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1)
+  if [ "$VPN_IS_RUNNING" == true ]; then
+    VPN_STATUS=$(osascript -e 'tell application "Viscosity" to return state of the first connection where name is equal to "office VPN"')
+  fi
+fi
+
 if contains $ACTIVE_WIDGETS "wifiWidget"; then
   WIFI_STATUS=$(ifconfig $NETWORK_DEVICE | grep status | cut -c 10-)
   WIFI_SSID=$(networksetup -getairportnetwork $NETWORK_DEVICE | cut -c 24-)
@@ -94,6 +101,9 @@ echo $(cat <<-EOF
       "percentage": "$BATTERY_PERCENTAGE",
       "charging": "$BATTERY_CHARGING",
       "caffeinate": "$CAFFEINATE_PID"
+    },
+    "vpn": {
+      "status": "$VPN_STATUS"
     },
     "wifi": {
       "status": "$WIFI_STATUS",
