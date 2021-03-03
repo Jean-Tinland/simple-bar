@@ -25,6 +25,8 @@ const render = ({ output, networkDevice }) => {
   if (!output) return null
   const settings = getSettings()
   const { wifiWidget } = settings.widgets
+  const { toggleWifiOnClick } = settings.networkWidgetOptions
+
   if (!wifiWidget) return null
 
   const { status, ssid } = output
@@ -38,8 +40,10 @@ const render = ({ output, networkDevice }) => {
   const Icon = isActive ? WifiIcon : WifiOffIcon
 
   const onClick = (e) => {
-    clickEffect(e)
-    toggleWifi(isActive, networkDevice)
+    if (toggleWifiOnClick) {
+      clickEffect(e)
+      toggleWifi(isActive, networkDevice)
+    }
   }
 
   return (
