@@ -1,6 +1,13 @@
+import { run } from 'uebersicht'
+
 import { ClockIcon } from './Icons.jsx'
+import { clickEffect } from '../utils.js'
 
 import { getSettings } from '../settings.js'
+
+const displayNotificationCenter = () => {
+  run(`osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`)
+}
 
 const Time = () => {
   const settings = getSettings()
@@ -24,8 +31,15 @@ const Time = () => {
   const diff = Math.max(0, dayEnd - new Date())
   const fillerWidth = (100 - (100 * diff) / range) / 100
 
+  const onClick = (e) => {
+    if (displayNotificationCenter) {
+      clickEffect(e)
+      displayNotificationCenter()
+    }
+  }
+
   return (
-    <div className="time">
+    <div className="time" onClick={onClick}>
       <ClockIcon className="time__icon" />
       {time}
       {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
