@@ -5,9 +5,9 @@ VPN_CONNECTION_NAME="$4"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
-    return 1
-  else
     return 0
+  else
+    return 1
   fi
 }
 
