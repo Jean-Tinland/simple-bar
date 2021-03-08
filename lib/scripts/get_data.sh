@@ -5,20 +5,20 @@ VPN_CONNECTION_NAME="$4"
 
 contains() {
   if printf '%s\n' "$1" | grep -Fqe "$2"; then
-    return 1
-  else
     return 0
+  else
+    return 1
   fi
 }
 
 WEATHER="{}"
-if contains $ACTIVE_WIDGETS "weatherWidget"; then
+if contains "$ACTIVE_WIDGETS" "weatherWidget"; then
   if [ "$WEATHER_LOCATION" != "" ]; then
     WEATHER=$(curl -s "wttr.in/$WEATHER_LOCATION?format=j1" 2>/dev/null || echo "{}")
   fi
 fi
 
-if contains $ACTIVE_WIDGETS "batteryWidget"; then
+if contains "$ACTIVE_WIDGETS" "batteryWidget"; then
   BATTERY_PERCENTAGE=$(pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d'%')
   BATTERY_STATUS=$(pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19)
   
@@ -36,32 +36,32 @@ if contains $ACTIVE_WIDGETS "batteryWidget"; then
   fi
 fi
 
-if contains $ACTIVE_WIDGETS "vpnWidget"; then
+if contains "$ACTIVE_WIDGETS" "vpnWidget"; then
   VPN_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1)
   if [ "$VPN_IS_RUNNING" = true ]; then
     VPN_STATUS=$(osascript -e "tell application \"Viscosity\" to return state of the first connection where name is equal to \"$VPN_CONNECTION_NAME\"" 2>/dev/null)
   fi
 fi
 
-if contains $ACTIVE_WIDGETS "wifiWidget"; then
+if contains "$ACTIVE_WIDGETS" "wifiWidget"; then
   WIFI_STATUS=$(ifconfig $NETWORK_DEVICE | grep status | cut -c 10-)
   WIFI_SSID=$(networksetup -getairportnetwork $NETWORK_DEVICE | cut -c 24-)
 fi
 
-if contains $ACTIVE_WIDGETS "soundWidget"; then
+if contains "$ACTIVE_WIDGETS" "soundWidget"; then
   VOLUME=$(osascript -e 'set ovol to output volume of (get volume settings)')
   MUTED=$(osascript -e 'set ovol to output muted of (get volume settings)')
 fi
 
-if contains $ACTIVE_WIDGETS "micWidget"; then
+if contains "$ACTIVE_WIDGETS" "micWidget"; then
   MIC=$(osascript -e 'set ovol to input volume of (get volume settings)')
 fi
 
-if contains $ACTIVE_WIDGETS "keyboardWidget"; then
+if contains "$ACTIVE_WIDGETS" "keyboardWidget"; then
   KEYBOARD=$(defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g')
 fi
 
-if contains $ACTIVE_WIDGETS "spotifyWidget"; then
+if contains "$ACTIVE_WIDGETS" "spotifyWidget"; then
   SPOTIFY_IS_RUNNING=$(osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1)
 
   if [ "$SPOTIFY_IS_RUNNING" = true ]; then
@@ -71,7 +71,7 @@ if contains $ACTIVE_WIDGETS "spotifyWidget"; then
   fi
 fi
 
-if contains $ACTIVE_WIDGETS "musicWidget"; then
+if contains "$ACTIVE_WIDGETS" "musicWidget"; then
   MUSIC_PROCESS="Music"
   if [ $(sw_vers -productVersion) = "10.15" ]; then
     MUSIC_PROCESS="iTunes"
@@ -87,7 +87,7 @@ if contains $ACTIVE_WIDGETS "musicWidget"; then
 fi
 
 BROWSER_TRACK="{}"
-if contains $ACTIVE_WIDGETS "browserTrackWidget"; then
+if contains "$ACTIVE_WIDGETS" "browserTrackWidget"; then
   if GET_BROWSER_TRACK=$(osascript ./simple-bar/lib/scripts/browser_audio.applescript 2>&1); then
     BROWSER_TRACK=$GET_BROWSER_TRACK
   fi
