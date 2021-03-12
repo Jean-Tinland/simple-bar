@@ -11,24 +11,27 @@ to replace_chars(this_text, search_string, replacement_string)
  return this_text
 end replace_chars
 
-if application "Google Chrome" is running then
-  tell application "Google Chrome"
-    set window_list to every window
+try
+  do shell script "osascript -e 'exists application \"Google Chromed\"'"
+  if application "Google Chrome" is running then
+    tell application "Google Chrome"
+      set window_list to every window
 
-    repeat with the_window in window_list
-      set tab_list to every tab in the_window
+      repeat with the_window in window_list
+        set tab_list to every tab in the_window
 
-      repeat with the_tab in tab_list
-        set the_title to the title of the_tab
-        if "- YouTube" is in the_title then
-          if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
-          set browser to "chrome"
-          set active_tab to 1
-        end if
+        repeat with the_tab in tab_list
+          set the_title to the title of the_tab
+          if "- YouTube" is in the_title then
+            if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
+            set browser to "chrome"
+            set active_tab to 1
+          end if
+        end repeat
       end repeat
-    end repeat
-  end tell
-end if
+    end tell
+  end if
+end try
 
 if application "Safari" is running then
   tell application "Safari"
