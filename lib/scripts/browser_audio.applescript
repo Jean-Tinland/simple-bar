@@ -12,7 +12,7 @@ to replace_chars(this_text, search_string, replacement_string)
 end replace_chars
 
 try
-  do shell script "osascript -e 'exists application \"Google Chromed\"'"
+  do shell script "osascript -e 'exists application \"Google Chrome\"'"
   if application "Google Chrome" is running then
     tell application "Google Chrome"
       set window_list to every window
