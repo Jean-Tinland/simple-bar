@@ -1,4 +1,5 @@
 import { run } from 'uebersicht'
+import Zoom from './lib/components/Zoom.jsx'
 import Time from './lib/components/Time.jsx'
 import DateDisplay from './lib/components/Date.jsx'
 import Weather from './lib/components/Weather.jsx'
@@ -29,6 +30,7 @@ const Styles = styles[theme]
 const className = `
   ${Styles.BaseStyles}
   ${Styles.DateStyles}
+  ${Styles.ZoomStyles}
   ${Styles.TimeStyles}
   ${Styles.WeatherStyles}
   ${Styles.BatteryStyles}
@@ -83,10 +85,11 @@ const render = ({ output, error }) => {
   const data = parseJson(output)
   if (!data) return <Error widget="data" type="noData" />
 
-  const { weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
+  const { zoom, weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
 
   return (
     <div className="simple-bar simple-bar--data">
+      <Zoom output={zoom} />
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
       <Music output={music} />
