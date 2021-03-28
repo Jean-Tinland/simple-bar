@@ -1,6 +1,7 @@
 import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from './Icons.jsx'
 
 import { getSettings } from '../settings.js'
+import { run } from 'uebersicht'
 
 const getIcon = (volume, muted) => {
   let Icon = VolumeHighIcon
@@ -20,8 +21,12 @@ const Sound = ({ output }) => {
 
   const Icon = getIcon(volume, muted)
 
+  const onClick = (e) => {
+    run(`osascript -e 'tell application "System Preferences"' -e 'activate' -e 'set current pane to pane "com.apple.preference.sound"' -e 'end tell'`)
+  }
+
   return (
-    <div className="sound">
+    <div className="sound" onClick={onClick}>
       <Icon className="sound__icon" />
       {volume}%
     </div>
