@@ -14,8 +14,8 @@ contains() {
 ZOOM_MIC=""
 ZOOM_VIDEO=""
 if contains "$ACTIVE_WIDGETS" "zoomWidget"; then
-  ZOOM_MIC=$(osascript ./simple-bar/lib/scripts/zoom-mute-status.scpt)
-  ZOOM_VIDEO=$(osascript ./simple-bar/lib/scripts/zoom-video-status.scpt)
+  ZOOM_MIC=$(osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript)
+  ZOOM_VIDEO=$(osascript ./simple-bar/lib/scripts/zoom-video-status.applescript)
 fi
 
 WEATHER="{}"
