@@ -1,9 +1,9 @@
 import { React } from 'uebersicht'
 
-import Specter from './Specter.jsx'
-import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from './Icons.jsx'
+import Specter from './specter.jsx'
+import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from '../icons.jsx'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const { useRef } = React
 

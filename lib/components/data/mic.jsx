@@ -1,8 +1,8 @@
-import { MicOnIcon, MicOffIcon } from './Icons.jsx'
 import { run } from 'uebersicht'
+import { MicOnIcon, MicOffIcon } from '../icons.jsx'
 
-import { clickEffect, notification, refreshData } from '../utils.js'
-import { getSettings } from '../settings.js'
+import { clickEffect, notification, refreshData } from '../../utils.js'
+import { getSettings } from '../../settings.js'
 
 const toggleMic = (volume) => {
   if (volume === '0') {

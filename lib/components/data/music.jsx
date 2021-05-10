@@ -1,10 +1,10 @@
 import { React, run } from 'uebersicht'
 import Specter from './Specter.jsx'
-import { PlayingIcon, PausedIcon } from './Icons.jsx'
+import { PlayingIcon, PausedIcon } from '../icons.jsx'
 
-import { refreshData, clickEffect, classnames } from '../utils'
+import { refreshData, clickEffect, classnames } from '../../utils'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const { useRef } = React
 

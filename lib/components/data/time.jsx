@@ -1,12 +1,14 @@
 import { run } from 'uebersicht'
 
-import { ClockIcon } from './Icons.jsx'
-import { clickEffect } from '../utils.js'
+import { ClockIcon } from '../icons.jsx'
+import { clickEffect } from '../../utils.js'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const displayNotificationCenter = () => {
-  run(`osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`)
+  run(
+    `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
+  )
 }
 
 const Time = () => {

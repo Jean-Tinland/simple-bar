@@ -1,5 +1,5 @@
-import { appIcons } from '../data.js'
-import { classnames } from '../utils.js'
+import { appIcons } from '../../data.js'
+import { classnames } from '../../utils.js'
 
 const OpenedApps = ({ type, apps }) => {
   if (apps.length === 0) return null

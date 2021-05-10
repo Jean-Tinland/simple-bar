@@ -1,8 +1,8 @@
-import Space from './Space.jsx'
-import { AddIcon } from './Icons.jsx'
+import Space from './space.jsx'
+import { AddIcon } from '../icons.jsx'
 
-import { clickEffect } from '../utils.js'
-import { createSpace } from '../yabai.js'
+import { clickEffect } from '../../utils.js'
+import { createSpace } from '../../yabai.js'
 
 export const refreshFrequency = false
 

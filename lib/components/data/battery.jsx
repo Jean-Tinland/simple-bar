@@ -1,9 +1,9 @@
 import { run } from 'uebersicht'
 
-import { CoffeeIcon, ChargingIcon } from './Icons.jsx'
-import { classnames, clickEffect, notification, refreshData } from '../utils.js'
+import { CoffeeIcon, ChargingIcon } from '../icons.jsx'
+import { classnames, clickEffect, notification, refreshData } from '../../utils.js'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const getTransform = (value) => {
   let transform = `0.${value}`

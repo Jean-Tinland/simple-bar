@@ -1,12 +1,12 @@
-import Process from './lib/components/Process.jsx'
-import Settings from './lib/components/Settings.jsx'
-import Error from './lib/components/Error.jsx'
+import Process from './lib/components/process/process.jsx'
+import Settings from './lib/components/process/settings.jsx'
+import Error from './lib/components/error.jsx'
 
-import { parseJson, getTheme } from './lib/utils.js'
+import { parseJson, getTheme, loadStyles } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
 
-import { styles } from './lib/styles/Styles.js'
-import CustomStyles from './lib/styles/CustomStyles.js'
+import { styles } from './lib/styles/styles.js'
+import CustomStyles from './lib/styles/custom-styles.js'
 
 const refreshFrequency = false
 
@@ -34,6 +34,7 @@ const { processWidget } = settings.widgets
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
+  loadStyles('simple-bar-variables', Styles.Variables)
   if (error) {
     console.log('Error in process.jsx', error)
     return <Error widget="process" type="error" withSettings />

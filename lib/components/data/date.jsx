@@ -1,9 +1,9 @@
 import { run } from 'uebersicht'
 
-import { DateIcon } from './Icons.jsx'
-import { clickEffect } from '../utils.js'
+import { DateIcon } from '../icons.jsx'
+import { clickEffect } from '../../utils.js'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp ? calendarApp : 'Calendar'

@@ -1,7 +1,7 @@
-import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from './Icons.jsx'
+import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons.jsx'
 
-import { clickEffect } from '../utils.js'
-import { removeSpace, swapSpace } from '../yabai.js'
+import { clickEffect } from '../../utils.js'
+import { removeSpace, swapSpace } from '../../yabai.js'
 
 const SpaceOptions = ({ index, setHovered, displayIndex }) => {
   const onRemoveClick = (e) => {

@@ -1,11 +1,9 @@
 const Specter = () => {
   return (
     <div className="specter">
-      <span />
-      <span />
-      <span />
-      <span />
-      <span />
+      {[...new Array(5)].map((_, i) => (
+        <span key={i} />
+      ))}
     </div>
   )
 }

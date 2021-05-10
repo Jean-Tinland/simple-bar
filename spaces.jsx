@@ -1,11 +1,11 @@
-import Spaces from './lib/components/Spaces.jsx'
-import Error from './lib/components/Error.jsx'
+import Spaces from './lib/components/spaces/spaces.jsx'
+import Error from './lib/components/error.jsx'
 
 import { parseJson, getTheme } from './lib/utils.js'
 import { getSettings } from './lib/settings.js'
 
-import { styles } from './lib/styles/Styles.js'
-import CustomStyles from './lib/styles/CustomStyles.js'
+import { styles } from './lib/styles/styles.js'
+import CustomStyles from './lib/styles/custom-styles.js'
 
 const refreshFrequency = false
 

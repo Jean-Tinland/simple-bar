@@ -1,7 +1,7 @@
-import { classnames, clickEffect, getLocation, notification, setLocation } from '../utils.js'
-import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from './Icons.jsx'
+import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils.js'
+import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from '../icons.jsx'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const getIcon = (description, atNight) => {
   if (description.includes('snow')) return SnowIcon
@@ -31,7 +31,7 @@ const Weather = ({ output }) => {
 
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F
-  const wttr_unit = unit === 'C' ? "?m" : "?u"
+  const wttr_unit = unit === 'C' ? '?m' : '?u'
 
   const description = weatherDesc[0].value
 

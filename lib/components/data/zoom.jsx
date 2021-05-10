@@ -1,6 +1,6 @@
-import { ZoomIcon, MicOnIcon, MicOffIcon } from './Icons.jsx'
+import { ZoomIcon, MicOnIcon, MicOffIcon } from '../icons.jsx'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const Zoom = ({ output }) => {
   const settings = getSettings()

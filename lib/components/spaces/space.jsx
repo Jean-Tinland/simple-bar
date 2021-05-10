@@ -1,11 +1,11 @@
 import { React } from 'uebersicht'
 
-import OpenedApps from './OpenedApps.jsx'
-import SpaceOptions from './SpaceOptions.jsx'
-import { classnames, clickEffect, filterApps } from '../utils.js'
+import OpenedApps from './opened-apps.jsx'
+import SpaceOptions from './space-options.jsx'
+import { classnames, clickEffect, filterApps } from '../../utils.js'
 
-import { goToSpace } from '../yabai.js'
-import { getSettings } from '../settings.js'
+import { goToSpace } from '../../yabai.js'
+import { getSettings } from '../../settings.js'
 
 const { useState } = React
 

@@ -1,6 +1,6 @@
-import { KeyboardIcon } from './Icons.jsx'
+import { KeyboardIcon } from '../icons.jsx'
 
-import { getSettings } from '../settings.js'
+import { getSettings } from '../../settings.js'
 
 const Keyboard = ({ output }) => {
   const settings = getSettings()

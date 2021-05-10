@@ -1,4 +1,4 @@
-import Settings from './Settings.jsx'
+import Settings from './process/settings.jsx'
 import { classnames, refreshSpaces, refreshProcess, refreshData } from '../utils.js'
 
 const message = {
