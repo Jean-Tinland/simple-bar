@@ -1,9 +1,11 @@
 import { run } from 'uebersicht'
 
 import { DateIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils.js'
+import { clickEffect } from '../../utils'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { DateStyles } from '../../styles/components/data/date-display'
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp ? calendarApp : 'Calendar'

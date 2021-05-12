@@ -1,7 +1,9 @@
 import { run } from 'uebersicht'
 import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from '../icons.jsx'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { SoundStyles } from '../../styles/components/data/sound'
 
 const getIcon = (volume, muted) => {
   let Icon = VolumeHighIcon

@@ -1,8 +1,10 @@
 import { run } from 'uebersicht'
 import { VPNIcon, VPNOffIcon } from '../icons.jsx'
-import { classnames, clickEffect, refreshData } from '../../utils.js'
+import { classnames, clickEffect, refreshData } from '../../utils'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { VPNStyles } from '../../styles/components/data/vpn'
 
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {

@@ -1,9 +1,11 @@
 import { run } from 'uebersicht'
 
 import { ClockIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils.js'
+import { clickEffect } from '../../utils'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { TimeStyles } from '../../styles/components/data/time'
 
 const displayNotificationCenter = () => {
   run(

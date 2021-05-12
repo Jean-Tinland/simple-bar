@@ -3,7 +3,9 @@ import { React } from 'uebersicht'
 import Specter from './specter.jsx'
 import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from '../icons.jsx'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { BrowserTrackStyles } from '../../styles/components/data/browser-track'
 
 const { useRef } = React
 

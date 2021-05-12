@@ -2,21 +2,22 @@ import { React } from 'uebersicht'
 
 import OpenedApps from './opened-apps.jsx'
 import SpaceOptions from './space-options.jsx'
-import { classnames, clickEffect, filterApps } from '../../utils.js'
+import { classnames, clickEffect, filterApps } from '../../utils'
 
-import { goToSpace } from '../../yabai.js'
-import { getSettings } from '../../settings.js'
+import { goToSpace } from '../../yabai'
+import { getSettings } from '../../settings'
 
 const { useState } = React
 
-const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
+const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
-  if (display !== space.display) return null
 
-  const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
   const settings = getSettings()
   const { spacesDisplay } = settings
+  if (!spacesDisplay.displayAllSpacesOnAllScreens && display !== space.display) return null
+
+  const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
   const exclusions = spacesDisplay.exclusions.split(', ')
   const titleExclusions = spacesDisplay.titleExclusions.split(', ')
 
@@ -48,12 +49,15 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled }) => {
   const spaceLabel = label && label !== '' ? label : index
 
   return (
-    <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <div className="space__inner" onClick={onClick}>
-        <span className="space__label">{spaceLabel}</span> <OpenedApps type={type} apps={apps} />
+    <>
+      {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div class="space-separator" />}
+      <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className="space__inner" onClick={onClick}>
+          <span className="space__label">{spaceLabel}</span> <OpenedApps type={type} apps={apps} />
+        </div>
+        {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
       </div>
-      {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
-    </div>
+    </>
   )
 }
 

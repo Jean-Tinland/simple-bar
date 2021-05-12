@@ -1,8 +1,10 @@
 import { run } from 'uebersicht'
 import { WifiIcon, WifiOffIcon } from '../icons.jsx'
-import { classnames, clickEffect, notification, refreshData } from '../../utils.js'
+import { classnames, clickEffect, notification, refreshData } from '../../utils'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { WifiStyles } from '../../styles/components/data/wifi'
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {

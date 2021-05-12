@@ -1,31 +1,27 @@
 import Spaces from './lib/components/spaces/spaces.jsx'
 import Error from './lib/components/error.jsx'
 
-import { parseJson, getTheme } from './lib/utils.js'
-import { getSettings } from './lib/settings.js'
+import { parseJson } from './lib/utils'
+import { getSettings } from './lib/settings'
 
-import { styles } from './lib/styles/styles.js'
-import CustomStyles from './lib/styles/custom-styles.js'
+import { SpacesStyles } from './lib/styles/components/spaces'
+import { BaseStyles } from './lib/styles/core/base'
+import CustomStyles from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
 const settings = getSettings()
 
-const theme = getTheme(settings)
-const Styles = styles[theme]
-
 const className = `
-  ${Styles.BaseStyles}
-  ${Styles.SpacesStyles}
-
-  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
-  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
-  ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
-  ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
-  ${settings.global.inlineSpacesOptions ? Styles.InlineSpacesOptionsOverride : ''}
-
+  ${BaseStyles}
+  ${SpacesStyles}
   ${CustomStyles}
 `
+// ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+// ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
+// ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
+// ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
+// ${settings.global.inlineSpacesOptions ? Styles.InlineSpacesOptionsOverride : ''}
 
 const { yabaiPath, shell } = settings.global
 

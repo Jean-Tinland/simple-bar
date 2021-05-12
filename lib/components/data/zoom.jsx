@@ -1,6 +1,8 @@
 import { ZoomIcon, MicOnIcon, MicOffIcon } from '../icons.jsx'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { ZoomStyles } from '../../styles/components/data/zoom'
 
 const Zoom = ({ output }) => {
   const settings = getSettings()

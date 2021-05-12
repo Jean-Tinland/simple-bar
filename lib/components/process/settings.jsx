@@ -1,8 +1,8 @@
 import { React } from 'uebersicht'
-import { classnames } from '../../utils.js'
+import { classnames } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
 
-import { getSettings, setSettings, settingsData } from '../../settings.js'
+import { getSettings, setSettings, settingsData } from '../../settings'
 
 const { useState, useEffect, useCallback, Fragment } = React
 

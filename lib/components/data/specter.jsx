@@ -1,3 +1,5 @@
+export { SpecterStyles } from '../../styles/components/data/specter'
+
 const Specter = () => {
   return (
     <div className="specter">

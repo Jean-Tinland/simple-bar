@@ -1,57 +1,52 @@
 import { run } from 'uebersicht'
-import Zoom from './lib/components/data/zoom.jsx'
-import Time from './lib/components/data/time.jsx'
-import DateDisplay from './lib/components/data/date.jsx'
-import Weather from './lib/components/data/weather.jsx'
-import Battery from './lib/components/data/battery.jsx'
-import Sound from './lib/components/data/sound.jsx'
-import Mic from './lib/components/data/mic.jsx'
-import Wifi from './lib/components/data/wifi.jsx'
-import Keyboard from './lib/components/data/keyboard.jsx'
-import Spotify from './lib/components/data/spotify.jsx'
-import Music from './lib/components/data/music.jsx'
-import BrowserTrack from './lib/components/data/browser-track.jsx'
-import VPN from './lib/components/data/vpn.jsx'
+import Zoom, { ZoomStyles } from './lib/components/data/zoom.jsx'
+import Time, { TimeStyles } from './lib/components/data/time.jsx'
+import DateDisplay, { DateStyles } from './lib/components/data/date-display.jsx'
+import Weather, { WeatherStyles } from './lib/components/data/weather.jsx'
+import Battery, { BatteryStyles } from './lib/components/data/battery.jsx'
+import Sound, { SoundStyles } from './lib/components/data/sound.jsx'
+import Mic, { MicStyles } from './lib/components/data/mic.jsx'
+import Wifi, { WifiStyles } from './lib/components/data/wifi.jsx'
+import Keyboard, { KeyboardStyles } from './lib/components/data/keyboard.jsx'
+import Spotify, { SpotifyStyles } from './lib/components/data/spotify.jsx'
+import Music, { MusicStyles } from './lib/components/data/music.jsx'
+import BrowserTrack, { BrowserTrackStyles } from './lib/components/data/browser-track.jsx'
+import VPN, { VPNStyles } from './lib/components/data/vpn.jsx'
+import { SpecterStyles } from './lib/components/data/specter.jsx'
 import Error from './lib/components/error.jsx'
 
-import { parseJson, getTheme, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils.js'
-import { getSettings } from './lib/settings.js'
-
-import { styles } from './lib/styles/styles.js'
-import CustomStyles from './lib/styles/custom-styles.js'
+import { parseJson, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils'
+import { getSettings } from './lib/settings'
+import { BaseStyles } from './lib/styles/core/base'
+import CustomStyles from './lib/styles/custom-styles'
 
 const refreshFrequency = 12000
 
 const settings = getSettings()
 
-const theme = getTheme(settings)
-const Styles = styles[theme]
-
 const className = `
-  ${Styles.BaseStyles}
-  ${Styles.DateStyles}
-  ${Styles.ZoomStyles}
-  ${Styles.TimeStyles}
-  ${Styles.WeatherStyles}
-  ${Styles.BatteryStyles}
-  ${Styles.WifiStyles}
-  ${Styles.KeyboardStyles}
-  ${Styles.MicStyles}
-  ${Styles.SoundStyles}
-  ${Styles.SpotifyStyles}
-  ${Styles.MusicStyles}
-  ${Styles.BrowserTrackStyles}
-  ${Styles.SpecterStyles}
-  ${Styles.VPNStyles}
-
-  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
-  ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
-  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
-  ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
-  ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
-
+  ${BaseStyles}
+  ${DateStyles}
+  ${ZoomStyles}
+  ${TimeStyles}
+  ${WeatherStyles}
+  ${BatteryStyles}
+  ${WifiStyles}
+  ${KeyboardStyles}
+  ${MicStyles}
+  ${SoundStyles}
+  ${SpotifyStyles}
+  ${MusicStyles}
+  ${BrowserTrackStyles}
+  ${SpecterStyles}
+  ${VPNStyles}
   ${CustomStyles}
 `
+// ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+// ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
+// ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
+// ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
+// ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
 
 const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global

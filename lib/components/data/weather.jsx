@@ -1,7 +1,9 @@
-import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils.js'
+import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils'
 import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from '../icons.jsx'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { WeatherStyles } from '../../styles/components/data/weather'
 
 const getIcon = (description, atNight) => {
   if (description.includes('snow')) return SnowIcon

@@ -4,7 +4,9 @@ import { PlayingIcon, PausedIcon } from '../icons.jsx'
 
 import { refreshData, clickEffect, classnames } from '../../utils'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { MusicStyles } from '../../styles/components/data/music'
 
 const { useRef } = React
 

@@ -1,6 +1,8 @@
 import { KeyboardIcon } from '../icons.jsx'
 
-import { getSettings } from '../../settings.js'
+import { getSettings } from '../../settings'
+
+export { KeyboardStyles } from '../../styles/components/data/keyboard'
 
 const Keyboard = ({ output }) => {
   const settings = getSettings()

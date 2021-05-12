@@ -2,31 +2,29 @@ import Process from './lib/components/process/process.jsx'
 import Settings from './lib/components/process/settings.jsx'
 import Error from './lib/components/error.jsx'
 
-import { parseJson, getTheme, loadStyles } from './lib/utils.js'
-import { getSettings } from './lib/settings.js'
+import { parseJson, loadStyles } from './lib/utils'
+import { getSettings } from './lib/settings'
 
-import { styles } from './lib/styles/styles.js'
-import CustomStyles from './lib/styles/custom-styles.js'
+import { Variables } from './lib/styles/dark-theme'
+import { BaseStyles } from './lib/styles/core/base'
+import { ProcessStyles } from './lib/styles/components/process'
+import { SettingsStyles } from './lib/styles/components/settings'
+import CustomStyles from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
 const settings = getSettings()
 
-const theme = getTheme(settings)
-const Styles = styles[theme]
-
 const className = `
-  ${Styles.BaseStyles}
-  ${Styles.ProcessStyles}
-  ${Styles.SettingsStyles}
-
-  ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
-  ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
-  ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
-  ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
-
+  ${BaseStyles}
+  ${ProcessStyles}
+  ${SettingsStyles}
   ${CustomStyles}
 `
+// ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
+// ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
+// ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
+// ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
 
 const { yabaiPath, shell } = settings.global
 const { processWidget } = settings.widgets
@@ -34,7 +32,7 @@ const { processWidget } = settings.widgets
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
-  loadStyles('simple-bar-variables', Styles.Variables)
+  loadStyles('simple-bar-variables', Variables)
   if (error) {
     console.log('Error in process.jsx', error)
     return <Error widget="process" type="error" withSettings />
