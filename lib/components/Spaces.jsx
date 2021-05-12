@@ -20,16 +20,20 @@ const Spaces = ({ output, SIP, displayIndex }) => {
     }
     return (
       <div key={i} className="spaces">
-        {spaces.map((space, i) => (
-          <Space
-            key={i}
-            display={display}
-            space={space}
-            windows={windows}
-            displayIndex={displayIndex}
-            SIPDisabled={SIPDisabled}
-          />
-        ))}
+        {spaces.map((space, i) => {
+          const lastOfSpace = i !== 0 && space.display !== spaces[i - 1].display
+          return (
+            <Space
+              key={i}
+              display={display}
+              space={space}
+              windows={windows}
+              displayIndex={displayIndex}
+              SIPDisabled={SIPDisabled}
+              lastOfSpace={lastOfSpace}
+            />
+          )
+        })}
         {SIPDisabled && (
           <div className="spaces__add" onClick={onClick}>
             <AddIcon />
