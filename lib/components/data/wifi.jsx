@@ -23,11 +23,11 @@ const renderName = (name) => {
   return name
 }
 
-const render = ({ output, networkDevice }) => {
+const Wifi = ({ output }) => {
   if (!output) return null
   const settings = getSettings()
   const { wifiWidget } = settings.widgets
-  const { toggleWifiOnClick } = settings.networkWidgetOptions
+  const { toggleWifiOnClick, networkDevice } = settings.networkWidgetOptions
 
   if (!wifiWidget) return null
 
@@ -56,4 +56,4 @@ const render = ({ output, networkDevice }) => {
   )
 }
 
-export default render
+export default Wifi

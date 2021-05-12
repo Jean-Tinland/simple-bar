@@ -16,11 +16,12 @@ const toggleVPN = (isConnected, vpnConnectionName) => {
   }
 }
 
-const render = ({ output, vpnConnectionName }) => {
-  if (!output || vpnConnectionName === '') return null
+const VPN = ({ output }) => {
   const settings = getSettings()
-  const { vpnWidget } = settings.widgets
-  if (!vpnWidget) return null
+  const { widgets, vpnWidgetOptions } = settings
+  const { vpnWidget } = widgets
+  const { vpnConnectionName } = vpnWidgetOptions
+  if (!output || vpnConnectionName === '' || !vpnWidget) return null
 
   const { status } = output
   const isConnected = status === 'Connected'
@@ -44,4 +45,4 @@ const render = ({ output, vpnConnectionName }) => {
   )
 }
 
-export default render
+export default VPN

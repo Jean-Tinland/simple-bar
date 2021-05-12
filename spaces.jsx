@@ -6,7 +6,7 @@ import { getSettings } from './lib/settings'
 
 import { SpacesStyles } from './lib/styles/components/spaces'
 import { BaseStyles } from './lib/styles/core/base'
-import CustomStyles from './lib/styles/custom-styles'
+import { CustomStyles } from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 

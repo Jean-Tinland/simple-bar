@@ -18,7 +18,7 @@ import Error from './lib/components/error.jsx'
 import { parseJson, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils'
 import { getSettings } from './lib/settings'
 import { BaseStyles } from './lib/styles/core/base'
-import CustomStyles from './lib/styles/custom-styles'
+import { CustomStyles } from './lib/styles/custom-styles'
 
 const refreshFrequency = 12000
 
@@ -71,6 +71,7 @@ const command = () => {
 }
 
 const render = ({ output, error }) => {
+  console.log('renderData')
   if (error) {
     console.log('Error in data.jsx', error)
     return <Error widget="data" type="error" />
@@ -92,8 +93,8 @@ const render = ({ output, error }) => {
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
-      <VPN output={vpn} vpnConnectionName={vpnConnectionName} />
-      <Wifi output={wifi} networkDevice={networkDevice} />
+      <VPN output={vpn} />
+      <Wifi output={wifi} />
       <Keyboard output={keyboard} />
       <DateDisplay />
       <Time />

@@ -9,7 +9,7 @@ import { Variables } from './lib/styles/dark-theme'
 import { BaseStyles } from './lib/styles/core/base'
 import { ProcessStyles } from './lib/styles/components/process'
 import { SettingsStyles } from './lib/styles/components/settings'
-import CustomStyles from './lib/styles/custom-styles'
+import { CustomStyles } from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
