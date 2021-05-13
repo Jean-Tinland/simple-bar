@@ -13,7 +13,7 @@ import Keyboard, { keyboardStyles } from './lib/components/data/keyboard.jsx'
 import Spotify, { spotifyStyles } from './lib/components/data/spotify.jsx'
 import Music, { musicStyles } from './lib/components/data/music.jsx'
 import BrowserTrack, { browserTrackStyles } from './lib/components/data/browser-track.jsx'
-import VPN, { VPNStyles } from './lib/components/data/vpn.jsx'
+import ViscosityVPN, { viscosityVPNStyles } from './lib/components/data/viscosity-vpn.jsx'
 import { specterStyles } from './lib/components/data/specter.jsx'
 import { dataWidgetStyles } from './lib/styles/components/data/data-widget.js'
 
@@ -40,9 +40,7 @@ const { vpnConnectionName } = settings.vpnWidgetOptions
 const { customLocation } = settings.weatherWidgetOptions
 const userLocation = customLocation !== '' ? customLocation : undefined
 
-if (weatherWidget && !userLocation) {
-  window.geolocation.getCurrentPosition(setLocation)
-}
+if (weatherWidget && !userLocation) window.geolocation.getCurrentPosition(setLocation)
 
 const command = () => {
   const location = weatherWidget ? getLocation() : ''
@@ -69,8 +67,8 @@ const render = ({ output, error }) => {
     spotifyStyles,
     musicStyles,
     browserTrackStyles,
-    specterStyles,
-    VPNStyles
+    viscosityVPNStyles,
+    specterStyles
   ])
 
   const classes = classnames('simple-bar simple-bar--data', {
@@ -90,18 +88,19 @@ const render = ({ output, error }) => {
   if (!data) return <Error widget="data" type="noData" classes={classes} />
 
   const { zoom, weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
+  const browserTrackOutput = { ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }
 
   return (
     <div className={classes}>
       <Zoom output={zoom} />
-      <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
+      <BrowserTrack output={browserTrackOutput} />
       <Spotify output={spotify} />
       <Music output={music} />
       <Weather output={weather} />
       <Battery output={battery} />
       <Mic output={mic} />
       <Sound output={sound} />
-      <VPN output={vpn} />
+      <ViscosityVPN output={vpn} />
       <Wifi output={wifi} />
       <Keyboard output={keyboard} />
       <DateDisplay />

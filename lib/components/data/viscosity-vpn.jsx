@@ -6,7 +6,7 @@ import { classnames, clickEffect, refreshData } from '../../utils'
 
 import { getSettings } from '../../settings'
 
-export { VPNStyles } from '../../styles/components/data/vpn'
+export { viscosityVPNStyles } from '../../styles/components/data/viscosity-vpn'
 
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
@@ -18,7 +18,7 @@ const toggleVPN = (isConnected, vpnConnectionName) => {
   }
 }
 
-const VPN = ({ output }) => {
+const ViscosityVPN = ({ output }) => {
   const settings = getSettings()
   const { widgets, vpnWidgetOptions } = settings
   const { vpnWidget } = widgets
@@ -28,8 +28,8 @@ const VPN = ({ output }) => {
   const { status } = output
   const isConnected = status === 'Connected'
 
-  const classes = classnames('vpn', {
-    'vpn--disconnected': !isConnected
+  const classes = classnames('viscosity-vpn', {
+    'viscosity-vpn--disconnected': !isConnected
   })
 
   const Icon = isConnected ? VPNIcon : VPNOffIcon
@@ -46,4 +46,4 @@ const VPN = ({ output }) => {
   )
 }
 
-export default VPN
+export default ViscosityVPN
