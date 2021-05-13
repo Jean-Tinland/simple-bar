@@ -21,21 +21,21 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Features
 
-- 3 themes (dark/light/auto)(\*)
-- Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*\*)
-- Display workspace number & current space
+- 3 themes behaviours (dark/light/auto)
+- Extensible themes system (you can easily create your own theme)
+- Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*)
+- Display workspace number/label & current space
 - Navigate to workspace on click
-- For each space display an icon for every opened app (you can exclude specific apps in settings)
+- For each space display an icon for every opened app (you can exclude specific apps/windows in settings base on process name or window title)
 - Show current app name & title
-- Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*\*)
+- Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*)
 - Spotify, Music/iTunes, browser current track
 - Battery, microphone, sound level, wifi, date, time widgets
 - Weather & keyboard language input widgets (disabled by default)(\*\*\*)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
-(\*) Unfortunatly not so "auto" anymore. You'll need to manually refresh **simple-bar** when system theme switch its own theme.\
-(\*\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
-(\*\*\*) You'll be prompted to let Übersicht use you geolocation.
+(\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
+(\*\*) You'll be prompted to let Übersicht use you geolocation.
 
 <a name="compatibility"></a>
 
@@ -93,16 +93,17 @@ In this settings module you'll find all the customization options available from
 
 ## Clickable elements
 
-Some elements of **simple-bar** are interactives :
+Some elements of **simple-bar** are interactives. For example :
 
 - Toggle caffeinate mode on battery widget click (prevent your mac to sleep while activate)
 - Toggle wifi on/off on wifi widget click
 - Toggle microphone on microphone widget click
-- Play/pause Spotify current song on Spotify widget click
-- Play/pause Music/iTunes current song on Music widget click
+- Play/pause Spotify or Music-iTunes current song on Spotify/Music-iTunes widget click
 - Open Calendar app on date widget click
 - Remove, move spaces on space hover (1s delay / instant while `cmd` key is pressed) (**Only with SIP disabled**)
 - Add space on "plus" button click (**Only with SIP disabled**)
+
+Clickable elements have a border showing on hover in order to easily identify them.
 
 <a name="refresh-bar"></a>
 
@@ -146,32 +147,12 @@ yabai -m signal --add event=window_title_changed action="osascript -e 'tell appl
 
 ### Colors & theme
 
-If you want to customize the colors, shadow & fonts used you can simply edit the `simple-bar > lib > styles > Theme.js` and put your settings in it.
-
-```javascript
-export const Theme = {
-  main: '#1B222D',
-  minor: '#39465E',
-  accent: '#FFD484',
-  red: '#E78482',
-  green: '#8FC8BB',
-  yellow: '#FFD484',
-  blue: '#6DB3CE',
-  magenta: '#AD82CB',
-  cyan: '#7EDDDE',
-  background: '#1B222D',
-  lightGrey: 'rgba(0, 0, 0, 0.05)',
-  font: 'JetBrains Mono, monospace',
-  lightShadow: '0 5px 10px rgba(0, 0, 0, 0.24)',
-  mediumShadow: '0 8px 30px rgba(0, 0, 0, 0.24)',
-  largeShadow: '0 30px 60px rgba(0, 0, 0, 0.24)',
-  easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-}
-```
+If you want to customize the colors, shadows, fonts, etc... you can simply tweak and existing theme or create your own in `simple-bar > lib > styles > themes`.\
+You can duplicate an existing theme and change the exported function name, the "name" and the "kind" properties.
 
 ### Pywal
 
-To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles`, then edit `simple-bar > lib > styles > Theme.js` to use `ThemePywal.js` instead. This should be done after running `pywal`.\
+To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles > pywal`, then edit `simple-bar > lib > styles > theme.js` : `const WITH_PYWAL = false` must be set to "tru". This should be done after running `pywal`.\
 As I am not using this myself, I may have missed some problems, feel free to open an issue about it anytime.
 
 ### Icons
@@ -186,7 +167,7 @@ export const Caprine = (props) => (
 )
 ```
 
-To link it to a process you'll need to get the Yabai process name and make the association in `simple-bar > lib > data.js` :
+To link it to a process you'll need to get the Yabai process name and make the association in `simple-bar > lib > app-icons.js` :
 
 ```javascript
 import {
@@ -218,11 +199,11 @@ export const appIcons = {
 }
 ```
 
-As you can see if there is no icon defined for a running process, there is a default one which will be used as fallback.
+If there is no icon defined for a running process, there is a default one which will be used as fallback.
 
 ### Override default styles
 
-You'll find a `customStyles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You'll find a `custom-styles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 <a name="special-thanks"></a>
