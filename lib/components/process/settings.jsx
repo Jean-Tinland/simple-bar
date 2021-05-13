@@ -67,7 +67,7 @@ const getLastCurrentTab = () => {
 const Settings = () => {
   const [visible, setVisible] = useState(false)
   const [currentTab, setCurrentTab] = useState(getLastCurrentTab())
-  const [refreshNeeded, setRefreshNeeded] = useState(false)
+  const [pendingChanges, setPendingChanges] = useState(0)
   const settings = getSettings()
 
   const closeSettings = () => setVisible(false)
@@ -84,7 +84,7 @@ const Settings = () => {
   }
 
   const onRefreshClick = () => {
-    setRefreshNeeded(false)
+    setPendingChanges(0)
     hardRefresh()
   }
 
@@ -138,7 +138,7 @@ const Settings = () => {
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
-                    if (value !== defaultValue) setSettings(key, subKey, value, setRefreshNeeded)
+                    if (value !== defaultValue) setSettings(key, subKey, value, pendingChanges, setPendingChanges)
                   }
                   return (
                     <Fragment key={subKey}>
@@ -172,7 +172,12 @@ const Settings = () => {
           })}
         </div>
         <div className="settings__bottom">
-          <button className="settings__refresh-button" onClick={onRefreshClick} disabled={!refreshNeeded}>
+          {pendingChanges !== 0 && (
+            <div className="settings__pending-changes">
+              <b>{pendingChanges}</b> pending change{pendingChanges > 1 && 's'}
+            </div>
+          )}
+          <button className="settings__refresh-button" onClick={onRefreshClick} disabled={!pendingChanges}>
             Refresh simple-bar
           </button>
         </div>
