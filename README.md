@@ -6,7 +6,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com)
 
 ## Warning
 
-Latest update is huge and may broke your local changes as I have refined almost every file in the project. If you encounter any problem you can checkout this commit `0157db58f49da7055b0e88c13b0b1207d8d5301c` (the last one before I merged v2 branch into master).
+Latest update is huge and may broke your local changes as I have refined almost every file in the project. If you encounter any problem you can checkout this commit `64e4080e69b9aee28843dd394b17e3f982eb9c9f` (the last one before I merged v2 branch into master).
 
 ## Table of content
 
