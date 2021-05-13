@@ -5,7 +5,7 @@ import Error from './lib/components/error.jsx'
 import { classnames, parseJson, injectStyles } from './lib/utils'
 import { getSettings } from './lib/settings'
 
-import { variables } from './lib/styles/variables'
+import { variables } from './lib/styles/core/variables'
 import { baseStyles } from './lib/styles/core/base'
 import { processStyles } from './lib/styles/components/process'
 import { settingsStyles } from './lib/styles/components/settings'
