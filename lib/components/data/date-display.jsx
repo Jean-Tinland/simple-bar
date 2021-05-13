@@ -32,11 +32,11 @@ const DateDisplay = () => {
     openCalendarApp(calendarApp)
   }
 
-  const _locale = locale.length >= 5 ? locale : 'en-UK'
+  const _locale = locale.length > 4 ? locale : 'en-UK'
   const now = new Date().toLocaleDateString(_locale, options)
   return (
-    <div className="date" onClick={onClick}>
-      <DateIcon className="date__icon" />
+    <div className="date-display" onClick={onClick}>
+      <DateIcon className="date-display__icon" />
       {now}
     </div>
   )

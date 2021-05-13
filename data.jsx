@@ -15,7 +15,7 @@ import VPN, { VPNStyles } from './lib/components/data/vpn.jsx'
 import { SpecterStyles } from './lib/components/data/specter.jsx'
 import Error from './lib/components/error.jsx'
 
-import { parseJson, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils'
+import { classnames, parseJson, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils'
 import { getSettings } from './lib/settings'
 import { BaseStyles } from './lib/styles/core/base'
 import { CustomStyles } from './lib/styles/custom-styles'
@@ -42,11 +42,6 @@ const className = `
   ${VPNStyles}
   ${CustomStyles}
 `
-// ${settings.global.floatingBar ? Styles.FloatingBarOverride : ''}
-// ${settings.global.noColorInData ? Styles.NoColorInDataOverride : ''}
-// ${settings.global.noBarBg ? Styles.NoBarBgOverride : ''}
-// ${settings.global.bottomBar ? Styles.BottomBarOverride : ''}
-// ${settings.global.floatingBar && settings.global.bottomBar ? Styles.FloatinBottomBarOverride : ''}
 
 const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global
@@ -71,20 +66,26 @@ const command = () => {
 }
 
 const render = ({ output, error }) => {
-  console.log('renderData')
+  const classes = classnames('simple-bar simple-bar--data', {
+    'simple-bar--floating': settings.global.floatingBar,
+    'simple-bar--no-color-in-data': settings.global.noColorInData,
+    'simple-bar--no-bar-background': settings.global.noBarBg,
+    'simple-bar--on-bottom': settings.global.bottomBar
+  })
+
   if (error) {
     console.log('Error in data.jsx', error)
-    return <Error widget="data" type="error" />
+    return <Error widget="data" type="error" classes={classes} />
   }
-  if (!output) return <Error widget="data" type="noOutput" />
+  if (!output) return <Error widget="data" type="noOutput" classes={classes} />
 
   const data = parseJson(output)
-  if (!data) return <Error widget="data" type="noData" />
+  if (!data) return <Error widget="data" type="noData" classes={classes} />
 
   const { zoom, weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
 
   return (
-    <div className="simple-bar simple-bar--data">
+    <div className={classes}>
       <Zoom output={zoom} />
       <BrowserTrack output={{ ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }} />
       <Spotify output={spotify} />
