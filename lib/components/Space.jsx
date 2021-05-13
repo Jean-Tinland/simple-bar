@@ -47,8 +47,6 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
 
   const spaceLabel = label && label !== '' ? label : index
 
-  console.log({ lastOfSpace })
-
   return (
     <>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div class="space-separator" />}
