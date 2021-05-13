@@ -1,5 +1,5 @@
 import { React } from 'uebersicht'
-import { classnames } from '../../utils'
+import { classnames, hardRefresh } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
 
 import { getSettings, setSettings, settingsData } from '../../settings'
@@ -40,7 +40,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
           type="text"
           defaultValue={defaultValue}
           placeholder={placeholder}
-          onBlur={onChange}
+          onChange={onChange}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -67,6 +67,7 @@ const getLastCurrentTab = () => {
 const Settings = () => {
   const [visible, setVisible] = useState(false)
   const [currentTab, setCurrentTab] = useState(getLastCurrentTab())
+  const [refreshNeeded, setRefreshNeeded] = useState(false)
   const settings = getSettings()
 
   const closeSettings = () => setVisible(false)
@@ -80,6 +81,11 @@ const Settings = () => {
   const onTabClick = (tab) => {
     setCurrentTab(tab)
     window.sessionStorage.setItem(LAST_CURRENT_TAB, tab)
+  }
+
+  const onRefreshClick = () => {
+    setRefreshNeeded(false)
+    hardRefresh()
   }
 
   useEffect(() => {
@@ -119,7 +125,7 @@ const Settings = () => {
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
                 {Object.keys(settings[key]).map((subKey) => {
-                  const { title, label, type, options, placeholder, fullWidth, hardRefresh } = settingsData[subKey]
+                  const { title, label, type, options, placeholder, fullWidth } = settingsData[subKey]
                   const defaultValue = settings[key][subKey]
                   const classes = classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
@@ -128,7 +134,7 @@ const Settings = () => {
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
-                    if (value !== defaultValue) setSettings(key, subKey, value, hardRefresh)
+                    if (value !== defaultValue) setSettings(key, subKey, value, setRefreshNeeded)
                   }
                   return (
                     <Fragment key={subKey}>
@@ -160,6 +166,11 @@ const Settings = () => {
               </div>
             )
           })}
+        </div>
+        <div className="settings__bottom">
+          <button className="settings__refresh-button" onClick={onRefreshClick} disabled={!refreshNeeded}>
+            Refresh simple-bar
+          </button>
         </div>
       </div>
     </div>
