@@ -4,6 +4,10 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 Developed by [Jean Tinland](https://www.jeantinland.com)
 
+## Warning
+
+Latest update is huge and may broke your local changes as I have refined almost every file in the project. If you encounter any problem you can checkout this commit `64e4080e69b9aee28843dd394b17e3f982eb9c9f` (the last one before I merged v2 branch into master).
+
 ## Table of content
 
 - [Features](#features)

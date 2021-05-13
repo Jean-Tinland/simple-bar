@@ -107,7 +107,9 @@ const Settings = () => {
         </div>
         <div className="settings__tabs">
           {Object.keys(settings).map((key, i) => {
-            const { label } = settingsData[key]
+            const setting = settingsData[key]
+            if (!setting) return null
+            const { label } = setting
             const classes = classnames('settings__tab', {
               'settings__tab--current': i === currentTab
             })
@@ -120,7 +122,9 @@ const Settings = () => {
         </div>
         <div className="settings__inner">
           {Object.keys(settings).map((key) => {
-            const { label, infos } = settingsData[key]
+            const setting = settingsData[key]
+            if (!setting) return null
+            const { label, infos } = setting
             return (
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
