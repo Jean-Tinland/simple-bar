@@ -1,11 +1,12 @@
 import { run } from 'uebersicht'
 
+import DataWidget from './data-widget.jsx'
 import { ClockIcon } from '../icons.jsx'
 import { clickEffect } from '../../utils'
 
 import { getSettings } from '../../settings'
 
-export { TimeStyles } from '../../styles/components/data/time'
+export { timeStyles } from '../../styles/components/data/time'
 
 const displayNotificationCenter = () => {
   run(
@@ -43,11 +44,10 @@ const Time = () => {
   }
 
   return (
-    <div className="time" onClick={onClick}>
-      <ClockIcon className="time__icon" />
+    <DataWidget classes="time" Icon={ClockIcon} onClick={onClick}>
       {time}
       {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
-    </div>
+    </DataWidget>
   )
 }
 

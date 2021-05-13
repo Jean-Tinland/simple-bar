@@ -1,8 +1,9 @@
+import DataWidget from './data-widget.jsx'
 import { ZoomIcon, MicOnIcon, MicOffIcon } from '../icons.jsx'
 
 import { getSettings } from '../../settings'
 
-export { ZoomStyles } from '../../styles/components/data/zoom'
+export { zoomStyles } from '../../styles/components/data/zoom'
 
 const Zoom = ({ output }) => {
   const settings = getSettings()
@@ -15,10 +16,10 @@ const Zoom = ({ output }) => {
   const { mic, video } = output
   const MicIcon = mic === 'off' ? MicOffIcon : MicOnIcon
   return (
-    <div className="zoom">
+    <DataWidget classes="zoom">
       {showVideo && <ZoomIcon className={`zoom__icon zoom__icon--${video}`} />}
       {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
-    </div>
+    </DataWidget>
   )
 }
 

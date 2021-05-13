@@ -5,22 +5,15 @@ import Error from './lib/components/error.jsx'
 import { classnames, parseJson, injectStyles } from './lib/utils'
 import { getSettings } from './lib/settings'
 
-import { Variables } from './lib/styles/dark-theme'
-import { BaseStyles } from './lib/styles/core/base'
-import { ProcessStyles } from './lib/styles/components/process'
-import { SettingsStyles } from './lib/styles/components/settings'
-import { CustomStyles } from './lib/styles/custom-styles'
+import { variables } from './lib/styles/variables'
+import { baseStyles } from './lib/styles/core/base'
+import { processStyles } from './lib/styles/components/process'
+import { settingsStyles } from './lib/styles/components/settings'
+import { customStyles } from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
 const settings = getSettings()
-
-const className = `
-  ${BaseStyles}
-  ${ProcessStyles}
-  ${SettingsStyles}
-  ${CustomStyles}
-`
 
 const { yabaiPath, shell } = settings.global
 const { processWidget } = settings.widgets
@@ -28,7 +21,7 @@ const { processWidget } = settings.widgets
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
-  injectStyles('simple-bar-variables', Variables)
+  injectStyles('simple-bar-process-styles', [variables, baseStyles, processStyles, settingsStyles, customStyles])
 
   const classes = classnames('simple-bar simple-bar--process', {
     'simple-bar--floating': settings.global.floatingBar,
@@ -55,4 +48,4 @@ const render = ({ output, error }) => {
   )
 }
 
-export { command, refreshFrequency, className, render }
+export { command, refreshFrequency, render }

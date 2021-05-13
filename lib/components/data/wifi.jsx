@@ -1,10 +1,12 @@
 import { run } from 'uebersicht'
+
+import DataWidget from './data-widget.jsx'
 import { WifiIcon, WifiOffIcon } from '../icons.jsx'
 import { classnames, clickEffect, notification, refreshData } from '../../utils'
 
 import { getSettings } from '../../settings'
 
-export { WifiStyles } from '../../styles/components/data/wifi'
+export { wifiStyles } from '../../styles/components/data/wifi'
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
@@ -42,17 +44,14 @@ const Wifi = ({ output }) => {
   const Icon = isActive ? WifiIcon : WifiOffIcon
 
   const onClick = (e) => {
-    if (toggleWifiOnClick) {
-      clickEffect(e)
-      toggleWifi(isActive, networkDevice)
-    }
+    clickEffect(e)
+    toggleWifi(isActive, networkDevice)
   }
 
   return (
-    <div className={classes} onClick={onClick}>
-      <Icon className="wifi__icon" />
+    <DataWidget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined}>
       {name}
-    </div>
+    </DataWidget>
   )
 }
 

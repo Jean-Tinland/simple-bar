@@ -1,4 +1,6 @@
 import { run } from 'uebersicht'
+
+import DataWidget from './data-widget.jsx'
 import { VPNIcon, VPNOffIcon } from '../icons.jsx'
 import { classnames, clickEffect, refreshData } from '../../utils'
 
@@ -38,10 +40,9 @@ const VPN = ({ output }) => {
   }
 
   return (
-    <div className={classes} onClick={clicked}>
-      <Icon className="vpn__icon" />
+    <DataWidget classes={classes} Icon={Icon} onClick={clicked}>
       {status}
-    </div>
+    </DataWidget>
   )
 }
 

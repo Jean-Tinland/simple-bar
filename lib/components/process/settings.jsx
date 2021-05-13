@@ -7,17 +7,29 @@ import { getSettings, setSettings, settingsData } from '../../settings'
 const { useState, useEffect, useCallback, Fragment } = React
 
 const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
+  if (type === 'select') {
+    return (
+      <>
+        <label htmlFor={code}>{label}</label>
+        <select id={code} className="settings__select" onChange={onChange} defaultValue={defaultValue}>
+          {options.map((option) => (
+            <option key={option.code} value={option.code}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </>
+    )
+  }
   if (type === 'radio') {
-    return options.map((option) => {
-      return (
-        <div className="settings__item-option" key={option}>
-          <input name={code} id={option} value={option} type="radio" defaultChecked={option === defaultValue} />
-          <label htmlFor={option}>
-            {option} {label}
-          </label>
-        </div>
-      )
-    })
+    return options.map((option) => (
+      <div className="settings__item-option" key={option}>
+        <input name={code} id={option} value={option} type="radio" defaultChecked={option === defaultValue} />
+        <label htmlFor={option}>
+          {option} {label}
+        </label>
+      </div>
+    ))
   }
   if (type === 'text') {
     return (
@@ -44,9 +56,17 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
   )
 }
 
+const LAST_CURRENT_TAB = 'simple-bar-last-current-settings-tab'
+
+const getLastCurrentTab = () => {
+  const storedLastCurrentTab = window.sessionStorage.getItem(LAST_CURRENT_TAB)
+  if (storedLastCurrentTab) return parseInt(storedLastCurrentTab)
+  return 0
+}
+
 const Settings = () => {
   const [visible, setVisible] = useState(false)
-  const [currentTab, setCurrentTab] = useState(0)
+  const [currentTab, setCurrentTab] = useState(getLastCurrentTab())
   const settings = getSettings()
 
   const closeSettings = () => setVisible(false)
@@ -57,7 +77,10 @@ const Settings = () => {
     }
   }, [])
 
-  const onTabClick = (tab) => () => setCurrentTab(tab)
+  const onTabClick = (tab) => {
+    setCurrentTab(tab)
+    window.sessionStorage.setItem(LAST_CURRENT_TAB, tab)
+  }
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown)
@@ -83,7 +106,7 @@ const Settings = () => {
               'settings__tab--current': i === currentTab
             })
             return (
-              <div key={i} className={classes} onClick={onTabClick(i)}>
+              <div key={i} className={classes} onClick={() => onTabClick(i)}>
                 {label}
               </div>
             )
@@ -105,9 +128,7 @@ const Settings = () => {
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
-                    if (value !== defaultValue) {
-                      setSettings(key, subKey, value)
-                    }
+                    if (value !== defaultValue) setSettings(key, subKey, value)
                   }
                   return (
                     <Fragment key={subKey}>

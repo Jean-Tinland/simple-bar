@@ -1,11 +1,12 @@
 import { run } from 'uebersicht'
 
+import DataWidget from './data-widget.jsx'
 import { CoffeeIcon, ChargingIcon } from '../icons.jsx'
 import { classnames, clickEffect, notification, refreshData } from '../../utils'
 
 import { getSettings } from '../../settings'
 
-export { BatteryStyles } from '../../styles/components/data/battery'
+export { batteryStyles } from '../../styles/components/data/battery'
 
 const getTransform = (value) => {
   let transform = `0.${value}`
@@ -48,21 +49,24 @@ const Battery = ({ output }) => {
     toggleCaffeinate(caffeinate, caffeinateOption)
   }
 
-  return (
-    <div className={classes} onClick={onClick}>
-      {caffeinate !== '' && <CoffeeIcon className="battery__caffeinate-icon" />}
-      <div className="battery__icon">
-        {isCharging && (
-          <div className="battery__charging-icon">
-            <ChargingIcon className="battery__charging-icon-outline-left" />
-            <ChargingIcon className="battery__charging-icon-fill" />
-            <ChargingIcon className="battery__charging-icon-outline-right" />
-          </div>
-        )}
-        <div className="battery__icon-filler" style={{ transform: transformValue }} />
-      </div>
-      {percentage}%
+  const Icon = () => (
+    <div className="battery__icon">
+      {isCharging && (
+        <div className="battery__charging-icon">
+          <ChargingIcon className="battery__charging-icon-outline-left" />
+          <ChargingIcon className="battery__charging-icon-fill" />
+          <ChargingIcon className="battery__charging-icon-outline-right" />
+        </div>
+      )}
+      <div className="battery__icon-filler" style={{ transform: transformValue }} />
     </div>
+  )
+
+  return (
+    <DataWidget classes={classes} Icon={Icon} onClick={onClick}>
+      {caffeinate !== '' && <CoffeeIcon className="battery__caffeinate-icon" />}
+      {percentage}%
+    </DataWidget>
   )
 }
 

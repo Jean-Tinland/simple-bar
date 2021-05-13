@@ -1,11 +1,12 @@
 import { run } from 'uebersicht'
 
+import DataWidget from './data-widget.jsx'
 import { DateIcon } from '../icons.jsx'
 import { clickEffect } from '../../utils'
 
 import { getSettings } from '../../settings'
 
-export { DateStyles } from '../../styles/components/data/date-display'
+export { dateStyles } from '../../styles/components/data/date-display'
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp ? calendarApp : 'Calendar'
@@ -35,10 +36,9 @@ const DateDisplay = () => {
   const _locale = locale.length > 4 ? locale : 'en-UK'
   const now = new Date().toLocaleDateString(_locale, options)
   return (
-    <div className="date-display" onClick={onClick}>
-      <DateIcon className="date-display__icon" />
+    <DataWidget classes="date-display" Icon={DateIcon} onClick={onClick}>
       {now}
-    </div>
+    </DataWidget>
   )
 }
 

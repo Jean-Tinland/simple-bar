@@ -1,10 +1,12 @@
 import { run } from 'uebersicht'
+
+import DataWidget from './data-widget.jsx'
 import { MicOnIcon, MicOffIcon } from '../icons.jsx'
 
 import { clickEffect, notification, refreshData } from '../../utils'
 import { getSettings } from '../../settings'
 
-export { MicStyles } from '../../styles/components/data/mic'
+export { micStyles } from '../../styles/components/data/mic'
 
 const toggleMic = (volume) => {
   if (volume === '0') {
@@ -32,10 +34,9 @@ const Mic = ({ output }) => {
   }
 
   return (
-    <div className="mic" onClick={onClick}>
-      <Icon className="mic__icon" />
+    <DataWidget classes="mic" Icon={Icon} onClick={onClick}>
       {volume}%
-    </div>
+    </DataWidget>
   )
 }
 

@@ -1,12 +1,13 @@
 import { React, run } from 'uebersicht'
+
+import DataWidget from './data-widget.jsx'
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from '../icons.jsx'
 
 import { refreshData, clickEffect, classnames } from '../../utils'
-
 import { getSettings } from '../../settings'
 
-export { MusicStyles } from '../../styles/components/data/music'
+export { musicStyles } from '../../styles/components/data/music'
 
 const { useRef } = React
 
@@ -58,15 +59,21 @@ const Spotify = ({ output }) => {
   })
 
   return (
-    <div ref={ref} className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <Icon className="music__icon" />
+    <DataWidget
+      ref={ref}
+      classes={classes}
+      Icon={Icon}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {showSpecter && isPlaying && <Specter />}
       <div className="music__inner">
         <div className="music__slider">
           {trackName} - {artistName}
         </div>
       </div>
-    </div>
+    </DataWidget>
   )
 }
 

@@ -1,9 +1,12 @@
 import { run } from 'uebersicht'
+
+import DataWidget from './data-widget.jsx'
 import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from '../icons.jsx'
 
 import { getSettings } from '../../settings'
+import { clickEffect } from '../../utils.js'
 
-export { SoundStyles } from '../../styles/components/data/sound'
+export { soundStyles } from '../../styles/components/data/sound'
 
 const getIcon = (volume, muted) => {
   let Icon = VolumeHighIcon
@@ -11,6 +14,12 @@ const getIcon = (volume, muted) => {
   if (volume === '0') Icon = NoVolumeIcon
   if (muted === 'true' && volume !== '0') Icon = VolumeMutedIcon
   return Icon
+}
+
+const openSoundSettings = () => {
+  run(
+    `osascript -e 'tell application "System Preferences"' -e 'activate' -e 'set current pane to pane "com.apple.preference.sound"' -e 'end tell'`
+  )
 }
 
 const Sound = ({ output }) => {
@@ -24,16 +33,14 @@ const Sound = ({ output }) => {
   const Icon = getIcon(volume, muted)
 
   const onClick = (e) => {
-    run(
-      `osascript -e 'tell application "System Preferences"' -e 'activate' -e 'set current pane to pane "com.apple.preference.sound"' -e 'end tell'`
-    )
+    clickEffect(e)
+    openSoundSettings()
   }
 
   return (
-    <div className="sound" onClick={onClick}>
-      <Icon className="sound__icon" />
+    <DataWidget classes="sound" Icon={Icon} onClick={onClick}>
       {volume}%
-    </div>
+    </DataWidget>
   )
 }
 

@@ -50,11 +50,11 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
 
   return (
     <>
-      {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div class="space-separator" />}
+      {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div class="spaces__separator" />}
       <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <div className="space__inner" onClick={onClick}>
+        <button className="space__inner" onClick={onClick}>
           <span className="space__label">{spaceLabel}</span> <OpenedApps type={type} apps={apps} />
-        </div>
+        </button>
         {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
       </div>
     </>

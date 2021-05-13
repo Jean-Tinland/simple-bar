@@ -1,11 +1,12 @@
 import { React } from 'uebersicht'
 
+import DataWidget from './data-widget.jsx'
 import Specter from './specter.jsx'
 import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from '../icons.jsx'
 
 import { getSettings } from '../../settings'
 
-export { BrowserTrackStyles } from '../../styles/components/data/browser-track'
+export { browserTrackStyles } from '../../styles/components/data/browser-track'
 
 const { useRef } = React
 
@@ -45,19 +46,23 @@ const BrowserTrack = ({ output }) => {
     target && target.querySelector('.browser-track__slider').removeAttribute('style')
   }
 
-  const Icon = getIcon(browser)
-
-  return (
-    <div ref={ref} className="browser-track" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+  const Icon = () => {
+    const BrowserIcon = getIcon(browser)
+    return (
       <div className="browser-track__icons">
-        <Icon />
+        <BrowserIcon />
         <PlayingIcon />
       </div>
+    )
+  }
+
+  return (
+    <DataWidget ref={ref} classes="browser-track" Icon={Icon} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {showSpecter && <Specter />}
       <div className="browser-track__inner">
         <div className="browser-track__slider">{title}</div>
       </div>
-    </div>
+    </DataWidget>
   )
 }
 

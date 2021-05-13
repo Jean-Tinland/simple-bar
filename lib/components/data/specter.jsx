@@ -1,4 +1,4 @@
-export { SpecterStyles } from '../../styles/components/data/specter'
+export { specterStyles } from '../../styles/components/data/specter'
 
 const Specter = () => {
   return (

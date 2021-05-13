@@ -222,7 +222,7 @@ As you can see if there is no icon defined for a running process, there is a def
 
 ### Override default styles
 
-You'll find a `CustomStyles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You'll find a `customStyles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 <a name="special-thanks"></a>

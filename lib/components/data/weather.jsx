@@ -1,9 +1,10 @@
-import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils'
+import DataWidget from './data-widget.jsx'
 import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from '../icons.jsx'
 
+import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils'
 import { getSettings } from '../../settings'
 
-export { WeatherStyles } from '../../styles/components/data/weather'
+export { weatherStyles } from '../../styles/components/data/weather'
 
 const getIcon = (description, atNight) => {
   if (description.includes('snow')) return SnowIcon
@@ -33,7 +34,7 @@ const Weather = ({ output }) => {
 
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F
-  const wttr_unit = unit === 'C' ? '?m' : '?u'
+  const wttrUnitParam = unit === 'C' ? '?m' : '?u'
 
   const description = weatherDesc[0].value
 
@@ -65,12 +66,16 @@ const Weather = ({ output }) => {
   })
 
   return (
-    <a className={classes} href={`https://wttr.in/${location}${wttr_unit}`} onClick={refreshWeather}>
+    <DataWidget
+      classes={classes}
+      Icon={Icon}
+      href={`https://wttr.in/${location}${wttrUnitParam}`}
+      onClick={refreshWeather}
+    >
       {!hideGradient && <div className="weather__gradient" />}
-      <Icon className="weather__icon" />
       {label}
       {temperature}°{unit}
-    </a>
+    </DataWidget>
   )
 }
 

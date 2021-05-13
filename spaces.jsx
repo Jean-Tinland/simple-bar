@@ -1,28 +1,22 @@
 import Spaces from './lib/components/spaces/spaces.jsx'
 import Error from './lib/components/error.jsx'
 
-import { classnames, parseJson } from './lib/utils'
+import { classnames, injectStyles, parseJson } from './lib/utils'
 import { getSettings } from './lib/settings'
 
-import { SpacesStyles } from './lib/styles/components/spaces'
-import { BaseStyles } from './lib/styles/core/base'
-import { CustomStyles } from './lib/styles/custom-styles'
+import { spacesStyles } from './lib/styles/components/spaces'
 
 const refreshFrequency = false
 
 const settings = getSettings()
-
-const className = `
-  ${BaseStyles}
-  ${SpacesStyles}
-  ${CustomStyles}
-`
 
 const { yabaiPath, shell } = settings.global
 
 const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
 
 const render = ({ output, error }) => {
+  injectStyles('simple-bar-spaces-styles', [spacesStyles])
+
   const classes = classnames('simple-bar simple-bar--spaces', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,
@@ -49,4 +43,4 @@ const render = ({ output, error }) => {
   )
 }
 
-export { command, refreshFrequency, className, render }
+export { command, refreshFrequency, render }

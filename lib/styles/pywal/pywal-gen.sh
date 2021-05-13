@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 {
-  echo -n 'export const Pywal = '
+  echo -n 'export const pywal = '
   cat "$HOME/.cache/wal/colors-speedcrunch.json"
   echo ';'
-} > Pywal.js
+} > pywal.js

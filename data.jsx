@@ -1,47 +1,36 @@
 import { run } from 'uebersicht'
-import Zoom, { ZoomStyles } from './lib/components/data/zoom.jsx'
-import Time, { TimeStyles } from './lib/components/data/time.jsx'
-import DateDisplay, { DateStyles } from './lib/components/data/date-display.jsx'
-import Weather, { WeatherStyles } from './lib/components/data/weather.jsx'
-import Battery, { BatteryStyles } from './lib/components/data/battery.jsx'
-import Sound, { SoundStyles } from './lib/components/data/sound.jsx'
-import Mic, { MicStyles } from './lib/components/data/mic.jsx'
-import Wifi, { WifiStyles } from './lib/components/data/wifi.jsx'
-import Keyboard, { KeyboardStyles } from './lib/components/data/keyboard.jsx'
-import Spotify, { SpotifyStyles } from './lib/components/data/spotify.jsx'
-import Music, { MusicStyles } from './lib/components/data/music.jsx'
-import BrowserTrack, { BrowserTrackStyles } from './lib/components/data/browser-track.jsx'
-import VPN, { VPNStyles } from './lib/components/data/vpn.jsx'
-import { SpecterStyles } from './lib/components/data/specter.jsx'
-import Error from './lib/components/error.jsx'
 
-import { classnames, parseJson, getActiveWidgets, getLocation, setLocation, refreshData } from './lib/utils'
+import Error from './lib/components/error.jsx'
+import Zoom, { zoomStyles } from './lib/components/data/zoom.jsx'
+import Time, { timeStyles } from './lib/components/data/time.jsx'
+import DateDisplay, { dateStyles } from './lib/components/data/date-display.jsx'
+import Weather, { weatherStyles } from './lib/components/data/weather.jsx'
+import Battery, { batteryStyles } from './lib/components/data/battery.jsx'
+import Sound, { soundStyles } from './lib/components/data/sound.jsx'
+import Mic, { micStyles } from './lib/components/data/mic.jsx'
+import Wifi, { wifiStyles } from './lib/components/data/wifi.jsx'
+import Keyboard, { keyboardStyles } from './lib/components/data/keyboard.jsx'
+import Spotify, { spotifyStyles } from './lib/components/data/spotify.jsx'
+import Music, { musicStyles } from './lib/components/data/music.jsx'
+import BrowserTrack, { browserTrackStyles } from './lib/components/data/browser-track.jsx'
+import VPN, { VPNStyles } from './lib/components/data/vpn.jsx'
+import { specterStyles } from './lib/components/data/specter.jsx'
+import { dataWidgetStyles } from './lib/styles/components/data/data-widget.js'
+
+import {
+  classnames,
+  parseJson,
+  getActiveWidgets,
+  getLocation,
+  setLocation,
+  refreshData,
+  injectStyles
+} from './lib/utils'
 import { getSettings } from './lib/settings'
-import { BaseStyles } from './lib/styles/core/base'
-import { CustomStyles } from './lib/styles/custom-styles'
 
 const refreshFrequency = 12000
 
 const settings = getSettings()
-
-const className = `
-  ${BaseStyles}
-  ${DateStyles}
-  ${ZoomStyles}
-  ${TimeStyles}
-  ${WeatherStyles}
-  ${BatteryStyles}
-  ${WifiStyles}
-  ${KeyboardStyles}
-  ${MicStyles}
-  ${SoundStyles}
-  ${SpotifyStyles}
-  ${MusicStyles}
-  ${BrowserTrackStyles}
-  ${SpecterStyles}
-  ${VPNStyles}
-  ${CustomStyles}
-`
 
 const activeWidgets = getActiveWidgets(settings)
 const { shell } = settings.global
@@ -66,6 +55,24 @@ const command = () => {
 }
 
 const render = ({ output, error }) => {
+  injectStyles('simple-bar-data-styles', [
+    dataWidgetStyles,
+    dateStyles,
+    zoomStyles,
+    timeStyles,
+    weatherStyles,
+    batteryStyles,
+    wifiStyles,
+    keyboardStyles,
+    micStyles,
+    soundStyles,
+    spotifyStyles,
+    musicStyles,
+    browserTrackStyles,
+    specterStyles,
+    VPNStyles
+  ])
+
   const classes = classnames('simple-bar simple-bar--data', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-color-in-data': settings.global.noColorInData,
@@ -103,4 +110,4 @@ const render = ({ output, error }) => {
   )
 }
 
-export { command, refreshFrequency, className, render }
+export { command, refreshFrequency, render }
