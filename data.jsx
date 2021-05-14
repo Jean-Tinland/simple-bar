@@ -45,11 +45,8 @@ if (weatherWidget && !userLocation) window.geolocation.getCurrentPosition(setLoc
 const command = () => {
   const location = weatherWidget ? getLocation() : ''
   if (weatherWidget && (!location || location === '') && !userLocation) refreshData()
-  return run(
-    `${shell} simple-bar/lib/scripts/get_data.sh "${activeWidgets}" "${networkDevice}" "${
-      userLocation || location
-    }" "${vpnConnectionName}"`
-  )
+  const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
+  return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
 }
 
 const render = ({ output, error }) => {
