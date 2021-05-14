@@ -10,7 +10,7 @@ const refreshFrequency = false
 
 const settings = getSettings()
 
-const { yabaiPath, shell } = settings.global
+const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 
 const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
 

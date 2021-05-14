@@ -6,7 +6,7 @@ import { getSettings, setSettings, settingsData } from '../../settings'
 
 const { useState, useEffect, useCallback, Fragment } = React
 
-const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
+const Item = ({ code, defaultValue, label, type, options, placeholder, onChange, onBlur }) => {
   if (type === 'select') {
     return (
       <>
@@ -41,6 +41,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
           defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={onChange}
+          onBlur={onBlur}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -114,9 +115,9 @@ const Settings = () => {
               'settings__tab--current': i === currentTab
             })
             return (
-              <div key={i} className={classes} onClick={() => onTabClick(i)}>
+              <button key={i} className={classes} onClick={() => onTabClick(i)}>
                 {label}
-              </div>
+              </button>
             )
           })}
         </div>
@@ -140,8 +141,18 @@ const Settings = () => {
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
-                    if (value !== defaultValue) setSettings(key, subKey, value, pendingChanges, setPendingChanges)
+                    if (value !== defaultValue) {
+                      setSettings(key, subKey, value)
+                      if (type !== 'text') updatePendingChanges()
+                    }
                   }
+                  const onBlur = (e) => {
+                    if (e.target.value !== defaultValue && type === 'text') {
+                      updatePendingChanges()
+                    }
+                  }
+                  const updatePendingChanges = () => setPendingChanges(pendingChanges + 1)
+
                   return (
                     <Fragment key={subKey}>
                       {title && <div className="settings__item-title">{title}</div>}
@@ -154,6 +165,7 @@ const Settings = () => {
                           options={options}
                           placeholder={placeholder}
                           onChange={onChange}
+                          onBlur={onBlur}
                         />
                       </div>
                     </Fragment>

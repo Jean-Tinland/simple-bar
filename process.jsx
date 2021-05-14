@@ -15,7 +15,7 @@ const refreshFrequency = false
 
 const settings = getSettings()
 
-const { yabaiPath, shell } = settings.global
+const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 const { processWidget } = settings.widgets
 
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
