@@ -1,5 +1,5 @@
 import { React } from 'uebersicht'
-import { classnames, hardRefresh } from '../../utils'
+import { classnames, clickEffect, hardRefresh } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
 
 import { getSettings, setSettings, settingsData } from '../../settings'
@@ -7,6 +7,7 @@ import { getSettings, setSettings, settingsData } from '../../settings'
 const { useState, useEffect, useCallback, Fragment } = React
 
 const Item = ({ code, defaultValue, label, type, options, placeholder, onChange, onBlur }) => {
+  const onClick = (e) => clickEffect(e)
   if (type === 'select') {
     return (
       <>
@@ -23,7 +24,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange,
   }
   if (type === 'radio') {
     return options.map((option) => (
-      <div className="settings__item-option" key={option}>
+      <div className="settings__item-option" key={option} onClick={onClick}>
         <input name={code} id={option} value={option} type="radio" defaultChecked={option === defaultValue} />
         <label htmlFor={option}>
           {option} {label}
@@ -51,8 +52,10 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange,
   }
   return (
     <>
-      <input id={code} type="checkbox" defaultChecked={defaultValue} onChange={onChange} />
-      <label htmlFor={code}>{label}</label>
+      <input id={code} type="checkbox" defaultChecked={defaultValue} onChange={onChange} onClick={onClick} />
+      <label htmlFor={code} onClick={onClick}>
+        {label}
+      </label>
     </>
   )
 }
@@ -84,7 +87,8 @@ const Settings = () => {
     window.sessionStorage.setItem(LAST_CURRENT_TAB, tab)
   }
 
-  const onRefreshClick = () => {
+  const onRefreshClick = (e) => {
+    clickEffect(e)
     setPendingChanges(0)
     hardRefresh()
   }
