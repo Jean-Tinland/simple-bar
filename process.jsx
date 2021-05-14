@@ -14,7 +14,6 @@ import { customStyles } from './lib/styles/custom-styles'
 const refreshFrequency = false
 
 const settings = getSettings()
-
 const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 const { processWidget } = settings.widgets
 

@@ -9,7 +9,6 @@ import { spacesStyles } from './lib/styles/components/spaces/spaces'
 const refreshFrequency = false
 
 const settings = getSettings()
-
 const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 
 const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
