@@ -33,9 +33,9 @@ const Spaces = ({ output, SIP, displayIndex }) => {
           )
         })}
         {SIPDisabled && (
-          <div className="spaces__add" onClick={onClick}>
+          <button className="spaces__add" onClick={onClick}>
             <AddIcon />
-          </div>
+          </button>
         )}
       </div>
     )

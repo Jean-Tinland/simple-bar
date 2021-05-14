@@ -55,7 +55,9 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
         <button className="space__inner" onClick={onClick}>
           <span className="space__label">{spaceLabel}</span> <OpenedApps type={type} apps={apps} />
         </button>
-        {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
+        {!spacesDisplay.hideSpacesOptions && SIPDisabled && (
+          <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />
+        )}
       </div>
     </>
   )

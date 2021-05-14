@@ -4,7 +4,7 @@ import Error from './lib/components/error.jsx'
 import { classnames, injectStyles, parseJson } from './lib/utils'
 import { getSettings } from './lib/settings'
 
-import { spacesStyles } from './lib/styles/components/spaces'
+import { spacesStyles } from './lib/styles/components/spaces/spaces'
 
 const refreshFrequency = false
 

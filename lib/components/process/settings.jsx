@@ -129,7 +129,9 @@ const Settings = () => {
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
                 {Object.keys(settings[key]).map((subKey) => {
-                  const { title, label, type, options, placeholder, fullWidth } = settingsData[subKey]
+                  const subSetting = settingsData[subKey]
+                  if (!subSetting) return null
+                  const { title, label, type, options, placeholder, fullWidth } = subSetting
                   const defaultValue = settings[key][subKey]
                   const classes = classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
