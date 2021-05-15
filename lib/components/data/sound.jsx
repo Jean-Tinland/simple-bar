@@ -9,11 +9,10 @@ import { clickEffect } from '../../utils.js'
 export { soundStyles } from '../../styles/components/data/sound'
 
 const getIcon = (volume, muted) => {
-  let Icon = VolumeHighIcon
-  if (volume < 50) Icon = VolumeLowIcon
-  if (volume === '0') Icon = NoVolumeIcon
-  if (muted === 'true' && volume !== '0') Icon = VolumeMutedIcon
-  return Icon
+  if (volume < 50) return VolumeLowIcon
+  if (volume === '0') return NoVolumeIcon
+  if (muted === 'true' && volume !== '0') return VolumeMutedIcon
+  return VolumeHighIcon
 }
 
 const openSoundSettings = () => {
