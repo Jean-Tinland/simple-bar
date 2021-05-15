@@ -48,25 +48,25 @@ const command = () => {
   return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
 }
 
-const render = ({ output, error }) => {
-  injectStyles('simple-bar-data-styles', [
-    dataWidgetStyles,
-    dateStyles,
-    zoomStyles,
-    timeStyles,
-    weatherStyles,
-    batteryStyles,
-    wifiStyles,
-    keyboardStyles,
-    micStyles,
-    soundStyles,
-    spotifyStyles,
-    musicStyles,
-    browserTrackStyles,
-    viscosityVPNStyles,
-    specterStyles
-  ])
+injectStyles('simple-bar-data-styles', [
+  dataWidgetStyles,
+  dateStyles,
+  zoomStyles,
+  timeStyles,
+  weatherStyles,
+  batteryStyles,
+  wifiStyles,
+  keyboardStyles,
+  micStyles,
+  soundStyles,
+  spotifyStyles,
+  musicStyles,
+  browserTrackStyles,
+  viscosityVPNStyles,
+  specterStyles
+])
 
+const render = ({ output, error }) => {
   const classes = classnames('simple-bar simple-bar--data', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-color-in-data': settings.global.noColorInData,

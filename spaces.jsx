@@ -13,9 +13,9 @@ const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 
 const command = `${shell} simple-bar/lib/scripts/get_spaces.sh ${yabaiPath}`
 
-const render = ({ output, error }) => {
-  injectStyles('simple-bar-spaces-styles', [spacesStyles])
+injectStyles('simple-bar-spaces-styles', [spacesStyles])
 
+const render = ({ output, error }) => {
   const classes = classnames('simple-bar simple-bar--spaces', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,

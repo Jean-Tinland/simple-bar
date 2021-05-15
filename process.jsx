@@ -19,9 +19,9 @@ const { processWidget } = settings.widgets
 
 const command = `${shell} simple-bar/lib/scripts/get_process.sh ${yabaiPath}`
 
-const render = ({ output, error }) => {
-  injectStyles('simple-bar-process-styles', [variables, baseStyles, processStyles, settingsStyles, customStyles])
+injectStyles('simple-bar-process-styles', [variables, baseStyles, processStyles, settingsStyles, customStyles])
 
+const render = ({ output, error }) => {
   const classes = classnames('simple-bar simple-bar--process', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,
