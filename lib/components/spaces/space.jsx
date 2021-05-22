@@ -37,6 +37,8 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
 
   const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
 
+  if (!focused && !visible && apps.length === 0 && spacesDisplay.hideEmptySpaces) return null
+
   const classes = classnames(`space space--${type}`, {
     'space--focused': focused === 1,
     'space--visible': visible === 1,
