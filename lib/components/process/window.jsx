@@ -45,7 +45,7 @@ const Window = ({ app }) => {
       <Icon className="process__icon" />
       <span className="process__inner">
         <span className="process__name">
-          {name == title ? name : `${name} / ${title}`}
+          {name == title || title == '' ? name : `${name} / ${title}`}
         </span>
       </span>
     </button>
