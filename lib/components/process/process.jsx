@@ -11,7 +11,7 @@ const Process = ({ output: apps }) => {
     const { app, title } = currentApp
     return (
       <div className="process">
-        {app} / {title}
+        {app == title ? app : `${app} / ${title}`}
       </div>
     )
   }
