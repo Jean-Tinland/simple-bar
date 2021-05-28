@@ -7,10 +7,10 @@ const { useRef } = React
 
 const Window = ({ app }) => {
   const ref = useRef()
-  const { minimized, focused, app: name, title, id } = app
+  const { minimized, focused, app: appName, title, id } = app
   if (minimized === 1) return null
   const isFocused = focused === 1
-  const Icon = appIcons[name] || appIcons['Default']
+  const Icon = appIcons[appName] || appIcons['Default']
   const classes = classnames('process__window', {
     'process__window--focused': isFocused
   })
@@ -39,14 +39,13 @@ const Window = ({ app }) => {
     if (!slider) return
     slider.removeAttribute('style')
   }
+  const processName = appName !== title && title.length ? `${appName} / ${title}` : appName
 
   return (
     <button ref={ref} className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="process__icon" />
       <span className="process__inner">
-        <span className="process__name">
-          {name == title || title == '' ? name : `${name} / ${title}`}
-        </span>
+        <span className="process__name">{processName}</span>
       </span>
     </button>
   )

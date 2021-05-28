@@ -9,11 +9,8 @@ const Process = ({ output: apps }) => {
     const [currentApp] = apps.filter((app) => app.focused === 1)
     if (!currentApp) return null
     const { app, title } = currentApp
-    return (
-      <div className="process">
-        {app == title || title == '' ? app : `${app} / ${title}`}
-      </div>
-    )
+    const processName = app !== title && title.length ? `${app} / ${title}` : app
+    return <div className="process">{processName}</div>
   }
   return (
     <div className="process process--all-windows">
