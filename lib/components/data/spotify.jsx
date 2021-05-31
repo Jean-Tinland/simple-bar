@@ -35,7 +35,7 @@ const Spotify = ({ output }) => {
   const { playerState, trackName, artistName, spotifyIsRunning } = output
   const { showSpecter } = spotifyWidgetOptions
 
-  if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
+  if (spotifyIsRunning === 'false' || trackName === '') return null
 
   const isPlaying = playerState === 'playing'
   const Icon = getIcon(playerState)
@@ -66,23 +66,43 @@ const Spotify = ({ output }) => {
     'spotify--playing': isPlaying
   })
 
-  return (
-    <DataWidget
-      ref={ref}
-      classes={classes}
-      Icon={Icon}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      {showSpecter && isPlaying && <Specter />}
-      <div className="spotify__inner">
-        <div className="spotify__slider">
-          {trackName} - {artistName}
+  if (artistName === '') {
+    return (
+      <DataWidget
+        ref={ref}
+        classes={classes}
+        Icon={Icon}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+       >
+        {showSpecter && isPlaying && <Specter />}
+        <div className="spotify__inner">
+         <div className="spotify__slider">
+            {trackName}
+          </div>
+       </div>
+      </DataWidget>
+    );
+  } else {
+    return (
+      <DataWidget
+        ref={ref}
+        classes={classes}
+        Icon={Icon}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+       {showSpecter && isPlaying && <Specter />}
+       <div className="spotify__inner">
+         <div className="spotify__slider">
+           {trackName} - {artistName}
+          </div>
         </div>
-      </div>
-    </DataWidget>
-  )
+      </DataWidget>
+  );
+  }
 }
 
 export default Spotify
