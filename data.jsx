@@ -17,15 +17,7 @@ import ViscosityVPN, { viscosityVPNStyles } from './lib/components/data/viscosit
 import { specterStyles } from './lib/components/data/specter.jsx'
 import { dataWidgetStyles } from './lib/styles/components/data/data-widget.js'
 
-import {
-  classnames,
-  parseJson,
-  getActiveWidgets,
-  getLocation,
-  setLocation,
-  refreshData,
-  injectStyles
-} from './lib/utils'
+import { classnames, parseJson, getActiveWidgets, getLocation, setLocation, injectStyles } from './lib/utils'
 import { getSettings } from './lib/settings'
 
 const refreshFrequency = 12000
@@ -37,13 +29,11 @@ const { weatherWidget } = settings.widgets
 const { networkDevice } = settings.networkWidgetOptions
 const { vpnConnectionName } = settings.vpnWidgetOptions
 const { customLocation } = settings.weatherWidgetOptions
-const userLocation = customLocation !== '' ? customLocation : undefined
+const userLocation = customLocation.length ? customLocation : undefined
 
-if (weatherWidget && !userLocation) window.geolocation.getCurrentPosition(setLocation)
-
-const command = () => {
+const command = async () => {
+  await window.geolocation.getCurrentPosition(setLocation)
   const location = weatherWidget ? getLocation() : ''
-  if (weatherWidget && (!location || location === '') && !userLocation) refreshData()
   const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
   return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
 }

@@ -14,6 +14,12 @@ const getIcon = (description, atNight) => {
   return SunIcon
 }
 
+const getLabel = (location, temperature, unit, hideLocation) => {
+  if (!location) return 'Fetching...'
+  if (hideLocation) return `${temperature}°${unit}`
+  return `${location}, ${temperature}°${unit}`
+}
+
 const refreshWeather = (e) => {
   clickEffect(e)
   notification('Opening forecast from wttr.in...')
@@ -25,13 +31,9 @@ const Weather = ({ output }) => {
   if (!weatherWidget || !output) return null
 
   const { data } = output
-  if (!data.current_condition) return null
-
-  const { unit, hideLocation, hideGradient, customLocation } = settings.weatherWidgetOptions
-  const userLocation = customLocation !== '' ? customLocation : undefined
-  const location = userLocation || getLocation()
-  if (!location) window.geolocation.getCurrentPosition(setLocation)
-
+  if (!data || !data.current_condition) return null
+  const area = data.nearest_area[0].areaName[0].value
+  const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F
   const wttrUnitParam = unit === 'C' ? '?m' : '?u'
@@ -55,7 +57,7 @@ const Weather = ({ output }) => {
   const atNight = sunriseTime >= now || now >= sunsetTime
 
   const Icon = getIcon(description, atNight)
-  const label = hideLocation ? '' : `${location}, `
+  const label = getLabel(area, temperature, unit, hideLocation)
 
   const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
   const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
@@ -66,15 +68,9 @@ const Weather = ({ output }) => {
   })
 
   return (
-    <DataWidget
-      classes={classes}
-      Icon={Icon}
-      href={`https://wttr.in/${location}${wttrUnitParam}`}
-      onClick={refreshWeather}
-    >
+    <DataWidget classes={classes} Icon={Icon} href={`https://wttr.in/${area}${wttrUnitParam}`} onClick={refreshWeather}>
       {!hideGradient && <div className="weather__gradient" />}
       {label}
-      {temperature}°{unit}
     </DataWidget>
   )
 }
