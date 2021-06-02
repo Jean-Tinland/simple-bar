@@ -11,7 +11,7 @@ const Zoom = ({ output }) => {
   const { zoomWidget } = widgets
   const { showVideo, showMic } = zoomWidgetOptions
 
-  if (!zoomWidget || (output.mic === '' && output.video === '')) return null
+  if (!zoomWidget || (!output.mic.length && !output.video.length)) return null
 
   const { mic, video } = output
   const MicIcon = mic === 'off' ? MicOffIcon : MicOnIcon

@@ -26,7 +26,7 @@ const BrowserTrack = ({ output }) => {
 
   const { browser, title, spotifyStatus } = output
   const { showSpecter } = browserTrackWidgetOptions
-  if (!browser || !title || browser === '' || title === '' || spotifyStatus === 'true') return null
+  if (!browser || !title || !browser.length || !title.length || spotifyStatus === 'true') return null
 
   const onMouseEnter = () => {
     const target = ref.current

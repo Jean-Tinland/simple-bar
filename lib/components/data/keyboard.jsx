@@ -8,7 +8,7 @@ export { keyboardStyles } from '../../styles/components/data/keyboard'
 const Keyboard = ({ output }) => {
   const settings = getSettings()
   const { keyboardWidget } = settings.widgets
-  if (!keyboardWidget || !output || !output.layout || output.layout === '') return null
+  if (!keyboardWidget || !output || !output.layout || !output.layout.length) return null
 
   const formatedOutput = output && output.layout.replace("'KeyboardLayout Name' =", '').replace(';', '')
 

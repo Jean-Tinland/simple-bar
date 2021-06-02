@@ -23,7 +23,7 @@ const ViscosityVPN = ({ output }) => {
   const { widgets, vpnWidgetOptions } = settings
   const { vpnWidget } = widgets
   const { vpnConnectionName } = vpnWidgetOptions
-  if (!output || vpnConnectionName === '' || !vpnWidget) return null
+  if (!output || !vpnConnectionName.length || !vpnWidget) return null
 
   const { status } = output
   const isConnected = status === 'Connected'

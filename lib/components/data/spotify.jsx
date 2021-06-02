@@ -35,8 +35,9 @@ const Spotify = ({ output }) => {
   const { playerState, trackName, artistName, spotifyIsRunning } = output
   const { showSpecter } = spotifyWidgetOptions
 
-  if (spotifyIsRunning === 'false' || trackName === '' || artistName === '') return null
+  if (spotifyIsRunning === 'false' || !trackName.length) return null
 
+  const label = artistName.length ? `${trackName} - ${artistName}` : trackName
   const isPlaying = playerState === 'playing'
   const Icon = getIcon(playerState)
 

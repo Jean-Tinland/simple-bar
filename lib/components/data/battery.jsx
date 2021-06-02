@@ -16,7 +16,7 @@ const getTransform = (value) => {
 }
 
 const toggleCaffeinate = (caffeinate, option) => {
-  if (caffeinate === '') {
+  if (!caffeinate.length) {
     run(`caffeinate ${option} &`)
     notification('Enabling caffeinate...')
     refreshData()
