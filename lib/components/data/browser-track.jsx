@@ -5,6 +5,7 @@ import Specter from './specter.jsx'
 import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from '../icons.jsx'
 
 import { getSettings } from '../../settings'
+import { startSliding, stopSliding } from '../../utils.js'
 
 export { browserTrackStyles } from '../../styles/components/data/browser-track'
 
@@ -28,23 +29,8 @@ const BrowserTrack = ({ output }) => {
   const { showSpecter } = browserTrackWidgetOptions
   if (!browser || !title || !browser.length || !title.length || spotifyStatus === 'true') return null
 
-  const onMouseEnter = () => {
-    const target = ref.current
-    if (!target) return
-    const inner = target.querySelector('.browser-track__inner')
-    const slider = target.querySelector('.browser-track__slider')
-    const delta = inner.clientWidth - slider.clientWidth
-    if (delta > 0) return
-    const timing = Math.round((Math.abs(delta) * 100) / 4)
-    Object.assign(slider.style, {
-      transform: `translateX(${delta}px)`,
-      transition: `transform ${timing}ms linear`
-    })
-  }
-  const onMouseLeave = () => {
-    const target = ref.current
-    target && target.querySelector('.browser-track__slider').removeAttribute('style')
-  }
+  const onMouseEnter = () => startSliding(ref.current, '.browser-track__inner', '.browser-track__slider')
+  const onMouseLeave = () => stopSliding(ref.current, '.browser-track__slider')
 
   const Icon = () => {
     const BrowserIcon = getIcon(browser)

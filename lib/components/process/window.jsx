@@ -1,6 +1,6 @@
 import { React } from 'uebersicht'
 import { appIcons } from '../../app-icons'
-import { classnames, clickEffect } from '../../utils'
+import { classnames, clickEffect, startSliding, stopSliding } from '../../utils'
 import { focusWindow } from '../../yabai'
 
 const { useRef } = React
@@ -18,27 +18,9 @@ const Window = ({ app }) => {
     clickEffect(e)
     focusWindow(id)
   }
-  const onMouseEnter = () => {
-    const target = ref.current
-    if (!isFocused || !target) return
-    const inner = target.querySelector('.process__inner')
-    const slider = target.querySelector('.process__name')
-    if (!inner || !slider) return
-    const delta = inner.clientWidth - slider.clientWidth
-    if (delta > 0) return
-    const timing = Math.round((Math.abs(delta) * 100) / 4)
-    Object.assign(slider.style, {
-      transform: `translateX(${delta}px)`,
-      transition: `transform ${timing}ms linear`
-    })
-  }
-  const onMouseLeave = () => {
-    const target = ref.current
-    if (!target) return
-    const slider = target.querySelector('.process__name')
-    if (!slider) return
-    slider.removeAttribute('style')
-  }
+  const onMouseEnter = () => startSliding(ref.current, '.process__inner', '.process__name')
+  const onMouseLeave = () => stopSliding(ref.current, '.process__name')
+
   const processName = appName !== title && title.length ? `${appName} / ${title}` : appName
 
   return (

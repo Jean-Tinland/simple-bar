@@ -23,7 +23,7 @@ import { getSettings } from './lib/settings'
 const refreshFrequency = 12000
 
 const settings = getSettings()
-const activeWidgets = getActiveWidgets(settings)
+const activeWidgets = getActiveWidgets()
 const { shell } = settings.global
 const { weatherWidget } = settings.widgets
 const { networkDevice } = settings.networkWidgetOptions

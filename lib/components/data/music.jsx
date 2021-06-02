@@ -4,7 +4,7 @@ import DataWidget from './data-widget.jsx'
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from '../icons.jsx'
 
-import { refreshData, clickEffect, classnames } from '../../utils'
+import { refreshData, clickEffect, classnames, startSliding, stopSliding } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { musicStyles } from '../../styles/components/data/music'
@@ -36,23 +36,8 @@ const Spotify = ({ output }) => {
     clickEffect(e)
     togglePlay(!isPlaying, processName)
   }
-  const onMouseEnter = () => {
-    const target = ref.current
-    if (!target) return
-    const inner = target.querySelector('.music__inner')
-    const slider = target.querySelector('.music__slider')
-    const delta = inner.clientWidth - slider.clientWidth
-    if (delta > 0) return
-    const timing = Math.round((Math.abs(delta) * 100) / 4)
-    Object.assign(slider.style, {
-      transform: `translateX(${delta}px)`,
-      transition: `transform ${timing}ms linear`
-    })
-  }
-  const onMouseLeave = () => {
-    const target = ref.current
-    target && target.querySelector('.music__slider').removeAttribute('style')
-  }
+  const onMouseEnter = () => startSliding(ref.current, '.music__inner', '.music__slider')
+  const onMouseLeave = () => stopSliding(ref.current, '.music__slider')
 
   const classes = classnames('music', {
     'music--playing': isPlaying

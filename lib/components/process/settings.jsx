@@ -179,9 +179,7 @@ const Settings = () => {
                   <div className="settings__infos">
                     <div className="settings__infos-title">Tips</div>
                     {infos.map((info, i) => (
-                      <div key={i} className="settings__info">
-                        {info}
-                      </div>
+                      <div key={i} className="settings__info" dangerouslySetInnerHTML={{ __html: info }} />
                     ))}
                   </div>
                 )}
