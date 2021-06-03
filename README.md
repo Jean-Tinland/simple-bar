@@ -197,7 +197,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 - Pywal integration was added thanks to [@Amar Paul](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar Paul](https://github.com/Amar1729)
-- Spotify current track & play/pause toggle on click added thanks to [@jamieweavis](https://github.com/jamieweavis)
+- Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
 - Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni) and [@anujc4](https://github.com/anujc4)
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
