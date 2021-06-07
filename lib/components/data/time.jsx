@@ -1,4 +1,4 @@
-import { run } from 'uebersicht'
+import { run, React } from 'uebersicht'
 
 import DataWidget from './data-widget.jsx'
 import { ClockIcon } from '../icons.jsx'
@@ -7,6 +7,8 @@ import { clickEffect } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { timeStyles } from '../../styles/components/data/time'
+
+const { useEffect, useState } = React
 
 const displayNotificationCenter = () => {
   run(
@@ -18,15 +20,26 @@ const Time = () => {
   const settings = getSettings()
   const { widgets, timeWidgetOptions } = settings
   const { timeWidget } = widgets
-  if (!timeWidget) return null
 
-  const { hour12, dayProgress } = timeWidgetOptions
+  const { hour12, dayProgress, showSeconds } = timeWidgetOptions
   const options = {
     hour: 'numeric',
     minute: 'numeric',
+    second: showSeconds ? 'numeric' : undefined,
     hour12
   }
-  const time = new Date().toLocaleString('en-UK', options)
+
+  const getTime = () => new Date().toLocaleString('en-UK', options)
+  const [time, setTime] = useState(getTime())
+
+  useEffect(() => {
+    if (timeWidget && showSeconds) {
+      const interval = setInterval(() => setTime(getTime()), 1000)
+      return () => clearInterval(interval)
+    }
+  })
+
+  if (!timeWidget) return null
 
   const [dayStart, dayEnd] = [new Date(), new Date()]
   dayStart.setHours(0, 0, 0)
