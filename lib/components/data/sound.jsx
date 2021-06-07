@@ -17,7 +17,10 @@ const getIcon = (volume, muted) => {
   return VolumeHighIcon
 }
 
-const setSound = (volume) => run(`osascript -e 'set volume output volume ${volume}'`).then(refreshData)
+const setSound = async (volume) => {
+  await run(`osascript -e 'set volume output volume ${volume}'`)
+  await refreshData()
+}
 
 const Sound = ({ output }) => {
   const settings = getSettings()
@@ -30,10 +33,10 @@ const Sound = ({ output }) => {
 
   const Icon = getIcon(volume, muted)
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
     const value = parseInt(e.target.value)
     setVolume(value)
-    setSound(value)
+    await setSound(value)
   }
 
   const fillerWidth = volume / 100

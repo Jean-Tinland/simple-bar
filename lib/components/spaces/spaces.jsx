@@ -12,9 +12,9 @@ const Spaces = ({ output, SIP, displayIndex }) => {
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
   return displays.map((display, i) => {
     if (display !== displayIndex) return null
-    const onClick = (e) => {
+    const onClick = async (e) => {
       clickEffect(e)
-      createSpace(displayIndex)
+      await createSpace(displayIndex)
     }
     return (
       <div key={i} className="spaces">

@@ -8,12 +8,14 @@ import { getSettings } from '../../settings'
 
 export { wifiStyles } from '../../styles/components/data/wifi'
 
-const toggleWifi = (isActive, networkDevice) => {
+const toggleWifi = async (isActive, networkDevice) => {
   if (isActive) {
-    run(`networksetup -setairportpower ${networkDevice} off`).then(refreshData)
+    await run(`networksetup -setairportpower ${networkDevice} off`)
+    await refreshData()
     notification('Disabling network...')
   } else {
-    run(`networksetup -setairportpower ${networkDevice} on`).then(refreshData)
+    await run(`networksetup -setairportpower ${networkDevice} on`)
+    await refreshData()
     notification('Enabling network...')
   }
 }
@@ -43,9 +45,9 @@ const Wifi = ({ output }) => {
 
   const Icon = isActive ? WifiIcon : WifiOffIcon
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     clickEffect(e)
-    toggleWifi(isActive, networkDevice)
+    await toggleWifi(isActive, networkDevice)
   }
 
   return (

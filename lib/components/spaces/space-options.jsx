@@ -4,16 +4,16 @@ import { clickEffect } from '../../utils'
 import { removeSpace, swapSpace } from '../../yabai'
 
 const SpaceOptions = ({ index, setHovered, displayIndex }) => {
-  const onRemoveClick = (e) => {
-    removeSpace(index, displayIndex)
+  const onRemoveClick = async (e) => {
     e.stopPropagation()
     clickEffect(e)
     setHovered(false)
+    await removeSpace(index, displayIndex)
   }
-  const onChevronClick = (direction) => (e) => {
-    swapSpace(index, direction)
+  const onChevronClick = (direction) => async (e) => {
     clickEffect(e)
     setHovered(false)
+    await swapSpace(index, direction)
   }
   const onMouseDown = (e) => e.preventDefault()
   const onMouseLeave = () => setHovered(false)
