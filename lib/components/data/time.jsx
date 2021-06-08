@@ -33,9 +33,8 @@ const Time = () => {
   const [time, setTime] = useState(getTime())
 
   useEffect(() => {
-    const delay = showSeconds ? 1000 : 60000
     if (timeWidget) {
-      const interval = setInterval(() => setTime(getTime()), delay)
+      const interval = setInterval(() => setTime(getTime()), 1000)
       return () => clearInterval(interval)
     }
   })
