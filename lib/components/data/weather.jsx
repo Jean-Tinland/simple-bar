@@ -1,7 +1,7 @@
 import DataWidget from './data-widget.jsx'
 import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from '../icons.jsx'
 
-import { classnames, clickEffect, getLocation, notification, setLocation } from '../../utils'
+import { classnames, clickEffect, notification } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { weatherStyles } from '../../styles/components/data/weather'
