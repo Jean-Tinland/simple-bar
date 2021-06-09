@@ -31,9 +31,8 @@ const userLocation = customLocation.length ? customLocation : undefined
 
 let location = ''
 if (weatherWidget) {
-  window.geolocation.getCurrentPosition(() => {
-    const { city } = data.address
-    location = city
+  window.geolocation.getCurrentPosition((data) => {
+    location = data?.address?.city
   })
 }
 const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
