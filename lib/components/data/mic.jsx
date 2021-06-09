@@ -8,14 +8,12 @@ import { getSettings } from '../../settings'
 
 export { micStyles } from '../../styles/components/data/mic'
 
-const toggleMic = async (volume) => {
+const toggleMic = (volume) => {
   if (volume === '0') {
-    await run("osascript -e 'set volume input volume 100'")
-    await refreshData()
+    run("osascript -e 'set volume input volume 100'").then(refreshData)
     notification('Enabling microphone...')
   } else {
-    await run("osascript -e 'set volume input volume 0'")
-    await refreshData()
+    run("osascript -e 'set volume input volume 0'").then(refreshData)
     notification('Disabling microphone...')
   }
 }
@@ -30,9 +28,9 @@ const Mic = ({ output }) => {
 
   const Icon = volume !== '0' ? MicOnIcon : MicOffIcon
 
-  const onClick = async (e) => {
+  const onClick = (e) => {
     clickEffect(e)
-    await toggleMic(volume)
+    toggleMic(volume)
   }
 
   return (

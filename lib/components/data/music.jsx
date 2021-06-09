@@ -11,13 +11,11 @@ export { musicStyles } from '../../styles/components/data/music'
 
 const { useRef } = React
 
-const togglePlay = async (isPaused, processName) => {
+const togglePlay = (isPaused, processName) => {
   if (isPaused) {
-    await run(`osascript -e 'tell application "${processName}" to play'`)
-    await refreshData()
+    run(`osascript -e 'tell application "${processName}" to play'`).then(refreshData)
   } else {
-    await run(`osascript -e 'tell application "${processName}" to pause'`)
-    await refreshData()
+    run(`osascript -e 'tell application "${processName}" to pause'`).then(refreshData)
   }
 }
 
@@ -34,9 +32,9 @@ const Spotify = ({ output }) => {
   const isPlaying = playerState === 'playing'
   const Icon = isPlaying ? PlayingIcon : PausedIcon
 
-  const onClick = async (e) => {
+  const onClick = (e) => {
     clickEffect(e)
-    await togglePlay(!isPlaying, processName)
+    togglePlay(!isPlaying, processName)
   }
   const onMouseEnter = () => startSliding(ref.current, '.music__inner', '.music__slider')
   const onMouseLeave = () => stopSliding(ref.current, '.music__slider')

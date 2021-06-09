@@ -15,14 +15,12 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
-const toggleCaffeinate = async (caffeinate, option) => {
+const toggleCaffeinate = (caffeinate, option) => {
   if (!caffeinate.length) {
-    await run(`caffeinate ${option} &`)
-    await refreshData()
+    run(`caffeinate ${option} &`).then(refreshData)
     notification('Enabling caffeinate...')
   } else {
-    await run(`kill ${caffeinate}`)
-    await refreshData()
+    run(`kill ${caffeinate}`).then(refreshData)
     notification('Disabling caffeinate...')
   }
 }
@@ -45,9 +43,9 @@ const Battery = ({ output }) => {
 
   const transformValue = getTransform(percentage)
 
-  const onClick = async (e) => {
+  const onClick = (e) => {
     clickEffect(e)
-    await toggleCaffeinate(caffeinate, caffeinateOption)
+    toggleCaffeinate(caffeinate, caffeinateOption)
   }
 
   const Icon = () => (

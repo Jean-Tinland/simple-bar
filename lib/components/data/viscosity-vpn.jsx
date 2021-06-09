@@ -8,14 +8,12 @@ import { getSettings } from '../../settings'
 
 export { viscosityVPNStyles } from '../../styles/components/data/viscosity-vpn'
 
-const toggleVPN = async (isConnected, vpnConnectionName) => {
+const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
-    await run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`)
-    await refreshData()
+    run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`).then(refreshData)
     notification(`Disabling Viscosity ${vpnConnectionName} network...`)
   } else {
-    await run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`)
-    await refreshData()
+    run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`).then(refreshData)
     notification(`Enabling Viscosity ${vpnConnectionName} network...`)
   }
 }
@@ -36,9 +34,9 @@ const ViscosityVPN = ({ output }) => {
 
   const Icon = isConnected ? VPNIcon : VPNOffIcon
 
-  const clicked = async (e) => {
+  const clicked = (e) => {
     clickEffect(e)
-    await toggleVPN(isConnected, vpnConnectionName)
+    toggleVPN(isConnected, vpnConnectionName)
   }
 
   return (

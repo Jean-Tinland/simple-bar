@@ -10,11 +10,10 @@ export { timeStyles } from '../../styles/components/data/time'
 
 const { useEffect, useState } = React
 
-const displayNotificationCenter = () => {
+const displayNotificationCenter = () =>
   run(
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   )
-}
 
 const Time = () => {
   const settings = getSettings()

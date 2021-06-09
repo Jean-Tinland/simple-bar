@@ -11,10 +11,9 @@ export { spotifyStyles } from '../../styles/components/data/spotify'
 
 const { useRef } = React
 
-const togglePlay = async (isPaused) => {
+const togglePlay = (isPaused) => {
   const state = isPaused ? 'play' : 'pause'
-  await run(`osascript -e 'tell application "Spotify" to ${state}'`)
-  await refreshData()
+  run(`osascript -e 'tell application "Spotify" to ${state}'`).then(refreshData)
 }
 
 const getIcon = (playerState) => {
@@ -39,9 +38,9 @@ const Spotify = ({ output }) => {
   const isPlaying = playerState === 'playing'
   const Icon = getIcon(playerState)
 
-  const onClick = async (e) => {
+  const onClick = (e) => {
     clickEffect(e)
-    await togglePlay(!isPlaying)
+    togglePlay(!isPlaying)
   }
   const onMouseEnter = () => startSliding(ref.current, '.spotify__inner', '.spotify__slider')
   const onMouseLeave = () => stopSliding(ref.current, '.spotify__slider')
