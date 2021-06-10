@@ -1,3 +1,5 @@
+import { run } from 'uebersicht'
+
 import Error from './lib/components/error.jsx'
 import Zoom, { zoomStyles } from './lib/components/data/zoom.jsx'
 import Time, { timeStyles } from './lib/components/data/time.jsx'
@@ -15,7 +17,7 @@ import ViscosityVPN, { viscosityVPNStyles } from './lib/components/data/viscosit
 import { specterStyles } from './lib/components/data/specter.jsx'
 import { dataWidgetStyles } from './lib/styles/components/data/data-widget.js'
 
-import { classnames, parseJson, getActiveWidgets, injectStyles } from './lib/utils'
+import { classnames, parseJson, getActiveWidgets, injectStyles, refreshData } from './lib/utils'
 import { getSettings } from './lib/settings'
 
 const refreshFrequency = 12000
@@ -27,16 +29,20 @@ const { weatherWidget } = settings.widgets
 const { networkDevice } = settings.networkWidgetOptions
 const { vpnConnectionName } = settings.vpnWidgetOptions
 const { customLocation } = settings.weatherWidgetOptions
-const userLocation = customLocation.length ? customLocation : undefined
+const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
 
-let location = ''
-if (weatherWidget) {
-  window.geolocation.getCurrentPosition((data) => {
-    location = data?.address?.city
-  })
+const getPosition = async (options) =>
+  new Promise((resolve, reject) => window.geolocation.getCurrentPosition(resolve, reject, options))
+
+const command = async () => {
+  let location
+  if (weatherWidget) {
+    const position = await getPosition()
+    location = position?.address?.city
+  }
+  const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
+  return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
 }
-const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
-const command = `${shell} simple-bar/lib/scripts/get_data.sh ${params}`
 
 injectStyles('simple-bar-data-styles', [
   dataWidgetStyles,
@@ -75,8 +81,6 @@ const render = ({ output, error }) => {
 
   const { zoom, weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
   const browserTrackOutput = { ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }
-
-  console.log('refresh')
 
   return (
     <div className={classes}>
