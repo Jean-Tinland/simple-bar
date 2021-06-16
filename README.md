@@ -202,4 +202,5 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
+- Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
 - Everyone opening issues that are helping me improve this little project
