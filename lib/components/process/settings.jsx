@@ -1,12 +1,12 @@
 import { React } from 'uebersicht'
-import { classnames, clickEffect, hardRefresh } from '../../utils'
+import { classnames, clickEffect, compareObjects, hardRefresh } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
 
-import { getSettings, setSettings, settingsData } from '../../settings'
+import { defaultSettings, getSettings, setSettings, settingsData } from '../../settings'
 
 const { useState, useEffect, useCallback, Fragment } = React
 
-const Item = ({ code, defaultValue, label, type, options, placeholder, onChange, onBlur }) => {
+const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
   const onClick = (e) => clickEffect(e)
   if (type === 'select') {
     return (
@@ -42,7 +42,6 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange,
           defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={onChange}
-          onBlur={onBlur}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -73,6 +72,7 @@ const Settings = () => {
   const [currentTab, setCurrentTab] = useState(getLastCurrentTab())
   const [pendingChanges, setPendingChanges] = useState(0)
   const settings = getSettings()
+  const [newSettings, setNewSettings] = useState(settings)
 
   const closeSettings = () => setVisible(false)
 
@@ -90,8 +90,15 @@ const Settings = () => {
   const onRefreshClick = (e) => {
     clickEffect(e)
     setPendingChanges(0)
+    setSettings(newSettings)
     hardRefresh()
   }
+
+  useEffect(() => {
+    const diffs = compareObjects(getSettings(), newSettings)
+    const deepDiffs = Object.keys(diffs).reduce((acc, key) => [...acc, ...Object.keys(diffs[key])], [])
+    setPendingChanges(deepDiffs.length)
+  }, [newSettings])
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown)
@@ -111,7 +118,7 @@ const Settings = () => {
           <CloseIcon className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__tabs">
-          {Object.keys(settings).map((key, i) => {
+          {Object.keys(defaultSettings).map((key, i) => {
             const setting = settingsData[key]
             if (!setting) return null
             const { label } = setting
@@ -126,18 +133,18 @@ const Settings = () => {
           })}
         </div>
         <div className="settings__inner">
-          {Object.keys(settings).map((key) => {
+          {Object.keys(defaultSettings).map((key) => {
             const setting = settingsData[key]
             if (!setting) return null
             const { label, infos } = setting
             return (
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
-                {Object.keys(settings[key]).map((subKey) => {
+                {Object.keys(defaultSettings[key]).map((subKey) => {
                   const subSetting = settingsData[subKey]
                   if (!subSetting) return null
                   const { title, label, type, options, placeholder, fullWidth } = subSetting
-                  const defaultValue = settings[key][subKey]
+                  const defaultValue = newSettings[key][subKey]
                   const classes = classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
                     'settings__item--text': type === 'text',
@@ -145,17 +152,9 @@ const Settings = () => {
                   })
                   const onChange = (e) => {
                     const value = type === 'checkbox' ? e.target.checked : e.target.value
-                    if (value !== defaultValue) {
-                      setSettings(key, subKey, value)
-                      if (type !== 'text') updatePendingChanges()
-                    }
+                    const updatedSettings = { ...newSettings, [key]: { ...newSettings[key], [subKey]: value } }
+                    setNewSettings(updatedSettings)
                   }
-                  const onBlur = (e) => {
-                    if (e.target.value !== defaultValue && type === 'text') {
-                      updatePendingChanges()
-                    }
-                  }
-                  const updatePendingChanges = () => setPendingChanges(pendingChanges + 1)
 
                   return (
                     <Fragment key={subKey}>
@@ -169,7 +168,6 @@ const Settings = () => {
                           options={options}
                           placeholder={placeholder}
                           onChange={onChange}
-                          onBlur={onBlur}
                         />
                       </div>
                     </Fragment>
