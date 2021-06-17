@@ -29,10 +29,12 @@ const Weather = ({ output }) => {
   const settings = getSettings()
   const { weatherWidget } = settings.widgets
   if (!weatherWidget || !output) return null
+  const { customLocation } = settings.weatherWidgetOptions
+  const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
 
   const { data } = output
   if (!data || !data.current_condition) return null
-  const area = data.nearest_area[0].areaName[0].value
+  const area = userLocation || data.nearest_area[0].areaName[0].value
   const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
   const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F

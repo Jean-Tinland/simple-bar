@@ -35,12 +35,12 @@ const getPosition = async (options) =>
   new Promise((resolve, reject) => window.geolocation.getCurrentPosition(resolve, reject, options))
 
 const command = async () => {
-  let location
-  if (weatherWidget) {
+  let location = userLocation
+  if (!userLocation && weatherWidget) {
     const position = await getPosition()
     location = position?.address?.city
   }
-  const params = `"${activeWidgets}" "${networkDevice}" "${userLocation || location}" "${vpnConnectionName}"`
+  const params = `"${activeWidgets}" "${networkDevice}" "${location}" "${vpnConnectionName}"`
   return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
 }
 
