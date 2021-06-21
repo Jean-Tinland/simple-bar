@@ -203,4 +203,5 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
+- Solarized Light & Dark themes implementation thanks to [@Joroovb](https://github.com/Joroovb)
 - Everyone opening issues that are helping me improve this little project
