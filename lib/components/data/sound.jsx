@@ -1,14 +1,16 @@
-import { run, React } from 'uebersicht'
-
+import { React, run } from 'uebersicht'
 import DataWidget from './data-widget.jsx'
+import DataWidgetLoader from './data-widget-loader.jsx'
 import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from '../icons.jsx'
-
+import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
 import { getSettings } from '../../settings'
-import { classnames, refreshData } from '../../utils.js'
+import { classnames, cleanupOutput } from '../../utils.js'
 
 export { soundStyles } from '../../styles/components/data/sound'
 
 const { useEffect, useState } = React
+
+const refreshFrequency = 20000
 
 const getIcon = (volume, muted) => {
   if (muted === 'true' || !volume) return VolumeMutedIcon
@@ -17,17 +19,47 @@ const getIcon = (volume, muted) => {
   return VolumeHighIcon
 }
 
-const setSound = (volume) => run(`osascript -e 'set volume output volume ${volume}'`).then(refreshData)
+const setSound = (volume) => {
+  if (!volume) return
+  run(`osascript -e 'set volume output volume ${volume}'`)
+}
 
-const Sound = ({ output }) => {
+const Sound = () => {
   const settings = getSettings()
   const { soundWidget } = settings.widgets
-  const { volume: _volume, muted } = output || {}
+
+  const [state, setState] = useState()
+  const [loading, setLoading] = useState(soundWidget)
+  const { volume: _volume } = state || {}
   const [volume, setVolume] = useState(_volume && parseInt(_volume))
   const [dragging, setDragging] = useState(false)
-  if (!soundWidget || !output) return null
 
-  if (volume === 'missing value' || muted === 'missing value') return null
+  const getSound = async () => {
+    const [volume, muted] = await Promise.all([
+      run(`osascript -e 'set ovol to output volume of (get volume settings)'`),
+      run(`osascript -e 'set ovol to output muted of (get volume settings)'`)
+    ])
+    setState({ volume: cleanupOutput(volume), muted: cleanupOutput(muted) })
+    setLoading(false)
+  }
+
+  useWidgetRefresh(soundWidget, getSound, refreshFrequency)
+
+  useEffect(() => {
+    if (!dragging) setSound(volume)
+  }, [loading])
+
+  useEffect(() => {
+    if (_volume && parseInt(_volume) !== volume) {
+      setVolume(parseInt(_volume))
+    }
+  }, [_volume])
+
+  if (loading) return <DataWidgetLoader className="sound" />
+  if (!state || volume === undefined) return null
+
+  const { muted } = state
+  if (_volume === 'missing value' || muted === 'missing value') return null
 
   const Icon = getIcon(volume, muted)
 
@@ -37,16 +69,6 @@ const Sound = ({ output }) => {
   }
   const onMouseDown = () => setDragging(true)
   const onMouseUp = () => setDragging(false)
-
-  useEffect(() => {
-    if (!dragging) setSound(volume)
-  }, [dragging])
-
-  useEffect(() => {
-    if (_volume && parseInt(_volume) !== volume) {
-      setVolume(parseInt(_volume))
-    }
-  }, [_volume])
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05
 

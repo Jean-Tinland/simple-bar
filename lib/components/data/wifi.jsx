@@ -1,12 +1,16 @@
-import { run } from 'uebersicht'
-
+import { React, run } from 'uebersicht'
 import DataWidget from './data-widget.jsx'
+import DataWidgetLoader from './data-widget-loader.jsx'
 import { WifiIcon, WifiOffIcon } from '../icons.jsx'
-import { classnames, clickEffect, notification, refreshData } from '../../utils'
-
+import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
+import { classnames, cleanupOutput, clickEffect, notification, refreshData } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { wifiStyles } from '../../styles/components/data/wifi'
+
+const { useState } = React
+
+const refreshFrequency = 20000
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
@@ -25,15 +29,29 @@ const renderName = (name) => {
   return name
 }
 
-const Wifi = ({ output }) => {
-  if (!output) return null
+const Wifi = () => {
   const settings = getSettings()
   const { wifiWidget } = settings.widgets
   const { toggleWifiOnClick, networkDevice } = settings.networkWidgetOptions
 
-  if (!wifiWidget) return null
+  const [state, setState] = useState()
+  const [loading, setLoading] = useState(wifiWidget)
 
-  const { status, ssid } = output
+  const getWifi = async () => {
+    const [status, ssid] = await Promise.all([
+      run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
+      run(`networksetup -getairportnetwork ${networkDevice} | cut -c 24-`)
+    ])
+    setState({ status: cleanupOutput(status), ssid: cleanupOutput(ssid) })
+    setLoading(false)
+  }
+
+  useWidgetRefresh(wifiWidget, getWifi, refreshFrequency)
+
+  if (loading) return <DataWidgetLoader className="wifi" />
+  if (!state) return null
+
+  const { status, ssid } = state
   const isActive = status === 'active'
   const name = renderName(ssid)
 

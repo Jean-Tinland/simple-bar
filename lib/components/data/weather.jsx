@@ -1,10 +1,16 @@
+import { React } from 'uebersicht'
 import DataWidget from './data-widget.jsx'
+import DataWidgetLoader from './data-widget-loader.jsx'
 import { SunIcon, MoonIcon, CloudIcon, RainIcon, SnowIcon } from '../icons.jsx'
-
 import { classnames, clickEffect, notification } from '../../utils'
 import { getSettings } from '../../settings'
+import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
 
 export { weatherStyles } from '../../styles/components/data/weather'
+
+const { useState } = React
+
+const refreshFrequency = 1000 * 60 * 10
 
 const getIcon = (description, atNight) => {
   if (description.includes('snow')) return SnowIcon
@@ -25,24 +31,43 @@ const refreshWeather = (e) => {
   notification('Opening forecast from wttr.in...')
 }
 
-const Weather = ({ output }) => {
+const getPosition = async (options) =>
+  new Promise((resolve, reject) => window.geolocation.getCurrentPosition(resolve, reject, options))
+
+const Weather = () => {
+  const [state, setState] = useState()
   const settings = getSettings()
   const { weatherWidget } = settings.widgets
-  if (!weatherWidget || !output) return null
+  const [loading, setLoading] = useState(weatherWidget)
   const { customLocation } = settings.weatherWidgetOptions
   const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
 
-  const { data } = output
-  if (!data || !data.current_condition) return null
-  const area = userLocation || data.nearest_area[0].areaName[0].value
+  const getWeather = async () => {
+    let location = userLocation
+    if (!userLocation) {
+      const position = await getPosition()
+      location = position?.address?.city
+    }
+    if (!location) return
+    const result = await fetch(`https://wttr.in/${location}?format=j1`)
+    const data = await result.json()
+    setState({ location, data })
+    setLoading(false)
+  }
+
+  useWidgetRefresh(weatherWidget, getWeather, refreshFrequency)
+
+  if (loading) return <DataWidgetLoader className="weather" />
+  if (!state || !state.data.current_condition) return null
+
   const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
-  const { temp_C, temp_F, weatherDesc } = data.current_condition[0]
+  const { temp_C, temp_F, weatherDesc } = state.data.current_condition[0]
   const temperature = unit === 'C' ? temp_C : temp_F
   const wttrUnitParam = unit === 'C' ? '?m' : '?u'
 
   const description = weatherDesc[0].value
 
-  const { astronomy } = data.weather[0]
+  const { astronomy } = state.data.weather[0]
   const sunriseData = astronomy[0].sunrise.replace(' AM', '').split(':')
   const sunsetData = astronomy[0].sunset.replace(' PM', '').split(':')
 
@@ -59,7 +84,7 @@ const Weather = ({ output }) => {
   const atNight = sunriseTime >= now || now >= sunsetTime
 
   const Icon = getIcon(description, atNight)
-  const label = getLabel(area, temperature, unit, hideLocation)
+  const label = getLabel(location, temperature, unit, hideLocation)
 
   const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
   const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
@@ -70,7 +95,12 @@ const Weather = ({ output }) => {
   })
 
   return (
-    <DataWidget classes={classes} Icon={Icon} href={`https://wttr.in/${area}${wttrUnitParam}`} onClick={refreshWeather}>
+    <DataWidget
+      classes={classes}
+      Icon={Icon}
+      href={`https://wttr.in/${state.location}${wttrUnitParam}`}
+      onClick={refreshWeather}
+    >
       {!hideGradient && <div className="weather__gradient" />}
       {label}
     </DataWidget>

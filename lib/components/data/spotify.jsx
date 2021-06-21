@@ -1,15 +1,20 @@
 import { React, run } from 'uebersicht'
 
 import DataWidget from './data-widget.jsx'
+import DataWidgetLoader from './data-widget-loader.jsx'
 import Specter from './specter.jsx'
 import { PlayingIcon, PausedIcon, StoppedIcon } from '../icons.jsx'
 
-import { refreshData, clickEffect, classnames, startSliding, stopSliding } from '../../utils'
+import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
+
+import { refreshData, clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { spotifyStyles } from '../../styles/components/data/spotify'
 
-const { useRef } = React
+const { useRef, useState } = React
+
+const refreshFrequency = 10000
 
 const togglePlay = (isPaused) => {
   const state = isPaused ? 'play' : 'pause'
@@ -22,17 +27,48 @@ const getIcon = (playerState) => {
   return PausedIcon
 }
 
-const Spotify = ({ output }) => {
+const Spotify = () => {
   const ref = useRef()
   const settings = getSettings()
   const { widgets, spotifyWidgetOptions } = settings
   const { spotifyWidget } = widgets
 
-  if (!spotifyWidget || !output) return null
-  const { playerState, trackName, artistName, spotifyIsRunning } = output
+  const [state, setState] = useState()
+  const [loading, setLoading] = useState(spotifyWidget)
+
+  const getSpotify = async () => {
+    const isRunning = await run(
+      `osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`
+    )
+    if (cleanupOutput(isRunning) === 'false') {
+      setLoading(false)
+      return
+    }
+    const [playerState, trackName, artistName] = await Promise.all([
+      run(`osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`),
+      run(
+        `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo "unknown track"`
+      ),
+      run(
+        `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo "unknown artist"`
+      )
+    ])
+    setState({
+      playerState: cleanupOutput(playerState),
+      trackName: cleanupOutput(trackName),
+      artistName: cleanupOutput(artistName)
+    })
+    setLoading(false)
+  }
+
+  useWidgetRefresh(spotifyWidget, getSpotify, refreshFrequency)
+
+  if (loading) return <DataWidgetLoader className="spotify" />
+  if (!state) return null
+  const { playerState, trackName, artistName } = state
   const { showSpecter } = spotifyWidgetOptions
 
-  if (spotifyIsRunning === 'false' || !trackName.length) return null
+  if (!trackName.length) return null
 
   const label = artistName.length ? `${trackName} - ${artistName}` : trackName
   const isPlaying = playerState === 'playing'
@@ -60,9 +96,7 @@ const Spotify = ({ output }) => {
     >
       {showSpecter && isPlaying && <Specter />}
       <div className="spotify__inner">
-        <div className="spotify__slider">
-          {trackName} - {artistName}
-        </div>
+        <div className="spotify__slider">{label}</div>
       </div>
     </DataWidget>
   )

@@ -1,14 +1,19 @@
-import { run, React } from 'uebersicht'
+import { React, run } from 'uebersicht'
 
 import DataWidget from './data-widget.jsx'
+import DataWidgetLoader from './data-widget-loader.jsx'
 import { ClockIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils'
 
+import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
+
+import { clickEffect } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { timeStyles } from '../../styles/components/data/time'
 
-const { useEffect, useState } = React
+const { useState } = React
+
+const refreshFrequency = 1000
 
 const displayNotificationCenter = () =>
   run(
@@ -19,8 +24,11 @@ const Time = () => {
   const settings = getSettings()
   const { widgets, timeWidgetOptions } = settings
   const { timeWidget } = widgets
-
   const { hour12, dayProgress, showSeconds } = timeWidgetOptions
+
+  const [state, setState] = useState()
+  const [loading, setLoading] = useState(timeWidget)
+
   const options = {
     hour: 'numeric',
     minute: 'numeric',
@@ -28,17 +36,17 @@ const Time = () => {
     hour12
   }
 
-  const getTime = () => new Date().toLocaleString('en-UK', options)
-  const [time, setTime] = useState(getTime())
+  const getTime = () => {
+    const time = new Date().toLocaleString('en-UK', options)
+    setState({ time })
+    setLoading(false)
+  }
 
-  useEffect(() => {
-    if (timeWidget) {
-      const interval = setInterval(() => setTime(getTime()), 1000)
-      return () => clearInterval(interval)
-    }
-  })
+  useWidgetRefresh(timeWidget, getTime, refreshFrequency)
 
-  if (!timeWidget) return null
+  if (loading) return <DataWidgetLoader className="time" />
+  if (!state) return null
+  const { time } = state
 
   const [dayStart, dayEnd] = [new Date(), new Date()]
   dayStart.setHours(0, 0, 0)

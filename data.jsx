@@ -1,6 +1,3 @@
-import { run } from 'uebersicht'
-
-import Error from './lib/components/error.jsx'
 import Zoom, { zoomStyles } from './lib/components/data/zoom.jsx'
 import Time, { timeStyles } from './lib/components/data/time.jsx'
 import DateDisplay, { dateStyles } from './lib/components/data/date-display.jsx'
@@ -15,34 +12,13 @@ import Music, { musicStyles } from './lib/components/data/music.jsx'
 import BrowserTrack, { browserTrackStyles } from './lib/components/data/browser-track.jsx'
 import ViscosityVPN, { viscosityVPNStyles } from './lib/components/data/viscosity-vpn.jsx'
 import { specterStyles } from './lib/components/data/specter.jsx'
-import { dataWidgetStyles } from './lib/styles/components/data/data-widget.js'
+import { dataWidgetLoaderStyles } from './lib/components/data/data-widget-loader.jsx'
+import { dataWidgetStyles } from './lib/styles/components/data/data-widget'
 
-import { classnames, parseJson, getActiveWidgets, injectStyles, refreshData } from './lib/utils'
+import { classnames, injectStyles } from './lib/utils'
 import { getSettings } from './lib/settings'
 
-const refreshFrequency = 12000
-
 const settings = getSettings()
-const activeWidgets = getActiveWidgets()
-const { shell } = settings.global
-const { weatherWidget } = settings.widgets
-const { networkDevice } = settings.networkWidgetOptions
-const { vpnConnectionName } = settings.vpnWidgetOptions
-const { customLocation } = settings.weatherWidgetOptions
-const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
-
-const getPosition = async (options) =>
-  new Promise((resolve, reject) => window.geolocation.getCurrentPosition(resolve, reject, options))
-
-const command = async () => {
-  let location = userLocation
-  if (!userLocation && weatherWidget) {
-    const position = await getPosition()
-    location = position?.address?.city
-  }
-  const params = `"${activeWidgets}" "${networkDevice}" "${location}" "${vpnConnectionName}"`
-  return run(`${shell} simple-bar/lib/scripts/get_data.sh ${params}`)
-}
 
 injectStyles('simple-bar-data-styles', [
   dataWidgetStyles,
@@ -59,10 +35,11 @@ injectStyles('simple-bar-data-styles', [
   musicStyles,
   browserTrackStyles,
   viscosityVPNStyles,
-  specterStyles
+  specterStyles,
+  dataWidgetLoaderStyles
 ])
 
-const render = ({ output, error }) => {
+const render = () => {
   const classes = classnames('simple-bar simple-bar--data', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-color-in-data': settings.global.noColorInData,
@@ -70,35 +47,23 @@ const render = ({ output, error }) => {
     'simple-bar--on-bottom': settings.global.bottomBar
   })
 
-  if (error) {
-    console.log('Error in data.jsx', error)
-    return <Error widget="data" type="error" classes={classes} />
-  }
-  if (!output) return <Error widget="data" type="noOutput" classes={classes} />
-
-  const data = parseJson(output)
-  if (!data) return <Error widget="data" type="noData" classes={classes} />
-
-  const { zoom, weather, battery, wifi, keyboard, vpn, mic, sound, spotify, music, browserTrack } = data
-  const browserTrackOutput = { ...browserTrack, spotifyStatus: spotify.spotifyIsRunning }
-
   return (
     <div className={classes}>
-      <Zoom output={zoom} />
-      <BrowserTrack output={browserTrackOutput} />
-      <Spotify output={spotify} />
-      <Music output={music} />
-      <Weather output={weather} />
-      <Battery output={battery} />
-      <Mic output={mic} />
-      <Sound output={sound} />
-      <ViscosityVPN output={vpn} />
-      <Wifi output={wifi} />
-      <Keyboard output={keyboard} />
+      <Zoom />
+      <BrowserTrack />
+      <Spotify />
+      <Music />
+      <Weather />
+      <Battery />
+      <Mic />
+      <Sound />
+      <ViscosityVPN />
+      <Wifi />
+      <Keyboard />
       <DateDisplay />
       <Time />
     </div>
   )
 }
 
-export { command, refreshFrequency, render }
+export { render }

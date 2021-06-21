@@ -1,5 +1,5 @@
 import Settings from './process/settings.jsx'
-import { classnames, refreshSpaces, refreshProcess, refreshData } from '../utils'
+import { classnames, refreshSpaces, refreshProcess } from '../utils'
 
 const message = {
   error: 'Something went wrong...',
@@ -15,7 +15,6 @@ const Error = ({ widget, type, classes, withSettings }) => {
   if (type === 'error') {
     if (widget === 'spaces') refreshSpaces()
     if (widget === 'process') refreshProcess()
-    if (widget === 'data') refreshData()
   }
 
   return (
