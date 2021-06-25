@@ -15,11 +15,12 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
 
   const settings = getSettings()
   const { spacesDisplay } = settings
-  if (!spacesDisplay.displayAllSpacesOnAllScreens && display !== space.display) return null
+  const { displayAllSpacesOnAllScreens, exclusionsAsRegex } = spacesDisplay
+  if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
   const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
-  const exclusions = spacesDisplay.exclusions.split(', ')
-  const titleExclusions = spacesDisplay.titleExclusions.split(', ')
+  const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
+  const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
   const onMouseEnter = (e) => {
     setHovered(true)
@@ -35,7 +36,9 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     clickEffect(e)
   }
 
-  const apps = windows.filter((app) => app.space === index && filterApps(app, exclusions, titleExclusions))
+  const apps = windows.filter(
+    (app) => app.space === index && filterApps(app, exclusions, titleExclusions, exclusionsAsRegex)
+  )
 
   if (!focused && !visible && apps.length === 0 && spacesDisplay.hideEmptySpaces) return null
 
