@@ -1,9 +1,7 @@
 import { React } from 'uebersicht'
-
 import OpenedApps from './opened-apps.jsx'
 import SpaceOptions from './space-options.jsx'
 import { classnames, clickEffect, filterApps } from '../../utils'
-
 import { goToSpace } from '../../yabai'
 import { getSettings } from '../../settings'
 

@@ -1,17 +1,15 @@
 import Window from './window.jsx'
 
-const Process = ({ displayIndex, visibleSpaces, windows: apps }) => {
-  if (!apps) return null
+const Process = ({ displayIndex, visibleSpaces, windows }) => {
+  if (!windows) return null
   return (
     <div className="process">
       <div className="process__container">
-        {apps
-          .filter((app, i) => {
-            return visibleSpaces.includes(app.space)
-          })
+        {windows
+          .filter((window) => visibleSpaces.includes(window.space) && window.display === displayIndex)
           .sort((a, b) => a.id > b.id)
-          .map((app, i) => (
-            <Window key={i} app={app} />
+          .map((window, i) => (
+            <Window key={i} displayIndex={displayIndex} window={window} />
           ))}
       </div>
     </div>

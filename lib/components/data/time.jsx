@@ -1,11 +1,8 @@
 import { React, run } from 'uebersicht'
-
 import DataWidget from './data-widget.jsx'
 import DataWidgetLoader from './data-widget-loader.jsx'
 import { ClockIcon } from '../icons.jsx'
-
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-
 import { clickEffect } from '../../utils'
 import { getSettings } from '../../settings'
 

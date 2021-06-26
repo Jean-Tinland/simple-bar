@@ -2,10 +2,8 @@ import Error from './lib/components/error.jsx'
 import Spaces from './lib/components/spaces/spaces.jsx'
 import Process from './lib/components/process/process.jsx'
 import Settings from './lib/components/process/settings.jsx'
-
 import { classnames, injectStyles, parseJson } from './lib/utils'
 import { getSettings } from './lib/settings'
-
 import { variables } from './lib/styles/core/variables'
 import { baseStyles } from './lib/styles/core/base'
 import { spacesStyles } from './lib/styles/components/spaces/spaces'
@@ -47,16 +45,17 @@ const render = ({ output, error }) => {
   const data = parseJson(output)
   if (!data) return <Error type="noData" classes={classes} withSettings />
 
-  const { displays, SIP, spaces } = data
+  const { displays, SIP, spaces: spacesList } = data
+  const { spaces, windows } = spacesList
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
   const displayIndex = displays.find((d) => d.id === displayId).index
-  const visibleSpaces = spaces.spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
+  const visibleSpaces = spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
 
   return (
     <div className={classes}>
-      <Spaces output={spaces} SIP={SIP} displayIndex={displayIndex} />
-      {processWidget && <Process windows={spaces.windows} displayIndex={displayIndex} visibleSpaces={visibleSpaces} />}
+      <Spaces output={spacesList} SIP={SIP} displayIndex={displayIndex} />
+      {processWidget && <Process displayIndex={displayIndex} visibleSpaces={visibleSpaces} windows={windows} />}
       <Settings />
     </div>
   )

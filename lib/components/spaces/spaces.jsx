@@ -1,6 +1,5 @@
 import Space from './space.jsx'
 import { AddIcon } from '../icons.jsx'
-
 import { clickEffect } from '../../utils'
 import { createSpace } from '../../yabai'
 

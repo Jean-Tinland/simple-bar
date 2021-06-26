@@ -1,7 +1,6 @@
 import { React } from 'uebersicht'
 import { classnames, clickEffect, compareObjects, hardRefresh } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
-
 import { defaultSettings, getSettings, setSettings, settingsData } from '../../settings'
 
 const { useState, useEffect, useCallback, Fragment } = React

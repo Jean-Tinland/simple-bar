@@ -1,5 +1,4 @@
 import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons.jsx'
-
 import { clickEffect } from '../../utils'
 import { removeSpace, swapSpace } from '../../yabai'
 
