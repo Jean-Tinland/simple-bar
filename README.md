@@ -4,6 +4,8 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 Developed by [Jean Tinland](https://www.jeantinland.com).
 
+> :warning: **There has been some changes regarding `yabai` signals! See [this section](https://github.com/Jean-Tinland/simple-bar#refresh-bar-on-app-or-workspace-change) bellow!** Feel free to open an issue if you encounter any issue.
+
 ## Features
 
 - 3 themes behaviours (dark/light/auto)
