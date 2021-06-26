@@ -1,9 +1,11 @@
-import { React } from 'uebersicht'
+import { React, run } from 'uebersicht'
 import { classnames, clickEffect, compareObjects, hardRefresh } from '../../utils'
 import { CloseIcon } from '../icons.jsx'
-import { defaultSettings, getSettings, setSettings, settingsData } from '../../settings'
+import { defaultSettings, getSettings, importSettings, setSettings, settingsData } from '../../settings'
 
-const { useState, useEffect, useCallback, Fragment } = React
+const { Fragment, useState, useEffect, useCallback } = React
+
+const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`
 
 const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
   const onClick = (e) => clickEffect(e)
@@ -86,11 +88,29 @@ const Settings = () => {
     window.sessionStorage.setItem(LAST_CURRENT_TAB, tab)
   }
 
-  const onRefreshClick = (e) => {
+  const onRefreshClick = async (e) => {
     clickEffect(e)
     setPendingChanges(0)
-    setSettings(newSettings)
+    await setSettings(newSettings)
     hardRefresh()
+  }
+
+  const onImportClick = async () => {
+    let fileExists = false
+    try {
+      fileExists = Boolean(await run(`ls ${EXTERNAL_CONFIG_FILE_PATH}`))
+    } catch (e) {}
+    if (!fileExists) return
+
+    const externalConfig = JSON.parse(await run(`cat ${EXTERNAL_CONFIG_FILE_PATH}`))
+    setNewSettings(externalConfig)
+  }
+
+  const onExportClick = async () => {
+    const { externalConfigFile } = newSettings.global
+    if (externalConfigFile) {
+      await run(`echo '${JSON.stringify(newSettings)}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
+    }
   }
 
   useEffect(() => {
@@ -185,6 +205,18 @@ const Settings = () => {
           })}
         </div>
         <div className="settings__bottom">
+          {settings.global.externalConfigFile && (
+            <Fragment>
+              <button className="settings__import-button" onClick={onImportClick} disabled={!!pendingChanges}>
+                Import
+              </button>
+              or
+              <button className="settings__export-button" onClick={onExportClick} disabled={!!pendingChanges}>
+                Export
+              </button>
+              <span className="settings__import-export-label">all settings</span>
+            </Fragment>
+          )}
           {pendingChanges !== 0 && (
             <div className="settings__pending-changes">
               <b>{pendingChanges}</b> pending change{pendingChanges > 1 && 's'}

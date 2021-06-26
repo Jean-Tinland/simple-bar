@@ -29,8 +29,9 @@ const toggleCaffeinate = (caffeinate, option) => {
   }
 }
 
+const settings = getSettings()
+
 const Battery = () => {
-  const settings = getSettings()
   const { widgets, batteryWidgetOptions } = settings
   const { batteryWidget } = widgets
   const { caffeinateOption } = batteryWidgetOptions

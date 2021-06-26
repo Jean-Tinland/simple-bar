@@ -29,8 +29,9 @@ const renderName = (name) => {
   return name
 }
 
+const settings = getSettings()
+
 const Wifi = () => {
-  const settings = getSettings()
   const { wifiWidget } = settings.widgets
   const { toggleWifiOnClick, networkDevice } = settings.networkWidgetOptions
 

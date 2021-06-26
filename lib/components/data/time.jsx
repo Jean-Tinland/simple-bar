@@ -17,8 +17,9 @@ const displayNotificationCenter = () =>
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   )
 
+const settings = getSettings()
+
 const Time = () => {
-  const settings = getSettings()
   const { widgets, timeWidgetOptions } = settings
   const { timeWidget } = widgets
   const { hour12, dayProgress, showSeconds } = timeWidgetOptions

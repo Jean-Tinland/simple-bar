@@ -8,7 +8,7 @@ import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
 
 export { dateStyles } from '../../styles/components/data/date-display'
 
-const { useState } = React
+const { memo, useState } = React
 
 const refreshFrequency = 1000
 
@@ -17,8 +17,9 @@ const openCalendarApp = (calendarApp) => {
   run(`open -a "${appName}"`)
 }
 
+const settings = getSettings()
+
 const DateDisplay = () => {
-  const settings = getSettings()
   const { widgets, dateWidgetOptions } = settings
   const { dateWidget } = widgets
   const { shortDateFormat, locale, calendarApp } = dateWidgetOptions
@@ -59,4 +60,4 @@ const DateDisplay = () => {
   )
 }
 
-export default DateDisplay
+export default memo(DateDisplay)

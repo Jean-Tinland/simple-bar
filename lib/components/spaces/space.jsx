@@ -7,11 +7,12 @@ import { getSettings } from '../../settings'
 
 const { useState } = React
 
+const settings = getSettings()
+
 const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace }) => {
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
 
-  const settings = getSettings()
   const { spacesDisplay } = settings
   const { displayAllSpacesOnAllScreens, exclusionsAsRegex } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null

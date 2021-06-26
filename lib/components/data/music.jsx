@@ -21,9 +21,10 @@ const togglePlay = (isPaused, processName) => {
   }
 }
 
+const settings = getSettings()
+
 const Music = () => {
   const ref = useRef()
-  const settings = getSettings()
   const { widgets, musicWidgetOptions } = settings
   const { musicWidget } = widgets
   const { showSpecter } = musicWidgetOptions

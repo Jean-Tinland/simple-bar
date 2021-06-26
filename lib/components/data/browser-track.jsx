@@ -20,9 +20,10 @@ const getIcon = (browser) => {
   return DefaultIcon
 }
 
+const settings = getSettings()
+
 const BrowserTrack = () => {
   const ref = useRef()
-  const settings = getSettings()
   const { widgets, browserTrackWidgetOptions } = settings
   const { browserTrackWidget } = widgets
   const { showSpecter } = browserTrackWidgetOptions

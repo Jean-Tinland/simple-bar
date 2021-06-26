@@ -12,8 +12,9 @@ const { useState } = React
 
 const refreshFrequency = 20000
 
+const settings = getSettings()
+
 const Keyboard = () => {
-  const settings = getSettings()
   const { keyboardWidget } = settings.widgets
 
   const [state, setState] = useState()

@@ -17,8 +17,9 @@ const setMic = (volume) => {
   run(`osascript -e 'set volume input volume ${volume}'`)
 }
 
+const settings = getSettings()
+
 const Mic = () => {
-  const settings = getSettings()
   const { micWidget } = settings.widgets
 
   const [state, setState] = useState()

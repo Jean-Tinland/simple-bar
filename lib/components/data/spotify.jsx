@@ -24,9 +24,10 @@ const getIcon = (playerState) => {
   return PausedIcon
 }
 
+const settings = getSettings()
+
 const Spotify = () => {
   const ref = useRef()
-  const settings = getSettings()
   const { widgets, spotifyWidgetOptions } = settings
   const { spotifyWidget } = widgets
 

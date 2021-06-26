@@ -22,8 +22,9 @@ const toggleVPN = (isConnected, vpnConnectionName) => {
   }
 }
 
+const settings = getSettings()
+
 const ViscosityVPN = () => {
-  const settings = getSettings()
   const { widgets, vpnWidgetOptions } = settings
   const { vpnWidget } = widgets
   const { vpnConnectionName } = vpnWidgetOptions

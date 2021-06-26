@@ -6,9 +6,10 @@ import { focusWindow } from '../../yabai'
 
 const { useRef } = React
 
+const settings = getSettings()
+
 const Window = ({ window }) => {
   const ref = useRef()
-  const settings = getSettings()
   const { displayOnlyCurrent } = settings.process
   const { minimized, focused, app, title, id } = window
   if (minimized === 1 || (displayOnlyCurrent && focused !== 1)) return null

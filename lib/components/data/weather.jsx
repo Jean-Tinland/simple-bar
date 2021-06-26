@@ -34,9 +34,10 @@ const refreshWeather = (e) => {
 const getPosition = async (options) =>
   new Promise((resolve, reject) => window.geolocation.getCurrentPosition(resolve, reject, options))
 
+const settings = getSettings()
+
 const Weather = () => {
   const [state, setState] = useState()
-  const settings = getSettings()
   const { weatherWidget } = settings.widgets
   const [loading, setLoading] = useState(weatherWidget)
   const { customLocation } = settings.weatherWidgetOptions

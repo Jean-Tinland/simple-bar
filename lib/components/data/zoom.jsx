@@ -12,8 +12,9 @@ const { useState } = React
 
 const refreshFrequency = 20000
 
+const settings = getSettings()
+
 const Zoom = () => {
-  const settings = getSettings()
   const { widgets, zoomWidgetOptions } = settings
   const { zoomWidget } = widgets
   const { showVideo, showMic } = zoomWidgetOptions

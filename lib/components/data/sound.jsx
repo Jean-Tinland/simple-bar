@@ -24,8 +24,9 @@ const setSound = (volume) => {
   run(`osascript -e 'set volume output volume ${volume}'`)
 }
 
+const settings = getSettings()
+
 const Sound = () => {
-  const settings = getSettings()
   const { soundWidget } = settings.widgets
 
   const [state, setState] = useState()
