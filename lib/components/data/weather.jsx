@@ -48,7 +48,10 @@ const Weather = () => {
       const position = await getPosition()
       location = position?.address?.city
     }
-    if (!location) return
+    if (!location) {
+      setLoading(false)
+      return
+    }
     const result = await fetch(`https://wttr.in/${location}?format=j1`)
     const data = await result.json()
     setState({ location, data })

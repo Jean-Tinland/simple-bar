@@ -86,37 +86,9 @@ Clickable elements have a border showing on hover in order to easily identify th
 
 ## Refresh bar on app or workspace change
 
-The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
-To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`:
-
-```sh
-# Refresh spaces widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on display focus change
-yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on window resize
-yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh process widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget when current window title changes
-yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-```
+~~The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
+To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`...~~\
+`simple-bar` is now setting itself all the required signals. You can safely remove all your signal set in your `.yabairc`.
 
 ## Customization
 

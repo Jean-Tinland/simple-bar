@@ -1,5 +1,5 @@
 import Settings from './process/settings.jsx'
-import { classnames, refreshSpaces, refreshProcess } from '../utils'
+import { classnames, hardRefresh } from '../utils'
 
 const message = {
   error: 'Something went wrong...',
@@ -7,20 +7,19 @@ const message = {
   noData: 'JSON error...'
 }
 
-const Error = ({ widget, type, classes, withSettings }) => {
+const Error = ({ type, classes, withSettings }) => {
   const errorClasses = classnames('simple-bar--empty', classes, {
     'simple-bar--loading': type === 'noOutput'
   })
 
-  if (type === 'error') {
-    if (widget === 'spaces') refreshSpaces()
-    if (widget === 'process') refreshProcess()
-  }
+  const onClick = type === 'error' ? hardRefresh : undefined
+  const reloadText = type === 'error' ? ', click to reload' : ''
 
   return (
     <div className={errorClasses}>
-      <span>
-        simple-bar-{widget}.jsx: {message[type]}
+      <span onClick={onClick}>
+        simple-bar-spaces.jsx: {message[type]}
+        {reloadText}
       </span>
       {withSettings && <Settings />}
     </div>

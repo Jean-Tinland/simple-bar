@@ -18,7 +18,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const { displayAllSpacesOnAllScreens, exclusionsAsRegex } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
-  const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
+  const { index, label, focused, visible, type } = space
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
@@ -45,7 +45,6 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const classes = classnames(`space space--${type}`, {
     'space--focused': focused === 1,
     'space--visible': visible === 1,
-    'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
     'space--no-delay': noDelay,
     'space--empty': apps.length === 0

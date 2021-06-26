@@ -32,7 +32,7 @@ const BrowserTrack = () => {
 
   const getBrowserTrack = async () => {
     const [browserTrackOutput, spotifyStatus] = await Promise.all([
-      run(`osascript ./simple-bar/lib/scripts/browser_audio.applescript 2>&1`),
+      run(`osascript ./simple-bar/lib/scripts/browser-audio.applescript 2>&1`),
       run(`osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`)
     ])
     const browserTrack = JSON.parse(browserTrackOutput)
