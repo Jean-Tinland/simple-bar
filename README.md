@@ -87,8 +87,9 @@ Clickable elements have a border showing on hover in order to easily identify th
 ## Refresh bar on app or workspace change
 
 ~~The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
-To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`...~~\
-`simple-bar` is now setting itself all the required signals. You can safely remove all your signal set in your `.yabairc`.
+To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`...~~
+
+`simple-bar` is now setting itself all the required signals. You can safely remove all your signals set in your `.yabairc`.
 
 ## Customization
 
