@@ -87,7 +87,7 @@ const Weather = () => {
   const atNight = sunriseTime >= now || now >= sunsetTime
 
   const Icon = getIcon(description, atNight)
-  const label = getLabel(location, temperature, unit, hideLocation)
+  const label = getLabel(state.location, temperature, unit, hideLocation)
 
   const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
   const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
