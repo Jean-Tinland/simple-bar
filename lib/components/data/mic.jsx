@@ -13,7 +13,7 @@ const { useEffect, useState } = React
 const refreshFrequency = 20000
 
 const setMic = (volume) => {
-  if (!volume) return
+  if (volume === undefined) return
   run(`osascript -e 'set volume input volume ${volume}'`)
 }
 

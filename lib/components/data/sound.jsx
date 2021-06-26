@@ -20,7 +20,7 @@ const getIcon = (volume, muted) => {
 }
 
 const setSound = (volume) => {
-  if (!volume) return
+  if (volume === undefined) return
   run(`osascript -e 'set volume output volume ${volume}'`)
 }
 
@@ -47,7 +47,7 @@ const Sound = () => {
 
   useEffect(() => {
     if (!dragging) setSound(volume)
-  }, [loading])
+  }, [dragging])
 
   useEffect(() => {
     if (_volume && parseInt(_volume) !== volume) {
