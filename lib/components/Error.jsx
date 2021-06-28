@@ -1,5 +1,5 @@
 import Settings from './process/settings.jsx'
-import { classnames, refreshSpaces, refreshProcess } from '../utils'
+import { classnames, refreshSpaces } from '../utils'
 
 const message = {
   error: 'Something went wrong...',
