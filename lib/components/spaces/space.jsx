@@ -81,7 +81,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
             className="space__label"
             onChange={onChange}
             value={spaceLabel}
-            size={labelSize}
+            style={{ width: `${labelSize}ch` }}
             readOnly={!editable}
           />
           <OpenedApps type={type} apps={apps} />
