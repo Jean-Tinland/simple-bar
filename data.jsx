@@ -18,6 +18,8 @@ import { dataWidgetStyles } from './lib/styles/components/data/data-widget'
 import { classnames, injectStyles } from './lib/utils'
 import { getSettings } from './lib/settings'
 
+const refreshFrequency = false
+
 const settings = getSettings()
 
 injectStyles('simple-bar-data-styles', [
@@ -66,4 +68,4 @@ const render = () => {
   )
 }
 
-export { render }
+export { refreshFrequency, render }
