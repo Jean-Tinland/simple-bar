@@ -18,10 +18,11 @@ const Spaces = ({ output, SIP, displayIndex }) => {
     return (
       <div key={i} className="spaces">
         {spaces.map((space, i) => {
+          const { label, index } = space
           const lastOfSpace = i !== 0 && space.display !== spaces[i - 1].display
           return (
             <Space
-              key={i}
+              key={label?.length ? label : index}
               display={display}
               space={space}
               windows={windows}
