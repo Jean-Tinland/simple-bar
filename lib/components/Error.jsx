@@ -12,7 +12,7 @@ const Error = ({ type, classes, withSettings }) => {
     'simple-bar--loading': type === 'noOutput'
   })
 
-  if (type === 'error') {
+  if (type === 'error' || type === 'noData') {
     refreshSpaces()
   }
 
