@@ -55,7 +55,9 @@ const render = ({ output, error }) => {
   return (
     <div className={classes}>
       <Spaces output={spacesList} SIP={SIP} displayIndex={displayIndex} />
-      {processWidget && <Process displayIndex={displayIndex} visibleSpaces={visibleSpaces} windows={windows} />}
+      {processWidget && (
+        <Process displayIndex={displayIndex} spaces={spaces} visibleSpaces={visibleSpaces} windows={windows} />
+      )}
       <Settings />
     </div>
   )
