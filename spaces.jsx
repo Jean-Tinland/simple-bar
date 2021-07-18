@@ -29,7 +29,7 @@ injectStyles('simple-bar-spaces-styles', [
 ])
 
 const render = ({ output, error }) => {
-  const classes = classnames('simple-bar simple-bar--spaces', {
+  const baseClasses = classnames('simple-bar simple-bar--spaces', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
@@ -38,19 +38,23 @@ const render = ({ output, error }) => {
 
   if (error) {
     console.log('Error in spaces.jsx', error)
-    return <Error type="error" classes={classes} withSettings />
+    return <Error type="error" classes={baseClasses} withSettings />
   }
-  if (!output) return <Error type="noOutput" classes={classes} withSettings />
+  if (!output) return <Error type="noOutput" classes={baseClasses} withSettings />
 
   const data = parseJson(output)
-  if (!data) return <Error type="noData" classes={classes} withSettings />
+  if (!data) return <Error type="noData" classes={baseClasses} withSettings />
 
-  const { displays, SIP, spaces: spacesList } = data
+  const { displays, shadow, SIP, spaces: spacesList } = data
   const { spaces, windows } = spacesList
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
   const displayIndex = displays.find((d) => d.id === displayId).index
   const visibleSpaces = spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
+
+  const classes = classnames(baseClasses, {
+    'simple-bar--no-shadow': shadow !== 'on'
+  })
 
   return (
     <div className={classes}>
