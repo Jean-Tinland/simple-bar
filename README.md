@@ -51,6 +51,8 @@ Clone this repo to your Übersicht widgets directory with the following command.
 $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
+**Becareful, the folder containing the widget must be name `simple-bar`, otherwise, simple-bar will never launch.**
+
 [JetBrains Mono](https://www.jetbrains.com/lp/mono/) is used by default. You can set your own font in the "Global" settings tab.
 
 ### For users with a custom yabai install (path)
