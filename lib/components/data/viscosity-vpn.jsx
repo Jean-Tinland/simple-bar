@@ -10,7 +10,7 @@ export { viscosityVPNStyles } from '../../styles/components/data/viscosity-vpn'
 
 const { useState } = React
 
-const refreshFrequency = 20000
+const refreshFrequency = 8000
 
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
@@ -65,7 +65,7 @@ const ViscosityVPN = () => {
   const clicked = (e) => {
     clickEffect(e)
     toggleVPN(isConnected, vpnConnectionName)
-    getVPN()
+    setTimeout(getVPN, refreshFrequency / 2)
   }
 
   return (
