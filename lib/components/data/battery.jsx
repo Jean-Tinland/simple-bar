@@ -24,7 +24,7 @@ const toggleCaffeinate = (caffeinate, option) => {
     run(`caffeinate ${option} &`).then(refreshData)
     notification('Enabling caffeinate...')
   } else {
-    run(`kill ${caffeinate}`).then(refreshData)
+    run('pkill -f caffeinate').then(refreshData)
     notification('Disabling caffeinate...')
   }
 }
