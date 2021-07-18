@@ -68,9 +68,10 @@ const Battery = () => {
 
   const transformValue = getTransform(percentage)
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     clickEffect(e)
     toggleCaffeinate(caffeinate, caffeinateOption)
+    getBattery()
   }
 
   const Icon = () => (

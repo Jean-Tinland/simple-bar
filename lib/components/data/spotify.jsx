@@ -75,6 +75,7 @@ const Spotify = () => {
   const onClick = (e) => {
     clickEffect(e)
     togglePlay(!isPlaying)
+    getSpotify()
   }
   const onMouseEnter = () => startSliding(ref.current, '.spotify__inner', '.spotify__slider')
   const onMouseLeave = () => stopSliding(ref.current, '.spotify__slider')

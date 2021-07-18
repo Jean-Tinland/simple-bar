@@ -65,6 +65,7 @@ const ViscosityVPN = () => {
   const clicked = (e) => {
     clickEffect(e)
     toggleVPN(isConnected, vpnConnectionName)
+    getVPN()
   }
 
   return (

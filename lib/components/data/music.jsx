@@ -74,6 +74,7 @@ const Music = () => {
   const onClick = (e) => {
     clickEffect(e)
     togglePlay(!isPlaying, processName)
+    getMusic()
   }
   const onMouseEnter = () => startSliding(ref.current, '.music__inner', '.music__slider')
   const onMouseLeave = () => stopSliding(ref.current, '.music__slider')

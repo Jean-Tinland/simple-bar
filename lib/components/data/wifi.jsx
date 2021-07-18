@@ -65,6 +65,7 @@ const Wifi = () => {
   const onClick = (e) => {
     clickEffect(e)
     toggleWifi(isActive, networkDevice)
+    getWifi()
   }
 
   return (
