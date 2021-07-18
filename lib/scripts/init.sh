@@ -11,7 +11,7 @@ if [ -z "$SPACES" ]; then
 fi
 
 if [ -z "$WINDOWS" ]; then
-  WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g')
+  WINDOWS=$($YABAI_PATH -m query --windows | sed 's/inf/0/g; s/\\.//g; s/\n//g')
 fi
 
 if [ -z "$DISPLAYS" ]; then
