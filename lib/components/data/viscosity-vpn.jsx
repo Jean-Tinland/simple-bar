@@ -3,7 +3,7 @@ import DataWidget from './data-widget.jsx'
 import DataWidgetLoader from './data-widget-loader.jsx'
 import { VPNIcon, VPNOffIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
-import { classnames, cleanupOutput, clickEffect, refreshData } from '../../utils'
+import { classnames, cleanupOutput, clickEffect } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { viscosityVPNStyles } from '../../styles/components/data/viscosity-vpn'
@@ -14,10 +14,10 @@ const refreshFrequency = 20000
 
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
-    run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`).then(refreshData)
+    run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`)
     notification(`Disabling Viscosity ${vpnConnectionName} network...`)
   } else {
-    run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`).then(refreshData)
+    run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`)
     notification(`Enabling Viscosity ${vpnConnectionName} network...`)
   }
 }

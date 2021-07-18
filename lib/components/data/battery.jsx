@@ -3,7 +3,7 @@ import DataWidget from './data-widget.jsx'
 import DataWidgetLoader from './data-widget-loader.jsx'
 import { CoffeeIcon, ChargingIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
-import { classnames, cleanupOutput, clickEffect, notification, refreshData } from '../../utils'
+import { classnames, cleanupOutput, clickEffect, notification } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { batteryStyles } from '../../styles/components/data/battery'
@@ -21,10 +21,10 @@ const getTransform = (value) => {
 
 const toggleCaffeinate = (caffeinate, option) => {
   if (!caffeinate.length) {
-    run(`caffeinate ${option} &`).then(refreshData)
+    run(`caffeinate ${option} &`)
     notification('Enabling caffeinate...')
   } else {
-    run('pkill -f caffeinate').then(refreshData)
+    run('pkill -f caffeinate')
     notification('Disabling caffeinate...')
   }
 }

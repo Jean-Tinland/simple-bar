@@ -3,7 +3,7 @@ import DataWidget from './data-widget.jsx'
 import DataWidgetLoader from './data-widget-loader.jsx'
 import { WifiIcon, WifiOffIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { classnames, cleanupOutput, clickEffect, notification, refreshData } from '../../utils'
+import { classnames, cleanupOutput, clickEffect, notification } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { wifiStyles } from '../../styles/components/data/wifi'
@@ -14,10 +14,10 @@ const refreshFrequency = 20000
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
-    run(`networksetup -setairportpower ${networkDevice} off`).then(refreshData)
+    run(`networksetup -setairportpower ${networkDevice} off`)
     notification('Disabling network...')
   } else {
-    run(`networksetup -setairportpower ${networkDevice} on`).then(refreshData)
+    run(`networksetup -setairportpower ${networkDevice} on`)
     notification('Enabling network...')
   }
 }

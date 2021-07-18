@@ -4,7 +4,7 @@ import DataWidgetLoader from './data-widget-loader.jsx'
 import Specter from './Specter.jsx'
 import { PlayingIcon, PausedIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { refreshData, clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
+import { clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { musicStyles } from '../../styles/components/data/music'
@@ -15,9 +15,9 @@ const refreshFrequency = 10000
 
 const togglePlay = (isPaused, processName) => {
   if (isPaused) {
-    run(`osascript -e 'tell application "${processName}" to play'`).then(refreshData)
+    run(`osascript -e 'tell application "${processName}" to play'`)
   } else {
-    run(`osascript -e 'tell application "${processName}" to pause'`).then(refreshData)
+    run(`osascript -e 'tell application "${processName}" to pause'`)
   }
 }
 

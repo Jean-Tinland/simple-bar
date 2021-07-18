@@ -4,7 +4,7 @@ import DataWidgetLoader from './data-widget-loader.jsx'
 import Specter from './specter.jsx'
 import { PlayingIcon, PausedIcon, StoppedIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { refreshData, clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
+import { clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
 import { getSettings } from '../../settings'
 
 export { spotifyStyles } from '../../styles/components/data/spotify'
@@ -15,7 +15,7 @@ const refreshFrequency = 10000
 
 const togglePlay = (isPaused) => {
   const state = isPaused ? 'play' : 'pause'
-  run(`osascript -e 'tell application "Spotify" to ${state}'`).then(refreshData)
+  run(`osascript -e 'tell application "Spotify" to ${state}'`)
 }
 
 const getIcon = (playerState) => {
