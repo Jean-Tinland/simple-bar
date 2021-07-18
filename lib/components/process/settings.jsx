@@ -78,7 +78,19 @@ const Settings = () => {
   const closeSettings = () => setVisible(false)
 
   const onKeydown = useCallback((e) => {
-    if ((e.ctrlKey || e.metaKey) && (e.which === 188 || e.keyCode === 188)) {
+    const { ctrlKey, keyCode, metaKey, which } = e
+    if ((ctrlKey || metaKey) && (which === 84 || keyCode === 84)) {
+      e.preventDefault()
+      const AUTO = 'auto'
+      const DARK = 'dark'
+      const LIGHT = 'light'
+      const newValue = newSettings.global.theme === AUTO ? DARK : newSettings.global.theme === DARK ? LIGHT : AUTO
+      const updatedSettings = { ...newSettings, global: { ...newSettings.global, theme: newValue } }
+      setSettings(updatedSettings)
+      hardRefresh()
+    }
+    if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
+      e.preventDefault()
       setVisible(true)
     }
   }, [])
@@ -101,7 +113,6 @@ const Settings = () => {
       fileExists = Boolean(await run(`ls ${EXTERNAL_CONFIG_FILE_PATH}`))
     } catch (e) {}
     if (!fileExists) return
-
     const externalConfig = JSON.parse(await run(`cat ${EXTERNAL_CONFIG_FILE_PATH}`))
     setNewSettings(externalConfig)
   }
