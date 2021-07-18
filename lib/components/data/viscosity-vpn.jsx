@@ -41,7 +41,7 @@ const ViscosityVPN = () => {
       return
     }
     const status = await run(
-      `osascript -e "tell application \"Viscosity\" to return state of the first connection where name is equal to \"${vpnConnectionName}\"" 2>/dev/null`
+      `osascript -e "tell application \\"Viscosity\\" to return state of the first connection where name is equal to \\"${vpnConnectionName}\\"" 2>/dev/null`
     )
     if (!status.length) return
     setState({ status: cleanupOutput(status) })
