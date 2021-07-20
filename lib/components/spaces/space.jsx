@@ -14,7 +14,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const [hovered, setHovered] = useState(false)
   const [noDelay, setNoDelay] = useState(false)
   const [editable, setEditable] = useState(false)
-  const { index, label, focused, visible, type } = space
+  const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
   const [spaceLabel, setSpaceLabel] = useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
@@ -62,6 +62,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const classes = classnames(`space space--${type}`, {
     'space--focused': focused === 1,
     'space--visible': visible === 1,
+    'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
     'space--no-delay': noDelay,
     'space--empty': apps.length === 0,
