@@ -1,7 +1,7 @@
 import { React, run } from 'uebersicht'
 import DataWidget from './data-widget.jsx'
 import DataWidgetLoader from './data-widget-loader.jsx'
-import Specter from './Specter.jsx'
+import Specter from './specter.jsx'
 import { PlayingIcon, PausedIcon } from '../icons.jsx'
 import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
 import { clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
