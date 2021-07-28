@@ -84,10 +84,13 @@ const Settings = () => {
       const AUTO = 'auto'
       const DARK = 'dark'
       const LIGHT = 'light'
-      const newValue = newSettings.global.theme === AUTO ? DARK : newSettings.global.theme === DARK ? LIGHT : AUTO
-      const updatedSettings = { ...newSettings, global: { ...newSettings.global, theme: newValue } }
-      setSettings(updatedSettings)
-      hardRefresh()
+      const newValue = newSettings.global.theme === AUTO ? AUTO : newSettings.global.theme === LIGHT ? DARK : LIGHT
+      run(`osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`)
+      if (newValue !== AUTO) {
+        const updatedSettings = { ...newSettings, global: { ...newSettings.global, theme: newValue } }
+        setSettings(updatedSettings)
+        hardRefresh()
+      }
     }
     if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
       e.preventDefault()
