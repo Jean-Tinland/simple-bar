@@ -1,0 +1,63 @@
+{
+  "name": "simple-bar",
+  "version": "1.0.0",
+  "description": "A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.simple-bar.com/en/).",
+  "browser": {
+    "simple-bar-data-jsx": "data.jsx",
+    "simple-bar-spaces-jsx": "spaces.jsx"
+  },
+  "files": [
+    "data.jsx",
+    "spaces.jsx",
+    "yarn.lock"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006 --config-dir lib/.storybook",
+    "build-storybook": "build-storybook --config-dir lib/.storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jean-Tinland/simple-bar.git"
+  },
+  "keywords": [
+    "macos",
+    "statusbar",
+    "ubersicht",
+    "ubersicht-widget",
+    "yabai"
+  ],
+  "author": "Jean Tinland <jean.tinland@valraiso.fr> (https://www.jeantinland.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jean-Tinland/simple-bar/issues"
+  },
+  "homepage": "https://github.com/Jean-Tinland/simple-bar#readme",
+  "packageManager": "yarn@3.0.0",
+  "resolutions": {
+    "@babel/*": "/Applications/Übersicht.app/Contents/Resources/node_modules/@babel",
+    "react": "/Applications/Übersicht.app/Contents/Resources/node_modules/react",
+    "react-dom": "/Applications/Übersicht.app/Contents/Resources/node_modules/react-dom",
+    "prop-types": "/Applications/Übersicht.app/Contents/Resources/node_modules/prop-types",
+    "regenerator-runtime": "/Applications/Übersicht.app/Contents/Resources/node_modules/regenerator-runtime"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "core-js": "^2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.3.6",
+    "@storybook/addon-essentials": "^6.3.6",
+    "@storybook/react": "^6.3.6",
+    "babel-plugin-react-require": "^3.1",
+    "webpack": "^4"
+  }
+}
