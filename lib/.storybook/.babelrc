@@ -1,0 +1,4 @@
+{
+"extends": "/Applications/Übersicht.app/Contents/Resources/public/.babelrc",
+"plugins": ["babel-plugin-react-require"]
+}
