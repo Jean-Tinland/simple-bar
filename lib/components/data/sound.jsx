@@ -1,62 +1,60 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { VolumeHighIcon, VolumeLowIcon, NoVolumeIcon, VolumeMutedIcon } from '../icons.jsx'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
-import { getSettings } from '../../settings'
-import { classnames, cleanupOutput } from '../../utils.js'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
 
-export { soundStyles } from '../../styles/components/data/sound'
-
-const { useEffect, useState } = React
+export { soundStyles as styles } from '../../styles/components/data/sound'
 
 const refreshFrequency = 20000
 
 const getIcon = (volume, muted) => {
-  if (muted === 'true' || !volume) return VolumeMutedIcon
-  if (volume < 20) return NoVolumeIcon
-  if (volume < 50) return VolumeLowIcon
-  return VolumeHighIcon
+  if (muted === 'true' || !volume) return Icons.VolumeMutedIcon
+  if (volume < 20) return Icons.NoVolumeIcon
+  if (volume < 50) return Icons.VolumeLowIcon
+  return Icons.VolumeHighIcon
 }
 
 const setSound = (volume) => {
   if (volume === undefined) return
-  run(`osascript -e 'set volume output volume ${volume}'`)
+  Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`)
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Sound = () => {
+export const Widget = () => {
   const { soundWidget } = settings.widgets
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(soundWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(soundWidget)
   const { volume: _volume } = state || {}
-  const [volume, setVolume] = useState(_volume && parseInt(_volume))
-  const [dragging, setDragging] = useState(false)
+  const [volume, setVolume] = Uebersicht.React.useState(_volume && parseInt(_volume))
+  const [dragging, setDragging] = Uebersicht.React.useState(false)
 
   const getSound = async () => {
     const [volume, muted] = await Promise.all([
-      run(`osascript -e 'set ovol to output volume of (get volume settings)'`),
-      run(`osascript -e 'set ovol to output muted of (get volume settings)'`)
+      Uebersicht.run(`osascript -e 'set ovol to output volume of (get volume settings)'`),
+      Uebersicht.run(`osascript -e 'set ovol to output muted of (get volume settings)'`)
     ])
-    setState({ volume: cleanupOutput(volume), muted: cleanupOutput(muted) })
+    setState({ volume: Utils.cleanupOutput(volume), muted: Utils.cleanupOutput(muted) })
     setLoading(false)
   }
 
   useWidgetRefresh(soundWidget, getSound, refreshFrequency)
 
-  useEffect(() => {
+  Uebersicht.React.useEffect(() => {
     if (!dragging) setSound(volume)
   }, [dragging])
 
-  useEffect(() => {
+  Uebersicht.React.useEffect(() => {
     if (_volume && parseInt(_volume) !== volume) {
       setVolume(parseInt(_volume))
     }
   }, [_volume])
 
-  if (loading) return <DataWidgetLoader className="sound" />
+  if (loading) return <DataWidgetLoader.Widget className="sound" />
   if (!state || volume === undefined) return null
 
   const { muted } = state
@@ -73,12 +71,10 @@ const Sound = () => {
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05
 
-  const classes = classnames('sound', {
-    'sound--dragging': dragging
-  })
+  const classes = Utils.classnames('sound', { 'sound--dragging': dragging })
 
   return (
-    <DataWidget classes={classes}>
+    <DataWidget.Widget classes={classes}>
       <div className="sound__display">
         <Icon />
         <span className="sound__value">{volume}%</span>
@@ -97,8 +93,6 @@ const Sound = () => {
         />
         <div className="sound__slider-filler" style={{ transform: `scaleX(${fillerWidth})` }} />
       </div>
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default Sound

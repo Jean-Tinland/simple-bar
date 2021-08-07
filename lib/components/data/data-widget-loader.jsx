@@ -1,9 +1,9 @@
-import { classnames } from '../../utils'
+import * as Utils from '../../utils'
 
-export { dataWidgetLoaderStyles } from '../../styles/components/data/data-widget-loader'
+export { dataWidgetLoaderStyles as styles } from '../../styles/components/data/data-widget-loader'
 
-const DataWidgetLoader = ({ width = 14, height = 14, className }) => {
-  const classes = classnames('data-widget-loader data-widget', {
+export const Widget = ({ width = 14, height = 14, className }) => {
+  const classes = Utils.classnames('data-widget-loader data-widget', {
     [className]: className
   })
   return (
@@ -12,5 +12,3 @@ const DataWidgetLoader = ({ width = 14, height = 14, className }) => {
     </div>
   )
 }
-
-export default DataWidgetLoader

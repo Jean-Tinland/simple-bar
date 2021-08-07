@@ -1,9 +1,11 @@
 import Space from './space.jsx'
-import { AddIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils'
-import { createSpace } from '../../yabai'
+import * as Icons from '../icons.jsx'
+import * as Utils from '../../utils'
+import * as Yabai from '../../yabai'
 
-const Spaces = ({ output, SIP, displayIndex }) => {
+export { spacesStyles as styles } from '../../styles/components/spaces/spaces'
+
+export const Component = ({ output, SIP, displayIndex }) => {
   if (!output) return <div className="spaces-display spaces-display--empty" />
   const { spaces, windows } = output
 
@@ -12,8 +14,8 @@ const Spaces = ({ output, SIP, displayIndex }) => {
   return displays.map((display, i) => {
     if (display !== displayIndex) return null
     const onClick = async (e) => {
-      clickEffect(e)
-      await createSpace(displayIndex)
+      Utils.clickEffect(e)
+      await Yabai.createSpace(displayIndex)
     }
     return (
       <div key={i} className="spaces">
@@ -34,12 +36,10 @@ const Spaces = ({ output, SIP, displayIndex }) => {
         })}
         {SIPDisabled && (
           <button className="spaces__add" onClick={onClick}>
-            <AddIcon />
+            <Icons.AddIcon />
           </button>
         )}
       </div>
     )
   })
 }
-
-export default Spaces

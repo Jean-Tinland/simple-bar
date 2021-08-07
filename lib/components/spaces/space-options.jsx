@@ -1,18 +1,18 @@
-import { RemoveIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils'
-import { removeSpace, swapSpace } from '../../yabai'
+import * as Icons from '../icons.jsx'
+import * as Utils from '../../utils'
+import * as Yabai from '../../yabai'
 
 const SpaceOptions = ({ index, setHovered, displayIndex }) => {
   const onRemoveClick = async (e) => {
     e.stopPropagation()
     clickEffect(e)
     setHovered(false)
-    await removeSpace(index, displayIndex)
+    await Yabai.removeSpace(index, displayIndex)
   }
   const onChevronClick = (direction) => async (e) => {
-    clickEffect(e)
+    Utils.clickEffect(e)
     setHovered(false)
-    await swapSpace(index, direction)
+    await Yabai.swapSpace(index, direction)
   }
   const onMouseDown = (e) => e.preventDefault()
   const onMouseLeave = () => setHovered(false)
@@ -24,17 +24,17 @@ const SpaceOptions = ({ index, setHovered, displayIndex }) => {
         onMouseDown={onMouseDown}
         onClick={onChevronClick('left')}
       >
-        <ChevronLeftIcon />
+        <Icons.ChevronLeftIcon />
       </div>
       <div
         className="space-options__option space-options__option--move-next"
         onMouseDown={onMouseDown}
         onClick={onChevronClick('right')}
       >
-        <ChevronRightIcon />
+        <Icons.ChevronRightIcon />
       </div>
       <div className="space-options__option space-options__option--remove" onClick={onRemoveClick}>
-        <RemoveIcon />
+        <Icons.RemoveIcon />
       </div>
     </span>
   )

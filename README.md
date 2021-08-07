@@ -128,32 +128,20 @@ export const Caprine = (props) => (
 To link it to a process you'll need to get the Yabai process name and make the association in `simple-bar > lib > app-icons.js` :
 
 ```javascript
-import {
-  AndroidMessages,
-  Caprine,
-  Code,
-  Default,
-  Figma,
-  GoogleChrome,
-  Music,
-  SequelPro,
-  Skype,
-  Slack,
-  Zeplin
-} from './components/Icons.jsx'
+import as * Icons from './components/Icons.jsx'
 
 export const appIcons = {
-  'Android Messages': AndroidMessages,
-  Caprine: Caprine,
-  Code: Code,
-  Default: Default,
-  Figma: Figma,
-  'Google Chrome': GoogleChrome,
-  Music: Music,
-  'Sequel Pro': SequelPro,
-  Skype: Skype,
-  Slack: Slack,
-  Zeplin: Zeplin
+  'Android Messages': Icons.AndroidMessages,
+  Caprine: Icons.Caprine,
+  Code: Icons.Code,
+  Default: Icons.Default,
+  Figma: Icons.Figma,
+  'Google Chrome': Icons.GoogleChrome,
+  Music: Icons.Music,
+  'Sequel Pro': Icons.SequelPro,
+  Skype: Icons.Skype,
+  Slack: Icons.Slack,
+  Zeplin: Icons.Zeplin
 }
 ```
 

@@ -1,6 +1,6 @@
-export { specterStyles } from '../../styles/components/data/specter'
+export { specterStyles as styles } from '../../styles/components/data/specter'
 
-const Specter = () => {
+export const Widget = () => {
   return (
     <div className="specter">
       {[...new Array(6)].map((_, i) => (
@@ -9,5 +9,3 @@ const Specter = () => {
     </div>
   )
 }
-
-export default Specter

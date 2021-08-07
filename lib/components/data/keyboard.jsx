@@ -1,36 +1,34 @@
-import { run, React } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { KeyboardIcon } from '../icons.jsx'
-import { getSettings } from '../../settings'
-import { cleanupOutput } from '../../utils.js'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
-export { keyboardStyles } from '../../styles/components/data/keyboard'
-
-const { useState } = React
+export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
 const refreshFrequency = 20000
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Keyboard = () => {
+export const Widget = () => {
   const { keyboardWidget } = settings.widgets
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(keyboardWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(keyboardWidget)
 
   const getKeyboard = async () => {
-    const keyboard = await run(
+    const keyboard = await Uebersicht.run(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g'`
     )
-    setState({ keyboard: cleanupOutput(keyboard) })
+    setState({ keyboard: Utils.cleanupOutput(keyboard) })
     setLoading(false)
   }
 
   useWidgetRefresh(keyboardWidget, getKeyboard, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="keyboard" />
+  if (loading) return <DataWidgetLoader.Widget className="keyboard" />
   if (!state) return null
   const { keyboard } = state
 
@@ -39,10 +37,8 @@ const Keyboard = () => {
   const formatedOutput = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
 
   return (
-    <DataWidget classes="keyboard" Icon={KeyboardIcon}>
+    <DataWidget.Widget classes="keyboard" Icon={Icons.KeyboardIcon}>
       {formatedOutput}
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default Keyboard

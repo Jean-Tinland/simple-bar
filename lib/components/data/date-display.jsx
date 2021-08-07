@@ -1,31 +1,29 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { DateIcon } from '../icons.jsx'
-import { clickEffect } from '../../utils'
-import { getSettings } from '../../settings'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import * as Utils from '../../utils'
+import * as Settings from '../../settings'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
-export { dateStyles } from '../../styles/components/data/date-display'
-
-const { memo, useState } = React
+export { dateStyles as styles } from '../../styles/components/data/date-display'
 
 const refreshFrequency = 1000
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp ? calendarApp : 'Calendar'
-  run(`open -a "${appName}"`)
+  Uebersicht.run(`open -a "${appName}"`)
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const DateDisplay = () => {
+export const Widget = () => {
   const { widgets, dateWidgetOptions } = settings
   const { dateWidget } = widgets
   const { shortDateFormat, locale, calendarApp } = dateWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(dateWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(dateWidget)
 
   const formatOptions = shortDateFormat ? 'short' : 'long'
 
@@ -44,20 +42,18 @@ const DateDisplay = () => {
 
   useWidgetRefresh(dateWidget, getDate, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="date-display" />
+  if (loading) return <DataWidgetLoader.Widget className="date-display" />
   if (!state) return null
   const { now } = state
 
   const onClick = (e) => {
-    clickEffect(e)
+    Utils.clickEffect(e)
     openCalendarApp(calendarApp)
   }
 
   return (
-    <DataWidget classes="date-display" Icon={DateIcon} onClick={onClick}>
+    <DataWidget.Widget classes="date-display" Icon={Icons.DateIcon} onClick={onClick}>
       {now}
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default memo(DateDisplay)

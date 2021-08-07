@@ -1,49 +1,45 @@
-import { run, React } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { ZoomIcon, MicOnIcon, MicOffIcon } from '../icons.jsx'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { getSettings } from '../../settings'
-import { cleanupOutput } from '../../utils.js'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
 
-export { zoomStyles } from '../../styles/components/data/zoom'
-
-const { useState } = React
+export { zoomStyles as styles } from '../../styles/components/data/zoom'
 
 const refreshFrequency = 20000
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Zoom = () => {
+export const Widget = () => {
   const { widgets, zoomWidgetOptions } = settings
   const { zoomWidget } = widgets
   const { showVideo, showMic } = zoomWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(zoomWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(zoomWidget)
 
   const getZoom = async () => {
     const [mic, video] = await Promise.all([
-      run(`osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`),
-      run(`osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`)
+      Uebersicht.run(`osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`),
+      Uebersicht.run(`osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`)
     ])
-    setState({ mic: cleanupOutput(mic), video: cleanupOutput(video) })
+    setState({ mic: Utils.cleanupOutput(mic), video: Utils.cleanupOutput(video) })
     setLoading(false)
   }
 
   useWidgetRefresh(zoomWidget, getZoom, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="zoom" />
+  if (loading) return <DataWidgetLoader.Widget className="zoom" />
   if (!state || (!state.mic.length && !state.video.length)) return null
 
   const { mic, video } = state
-  const MicIcon = mic === 'off' ? MicOffIcon : MicOnIcon
+  const MicIcon = mic === 'off' ? Icons.MicOffIcon : Icons.MicOnIcon
   return (
-    <DataWidget classes="zoom">
-      {showVideo && <ZoomIcon className={`zoom__icon zoom__icon--${video}`} />}
-      {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
-    </DataWidget>
+    <DataWidget.Widget classes="zoom">
+      {showVideo && <Icons.ZoomIcon className={`zoom__icon zoom__icon--${video}`} />}
+      {showMic && <Icons.MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
+    </DataWidget.Widget>
   )
 }
-
-export default Zoom

@@ -1,35 +1,31 @@
-import Error from './lib/components/error.jsx'
-import Spaces from './lib/components/spaces/spaces.jsx'
-import Process from './lib/components/process/process.jsx'
-import Settings from './lib/components/process/settings.jsx'
-import { classnames, injectStyles, parseJson } from './lib/utils'
-import { getSettings } from './lib/settings'
-import { variables } from './lib/styles/core/variables'
-import { baseStyles } from './lib/styles/core/base'
-import { spacesStyles } from './lib/styles/components/spaces/spaces'
-import { processStyles } from './lib/styles/components/process'
-import { settingsStyles } from './lib/styles/components/settings'
-import { customStyles } from './lib/styles/custom-styles'
+import * as Error from './lib/components/error.jsx'
+import * as Spaces from './lib/components/spaces/spaces.jsx'
+import * as Process from './lib/components/process/process.jsx'
+import * as Utils from './lib/utils'
+import * as Settings from './lib/settings'
+import * as Variables from './lib/styles/core/variables'
+import * as Base from './lib/styles/core/base'
+import * as Custom from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
-const settings = getSettings()
+const settings = Settings.get()
 const { yabaiPath = '/usr/local/bin/yabai', shell } = settings.global
 const { processWidget } = settings.widgets
 
 const command = `${shell} simple-bar/lib/scripts/init.sh ${yabaiPath}`
 
-injectStyles('simple-bar-spaces-styles', [
-  variables,
-  baseStyles,
-  spacesStyles,
-  processStyles,
-  settingsStyles,
-  customStyles
+Utils.injectStyles('simple-bar-spaces-styles', [
+  Variables.styles,
+  Base.styles,
+  Spaces.styles,
+  Process.styles,
+  Settings.styles,
+  Custom.styles
 ])
 
 const render = ({ output, error }) => {
-  const baseClasses = classnames('simple-bar simple-bar--spaces', {
+  const baseClasses = Utils.classnames('simple-bar simple-bar--spaces', {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
@@ -38,12 +34,12 @@ const render = ({ output, error }) => {
 
   if (error) {
     console.log('Error in spaces.jsx', error)
-    return <Error type="error" classes={baseClasses} withSettings />
+    return <Error.Component type="error" classes={baseClasses} withSettings />
   }
-  if (!output) return <Error type="noOutput" classes={baseClasses} withSettings />
+  if (!output) return <Error.Component type="noOutput" classes={baseClasses} withSettings />
 
-  const data = parseJson(output)
-  if (!data) return <Error type="noData" classes={baseClasses} withSettings />
+  const data = Utils.parseJson(output)
+  if (!data) return <Error.Component type="noData" classes={baseClasses} withSettings />
 
   const { displays, shadow, SIP, spaces: spacesList } = data
   const { spaces, windows } = spacesList
@@ -52,17 +48,22 @@ const render = ({ output, error }) => {
   const displayIndex = displays.find((d) => d.id === displayId).index
   const visibleSpaces = spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
 
-  const classes = classnames(baseClasses, {
+  const classes = Utils.classnames(baseClasses, {
     'simple-bar--no-shadow': shadow !== 'on'
   })
 
   return (
     <div className={classes}>
-      <Spaces output={spacesList} SIP={SIP} displayIndex={displayIndex} />
+      <Spaces.Component output={spacesList} SIP={SIP} displayIndex={displayIndex} />
       {processWidget && (
-        <Process displayIndex={displayIndex} spaces={spaces} visibleSpaces={visibleSpaces} windows={windows} />
+        <Process.Component
+          displayIndex={displayIndex}
+          spaces={spaces}
+          visibleSpaces={visibleSpaces}
+          windows={windows}
+        />
       )}
-      <Settings />
+      <Settings.Component />
     </div>
   )
 }

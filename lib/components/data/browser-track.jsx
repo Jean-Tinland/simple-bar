@@ -1,78 +1,80 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
 import Specter from './specter.jsx'
-import { GoogleChromeIcon, SafariIcon, PlayingIcon, FirefoxIcon, DefaultIcon } from '../icons.jsx'
-import { getSettings } from '../../settings'
-import { cleanupOutput, startSliding, stopSliding } from '../../utils.js'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
+import * as Icons from '../icons.jsx'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
-export { browserTrackStyles } from '../../styles/components/data/browser-track'
-
-const { useRef, useState } = React
+export { browserTrackStyles as styles } from '../../styles/components/data/browser-track'
 
 const refreshFrequency = 10000
 
 const getIcon = (browser) => {
-  if (browser === 'chrome') return GoogleChromeIcon
-  if (browser === 'safari') return SafariIcon
-  if (browser === 'firefox') return FirefoxIcon
-  return DefaultIcon
+  if (browser === 'chrome') return Icons.GoogleChromeIcon
+  if (browser === 'safari') return Icons.SafariIcon
+  if (browser === 'firefox') return Icons.FirefoxIcon
+  return Icons.DefaultIcon
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const BrowserTrack = () => {
-  const ref = useRef()
+export const Widget = () => {
+  const ref = Uebersicht.React.useRef()
   const { widgets, browserTrackWidgetOptions } = settings
   const { browserTrackWidget } = widgets
   const { showSpecter } = browserTrackWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(browserTrackWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(browserTrackWidget)
 
   const getBrowserTrack = async () => {
     const [browserTrackOutput, spotifyStatus] = await Promise.all([
-      run(`osascript ./simple-bar/lib/scripts/browser-audio.applescript 2>&1`),
-      run(`osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`)
+      Uebersicht.run(`osascript ./simple-bar/lib/scripts/browser-audio.applescript 2>&1`),
+      Uebersicht.run(`osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`)
     ])
     const browserTrack = JSON.parse(browserTrackOutput)
     setState({
       ...browserTrack,
-      isSpotifyRunning: cleanupOutput(spotifyStatus) === 'true'
+      isSpotifyRunning: Utils.cleanupOutput(spotifyStatus) === 'true'
     })
     setLoading(false)
   }
 
   useWidgetRefresh(browserTrackWidget, getBrowserTrack, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="browser-track" />
+  if (loading) return <DataWidgetLoader.Widget className="browser-track" />
   if (!state) return null
   const { browser, title, isSpotifyRunning } = state
 
   if (!browser?.length || !title?.length || isSpotifyRunning) return null
 
-  const onMouseEnter = () => startSliding(ref.current, '.browser-track__inner', '.browser-track__slider')
-  const onMouseLeave = () => stopSliding(ref.current, '.browser-track__slider')
+  const onMouseEnter = () => Utils.startSliding(ref.current, '.browser-track__inner', '.browser-track__slider')
+  const onMouseLeave = () => Utils.stopSliding(ref.current, '.browser-track__slider')
 
   const Icon = () => {
     const BrowserIcon = getIcon(browser)
     return (
       <div className="browser-track__icons">
         <BrowserIcon />
-        <PlayingIcon />
+        <Icons.PlayingIcon />
       </div>
     )
   }
 
   return (
-    <DataWidget ref={ref} classes="browser-track" Icon={Icon} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <DataWidget.Widget
+      ref={ref}
+      classes="browser-track"
+      Icon={Icon}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {showSpecter && <Specter />}
       <div className="browser-track__inner">
         <div className="browser-track__slider">{title}</div>
       </div>
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default BrowserTrack

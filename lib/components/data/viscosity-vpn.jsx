@@ -1,78 +1,72 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { VPNIcon, VPNOffIcon } from '../icons.jsx'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
-import { classnames, cleanupOutput, clickEffect } from '../../utils'
-import { getSettings } from '../../settings'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Utils from '../../utils'
+import * as Settings from '../../settings'
 
-export { viscosityVPNStyles } from '../../styles/components/data/viscosity-vpn'
-
-const { useState } = React
+export { viscosityVPNStyles as styles } from '../../styles/components/data/viscosity-vpn'
 
 const refreshFrequency = 8000
 
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
-    run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`)
+    Uebersicht.run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`)
     notification(`Disabling Viscosity ${vpnConnectionName} network...`)
   } else {
-    run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`)
+    Uebersicht.run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`)
     notification(`Enabling Viscosity ${vpnConnectionName} network...`)
   }
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const ViscosityVPN = () => {
+export const Widget = () => {
   const { widgets, vpnWidgetOptions } = settings
   const { vpnWidget } = widgets
   const { vpnConnectionName } = vpnWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(vpnWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(vpnWidget)
 
   const getVPN = async () => {
-    const isRunning = await run(
+    const isRunning = await Uebersicht.run(
       `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`
     )
-    if (cleanupOutput(isRunning) === 'false') {
+    if (Utils.cleanupOutput(isRunning) === 'false') {
       setLoading(false)
       return
     }
-    const status = await run(
+    const status = await Uebersicht.run(
       `osascript -e "tell application \\"Viscosity\\" to return state of the first connection where name is equal to \\"${vpnConnectionName}\\"" 2>/dev/null`
     )
     if (!status.length) return
-    setState({ status: cleanupOutput(status) })
+    setState({ status: Utils.cleanupOutput(status) })
     setLoading(false)
   }
 
   useWidgetRefresh(vpnWidget, getVPN, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="viscosity-vpn" />
+  if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />
   if (!state || !vpnConnectionName.length) return null
 
   const { status } = state
   const isConnected = status === 'Connected'
 
-  const classes = classnames('viscosity-vpn', {
-    'viscosity-vpn--disconnected': !isConnected
-  })
+  const classes = Utils.classnames('viscosity-vpn', { 'viscosity-vpn--disconnected': !isConnected })
 
-  const Icon = isConnected ? VPNIcon : VPNOffIcon
+  const Icon = isConnected ? Icons.VPNIcon : Icons.VPNOffIcon
 
   const clicked = (e) => {
-    clickEffect(e)
+    Utils.clickEffect(e)
     toggleVPN(isConnected, vpnConnectionName)
     setTimeout(getVPN, refreshFrequency / 2)
   }
 
   return (
-    <DataWidget classes={classes} Icon={Icon} onClick={clicked}>
+    <DataWidget.Widget classes={classes} Icon={Icon} onClick={clicked}>
       {status}
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default ViscosityVPN

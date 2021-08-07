@@ -1,10 +1,12 @@
 import Window from './window.jsx'
-import { getSettings } from '../../settings'
-import { filterApps } from '../../utils.js'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
 
-const settings = getSettings()
+export { processStyles as styles } from '../../styles/components/process'
 
-const Process = ({ displayIndex, spaces, visibleSpaces, windows }) => {
+const settings = Settings.get()
+
+export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
   if (!windows) return null
   const { process, spacesDisplay } = settings
   const { exclusionsAsRegex } = spacesDisplay
@@ -23,7 +25,7 @@ const Process = ({ displayIndex, spaces, visibleSpaces, windows }) => {
               </div>
             ))}
         {windows
-          .filter((app) => filterApps(app, exclusions, titleExclusions, exclusionsAsRegex))
+          .filter((app) => Utils.filterApps(app, exclusions, titleExclusions, exclusionsAsRegex))
           .filter(({ display, space }) => visibleSpaces.includes(space) && display === displayIndex)
           .sort((a, b) => a.id > b.id)
           .map((window, i) => (
@@ -33,5 +35,3 @@ const Process = ({ displayIndex, spaces, visibleSpaces, windows }) => {
     </div>
   )
 }
-
-export default Process

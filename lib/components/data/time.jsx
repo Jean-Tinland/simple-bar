@@ -1,31 +1,29 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { ClockIcon } from '../icons.jsx'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { clickEffect } from '../../utils'
-import { getSettings } from '../../settings'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Utils from '../../utils'
+import * as Settings from '../../settings'
 
-export { timeStyles } from '../../styles/components/data/time'
-
-const { useState } = React
+export { timeStyles as styles } from '../../styles/components/data/time'
 
 const refreshFrequency = 1000
 
 const displayNotificationCenter = () =>
-  run(
+  Uebersicht.run(
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   )
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Time = () => {
+export const Widget = () => {
   const { widgets, timeWidgetOptions } = settings
   const { timeWidget } = widgets
   const { hour12, dayProgress, showSeconds } = timeWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(timeWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(timeWidget)
 
   const options = {
     hour: 'numeric',
@@ -42,7 +40,7 @@ const Time = () => {
 
   useWidgetRefresh(timeWidget, getTime, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="time" />
+  if (loading) return <DataWidgetLoader.Widget className="time" />
   if (!state) return null
   const { time } = state
 
@@ -56,17 +54,15 @@ const Time = () => {
 
   const onClick = (e) => {
     if (displayNotificationCenter) {
-      clickEffect(e)
+      Utils.clickEffect(e)
       displayNotificationCenter()
     }
   }
 
   return (
-    <DataWidget classes="time" Icon={ClockIcon} onClick={onClick}>
+    <DataWidget.Widget classes="time" Icon={Icons.ClockIcon} onClick={onClick}>
       {time}
       {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default Time

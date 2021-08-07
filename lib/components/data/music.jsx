@@ -1,90 +1,88 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
 import Specter from './specter.jsx'
-import { PlayingIcon, PausedIcon } from '../icons.jsx'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh'
-import { clickEffect, classnames, startSliding, stopSliding, cleanupOutput } from '../../utils'
-import { getSettings } from '../../settings'
+import * as Icons from '../icons.jsx'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Utils from '../../utils'
+import * as Settings from '../../settings'
 
-export { musicStyles } from '../../styles/components/data/music'
-
-const { useRef, useState } = React
+export { musicStyles as styles } from '../../styles/components/data/music'
 
 const refreshFrequency = 10000
 
 const togglePlay = (isPaused, processName) => {
   if (isPaused) {
-    run(`osascript -e 'tell application "${processName}" to play'`)
+    Uebersicht.run(`osascript -e 'tell application "${processName}" to play'`)
   } else {
-    run(`osascript -e 'tell application "${processName}" to pause'`)
+    Uebersicht.run(`osascript -e 'tell application "${processName}" to pause'`)
   }
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Music = () => {
-  const ref = useRef()
+export const Widget = () => {
+  const ref = Uebersicht.React.useRef()
   const { widgets, musicWidgetOptions } = settings
   const { musicWidget } = widgets
   const { showSpecter } = musicWidgetOptions
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(musicWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(musicWidget)
 
   const getMusic = async () => {
-    const osVersion = await run(`sw_vers -productVersion`)
-    const processName = cleanupOutput(osVersion) === '10.15' ? 'iTunes' : 'Music'
-    const isRunning = await run(
+    const osVersion = await Uebersicht.run(`sw_vers -productVersion`)
+    const processName = Utils.cleanupOutput(osVersion) === '10.15' ? 'iTunes' : 'Music'
+    const isRunning = await Uebersicht.run(
       `osascript -e 'tell application "System Events" to (name of processes) contains "${processName}"' 2>&1`
     )
-    if (cleanupOutput(isRunning) === 'false') {
+    if (Utils.cleanupOutput(isRunning) === 'false') {
       setLoading(false)
       return
     }
     const [playerState, trackName, artistName] = await Promise.all([
-      run(`osascript -e 'tell application "${processName}" to player state as string' 2>/dev/null || echo "stopped"`),
-      run(
+      Uebersicht.run(
+        `osascript -e 'tell application "${processName}" to player state as string' 2>/dev/null || echo "stopped"`
+      ),
+      Uebersicht.run(
         `osascript -e 'tell application "${processName}" to name of current track as string' 2>/dev/null || echo "unknown track"`
       ),
-      run(
+      Uebersicht.run(
         `osascript -e 'tell application "${processName}" to artist of current track as string' 2>/dev/null || echo "unknown artist"`
       )
     ])
     setState({
-      playerState: cleanupOutput(playerState),
-      trackName: cleanupOutput(trackName),
-      artistName: cleanupOutput(artistName),
-      processName: cleanupOutput(processName)
+      playerState: Utils.cleanupOutput(playerState),
+      trackName: Utils.cleanupOutput(trackName),
+      artistName: Utils.cleanupOutput(artistName),
+      processName: Utils.cleanupOutput(processName)
     })
     setLoading(false)
   }
 
   useWidgetRefresh(musicWidget, getMusic, refreshFrequency)
 
-  if (loading) return <DataWidgetLoader className="music" />
+  if (loading) return <DataWidgetLoader.Widget className="music" />
   if (!state) return null
   const { processName, playerState, trackName, artistName } = state
 
   if (!trackName.length) return null
 
   const isPlaying = playerState === 'playing'
-  const Icon = isPlaying ? PlayingIcon : PausedIcon
+  const Icon = isPlaying ? Icons.PlayingIcon : Icons.PausedIcon
 
   const onClick = (e) => {
-    clickEffect(e)
+    Utils.clickEffect(e)
     togglePlay(!isPlaying, processName)
     getMusic()
   }
-  const onMouseEnter = () => startSliding(ref.current, '.music__inner', '.music__slider')
-  const onMouseLeave = () => stopSliding(ref.current, '.music__slider')
+  const onMouseEnter = () => Utils.startSliding(ref.current, '.music__inner', '.music__slider')
+  const onMouseLeave = () => Utils.stopSliding(ref.current, '.music__slider')
 
-  const classes = classnames('music', {
-    'music--playing': isPlaying
-  })
+  const classes = Utils.classnames('music', { 'music--playing': isPlaying })
 
   return (
-    <DataWidget
+    <DataWidget.Widget
       ref={ref}
       classes={classes}
       Icon={Icon}
@@ -98,8 +96,6 @@ const Music = () => {
           {trackName} - {artistName}
         </div>
       </div>
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default Music

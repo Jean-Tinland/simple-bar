@@ -1,55 +1,53 @@
-import { React, run } from 'uebersicht'
-import DataWidget from './data-widget.jsx'
-import DataWidgetLoader from './data-widget-loader.jsx'
-import { MicOnIcon, MicOffIcon } from '../icons.jsx'
-import { getSettings } from '../../settings'
-import { classnames, cleanupOutput } from '../../utils.js'
-import { useWidgetRefresh } from '../../hooks/use-widget-refresh.js'
+import * as Uebersicht from 'uebersicht'
+import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
+import * as Icons from '../icons.jsx'
+import * as Settings from '../../settings'
+import * as Utils from '../../utils'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
-export { micStyles } from '../../styles/components/data/mic'
-
-const { useEffect, useState } = React
+export { micStyles as styles } from '../../styles/components/data/mic'
 
 const refreshFrequency = 20000
 
 const setMic = (volume) => {
   if (volume === undefined) return
-  run(`osascript -e 'set volume input volume ${volume}'`)
+  Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`)
 }
 
-const settings = getSettings()
+const settings = Settings.get()
 
-const Mic = () => {
+export const Widget = () => {
   const { micWidget } = settings.widgets
 
-  const [state, setState] = useState()
-  const [loading, setLoading] = useState(micWidget)
+  const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(micWidget)
   const { volume: _volume } = state || {}
-  const [volume, setVolume] = useState(_volume && parseInt(_volume))
-  const [dragging, setDragging] = useState(false)
+  const [volume, setVolume] = Uebersicht.React.useState(_volume && parseInt(_volume))
+  const [dragging, setDragging] = Uebersicht.React.useState(false)
 
   const getMic = async () => {
-    const volume = await run(`osascript -e 'set ovol to input volume of (get volume settings)'`)
-    setState({ volume: cleanupOutput(volume) })
+    const volume = await Uebersicht.run(`osascript -e 'set ovol to input volume of (get volume settings)'`)
+    setState({ volume: Utils.cleanupOutput(volume) })
     setLoading(false)
   }
 
   useWidgetRefresh(micWidget, getMic, refreshFrequency)
 
-  useEffect(() => {
+  Uebersicht.React.useEffect(() => {
     if (!dragging) setMic(volume)
   }, [dragging])
 
-  useEffect(() => {
+  Uebersicht.React.useEffect(() => {
     if (_volume && parseInt(_volume) !== volume) {
       setVolume(parseInt(_volume))
     }
   }, [_volume])
 
-  if (loading) return <DataWidgetLoader className="mic" />
+  if (loading) return <DataWidgetLoader.Widget className="mic" />
   if (!state || volume === undefined || _volume === 'missing value') return null
 
-  const Icon = !volume ? MicOffIcon : MicOnIcon
+  const Icon = !volume ? Icons.MicOffIcon : Icons.MicOnIcon
 
   const onChange = (e) => {
     const value = parseInt(e.target.value)
@@ -60,12 +58,10 @@ const Mic = () => {
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05
 
-  const classes = classnames('mic', {
-    'mic--dragging': dragging
-  })
+  const classes = Utils.classnames('mic', { 'mic--dragging': dragging })
 
   return (
-    <DataWidget classes={classes}>
+    <DataWidget.Widget classes={classes}>
       <div className="mic__display">
         <Icon />
         <span className="mic__value">{volume}%</span>
@@ -84,8 +80,6 @@ const Mic = () => {
         />
         <div className="mic__slider-filler" style={{ transform: `scaleX(${fillerWidth})` }} />
       </div>
-    </DataWidget>
+    </DataWidget.Widget>
   )
 }
-
-export default Mic

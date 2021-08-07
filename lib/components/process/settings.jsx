@@ -1,17 +1,17 @@
-import { React, run } from 'uebersicht'
-import { classnames, clickEffect, compareObjects, hardRefresh } from '../../utils'
-import { CloseIcon } from '../icons.jsx'
-import { defaultSettings, getSettings, importSettings, setSettings, settingsData } from '../../settings'
+import * as Uebersicht from 'uebersicht'
+import * as Utils from '../../utils'
+import * as Icons from '../icons.jsx'
+import * as Settings from '../../settings'
 
-const { Fragment, useState, useEffect, useCallback } = React
+export { settingsStyles as styles } from '../../styles/components/settings'
 
 const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`
 
 const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
-  const onClick = (e) => clickEffect(e)
+  const onClick = (e) => Utils.clickEffect(e)
   if (type === 'select') {
     return (
-      <>
+      <Uebersicht.React.Fragment>
         <label htmlFor={code}>{label}</label>
         <select id={code} className="settings__select" onChange={onChange} defaultValue={defaultValue}>
           {options.map((option) => (
@@ -20,7 +20,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
             </option>
           ))}
         </select>
-      </>
+      </Uebersicht.React.Fragment>
     )
   }
   if (type === 'radio') {
@@ -35,7 +35,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
   }
   if (type === 'text') {
     return (
-      <>
+      <Uebersicht.React.Fragment>
         <label htmlFor={code}>{label}</label>
         <input
           id={code}
@@ -47,16 +47,16 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, onChange 
           autoCorrect="off"
           autoCapitalize="off"
         />
-      </>
+      </Uebersicht.React.Fragment>
     )
   }
   return (
-    <>
+    <Uebersicht.React.Fragment>
       <input id={code} type="checkbox" defaultChecked={defaultValue} onChange={onChange} onClick={onClick} />
       <label htmlFor={code} onClick={onClick}>
         {label}
       </label>
-    </>
+    </Uebersicht.React.Fragment>
   )
 }
 
@@ -68,16 +68,16 @@ const getLastCurrentTab = () => {
   return 0
 }
 
-const Settings = () => {
-  const [visible, setVisible] = useState(false)
-  const [currentTab, setCurrentTab] = useState(getLastCurrentTab())
-  const [pendingChanges, setPendingChanges] = useState(0)
-  const settings = getSettings()
-  const [newSettings, setNewSettings] = useState(settings)
+export const Component = () => {
+  const [visible, setVisible] = Uebersicht.React.useState(false)
+  const [currentTab, setCurrentTab] = Uebersicht.React.useState(getLastCurrentTab())
+  const [pendingChanges, setPendingChanges] = Uebersicht.React.useState(0)
+  const settings = Settings.get()
+  const [newSettings, setNewSettings] = Uebersicht.React.useState(settings)
 
   const closeSettings = () => setVisible(false)
 
-  const onKeydown = useCallback((e) => {
+  const onKeydown = Uebersicht.React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e
     if ((ctrlKey || metaKey) && (which === 84 || keyCode === 84)) {
       e.preventDefault()
@@ -85,11 +85,13 @@ const Settings = () => {
       const DARK = 'dark'
       const LIGHT = 'light'
       const newValue = newSettings.global.theme === AUTO ? AUTO : newSettings.global.theme === LIGHT ? DARK : LIGHT
-      run(`osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`)
+      Uebersicht.run(
+        `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
+      )
       if (newValue !== AUTO) {
         const updatedSettings = { ...newSettings, global: { ...newSettings.global, theme: newValue } }
-        setSettings(updatedSettings)
-        hardRefresh()
+        Settings.set(updatedSettings)
+        Utils.hardRefresh()
       }
     }
     if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
@@ -104,43 +106,41 @@ const Settings = () => {
   }
 
   const onRefreshClick = async (e) => {
-    clickEffect(e)
+    Utils.clickEffect(e)
     setPendingChanges(0)
-    await setSettings(newSettings)
-    hardRefresh()
+    await Settings.set(newSettings)
+    Utils.hardRefresh()
   }
 
   const onImportClick = async () => {
     let fileExists = false
     try {
-      fileExists = Boolean(await run(`ls ${EXTERNAL_CONFIG_FILE_PATH}`))
+      fileExists = Boolean(await Uebersicht.run(`ls ${EXTERNAL_CONFIG_FILE_PATH}`))
     } catch (e) {}
     if (!fileExists) return
-    const externalConfig = JSON.parse(await run(`cat ${EXTERNAL_CONFIG_FILE_PATH}`))
+    const externalConfig = JSON.parse(await Uebersicht.run(`cat ${EXTERNAL_CONFIG_FILE_PATH}`))
     setNewSettings(externalConfig)
   }
 
   const onExportClick = async () => {
     const { externalConfigFile } = newSettings.global
     if (externalConfigFile) {
-      await run(`echo '${JSON.stringify(newSettings)}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
+      await Uebersicht.run(`echo '${JSON.stringify(newSettings)}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
     }
   }
-
-  useEffect(() => {
-    const diffs = compareObjects(getSettings(), newSettings)
+  // { defaultSettings, getSettings, setSettings, Settings.data }
+  Uebersicht.React.useEffect(() => {
+    const diffs = Utils.compareObjects(Settings.get(), newSettings)
     const deepDiffs = Object.keys(diffs).reduce((acc, key) => [...acc, ...Object.keys(diffs[key])], [])
     setPendingChanges(deepDiffs.length)
   }, [newSettings])
 
-  useEffect(() => {
+  Uebersicht.React.useEffect(() => {
     document.addEventListener('keydown', onKeydown)
     return () => document.removeEventListener('keydown', onKeydown)
   }, [])
 
-  const classes = classnames('settings', {
-    'settings--visible': visible
-  })
+  const classes = Utils.classnames('settings', { 'settings--visible': visible })
 
   return (
     <div className={classes}>
@@ -148,14 +148,14 @@ const Settings = () => {
       <div className="settings__outer">
         <div className="settings__header">
           Settings
-          <CloseIcon className="settings__close" onClick={closeSettings} />
+          <Icons.CloseIcon className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__tabs">
-          {Object.keys(defaultSettings).map((key, i) => {
-            const setting = settingsData[key]
+          {Object.keys(Settings.defaultSettings).map((key, i) => {
+            const setting = Settings.data[key]
             if (!setting) return null
             const { label } = setting
-            const classes = classnames('settings__tab', {
+            const classes = Utils.classnames('settings__tab', {
               'settings__tab--current': i === currentTab
             })
             return (
@@ -166,19 +166,19 @@ const Settings = () => {
           })}
         </div>
         <div className="settings__inner">
-          {Object.keys(defaultSettings).map((key) => {
-            const setting = settingsData[key]
+          {Object.keys(Settings.defaultSettings).map((key) => {
+            const setting = Settings.data[key]
             if (!setting) return null
             const { label, infos } = setting
             return (
               <div key={key} className="settings__category" style={{ transform: `translateX(-${100 * currentTab}%)` }}>
                 <div className="settings__inner-title">{label}</div>
-                {Object.keys(defaultSettings[key]).map((subKey) => {
-                  const subSetting = settingsData[subKey]
+                {Object.keys(Settings.defaultSettings[key]).map((subKey) => {
+                  const subSetting = Settings.data[subKey]
                   if (!subSetting) return null
                   const { title, label, type, options, placeholder, fullWidth } = subSetting
                   const defaultValue = newSettings[key][subKey]
-                  const classes = classnames('settings__item', {
+                  const classes = Utils.classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
                     'settings__item--text': type === 'text',
                     'settings__item--full-width': fullWidth
@@ -190,7 +190,7 @@ const Settings = () => {
                   }
 
                   return (
-                    <Fragment key={subKey}>
+                    <Uebersicht.React.Fragment key={subKey}>
                       {title && <div className="settings__item-title">{title}</div>}
                       <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
                         <Item
@@ -203,7 +203,7 @@ const Settings = () => {
                           onChange={onChange}
                         />
                       </div>
-                    </Fragment>
+                    </Uebersicht.React.Fragment>
                   )
                 })}
                 {infos && infos.length && (
@@ -220,7 +220,7 @@ const Settings = () => {
         </div>
         <div className="settings__bottom">
           {settings.global.externalConfigFile && (
-            <Fragment>
+            <Uebersicht.React.Fragment>
               <button className="settings__import-button" onClick={onImportClick} disabled={!!pendingChanges}>
                 Import
               </button>
@@ -229,7 +229,7 @@ const Settings = () => {
                 Export
               </button>
               <span className="settings__import-export-label">all settings</span>
-            </Fragment>
+            </Uebersicht.React.Fragment>
           )}
           {pendingChanges !== 0 && (
             <div className="settings__pending-changes">
@@ -244,5 +244,3 @@ const Settings = () => {
     </div>
   )
 }
-
-export default Settings

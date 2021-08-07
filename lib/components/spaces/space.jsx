@@ -1,21 +1,19 @@
-import { React } from 'uebersicht'
+import * as Uebersicht from 'uebersicht'
 import OpenedApps from './opened-apps.jsx'
 import SpaceOptions from './space-options.jsx'
-import { classnames, clickEffect, filterApps } from '../../utils'
-import { goToSpace, renameSpace } from '../../yabai'
-import { getSettings } from '../../settings'
+import * as Utils from '../../utils'
+import * as Yabai from '../../yabai'
+import * as Settings from '../../settings'
 
-const { useRef, useState } = React
-
-const settings = getSettings()
+const settings = Settings.get()
 
 const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace }) => {
-  const labelRef = useRef()
-  const [hovered, setHovered] = useState(false)
-  const [noDelay, setNoDelay] = useState(false)
-  const [editable, setEditable] = useState(false)
+  const labelRef = Uebersicht.React.useRef()
+  const [hovered, setHovered] = Uebersicht.React.useState(false)
+  const [noDelay, setNoDelay] = Uebersicht.React.useState(false)
+  const [editable, setEditable] = Uebersicht.React.useState(false)
   const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
-  const [spaceLabel, setSpaceLabel] = useState(label?.length ? label : index)
+  const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
   const { displayAllSpacesOnAllScreens, exclusionsAsRegex } = spacesDisplay
@@ -42,24 +40,24 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
       labelRef.current?.select()
     } else {
       if (focused === 1) return
-      goToSpace(index)
-      clickEffect(e)
+      Yabai.goToSpace(index)
+      Utils.clickEffect(e)
     }
   }
   const onChange = (e) => {
     if (!editable) return
     const newLabel = e.target.value
     setSpaceLabel(newLabel)
-    renameSpace(index, newLabel)
+    Yabai.renameSpace(index, newLabel)
   }
 
   const apps = windows.filter(
-    (app) => app.space === index && filterApps(app, exclusions, titleExclusions, exclusionsAsRegex)
+    (app) => app.space === index && Utils.filterApps(app, exclusions, titleExclusions, exclusionsAsRegex)
   )
 
   if (!focused && !visible && apps.length === 0 && spacesDisplay.hideEmptySpaces) return null
 
-  const classes = classnames(`space space--${type}`, {
+  const classes = Utils.classnames(`space space--${type}`, {
     'space--focused': focused === 1,
     'space--visible': visible === 1,
     'space--fullscreen': fullscreen === 1,
@@ -72,7 +70,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const labelSize = typeof spaceLabel === 'number' ? spaceLabel.toString().length : spaceLabel.length
 
   return (
-    <>
+    <Uebersicht.React.Fragment>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div className="spaces__separator" />}
       <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <button className="space__inner" onClick={onClick}>
@@ -91,7 +89,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
           <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />
         )}
       </div>
-    </>
+    </Uebersicht.React.Fragment>
   )
 }
 
