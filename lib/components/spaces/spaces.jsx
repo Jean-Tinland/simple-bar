@@ -36,7 +36,7 @@ export const Component = ({ output, SIP, displayIndex }) => {
         })}
         {SIPDisabled && (
           <button className="spaces__add" onClick={onClick}>
-            <Icons.AddIcon />
+            <Icons.Add />
           </button>
         )}
       </div>

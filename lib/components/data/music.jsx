@@ -69,7 +69,7 @@ export const Widget = () => {
   if (!trackName.length) return null
 
   const isPlaying = playerState === 'playing'
-  const Icon = isPlaying ? Icons.PlayingIcon : Icons.PausedIcon
+  const Icon = isPlaying ? Icons.Playing : Icons.Paused
 
   const onClick = (e) => {
     Utils.clickEffect(e)

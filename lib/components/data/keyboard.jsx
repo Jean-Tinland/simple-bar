@@ -37,7 +37,7 @@ export const Widget = () => {
   const formatedOutput = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
 
   return (
-    <DataWidget.Widget classes="keyboard" Icon={Icons.KeyboardIcon}>
+    <DataWidget.Widget classes="keyboard" Icon={Icons.Keyboard}>
       {formatedOutput}
     </DataWidget.Widget>
   )

@@ -11,10 +11,10 @@ export { soundStyles as styles } from '../../styles/components/data/sound'
 const refreshFrequency = 20000
 
 const getIcon = (volume, muted) => {
-  if (muted === 'true' || !volume) return Icons.VolumeMutedIcon
-  if (volume < 20) return Icons.NoVolumeIcon
-  if (volume < 50) return Icons.VolumeLowIcon
-  return Icons.VolumeHighIcon
+  if (muted === 'true' || !volume) return Icons.VolumeMuted
+  if (volume < 20) return Icons.NoVolume
+  if (volume < 50) return Icons.VolumeLow
+  return Icons.VolumeHigh
 }
 
 const setSound = (volume) => {

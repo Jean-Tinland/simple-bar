@@ -11,11 +11,11 @@ export { weatherStyles as styles } from '../../styles/components/data/weather'
 const refreshFrequency = 1000 * 60 * 10
 
 const getIcon = (description, atNight) => {
-  if (description.includes('snow')) return Icons.SnowIcon
-  if (description.includes('rain')) return Icons.RainIcon
-  if (description.includes('cloud')) return Icons.CloudIcon
-  if (atNight) return Icons.MoonIcon
-  return Icons.SunIcon
+  if (description.includes('snow')) return Icons.Snow
+  if (description.includes('rain')) return Icons.Rain
+  if (description.includes('cloud')) return Icons.Cloud
+  if (atNight) return Icons.Moon
+  return Icons.Sun
 }
 
 const getLabel = (location, temperature, unit, hideLocation) => {

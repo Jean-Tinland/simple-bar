@@ -24,17 +24,17 @@ const SpaceOptions = ({ index, setHovered, displayIndex }) => {
         onMouseDown={onMouseDown}
         onClick={onChevronClick('left')}
       >
-        <Icons.ChevronLeftIcon />
+        <Icons.ChevronLeft />
       </div>
       <div
         className="space-options__option space-options__option--move-next"
         onMouseDown={onMouseDown}
         onClick={onChevronClick('right')}
       >
-        <Icons.ChevronRightIcon />
+        <Icons.ChevronRight />
       </div>
       <div className="space-options__option space-options__option--remove" onClick={onRemoveClick}>
-        <Icons.RemoveIcon />
+        <Icons.Remove />
       </div>
     </span>
   )

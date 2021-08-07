@@ -47,7 +47,7 @@ export const Widget = () => {
   if (loading) return <DataWidgetLoader.Widget className="mic" />
   if (!state || volume === undefined || _volume === 'missing value') return null
 
-  const Icon = !volume ? Icons.MicOffIcon : Icons.MicOnIcon
+  const Icon = !volume ? Icons.MicOff : Icons.MicOn
 
   const onChange = (e) => {
     const value = parseInt(e.target.value)

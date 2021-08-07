@@ -60,7 +60,7 @@ export const Widget = () => {
   }
 
   return (
-    <DataWidget.Widget classes="time" Icon={Icons.ClockIcon} onClick={onClick}>
+    <DataWidget.Widget classes="time" Icon={Icons.Clock} onClick={onClick}>
       {time}
       {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
     </DataWidget.Widget>

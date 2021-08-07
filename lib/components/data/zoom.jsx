@@ -35,11 +35,11 @@ export const Widget = () => {
   if (!state || (!state.mic.length && !state.video.length)) return null
 
   const { mic, video } = state
-  const MicIcon = mic === 'off' ? Icons.MicOffIcon : Icons.MicOnIcon
+  const MicIcon = mic === 'off' ? Icons.MicOff : Icons.MicOn
   return (
     <DataWidget.Widget classes="zoom">
-      {showVideo && <Icons.ZoomIcon className={`zoom__icon zoom__icon--${video}`} />}
-      {showMic && <Icons.MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
+      {showVideo && <Icons.Zoom className={`zoom__icon zoom__icon--${video}`} />}
+      {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
     </DataWidget.Widget>
   )
 }

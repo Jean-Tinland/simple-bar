@@ -56,7 +56,7 @@ export const Widget = () => {
 
   const classes = Utils.classnames('viscosity-vpn', { 'viscosity-vpn--disconnected': !isConnected })
 
-  const Icon = isConnected ? Icons.VPNIcon : Icons.VPNOffIcon
+  const Icon = isConnected ? Icons.VPN : Icons.VPNOff
 
   const clicked = (e) => {
     Utils.clickEffect(e)

@@ -76,9 +76,9 @@ export const Widget = () => {
     <div className="battery__icon">
       {charging && (
         <div className="battery__charging-icon">
-          <Icons.ChargingIcon className="battery__charging-icon-outline-left" />
-          <Icons.ChargingIcon className="battery__charging-icon-fill" />
-          <Icons.ChargingIcon className="battery__charging-icon-outline-right" />
+          <Icons.Charging className="battery__charging-icon-outline-left" />
+          <Icons.Charging className="battery__charging-icon-fill" />
+          <Icons.Charging className="battery__charging-icon-outline-right" />
         </div>
       )}
       <div className="battery__icon-filler" style={{ transform: transformValue }} />
@@ -87,7 +87,7 @@ export const Widget = () => {
 
   return (
     <DataWidget.Widget classes={classes} Icon={Icon} onClick={onClick}>
-      {caffeinate !== '' && <Icons.CoffeeIcon className="battery__caffeinate-icon" />}
+      {caffeinate !== '' && <Icons.Coffee className="battery__caffeinate-icon" />}
       {percentage}%
     </DataWidget.Widget>
   )

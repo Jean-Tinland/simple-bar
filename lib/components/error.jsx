@@ -1,4 +1,4 @@
-import Settings from './process/settings.jsx'
+import * as Settings from './process/settings.jsx'
 import * as Utils from '../utils'
 
 const message = {
@@ -19,7 +19,7 @@ export const Component = ({ type, classes, withSettings }) => {
   return (
     <div className={errorClasses}>
       <span>simple-bar-spaces.jsx: {message[type]}</span>
-      {withSettings && <Settings />}
+      {withSettings && <Settings.Component />}
     </div>
   )
 }

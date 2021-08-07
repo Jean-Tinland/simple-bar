@@ -56,7 +56,7 @@ export const Widget = () => {
 
   const classes = Utils.classnames('wifi', { 'wifi--inactive': !isActive })
 
-  const Icon = isActive ? Icons.WifiIcon : Icons.WifiOffIcon
+  const Icon = isActive ? Icons.Wifi : Icons.WifiOff
 
   const onClick = (e) => {
     Utils.clickEffect(e)

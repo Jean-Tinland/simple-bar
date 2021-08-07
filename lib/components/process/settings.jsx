@@ -148,7 +148,7 @@ export const Component = () => {
       <div className="settings__outer">
         <div className="settings__header">
           Settings
-          <Icons.CloseIcon className="settings__close" onClick={closeSettings} />
+          <Icons.Close className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__tabs">
           {Object.keys(Settings.defaultSettings).map((key, i) => {

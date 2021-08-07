@@ -1,11 +1,11 @@
 import * as Uebersicht from 'uebersicht'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
-import Specter from './specter.jsx'
+import * as Specter from './specter.jsx'
 import * as Icons from '../icons.jsx'
-import useWidgetRefresh from '../../hooks/use-widget-refresh'
 import * as Utils from '../../utils'
 import * as Settings from '../../settings'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { spotifyStyles as styles } from '../../styles/components/data/spotify'
 
@@ -17,9 +17,9 @@ const togglePlay = (isPaused) => {
 }
 
 const getIcon = (playerState) => {
-  if (playerState === 'stopped') return Icons.StoppedIcon
-  if (playerState === 'playing') return Icons.PlayingIcon
-  return Icons.PausedIcon
+  if (playerState === 'stopped') return Icons.Stopped
+  if (playerState === 'playing') return Icons.Playing
+  return Icons.Paused
 }
 
 const settings = Settings.get()

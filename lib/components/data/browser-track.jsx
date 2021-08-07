@@ -12,10 +12,10 @@ export { browserTrackStyles as styles } from '../../styles/components/data/brows
 const refreshFrequency = 10000
 
 const getIcon = (browser) => {
-  if (browser === 'chrome') return Icons.GoogleChromeIcon
-  if (browser === 'safari') return Icons.SafariIcon
-  if (browser === 'firefox') return Icons.FirefoxIcon
-  return Icons.DefaultIcon
+  if (browser === 'chrome') return Icons.GoogleChrome
+  if (browser === 'safari') return Icons.Safari
+  if (browser === 'firefox') return Icons.Firefox
+  return Icons.Default
 }
 
 const settings = Settings.get()
@@ -58,7 +58,7 @@ export const Widget = () => {
     return (
       <div className="browser-track__icons">
         <BrowserIcon />
-        <Icons.PlayingIcon />
+        <Icons.Playing />
       </div>
     )
   }
