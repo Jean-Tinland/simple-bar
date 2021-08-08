@@ -34,12 +34,12 @@ const render = ({ output, error }) => {
 
   if (error) {
     console.log('Error in spaces.jsx', error)
-    return <Error.Component type="error" classes={baseClasses} withSettings />
+    return <Error.Component type="error" classes={baseClasses} />
   }
-  if (!output) return <Error.Component type="noOutput" classes={baseClasses} withSettings />
+  if (!output) return <Error.Component type="noOutput" classes={baseClasses} />
 
   const data = Utils.parseJson(output)
-  if (!data) return <Error.Component type="noData" classes={baseClasses} withSettings />
+  if (!data) return <Error.Component type="noData" classes={baseClasses} />
 
   const { displays, shadow, SIP, spaces: spacesList } = data
   const { spaces, windows } = spacesList

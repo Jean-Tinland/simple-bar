@@ -7,7 +7,7 @@ const message = {
   noData: 'JSON error...'
 }
 
-export const Component = ({ type, classes, withSettings }) => {
+export const Component = ({ type, classes }) => {
   const errorClasses = Utils.classnames('simple-bar--empty', classes, {
     'simple-bar--loading': type === 'noOutput'
   })
@@ -19,7 +19,7 @@ export const Component = ({ type, classes, withSettings }) => {
   return (
     <div className={errorClasses}>
       <span>simple-bar-spaces.jsx: {message[type]}</span>
-      {withSettings && <Settings.Component />}
+      <Settings.Component />
     </div>
   )
 }
