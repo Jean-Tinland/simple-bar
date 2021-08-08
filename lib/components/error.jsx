@@ -1,4 +1,4 @@
-import * as Settings from './process/settings.jsx'
+import * as Settings from './settings/settings.jsx'
 import * as Utils from '../utils'
 
 const message = {

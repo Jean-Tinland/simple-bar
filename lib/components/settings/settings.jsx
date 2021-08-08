@@ -3,12 +3,15 @@ import * as Utils from '../../utils'
 import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 
-export { settingsStyles as styles } from '../../styles/components/settings'
+export { settingsStyles as styles } from '../../styles/components/settings/settings'
 
 const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`
 
-const Item = ({ code, defaultValue, label, type, options, placeholder, onChange }) => {
+const Item = ({ code, Component, defaultValue, label, onChange, options, placeholder, type }) => {
   const onClick = (e) => Utils.clickEffect(e)
+  if (type === 'component') {
+    return <Component defaultValue={defaultValue} onChange={onChange} />
+  }
   if (type === 'select') {
     return (
       <Uebersicht.React.Fragment>
@@ -176,7 +179,7 @@ export const Component = () => {
                 {Object.keys(Settings.defaultSettings[key]).map((subKey) => {
                   const subSetting = Settings.data[subKey]
                   if (!subSetting) return null
-                  const { title, label, type, options, placeholder, fullWidth } = subSetting
+                  const { Component, fullWidth, label, options, placeholder, title, type } = subSetting
                   const defaultValue = newSettings[key][subKey]
                   const classes = Utils.classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
@@ -195,12 +198,13 @@ export const Component = () => {
                       <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
                         <Item
                           code={subKey}
+                          Component={Component}
                           defaultValue={defaultValue}
-                          type={type}
                           label={label}
+                          onChange={onChange}
                           options={options}
                           placeholder={placeholder}
-                          onChange={onChange}
+                          type={type}
                         />
                       </div>
                     </Uebersicht.React.Fragment>
