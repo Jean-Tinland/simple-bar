@@ -1,7 +1,7 @@
 import * as Uebersicht from 'uebersicht'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
-import Specter from './specter.jsx'
+import * as Specter from './specter.jsx'
 import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 import * as Utils from '../../utils'
@@ -71,7 +71,7 @@ export const Widget = () => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {showSpecter && <Specter />}
+      {showSpecter && <Specter.Widget />}
       <div className="browser-track__inner">
         <div className="browser-track__slider">{title}</div>
       </div>
