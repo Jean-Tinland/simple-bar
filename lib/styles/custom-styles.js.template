@@ -1,0 +1,11 @@
+/*
+Save this file without the .template suffix to start implementing
+  your own custom simple-bar styles.
+*/
+export const styles = /* css */ `
+/* Add your custom styles here:
+.simple-bar {
+
+}
+*/
+`
