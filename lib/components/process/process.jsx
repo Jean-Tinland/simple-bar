@@ -13,18 +13,26 @@ export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
   const currentSpace = spaces.filter(({ visible, display }) => visible && display === displayIndex)[0]
-  const {stickyWindows, nonStickyWindows} = Utils.stickyWindowWorkaround(windows, false, displayIndex, currentSpace.index, exclusions, titleExclusions, exclusionsAsRegex)
-
+  const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround(
+    windows,
+    false,
+    displayIndex,
+    currentSpace.index,
+    exclusions,
+    titleExclusions,
+    exclusionsAsRegex
+  )
 
   return (
     <div className="process">
       <div className="process__container">
         {process.showCurrentSpaceMode && (
-              <div key={currentSpace.index} className="process__layout">
-                {currentSpace.type}
-              </div>
-          )}
-        {(stickyWindows.concat(nonStickyWindows))
+          <div key={currentSpace.index} className="process__layout">
+            {currentSpace.type}
+          </div>
+        )}
+        {stickyWindows
+          .concat(nonStickyWindows)
           // .filter((app) => Utils.filterApps(app, exclusions, titleExclusions, exclusionsAsRegex))
           // .filter(({ display, space }) => visibleSpaces.includes(space) && display === displayIndex)
           .sort((a, b) => a.id > b.id)

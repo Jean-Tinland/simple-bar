@@ -16,7 +16,8 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
-  const { displayAllSpacesOnAllScreens, exclusionsAsRegex, displayStickyWindowsSeparately, hideDuplicateAppsInSpaces } = spacesDisplay
+  const { displayAllSpacesOnAllScreens, exclusionsAsRegex, displayStickyWindowsSeparately, hideDuplicateAppsInSpaces } =
+    spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
@@ -51,8 +52,16 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     Yabai.renameSpace(index, newLabel)
   }
 
-  const {nonStickyWindows: apps, stickyWindows} = Utils.stickyWindowWorkaround(windows, hideDuplicateAppsInSpaces, display, index, exclusions, titleExclusions, exclusionsAsRegex)
-  const allApps = apps.concat(stickyWindows);
+  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround(
+    windows,
+    hideDuplicateAppsInSpaces,
+    display,
+    index,
+    exclusions,
+    titleExclusions,
+    exclusionsAsRegex
+  )
+  const allApps = apps.concat(stickyWindows)
 
   if (!focused && !visible && allApps.length === 0 && spacesDisplay.hideEmptySpaces) return null
 
