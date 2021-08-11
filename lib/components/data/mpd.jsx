@@ -11,9 +11,7 @@ export { mpdStyles as styles } from '../../styles/components/data/mpd'
 
 const refreshFrequency = 1000
 
-const togglePlay = () => {
-  Uebersicht.run(`mpc --host 10.11.11.10 toggle`)
-}
+const togglePlay = (host) => Uebersicht.run(`mpc --host ${host} toggle`)
 
 const settings = Settings.get()
 
@@ -28,7 +26,9 @@ export const Widget = () => {
 
   const getMpd = async () => {
     const [playerState, trackInfo] = await Promise.all([
-      Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`),
+      Uebersicht.run(
+        `mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`
+      ),
       Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`)
     ])
     if (Utils.cleanupOutput(trackInfo) === '') {
@@ -37,7 +37,7 @@ export const Widget = () => {
     }
     setState({
       playerState: Utils.cleanupOutput(playerState),
-      trackInfo: Utils.cleanupOutput(trackInfo),
+      trackInfo: Utils.cleanupOutput(trackInfo)
     })
     setLoading(false)
   }
@@ -55,7 +55,7 @@ export const Widget = () => {
 
   const onClick = (e) => {
     Utils.clickEffect(e)
-    togglePlay()
+    togglePlay(mpdHost)
     getMpd()
   }
   const onMouseEnter = () => Utils.startSliding(ref.current, '.mpd__inner', '.mpd__slider')
@@ -74,9 +74,7 @@ export const Widget = () => {
     >
       {showSpecter && isPlaying && <Specter.Widget />}
       <div className="mpd__inner">
-        <div className="mpd__slider">
-          {trackInfo}
-        </div>
+        <div className="mpd__slider">{trackInfo}</div>
       </div>
     </DataWidget.Widget>
   )
