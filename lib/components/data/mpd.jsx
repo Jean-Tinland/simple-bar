@@ -11,7 +11,7 @@ export { mpdStyles as styles } from '../../styles/components/data/mpd'
 
 const refreshFrequency = 1000
 
-const togglePlay = (host) => Uebersicht.run(`mpc --host ${host} toggle`)
+const togglePlay = (host, port) => Uebersicht.run(`mpc --host ${host} --port ${port} toggle`)
 
 const settings = Settings.get()
 
@@ -55,7 +55,7 @@ export const Widget = () => {
 
   const onClick = (e) => {
     Utils.clickEffect(e)
-    togglePlay(mpdHost)
+    togglePlay(mpdHost, mpdPort)
     getMpd()
   }
   const onMouseEnter = () => Utils.startSliding(ref.current, '.mpd__inner', '.mpd__slider')
