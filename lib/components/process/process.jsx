@@ -23,6 +23,8 @@ export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
     exclusionsAsRegex
   )
 
+  const apps = [...stickyWindows, ...nonStickyWindows]
+
   return (
     <div className="process">
       <div className="process__container">
@@ -31,10 +33,7 @@ export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
             {currentSpace.type}
           </div>
         )}
-        {stickyWindows
-          .concat(nonStickyWindows)
-          // .filter((app) => Utils.filterApps(app, exclusions, titleExclusions, exclusionsAsRegex))
-          // .filter(({ display, space }) => visibleSpaces.includes(space) && display === displayIndex)
+        {apps
           .sort((a, b) => a.id > b.id)
           .map((window, i) => (
             <Window key={i} displayIndex={displayIndex} window={window} />

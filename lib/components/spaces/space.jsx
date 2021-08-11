@@ -61,9 +61,9 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     titleExclusions,
     exclusionsAsRegex
   )
-  const allApps = apps.concat(stickyWindows)
+  const allApps = [...apps, ...stickyWindows]
 
-  if (!focused && !visible && allApps.length === 0 && spacesDisplay.hideEmptySpaces) return null
+  if (!focused && !visible && !allApps.length && spacesDisplay.hideEmptySpaces) return null
 
   const classes = Utils.classnames(`space space--${type}`, {
     'space--focused': focused === 1,
@@ -71,7 +71,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
     'space--no-delay': noDelay,
-    'space--empty': allApps.length === 0,
+    'space--empty': allApps.length,
     'space--editable': editable
   })
 
