@@ -12,7 +12,7 @@ export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
   const { exclusionsAsRegex } = spacesDisplay
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
-  const currentSpace = spaces.filter(({ visible, display }) => visible && display === displayIndex)[0]
+  const currentSpace = spaces.find(({ visible, display }) => visible && display === displayIndex)
   const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround(
     windows,
     false,
