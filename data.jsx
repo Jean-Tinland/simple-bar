@@ -9,6 +9,7 @@ import * as Wifi from './lib/components/data/wifi.jsx'
 import * as Keyboard from './lib/components/data/keyboard.jsx'
 import * as Spotify from './lib/components/data/spotify.jsx'
 import * as Music from './lib/components/data/music.jsx'
+import * as Mpd from './lib/components/data/mpd.jsx'
 import * as BrowserTrack from './lib/components/data/browser-track.jsx'
 import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
 import * as Specter from './lib/components/data/specter.jsx'
@@ -35,6 +36,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Sound.styles,
   Spotify.styles,
   Music.styles,
+  Mpd.styles,
   BrowserTrack.styles,
   ViscosityVPN.styles,
   Specter.styles,
@@ -55,6 +57,7 @@ const render = () => {
       <BrowserTrack.Widget />
       <Spotify.Widget />
       <Music.Widget />
+      <Mpd.Widget />
       <Weather.Widget />
       <Battery.Widget />
       <Mic.Widget />
