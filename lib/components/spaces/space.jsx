@@ -16,7 +16,8 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
-  const { displayAllSpacesOnAllScreens, exclusionsAsRegex } = spacesDisplay
+  const { displayAllSpacesOnAllScreens, exclusionsAsRegex, displayStickyWindowsSeparately, hideDuplicateAppsInSpaces } =
+    spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
@@ -51,11 +52,18 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     Yabai.renameSpace(index, newLabel)
   }
 
-  const apps = windows.filter(
-    (app) => app.space === index && Utils.filterApps(app, exclusions, titleExclusions, exclusionsAsRegex)
+  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround(
+    windows,
+    hideDuplicateAppsInSpaces,
+    display,
+    index,
+    exclusions,
+    titleExclusions,
+    exclusionsAsRegex
   )
+  const allApps = apps.concat(stickyWindows)
 
-  if (!focused && !visible && apps.length === 0 && spacesDisplay.hideEmptySpaces) return null
+  if (!focused && !visible && allApps.length === 0 && spacesDisplay.hideEmptySpaces) return null
 
   const classes = Utils.classnames(`space space--${type}`, {
     'space--focused': focused === 1,
@@ -63,7 +71,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     'space--fullscreen': fullscreen === 1,
     'space--hovered': hovered,
     'space--no-delay': noDelay,
-    'space--empty': apps.length === 0,
+    'space--empty': allApps.length === 0,
     'space--editable': editable
   })
 
@@ -83,7 +91,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
             style={{ width: `${labelSize}ch` }}
             readOnly={!editable}
           />
-          <OpenedApps type={type} apps={apps} />
+          <OpenedApps type={type} apps={displayStickyWindowsSeparately ? apps : allApps} />
         </button>
         {!spacesDisplay.hideSpacesOptions && SIPDisabled && (
           <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />
