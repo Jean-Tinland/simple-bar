@@ -153,9 +153,9 @@ Same as for themes, feel free to open an issue if you have an icon request.
 
 As I tried to automate a lot of things, there may be some elements impossible to specificaly change by creating your own theme.
 
-To remedy this problem, I added a file allowing you to override any **simple-bar** style you want.
+To remedy this problem, I added a tab in settings allowing you to override any **simple-bar** style you want.
 
-You'll find a `custom-styles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 ## Special thanks
