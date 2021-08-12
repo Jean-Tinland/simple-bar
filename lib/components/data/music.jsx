@@ -1,11 +1,11 @@
 import * as Uebersicht from 'uebersicht'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
-import Specter from './specter.jsx'
+import * as Specter from './specter.jsx'
 import * as Icons from '../icons.jsx'
-import useWidgetRefresh from '../../hooks/use-widget-refresh'
-import * as Utils from '../../utils'
 import * as Settings from '../../settings'
+import * as Utils from '../../utils'
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { musicStyles as styles } from '../../styles/components/data/music'
 
@@ -90,7 +90,7 @@ export const Widget = () => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {showSpecter && isPlaying && <Specter />}
+      {showSpecter && isPlaying && <Specter.Widget />}
       <div className="music__inner">
         <div className="music__slider">
           {trackName} - {artistName}

@@ -153,9 +153,9 @@ Same as for themes, feel free to open an issue if you have an icon request.
 
 As I tried to automate a lot of things, there may be some elements impossible to specificaly change by creating your own theme.
 
-To remedy this problem, I added a file allowing you to override any **simple-bar** style you want.
+To remedy this problem, I added a tab in settings allowing you to override any **simple-bar** style you want.
 
-You'll find a `custom-styles.js` file in `simple-bar/lib/styles/`. You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 ## Special thanks
@@ -163,6 +163,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Pywal integration was added thanks to [@Amar Paul](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar Paul](https://github.com/Amar1729)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
+- Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni) and [@anujc4](https://github.com/anujc4)
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)

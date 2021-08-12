@@ -5,7 +5,7 @@ import * as Yabai from '../../yabai'
 const SpaceOptions = ({ index, setHovered, displayIndex }) => {
   const onRemoveClick = async (e) => {
     e.stopPropagation()
-    clickEffect(e)
+    Utils.clickEffect(e)
     setHovered(false)
     await Yabai.removeSpace(index, displayIndex)
   }

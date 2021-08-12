@@ -5,7 +5,6 @@ import * as Utils from './lib/utils'
 import * as Settings from './lib/settings'
 import * as Variables from './lib/styles/core/variables'
 import * as Base from './lib/styles/core/base'
-import * as Custom from './lib/styles/custom-styles'
 
 const refreshFrequency = false
 
@@ -21,7 +20,7 @@ Utils.injectStyles('simple-bar-spaces-styles', [
   Spaces.styles,
   Process.styles,
   Settings.styles,
-  Custom.styles
+  settings.customStyles.styles
 ])
 
 const render = ({ output, error }) => {

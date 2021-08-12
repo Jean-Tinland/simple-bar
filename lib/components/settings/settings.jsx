@@ -7,7 +7,7 @@ export { settingsStyles as styles } from '../../styles/components/settings/setti
 
 const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`
 
-const Item = ({ code, Component, defaultValue, label, onChange, options, placeholder, type }) => {
+const Item = ({ code, Component, defaultValue, label, type, options, placeholder, minHeight, onChange }) => {
   const onClick = (e) => Utils.clickEffect(e)
   if (type === 'component') {
     return <Component defaultValue={defaultValue} onChange={onChange} />
@@ -49,6 +49,24 @@ const Item = ({ code, Component, defaultValue, label, onChange, options, placeho
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
+        />
+      </Uebersicht.React.Fragment>
+    )
+  }
+  if (type === 'textarea') {
+    return (
+      <Uebersicht.React.Fragment>
+        <label htmlFor={code}>{label}</label>
+        <textarea
+          id={code}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          style={{ minHeight }}
         />
       </Uebersicht.React.Fragment>
     )
@@ -131,7 +149,7 @@ export const Component = () => {
       await Uebersicht.run(`echo '${JSON.stringify(newSettings)}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
     }
   }
-  // { defaultSettings, getSettings, setSettings, Settings.data }
+
   Uebersicht.React.useEffect(() => {
     const diffs = Utils.compareObjects(Settings.get(), newSettings)
     const deepDiffs = Object.keys(diffs).reduce((acc, key) => [...acc, ...Object.keys(diffs[key])], [])
@@ -179,11 +197,12 @@ export const Component = () => {
                 {Object.keys(Settings.defaultSettings[key]).map((subKey) => {
                   const subSetting = Settings.data[subKey]
                   if (!subSetting) return null
-                  const { Component, fullWidth, label, options, placeholder, title, type } = subSetting
+                  const { Component, fullWidth, label, options, placeholder, title, type, minHeight } = subSetting
                   const defaultValue = newSettings[key][subKey]
                   const classes = Utils.classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
                     'settings__item--text': type === 'text',
+                    'settings__item--textarea': type === 'textarea',
                     'settings__item--full-width': fullWidth
                   })
                   const onChange = (e) => {
@@ -205,6 +224,8 @@ export const Component = () => {
                           options={options}
                           placeholder={placeholder}
                           type={type}
+                          minHeight={minHeight}
+                          onChange={onChange}
                         />
                       </div>
                     </Uebersicht.React.Fragment>

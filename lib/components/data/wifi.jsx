@@ -22,7 +22,7 @@ const toggleWifi = (isActive, networkDevice) => {
 
 const renderName = (name) => {
   if (!name) return ''
-  if (name === 'with an AirPort network. y off.') return 'Disabled'
+  if (name === 'with an AirPort network.y off.') return 'Disabled'
   if (name === 'with an AirPort network.') return 'Searching...'
   return name
 }
