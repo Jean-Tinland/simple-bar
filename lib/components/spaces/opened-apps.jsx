@@ -3,10 +3,9 @@ import * as Utils from '../../utils'
 
 const OpenedApps = ({ type, apps }) => {
   if (apps.length === 0) return null
-  return apps
-    .sort((a, b) => (type === 'stack' ? a['stack-index'] > b['stack-index'] : a.id > b.id))
+  return Utils.sortWindows(apps)
     .map((app, i) => {
-      const { minimized, focused, app: name, 'zoom-parent': zoomParent, 'zoom-fullscreen': zoomFullscreen } = app
+      const { minimized, sticky, focused, app: name, 'zoom-parent': zoomParent, 'zoom-fullscreen': zoomFullscreen } = app
       if (minimized === 1) return null
 
       const Icon = AppIcons.apps[name] || AppIcons.apps['Default']

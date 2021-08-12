@@ -33,11 +33,9 @@ export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
             {currentSpace.type}
           </div>
         )}
-        {apps
-          .sort((a, b) => a.id > b.id)
-          .map((window, i) => (
-            <Window key={i} displayIndex={displayIndex} window={window} />
-          ))}
+        {Utils.sortWindows(apps).map((window, i) => (
+          <Window key={i} window={window}/>
+        ))}
       </div>
     </div>
   )
