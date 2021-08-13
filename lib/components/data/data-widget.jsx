@@ -10,7 +10,7 @@ const getTag = (onClick, href) => {
 }
 
 export const Widget = Uebersicht.React.forwardRef(
-  ({ Icon, classes, href, onClick, onMouseEnter, onMouseLeave, children }, ref) => {
+  ({ Icon, classes, href, onClick, onMouseEnter, onMouseLeave, style, children }, ref) => {
     const Tag = getTag(onClick, href)
     const dataWidgetClasses = Utils.classnames('data-widget', classes, { 'data-widget--clickable': onClick })
 
@@ -22,6 +22,7 @@ export const Widget = Uebersicht.React.forwardRef(
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        style={style}
       >
         {Icon && <Icon />}
         {children}

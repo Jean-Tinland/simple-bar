@@ -18,6 +18,7 @@ import * as DataWidget from './lib/components/data/data-widget.jsx'
 
 import * as Utils from './lib/utils'
 import * as Settings from './lib/settings'
+import UserWidgets from './lib/components/data/user-widgets.jsx'
 
 const refreshFrequency = false
 
@@ -53,6 +54,7 @@ const render = () => {
 
   return (
     <div className={classes}>
+      <UserWidgets />
       <Zoom.Widget />
       <BrowserTrack.Widget />
       <Spotify.Widget />

@@ -3,12 +3,18 @@ import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 import * as Utils from '../../utils'
 import ColorPicker from './color-picker.jsx'
+import IconPicker from './icon-picker.jsx'
 
-const UserWidgetCreator = ({ onWidgetChange, setWidgets, widget }) => {
-  const { title, icon, index, backgroundColor, output, onClickAction, refreshFrequency } = widget
+const UserWidgetCreator = ({ index, onWidgetChange, setWidgets, widget }) => {
+  const { title, icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
   const Icon = Icons[icon]
 
-  const onRemoveClick = () => setWidgets((widgets) => widgets.filter((widget) => widget.index !== index))
+  const onRemoveClick = () => {
+    setWidgets((widgets) => {
+      const keys = Object.keys(widgets)
+      return keys.reduce((acc, key) => (key === index ? acc : { ...acc, [key]: widgets[key] }), {})
+    })
+  }
 
   const onChange = (field) => (e) => onWidgetChange(index, field, e?.target?.value || '')
 
@@ -17,11 +23,7 @@ const UserWidgetCreator = ({ onWidgetChange, setWidgets, widget }) => {
       <button className="user-widget-creator__remove" onClick={onRemoveClick}>
         <Icons.Remove />
       </button>
-      {Icon && (
-        <div className="user-widget-creator__icon">
-          <Icon />
-        </div>
-      )}
+      {Icon && <IconPicker callback={onWidgetChange} index={index} selectedIcon={icon} />}
       <div className="user-widget-creator__right">
         <div className="user-widget-creator__right-top">
           <ColorPicker callback={onWidgetChange} index={index} selectedColor={backgroundColor} />
@@ -42,6 +44,7 @@ const UserWidgetCreator = ({ onWidgetChange, setWidgets, widget }) => {
           id={`output-${index}`}
           type="text"
           defaultValue={output}
+          spellCheck={false}
         />
         <label htmlFor={`on-click-action-${index}`}>On click command/script path:</label>
         <input
@@ -50,6 +53,7 @@ const UserWidgetCreator = ({ onWidgetChange, setWidgets, widget }) => {
           id={`on-click-action-${index}`}
           type="text"
           defaultValue={onClickAction}
+          spellCheck={false}
         />
       </div>
     </div>
@@ -57,16 +61,21 @@ const UserWidgetCreator = ({ onWidgetChange, setWidgets, widget }) => {
 }
 
 const UserWidgetsCreator = ({ defaultValue, onChange }) => {
-  // const firstRender = Uebersicht.React.useRef(true)
-  const [widgets, setWidgets] = Uebersicht.React.useState(defaultValue || [])
+  const [widgets, setWidgets] = Uebersicht.React.useState(defaultValue || {})
+  const keys = Object.keys(widgets)
 
-  const highestId = widgets.reduce((acc, widget) => (widget.index > acc ? widget.index : acc), 0)
-  const newId = highestId + 1
+  const highestId = keys.reduce((acc, key) => (key > acc ? key : acc), 0)
+  const newId = parseInt(highestId) + 1
 
-  const onClick = () => setWidgets((widgets) => [...widgets, { ...Settings.userWidgetDefault, index: newId }])
+  const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
-    const newWidgets = [...widgets].map((widget) => (widget.index === index ? { ...widget, [field]: value } : widget))
-    setWidgets(newWidgets)
+    const newWidgets = { ...widgets }
+    const newKeys = Object.keys(newWidgets)
+    const updatedWidgets = newKeys.reduce((acc, key) => {
+      const widget = newWidgets[key]
+      return { ...acc, [key]: key === index ? { ...widget, [field]: value } : widget }
+    }, {})
+    setWidgets(updatedWidgets)
   }
 
   Uebersicht.React.useEffect(() => {
@@ -77,8 +86,14 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
 
   return (
     <div className="user-widgets-creator">
-      {widgets.map((widget, i) => (
-        <UserWidgetCreator key={i} onWidgetChange={onWidgetChange} setWidgets={setWidgets} widget={widget} />
+      {keys.map((key) => (
+        <UserWidgetCreator
+          key={key}
+          index={key}
+          onWidgetChange={onWidgetChange}
+          setWidgets={setWidgets}
+          widget={widgets[key]}
+        />
       ))}
       <button className="user-widgets-creator__add" onClick={onClick}>
         <Icons.Add />

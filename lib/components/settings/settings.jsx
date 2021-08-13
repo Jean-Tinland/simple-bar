@@ -49,6 +49,7 @@ const Item = ({ code, Component, defaultValue, label, type, options, placeholder
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
+          spellCheck={false}
         />
       </Uebersicht.React.Fragment>
     )
