@@ -942,6 +942,12 @@ export const Ableton = (props) => (
   </Icon>
 )
 
+export const Iris = (props) => (
+  <Icon {...props}>
+    <path d="M3 24V0l7 7v10l-7 7zM23 12L10 0v4l9 8-9 8v4l13-12z"/>
+  </Icon>
+)
+
 export const Default = (props) => (
   <Icon {...props}>
     <path
