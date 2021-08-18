@@ -863,6 +863,14 @@ export const Signal = (props) => (
   </Icon>
 )
 
+export const Zotero = (props) => (
+  <Icon {...props}>
+    <path
+    fillRule="evenodd"
+    d="M8.9 15.7L16.3 8s.6-.7.4-1.2c-.2-.5-1.1-.5-1.1-.5H5.3v2H13l-7.2 7.5s-.8.7-.6 1.4c.2.7 1.1.7 1.1.7h10.3v-2zM20.1 5.1L12.4 1S11.6.5 11 .5c-.6 0-1.4.4-1.4.4L1.9 5s-.6.4-1 1S.5 7.4.5 7.4v9.2s0 .7.4 1.3c.4.6.8.8.8.8L9.6 23s1 .4 1.4.4c.4 0 1.4-.4 1.4-.4l8-4.4.7-.8c.4-.6.4-1.3.4-1.3V7.4s0-.6-.4-1.3c-.4-.6-1-1-1-1z"/>
+  </Icon>
+)
+
 export const Default = (props) => (
   <Icon {...props}>
     <path
