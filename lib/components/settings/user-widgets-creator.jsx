@@ -5,9 +5,11 @@ import * as Utils from '../../utils'
 import ColorPicker from './color-picker.jsx'
 import IconPicker from './icon-picker.jsx'
 
-const UserWidgetCreator = ({ index, onWidgetChange, setWidgets, widget }) => {
+const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets, widget }) => {
   const { title, icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
   const Icon = Icons[icon]
+
+  const indexAsNumber = parseInt(index)
 
   const onRemoveClick = () => {
     setWidgets((widgets) => {
@@ -18,8 +20,40 @@ const UserWidgetCreator = ({ index, onWidgetChange, setWidgets, widget }) => {
 
   const onChange = (field) => (e) => onWidgetChange(index, field, e?.target?.value || '')
 
+  const onBeforeClick = () => {
+    setWidgets((widgets) => {
+      const swapedWidget = widgets[indexAsNumber - 1]
+      return { ...widgets, [indexAsNumber - 1]: widget, [indexAsNumber]: swapedWidget }
+    })
+  }
+
+  const onAfterClick = () => {
+    setWidgets((widgets) => {
+      const swapedWidget = widgets[indexAsNumber + 1]
+      return { ...widgets, [indexAsNumber + 1]: widget, [indexAsNumber]: swapedWidget }
+    })
+  }
+
   return (
-    <div className="user-widget-creator">
+    <div key={indexAsNumber} className="user-widget-creator">
+      <div className="user-widget-creator__sort-buttons">
+        {!isFirst && (
+          <button
+            className="user-widget-creator__sort-button user-widget-creator__sort-button--before"
+            onClick={onBeforeClick}
+          >
+            <Icons.ChevronTop />
+          </button>
+        )}
+        {!isLast && (
+          <button
+            className="user-widget-creator__sort-button user-widget-creator__sort-button--after"
+            onClick={onAfterClick}
+          >
+            <Icons.ChevronBottom />
+          </button>
+        )}
+      </div>
       <button className="user-widget-creator__remove" onClick={onRemoveClick}>
         <Icons.Remove />
       </button>
@@ -64,16 +98,21 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
   const [widgets, setWidgets] = Uebersicht.React.useState(defaultValue || {})
   const keys = Object.keys(widgets)
 
-  const highestId = keys.reduce((acc, key) => (key > acc ? key : acc), 0)
-  const newId = parseInt(highestId) + 1
+  const highestId = keys.reduce((acc, key) => {
+    const keyAsNumber = parseInt(key)
+    return keyAsNumber > acc ? keyAsNumber : acc
+  }, 1)
+  const newId = highestId + 1
+
+  console.log(widgets)
 
   const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
     const newWidgets = { ...widgets }
     const newKeys = Object.keys(newWidgets)
-    const updatedWidgets = newKeys.reduce((acc, key) => {
+    const updatedWidgets = newKeys.reduce((acc, key, i) => {
       const widget = newWidgets[key]
-      return { ...acc, [key]: key === index ? { ...widget, [field]: value } : widget }
+      return { ...acc, [i + 1]: key === index ? { ...widget, [field]: value } : widget }
     }, {})
     setWidgets(updatedWidgets)
   }
@@ -86,13 +125,15 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
 
   return (
     <div className="user-widgets-creator">
-      {keys.map((key) => (
+      {keys.map((key, i) => (
         <UserWidgetCreator
-          key={key}
+          key={`${key}-${widgets[key].backgroundColor}`}
           index={key}
           onWidgetChange={onWidgetChange}
           setWidgets={setWidgets}
           widget={widgets[key]}
+          isFirst={i === 0}
+          isLast={i === keys.length - 1}
         />
       ))}
       <button className="user-widgets-creator__add" onClick={onClick}>

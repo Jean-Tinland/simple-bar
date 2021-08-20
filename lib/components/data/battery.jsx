@@ -74,8 +74,10 @@ export const Widget = () => {
 
   const Icon = () => (
     <div className="battery__icon">
-      {charging && <Icons.Charging className="battery__charging-icon" />}
-      <div className="battery__icon-filler" style={{ transform: transformValue }} />
+      <div className="battery__icon-inner">
+        {charging && <Icons.Charging className="battery__charging-icon" />}
+        <div className="battery__icon-filler" style={{ transform: transformValue }} />
+      </div>
     </div>
   )
 

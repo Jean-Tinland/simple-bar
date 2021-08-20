@@ -169,8 +169,10 @@ export const Component = () => {
       <div className="settings__overlay" onClick={closeSettings} />
       <div className="settings__outer">
         <div className="settings__header">
+          <button className="settings__header-dot settings__header-dot--close" onClick={closeSettings} />
+          <span className="settings__header-dot settings__header-dot--disabled" />
+          <span className="settings__header-dot settings__header-dot--disabled" />
           Settings
-          <Icons.Close className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__tabs">
           {Object.keys(Settings.defaultSettings).map((key, i) => {
