@@ -104,13 +104,15 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
   }, 1)
   const newId = highestId + 1
 
+  console.log(widgets)
+
   const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
     const newWidgets = { ...widgets }
     const newKeys = Object.keys(newWidgets)
-    const updatedWidgets = newKeys.reduce((acc, key) => {
+    const updatedWidgets = newKeys.reduce((acc, key, i) => {
       const widget = newWidgets[key]
-      return { ...acc, [key]: key === index ? { ...widget, [field]: value } : widget }
+      return { ...acc, [i + 1]: key === index ? { ...widget, [field]: value } : widget }
     }, {})
     setWidgets(updatedWidgets)
   }
