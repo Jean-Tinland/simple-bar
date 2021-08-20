@@ -123,15 +123,15 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
 
   return (
     <div className="user-widgets-creator">
-      {keys.map((key) => (
+      {keys.map((key, i) => (
         <UserWidgetCreator
           key={`${key}-${widgets[key].backgroundColor}`}
           index={key}
           onWidgetChange={onWidgetChange}
           setWidgets={setWidgets}
           widget={widgets[key]}
-          isFirst={key === '1'}
-          isLast={parseInt(key) === keys.length}
+          isFirst={i === 0}
+          isLast={i === keys.length - 1}
         />
       ))}
       <button className="user-widgets-creator__add" onClick={onClick}>
