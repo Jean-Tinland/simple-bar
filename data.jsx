@@ -1,3 +1,4 @@
+import UserWidgets from './lib/components/data/user-widgets.jsx'
 import * as Zoom from './lib/components/data/zoom.jsx'
 import * as Time from './lib/components/data/time.jsx'
 import * as DateDisplay from './lib/components/data/date-display.jsx'
@@ -53,6 +54,7 @@ const render = () => {
 
   return (
     <div className={classes}>
+      <UserWidgets />
       <Zoom.Widget />
       <BrowserTrack.Widget />
       <Spotify.Widget />
