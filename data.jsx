@@ -1,3 +1,4 @@
+import UserWidgets from './lib/components/data/user-widgets.jsx'
 import * as Zoom from './lib/components/data/zoom.jsx'
 import * as Time from './lib/components/data/time.jsx'
 import * as DateDisplay from './lib/components/data/date-display.jsx'
@@ -18,7 +19,6 @@ import * as DataWidget from './lib/components/data/data-widget.jsx'
 
 import * as Utils from './lib/utils'
 import * as Settings from './lib/settings'
-import UserWidgets from './lib/components/data/user-widgets.jsx'
 
 const refreshFrequency = false
 
