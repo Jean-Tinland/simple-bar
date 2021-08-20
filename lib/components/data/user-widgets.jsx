@@ -28,9 +28,11 @@ const UserWidget = ({ widget }) => {
 
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor)
 
+  const property = settings.global.backgroundColorAsForeground ? 'color' : 'backgroundColor'
+
   const style = settings.global.noColorInData
     ? undefined
-    : { backgroundColor: isCustomColor ? backgroundColor : `var(${backgroundColor})` }
+    : { [property]: isCustomColor ? backgroundColor : `var(${backgroundColor})` }
 
   if (loading) return <DataWidgetLoader.Widget style={style} />
 
