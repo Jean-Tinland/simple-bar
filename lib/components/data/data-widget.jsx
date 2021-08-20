@@ -19,7 +19,6 @@ export const Widget = Uebersicht.React.forwardRef(
       if (middle) {
          onMiddleClick(e)
        } else {
-         Utils.clickEffect(e)
          onClick(e)
        }
     }
