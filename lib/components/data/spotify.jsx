@@ -79,7 +79,7 @@ export const Widget = () => {
   }
   const onRightClick = (e) => {
     Utils.clickEffect(e)
-    Uebersicht.run(`open -a Spotify`)
+    Uebersicht.run(`osascript -e 'tell application "Spotify" to Next Track'`)
     getSpotify()
   }
   const onMiddleClick = (e) => {

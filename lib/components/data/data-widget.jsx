@@ -10,14 +10,14 @@ const getTag = (onClick, href) => {
 }
 
 export const Widget = Uebersicht.React.forwardRef(
-  ({ Icon, classes, href, onClick, onMouseEnter, onMouseLeave, style, children }, ref) => {
+  ({ Icon, classes, href, onClick, onRightClick, onMiddleClick, onMouseEnter, onMouseLeave, style, children }, ref) => {
     const Tag = getTag(onClick, href)
     const dataWidgetClasses = Utils.classnames('data-widget', classes, { 'data-widget--clickable': onClick })
 
     const onClickWrapper = (e) => {
       var middle = e.button == 1 || 1 == e.button&2;
       if (middle) {
-        onMiddleClick(e)
+         onMiddleClick(e)
        } else {
          Utils.clickEffect(e)
          onClick(e)
