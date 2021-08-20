@@ -32,7 +32,7 @@ const settings = Settings.get()
 export const Widget = () => {
   const { widgets, batteryWidgetOptions } = settings
   const { batteryWidget } = widgets
-  const { caffeinateOption } = batteryWidgetOptions
+  const { clickForCaffeinate, caffeinateOption } = batteryWidgetOptions
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget)
@@ -67,6 +67,7 @@ export const Widget = () => {
   const transformValue = getTransform(percentage)
 
   const onClick = async (e) => {
+    if (!clickForCaffeinate) return
     Utils.clickEffect(e)
     toggleCaffeinate(caffeinate, caffeinateOption)
     getBattery()
