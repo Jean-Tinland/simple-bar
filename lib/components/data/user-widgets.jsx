@@ -12,7 +12,7 @@ const { userWidgetsList } = settings.userWidgets
 const UserWidget = ({ widget }) => {
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
-  const { icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
+  const { icon, backgroundColor, output, onClickAction, onRightClickAction, refreshFrequency } = widget
 
   const getUserWidget = async () => {
     const widgetOutput = await Uebersicht.run(output)
@@ -35,6 +35,7 @@ const UserWidget = ({ widget }) => {
   const Icon = Icons[icon]
 
   const hasOnClickAction = onClickAction?.trim().length > 0
+  const hasRightClickAction = onRightClickAction?.trim().length > 0
 
   const onClick = (e) => {
     Utils.clickEffect(e)
@@ -42,10 +43,17 @@ const UserWidget = ({ widget }) => {
     getUserWidget()
   }
 
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(onRightClickAction)
+    getUserWidget()
+  }
+
   const onUserWidgetClick = hasOnClickAction ? { onClick } : {}
+  const onUserWidgetRightClick = hasRightClickAction ? { onRightClick } : {}
 
   return (
-    <DataWidget.Widget Icon={Icon} style={style} {...onUserWidgetClick}>
+    <DataWidget.Widget Icon={Icon} style={style} {...onUserWidgetClick} {...onUserWidgetRightClick}>
       {state}
     </DataWidget.Widget>
   )

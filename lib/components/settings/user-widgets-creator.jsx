@@ -6,7 +6,7 @@ import ColorPicker from './color-picker.jsx'
 import IconPicker from './icon-picker.jsx'
 
 const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets, widget }) => {
-  const { title, icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
+  const { title, icon, backgroundColor, output, onClickAction, onRightClickAction, refreshFrequency } = widget
   const Icon = Icons[icon]
 
   const indexAsNumber = parseInt(index)
@@ -87,6 +87,15 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
           id={`on-click-action-${index}`}
           type="text"
           defaultValue={onClickAction}
+          spellCheck={false}
+        />
+        <label htmlFor={`on-right-click-action-${index}`}>On right click command/script path:</label>
+        <input
+          className="user-widget-creator__on-right-click-action"
+          onChange={onChange('onRightClickAction')}
+          id={`on-right-click-action-${index}`}
+          type="text"
+          defaultValue={onRightClickAction}
           spellCheck={false}
         />
       </div>
