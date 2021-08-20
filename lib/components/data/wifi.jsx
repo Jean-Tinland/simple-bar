@@ -64,8 +64,14 @@ export const Widget = () => {
     getWifi()
   }
 
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`)
+    getWifi()
+  }
+
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined}>
+    <DataWidget.Widget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined} onRightClick={onRightClick}>
       {name}
     </DataWidget.Widget>
   )
