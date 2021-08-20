@@ -4,13 +4,11 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 Developed by [Jean Tinland](https://www.jeantinland.com).
 
-> :warning: **There has been some changes regarding `yabai` signals needed by `simple-bar`! They are now automaticaly added. See [this section](https://github.com/Jean-Tinland/simple-bar#refresh-bar-on-app-or-workspace-change) bellow** and feel free to open an issue if you encounter any problem.
-
 ## Features
 
 - 3 themes behaviours (dark/light/auto)
 - Extensible themes system (you can easily create your own theme)
-- Multiple layout options (not sticky to top, no background, etc... Try it out in settings)(\*)
+- Numerous customisation options (not sticky to top, no background, etc... Try it out in settings)(\*)
 - Display workspace number/label & current space
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
@@ -19,6 +17,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 - Spotify, Music/iTunes, browser current track
 - Battery, microphone, sound level, wifi, date, time widgets
 - Weather & keyboard language input widgets (disabled by default)(\*\*)
+- You can add your own custom widgets in settings(\*)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (\*) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
@@ -86,14 +85,7 @@ Some elements of **simple-bar** are interactives. For example :
 - Remove, move spaces on space hover (1s delay / instant while `cmd` key is pressed) (**Only with SIP disabled**)
 - Add space on "plus" button click (**Only with SIP disabled**)
 
-Clickable elements have a border showing on hover in order to easily identify them.
-
-## Refresh bar on app or workspace change
-
-~~The widget for displaying yabai workspaces and process aren't refreshing automatically or with a delay.\
-To refresh them on space or display change, you can add these lines utilizing [yabai's signals](https://github.com/koekeishiya/yabai/wiki/Commands#automation-with-rules-and-signals) at the end of `.yabairc`...~~
-
-`simple-bar` is now setting itself all the required signals. You can safely remove all your signals set in your `.yabairc`.
+Clickable elements have an outline showing up on hover in order to easily identify them.
 
 ## Customization
 
