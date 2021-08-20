@@ -104,8 +104,6 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
   }, 1)
   const newId = highestId + 1
 
-  console.log(widgets)
-
   const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
     const newWidgets = { ...widgets }
