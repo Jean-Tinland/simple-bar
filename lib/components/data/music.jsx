@@ -76,6 +76,16 @@ export const Widget = () => {
     togglePlay(!isPlaying, processName)
     getMusic()
   }
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(`osascript -e 'tell application "${processName}" to Next Track'`)
+    getMusic()
+  }
+  const onMiddleClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(`open -a '${processName}'`)
+    getMusic()
+  }
   const onMouseEnter = () => Utils.startSliding(ref.current, '.music__inner', '.music__slider')
   const onMouseLeave = () => Utils.stopSliding(ref.current, '.music__slider')
 
@@ -87,6 +97,8 @@ export const Widget = () => {
       classes={classes}
       Icon={Icon}
       onClick={onClick}
+      onRightClick={onRightClick}
+      onMiddleClick={onMiddleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

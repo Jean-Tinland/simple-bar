@@ -16,14 +16,20 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
-  const { displayAllSpacesOnAllScreens, exclusionsAsRegex, displayStickyWindowsSeparately, hideDuplicateAppsInSpaces } =
-    spacesDisplay
+  const {
+    displayAllSpacesOnAllScreens,
+    exclusionsAsRegex,
+    displayStickyWindowsSeparately,
+    hideDuplicateAppsInSpaces,
+    showOptionsOnHover
+  } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
   const onMouseEnter = (e) => {
+    if (!showOptionsOnHover) return
     const { altKey, metaKey } = e
     if (altKey) return
     setHovered(true)
@@ -36,6 +42,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     window.getSelection().removeAllRanges()
   }
   const onClick = (e) => {
+    onMouseLeave(e)
     if (e.altKey) {
       setEditable(true)
       labelRef.current?.select()
@@ -44,6 +51,10 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
       Yabai.goToSpace(index)
       Utils.clickEffect(e)
     }
+  }
+  const onRightClick = (e) => {
+    setHovered(true)
+    setNoDelay(true)
   }
   const onChange = (e) => {
     if (!editable) return
@@ -80,8 +91,8 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   return (
     <Uebersicht.React.Fragment>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div className="spaces__separator" />}
-      <div className={classes} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <button className="space__inner" onClick={onClick}>
+      <div className={classes} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
+        <button className="space__inner" onClick={onClick} onContextMenu={onRightClick}>
           <input
             ref={labelRef}
             type="text"
@@ -93,9 +104,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
           />
           <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
         </button>
-        {!spacesDisplay.hideSpacesOptions && SIPDisabled && (
-          <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />
-        )}
+        {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
       </div>
     </Uebersicht.React.Fragment>
   )

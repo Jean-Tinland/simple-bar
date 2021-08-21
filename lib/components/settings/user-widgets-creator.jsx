@@ -6,8 +6,16 @@ import ColorPicker from './color-picker.jsx'
 import IconPicker from './icon-picker.jsx'
 
 const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets, widget }) => {
-  const { title, icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
-  const Icon = Icons[icon]
+  const {
+    title,
+    icon,
+    backgroundColor,
+    output,
+    onClickAction,
+    onRightClickAction,
+    onMiddleClickAction,
+    refreshFrequency
+  } = widget
 
   const indexAsNumber = parseInt(index)
 
@@ -57,7 +65,7 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
       <button className="user-widget-creator__remove" onClick={onRemoveClick}>
         <Icons.Remove />
       </button>
-      {Icon && <IconPicker callback={onWidgetChange} index={index} selectedIcon={icon} />}
+      <IconPicker callback={onWidgetChange} index={index} selectedIcon={icon} />
       <div className="user-widget-creator__right">
         <div className="user-widget-creator__right-top">
           <ColorPicker callback={onWidgetChange} index={index} selectedColor={backgroundColor} />
@@ -87,6 +95,24 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
           id={`on-click-action-${index}`}
           type="text"
           defaultValue={onClickAction}
+          spellCheck={false}
+        />
+        <label htmlFor={`on-right-click-action-${index}`}>On right click command/script path:</label>
+        <input
+          className="user-widget-creator__on-right-click-action"
+          onChange={onChange('onRightClickAction')}
+          id={`on-right-click-action-${index}`}
+          type="text"
+          defaultValue={onRightClickAction}
+          spellCheck={false}
+        />
+        <label htmlFor={`on-Middle-click-action-${index}`}>On middle click command/script path:</label>
+        <input
+          className="user-widget-creator__on-middle-click-action"
+          onChange={onChange('onMiddleClickAction')}
+          id={`on-middle-click-action-${index}`}
+          type="text"
+          defaultValue={onMiddleClickAction}
           spellCheck={false}
         />
       </div>
