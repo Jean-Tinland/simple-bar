@@ -6,13 +6,13 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 
 ## Features
 
-- 3 themes behaviours (dark/light/auto)
-- Extensible themes system (you can easily create your own theme)
+- 3 themes behaviours: dark, light or automatic (synced with system)
+- Extensible themes system
 - Numerous customisation options (not sticky to top, no background, etc... Try it out in settings)(\*)
 - Display workspace number/label & current space
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
-- Show current app name & title
+- Show all opened apps (and current) in current space or simply current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(\*)
 - Spotify, Music/iTunes, browser current track
 - Battery, microphone, sound level, wifi, date, time widgets
@@ -60,11 +60,10 @@ There is a setting in the settings module allowing a custom yabai path.
 
 ## Usage
 
-After cloning the project, simply activate all three **simple-bar** widgets in Übersicht's widgets list.
+After cloning the project, simply activate both **simple-bar** widgets in Übersicht's widgets list.
 
-- `simple-bar-process-jsx`
-- `simple-bar-spaces-jsx`
 - `simple-bar-data-jsx`
+- `simple-bar-spaces-jsx`
 
 ## Settings
 
@@ -145,7 +144,7 @@ Same as for themes, feel free to open an issue if you have an icon request.
 
 As I tried to automate a lot of things, there may be some elements impossible to specificaly change by creating your own theme.
 
-To remedy this problem, I added a tab in settings allowing you to override any **simple-bar** style you want.
+To remedy this problem, there is a tab in settings allowing you to override any **simple-bar** style you want.
 
 You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
