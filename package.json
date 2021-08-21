@@ -2,8 +2,9 @@
   "name": "simple-bar",
   "licence": "MIT",
   "version": "1.0.0",
+  "description": "A yabai status bar widget for Übersicht.",
   "scripts": {
-    "lint": "eslint 'lib/**/*.js*'"
+    "lint": "eslint 'lib/**/*.{js,jsx}'"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
