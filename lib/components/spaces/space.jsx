@@ -91,7 +91,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
             style={{ width: `${labelSize}ch` }}
             readOnly={!editable}
           />
-          <OpenedApps type={type} apps={displayStickyWindowsSeparately ? apps : allApps} />
+          <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
         </button>
         {!spacesDisplay.hideSpacesOptions && SIPDisabled && (
           <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />

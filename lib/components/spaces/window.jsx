@@ -12,7 +12,7 @@ const Window = ({ window }) => {
   const { minimized, focused, app, title, id } = window
   if (minimized === 1 || (displayOnlyCurrent && focused !== 1)) return null
   const isFocused = focused === 1
-  const Icon = AppIcons.apps[app] || AppIcons.apps['Default']
+  const Icon = AppIcons.apps[app] || AppIcons.apps.Default
   const classes = Utils.classnames('process__window', {
     'process__window--focused': !displayOnlyCurrent && isFocused,
     'process__window--only-current': displayOnlyCurrent

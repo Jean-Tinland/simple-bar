@@ -25,7 +25,7 @@ const Stickies = ({ display, windows }) => {
     <Uebersicht.React.Fragment>
       <div className="stickies">
         <button className="stickies__inner">
-          <OpenedApps type="stickies" apps={apps} />
+          <OpenedApps apps={apps} />
         </button>
       </div>
     </Uebersicht.React.Fragment>

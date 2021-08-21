@@ -63,8 +63,8 @@ export const Widget = () => {
   if (!state || !state.data.current_condition) return null
 
   const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
-  const { temp_C, temp_F, weatherDesc } = state.data.current_condition[0]
-  const temperature = unit === 'C' ? temp_C : temp_F
+  const { temp_C: tempC, temp_F: tempF, weatherDesc } = state.data.current_condition[0]
+  const temperature = unit === 'C' ? tempC : tempF
   const wttrUnitParam = unit === 'C' ? '?m' : '?u'
 
   const description = weatherDesc[0].value

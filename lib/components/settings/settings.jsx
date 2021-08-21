@@ -1,6 +1,5 @@
 import * as Uebersicht from 'uebersicht'
 import * as Utils from '../../utils'
-import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 
 export { settingsStyles as styles } from '../../styles/components/settings/settings'
@@ -228,7 +227,6 @@ export const Component = () => {
                           placeholder={placeholder}
                           type={type}
                           minHeight={minHeight}
-                          onChange={onChange}
                         />
                       </div>
                     </Uebersicht.React.Fragment>
