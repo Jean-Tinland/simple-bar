@@ -157,6 +157,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Wifi toggle on click also added thanks to [@Amar Paul](https://github.com/Amar1729)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
 - Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
+- Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
 - Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni) and [@anujc4](https://github.com/anujc4)
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
