@@ -32,7 +32,7 @@ const settings = Settings.get()
 export const Widget = () => {
   const { widgets, batteryWidgetOptions } = settings
   const { batteryWidget } = widgets
-  const { clickForCaffeinate, caffeinateOption } = batteryWidgetOptions
+  const { toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget)
@@ -67,11 +67,12 @@ export const Widget = () => {
   const transformValue = getTransform(percentage)
 
   const onClick = async (e) => {
-    if (!clickForCaffeinate) return
     Utils.clickEffect(e)
     toggleCaffeinate(caffeinate, caffeinateOption)
     getBattery()
   }
+
+  const onClickProp = toggleCaffeinateOnClick ? { onClick } : {}
 
   const Icon = () => (
     <div className="battery__icon">
@@ -83,7 +84,7 @@ export const Widget = () => {
   )
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={onClick}>
+    <DataWidget.Widget classes={classes} Icon={Icon} {...onClickProp}>
       {caffeinate !== '' && <Icons.Coffee className="battery__caffeinate-icon" />}
       {percentage}%
     </DataWidget.Widget>
