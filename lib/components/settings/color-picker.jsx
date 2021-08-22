@@ -43,9 +43,9 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
               placeholder="Or any valid css color value (hex, rgb-a, hsl)"
               onChange={onCustomColorChange}
               defaultValue={customColor}
-              autoCapitalize={false}
-              autoComplete={false}
-              autoCorrect={false}
+              autoCapitalize="false"
+              autoComplete="false"
+              autoCorrect="false"
               spellCheck={false}
             />
             <button className="color-picker__custom-color-submit" disabled={!customColor} onClick={onCustomColorSubmit}>
