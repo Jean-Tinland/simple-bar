@@ -12,8 +12,15 @@ const { userWidgetsList } = settings.userWidgets
 const UserWidget = ({ widget }) => {
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
-  const { icon, backgroundColor, output, onClickAction, onRightClickAction, onMiddleClickAction, refreshFrequency } =
-    widget
+  const {
+    icon,
+    backgroundColor,
+    output,
+    onClickAction,
+    onRightClickAction,
+    onMiddleClickAction,
+    refreshFrequency
+  } = widget
 
   const getUserWidget = async () => {
     const widgetOutput = await Uebersicht.run(output)
@@ -43,19 +50,19 @@ const UserWidget = ({ widget }) => {
   const hasRightClickAction = onRightClickAction?.trim().length > 0
   const hasMiddleClickAction = onMiddleClickAction?.trim().length > 0
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     Utils.clickEffect(e)
-    Uebersicht.run(onClickAction)
+    await Uebersicht.run(onClickAction)
     getUserWidget()
   }
-  const onRightClick = (e) => {
+  const onRightClick = async (e) => {
     Utils.clickEffect(e)
-    Uebersicht.run(onRightClickAction)
+    await Uebersicht.run(onRightClickAction)
     getUserWidget()
   }
-  const onMiddleClick = (e) => {
+  const onMiddleClick = async (e) => {
     Utils.clickEffect(e)
-    Uebersicht.run(onMiddleClickAction)
+    await Uebersicht.run(onMiddleClickAction)
     getUserWidget()
   }
   const onClickProps = {
