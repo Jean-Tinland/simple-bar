@@ -9,6 +9,10 @@ const getTag = (onClick, href) => {
   return 'div'
 }
 
+const isMiddleClick = (e) => {
+  return (e.button === 1 || 1 === e.button&2)
+}
+
 export const Widget = Uebersicht.React.forwardRef(
   ({ Icon, classes, href, onClick, onRightClick, onMiddleClick, onMouseEnter, onMouseLeave, style, children }, ref) => {
     const Tag = getTag(onClick, href)
@@ -16,7 +20,7 @@ export const Widget = Uebersicht.React.forwardRef(
 
     const onClickProp = (e) => {
       const { metaKey, which } = e
-      const action = metaKey || which === 2 ? onMiddleClick : onClick
+      const action = metaKey || isMiddleClick(e) ? onMiddleClick : onClick
       if (action) action(e)
     }
 
