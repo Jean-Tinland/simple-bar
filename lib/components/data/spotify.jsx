@@ -104,7 +104,7 @@ export const Widget = () => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {showSpecter && isPlaying && <Specter />}
+      {showSpecter && isPlaying && <Specter.Widget />}
       <div className="spotify__inner">
         <div className="spotify__slider">{label}</div>
       </div>
