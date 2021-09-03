@@ -166,4 +166,6 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
 - Solarized Light & Dark themes implementation thanks to [@Joroovb](https://github.com/Joroovb)
-- Everyone opening issues that are helping me improve this little project
+- CodingInSylens theme implementation thanks to [@Sylenss](https://github.com/Sylenss)
+- Cisco theme implementation thanks to [@mrzone64](https://github.com/mrzone64)
+- Everyone opening issues that are helping me improve this little project by adding icons, fixing what they can, and every other things...
