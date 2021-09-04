@@ -17,12 +17,12 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
-const toggleCaffeinate = (caffeinate, option) => {
+const toggleCaffeinate = async (caffeinate, option) => {
   if (!caffeinate.length) {
     Uebersicht.run(`caffeinate ${option} &`)
     Utils.notification('Enabling caffeinate...')
   } else {
-    Uebersicht.run('pkill -f caffeinate')
+    await Uebersicht.run('pkill -f caffeinate')
     Utils.notification('Disabling caffeinate...')
   }
 }
@@ -32,7 +32,7 @@ const settings = Settings.get()
 export const Widget = () => {
   const { widgets, batteryWidgetOptions } = settings
   const { batteryWidget } = widgets
-  const { caffeinateOption } = batteryWidgetOptions
+  const { toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget)
@@ -68,19 +68,23 @@ export const Widget = () => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e)
-    toggleCaffeinate(caffeinate, caffeinateOption)
+    await toggleCaffeinate(caffeinate, caffeinateOption)
     getBattery()
   }
 
+  const onClickProp = toggleCaffeinateOnClick ? { onClick } : {}
+
   const Icon = () => (
     <div className="battery__icon">
-      {charging && <Icons.Charging className="battery__charging-icon" />}
-      <div className="battery__icon-filler" style={{ transform: transformValue }} />
+      <div className="battery__icon-inner">
+        {charging && <Icons.Charging className="battery__charging-icon" />}
+        <div className="battery__icon-filler" style={{ transform: transformValue }} />
+      </div>
     </div>
   )
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={onClick}>
+    <DataWidget.Widget classes={classes} Icon={Icon} {...onClickProp}>
       {caffeinate !== '' && <Icons.Coffee className="battery__caffeinate-icon" />}
       {percentage}%
     </DataWidget.Widget>

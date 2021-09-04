@@ -20,6 +20,11 @@ const toggleWifi = (isActive, networkDevice) => {
   }
 }
 
+const openWifiPreferences = (e) => {
+  Utils.clickEffect(e)
+  Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`)
+}
+
 const renderName = (name) => {
   if (!name) return ''
   if (name === 'with an AirPort network.y off.') return 'Disabled'
@@ -65,7 +70,12 @@ export const Widget = () => {
   }
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined}>
+    <DataWidget.Widget
+      classes={classes}
+      Icon={Icon}
+      onClick={toggleWifiOnClick ? onClick : undefined}
+      onRightClick={openWifiPreferences}
+    >
       {name}
     </DataWidget.Widget>
   )

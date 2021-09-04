@@ -1,14 +1,16 @@
 import * as Uebersicht from 'uebersicht'
 import * as Utils from '../../utils'
-import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 
-export { settingsStyles as styles } from '../../styles/components/settings'
+export { settingsStyles as styles } from '../../styles/components/settings/settings'
 
 const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`
 
-const Item = ({ code, defaultValue, label, type, options, placeholder, minHeight, onChange }) => {
+const Item = ({ code, Component, defaultValue, label, type, options, placeholder, minHeight, onChange }) => {
   const onClick = (e) => Utils.clickEffect(e)
+  if (type === 'component') {
+    return <Component defaultValue={defaultValue} onChange={onChange} />
+  }
   if (type === 'select') {
     return (
       <Uebersicht.React.Fragment>
@@ -46,6 +48,7 @@ const Item = ({ code, defaultValue, label, type, options, placeholder, minHeight
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
+          spellCheck={false}
         />
       </Uebersicht.React.Fragment>
     )
@@ -165,8 +168,10 @@ export const Component = () => {
       <div className="settings__overlay" onClick={closeSettings} />
       <div className="settings__outer">
         <div className="settings__header">
+          <button className="settings__header-dot settings__header-dot--close" onClick={closeSettings} />
+          <span className="settings__header-dot settings__header-dot--disabled" />
+          <span className="settings__header-dot settings__header-dot--disabled" />
           Settings
-          <Icons.Close className="settings__close" onClick={closeSettings} />
         </div>
         <div className="settings__tabs">
           {Object.keys(Settings.defaultSettings).map((key, i) => {
@@ -194,7 +199,7 @@ export const Component = () => {
                 {Object.keys(Settings.defaultSettings[key]).map((subKey) => {
                   const subSetting = Settings.data[subKey]
                   if (!subSetting) return null
-                  const { title, label, type, options, placeholder, fullWidth, minHeight } = subSetting
+                  const { Component, fullWidth, label, options, placeholder, title, type, minHeight } = subSetting
                   const defaultValue = newSettings[key][subKey]
                   const classes = Utils.classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
@@ -214,13 +219,14 @@ export const Component = () => {
                       <div key={subKey} className={classes} onChange={type === 'radio' ? onChange : undefined}>
                         <Item
                           code={subKey}
+                          Component={Component}
                           defaultValue={defaultValue}
-                          type={type}
                           label={label}
+                          onChange={onChange}
                           options={options}
                           placeholder={placeholder}
+                          type={type}
                           minHeight={minHeight}
-                          onChange={onChange}
                         />
                       </div>
                     </Uebersicht.React.Fragment>

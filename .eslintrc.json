@@ -1,0 +1,11 @@
+{
+  "plugins": ["react-hooks"],
+  "extends": ["standard", "prettier", "react-app"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-console": "warn",
+    "standard/no-callback-literal": "off",
+    "jsx-a11y/anchor-is-valid": "off"
+  }
+}

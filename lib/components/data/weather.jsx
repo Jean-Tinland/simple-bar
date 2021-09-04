@@ -24,7 +24,7 @@ const getLabel = (location, temperature, unit, hideLocation) => {
   return `${location}, ${temperature}°${unit}`
 }
 
-const refreshWeather = (e) => {
+const openWeather = (e) => {
   Utils.clickEffect(e)
   Utils.notification('Opening forecast from wttr.in...')
 }
@@ -63,8 +63,8 @@ export const Widget = () => {
   if (!state || !state.data.current_condition) return null
 
   const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
-  const { temp_C, temp_F, weatherDesc } = state.data.current_condition[0]
-  const temperature = unit === 'C' ? temp_C : temp_F
+  const { temp_C: tempC, temp_F: tempF, weatherDesc } = state.data.current_condition[0]
+  const temperature = unit === 'C' ? tempC : tempF
   const wttrUnitParam = unit === 'C' ? '?m' : '?u'
 
   const description = weatherDesc[0].value
@@ -91,6 +91,13 @@ export const Widget = () => {
   const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
   const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
 
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    setLoading(true)
+    getWeather()
+    Utils.notification('Refreshing forecast from wttr.in...')
+  }
+
   const classes = Utils.classnames('weather', {
     'weather--sunrise': sunrising,
     'weather--sunset': sunsetting
@@ -101,7 +108,8 @@ export const Widget = () => {
       classes={classes}
       Icon={Icon}
       href={`https://wttr.in/${state.location}${wttrUnitParam}`}
-      onClick={refreshWeather}
+      onClick={openWeather}
+      onRightClick={onRightClick}
     >
       {!hideGradient && <div className="weather__gradient" />}
       {label}

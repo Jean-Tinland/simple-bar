@@ -1,6 +1,6 @@
 import * as Error from './lib/components/error.jsx'
 import * as Spaces from './lib/components/spaces/spaces.jsx'
-import * as Process from './lib/components/process/process.jsx'
+import * as Process from './lib/components/spaces/process.jsx'
 import * as Utils from './lib/utils'
 import * as Settings from './lib/settings'
 import * as Variables from './lib/styles/core/variables'
@@ -28,7 +28,8 @@ const render = ({ output, error }) => {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
-    'simple-bar--inline-spaces-options': settings.global.inlineSpacesOptions
+    'simple-bar--inline-spaces-options': settings.global.inlineSpacesOptions,
+    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForeground
   })
 
   if (error) {

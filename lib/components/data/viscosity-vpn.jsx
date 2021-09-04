@@ -13,10 +13,10 @@ const refreshFrequency = 8000
 const toggleVPN = (isConnected, vpnConnectionName) => {
   if (isConnected) {
     Uebersicht.run(`osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`)
-    notification(`Disabling Viscosity ${vpnConnectionName} network...`)
+    Utils.notification(`Disabling Viscosity ${vpnConnectionName} network...`)
   } else {
     Uebersicht.run(`osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`)
-    notification(`Enabling Viscosity ${vpnConnectionName} network...`)
+    Utils.notification(`Enabling Viscosity ${vpnConnectionName} network...`)
   }
 }
 

@@ -77,6 +77,17 @@ export const Widget = () => {
     togglePlay(!isPlaying)
     getSpotify()
   }
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(`osascript -e 'tell application "Spotify" to Next Track'`)
+    getSpotify()
+  }
+  const onMiddleClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(`open -a 'Spotify'`)
+    getSpotify()
+  }
+
   const onMouseEnter = () => Utils.startSliding(ref.current, '.spotify__inner', '.spotify__slider')
   const onMouseLeave = () => Utils.stopSliding(ref.current, '.spotify__slider')
 
@@ -88,10 +99,12 @@ export const Widget = () => {
       classes={classes}
       Icon={Icon}
       onClick={onClick}
+      onRightClick={onRightClick}
+      onMiddleClick={onMiddleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {showSpecter && isPlaying && <Specter />}
+      {showSpecter && isPlaying && <Specter.Widget />}
       <div className="spotify__inner">
         <div className="spotify__slider">{label}</div>
       </div>

@@ -1,3 +1,4 @@
+import UserWidgets from './lib/components/data/user-widgets.jsx'
 import * as Zoom from './lib/components/data/zoom.jsx'
 import * as Time from './lib/components/data/time.jsx'
 import * as DateDisplay from './lib/components/data/date-display.jsx'
@@ -48,11 +49,13 @@ const render = () => {
     'simple-bar--floating': settings.global.floatingBar,
     'simple-bar--no-color-in-data': settings.global.noColorInData,
     'simple-bar--no-bar-background': settings.global.noBarBg,
-    'simple-bar--on-bottom': settings.global.bottomBar
+    'simple-bar--on-bottom': settings.global.bottomBar,
+    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForeground
   })
 
   return (
     <div className={classes}>
+      <UserWidgets />
       <Zoom.Widget />
       <BrowserTrack.Widget />
       <Spotify.Widget />

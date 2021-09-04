@@ -25,21 +25,25 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(mpdWidget)
 
   const getMpd = async () => {
-    const [playerState, trackInfo] = await Promise.all([
-      Uebersicht.run(
-        `mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`
-      ),
-      Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`)
-    ])
-    if (Utils.cleanupOutput(trackInfo) === '') {
+    try {
+      const [playerState, trackInfo] = await Promise.all([
+        Uebersicht.run(
+          `mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null`
+        ),
+        Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`)
+      ])
+      if (Utils.cleanupOutput(trackInfo) === '') {
+        setLoading(false)
+        return
+      }
+      setState({
+        playerState: Utils.cleanupOutput(playerState),
+        trackInfo: Utils.cleanupOutput(trackInfo)
+      })
       setLoading(false)
-      return
+    } catch (e) {
+      setLoading(false)
     }
-    setState({
-      playerState: Utils.cleanupOutput(playerState),
-      trackInfo: Utils.cleanupOutput(trackInfo)
-    })
-    setLoading(false)
   }
 
   useWidgetRefresh(mpdWidget, getMpd, refreshFrequency)

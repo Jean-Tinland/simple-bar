@@ -11,7 +11,7 @@ export { dateStyles as styles } from '../../styles/components/data/date-display'
 const refreshFrequency = 1000
 
 const openCalendarApp = (calendarApp) => {
-  const appName = calendarApp ? calendarApp : 'Calendar'
+  const appName = calendarApp || 'Calendar'
   Uebersicht.run(`open -a "${appName}"`)
 }
 

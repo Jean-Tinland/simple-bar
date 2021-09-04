@@ -19,13 +19,13 @@ const Stickies = ({ display, windows }) => {
     exclusionsAsRegex
   )
 
-  if (!apps.filter(app => app.minimized === 0)?.length) return null
+  if (!apps.filter((app) => app.minimized === 0)?.length) return null
 
   return (
     <Uebersicht.React.Fragment>
       <div className="stickies">
-        <button className="stickies_inner">
-          <OpenedApps type="stickies" apps={apps} />
+        <button className="stickies__inner">
+          <OpenedApps apps={apps} />
         </button>
       </div>
     </Uebersicht.React.Fragment>
