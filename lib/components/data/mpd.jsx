@@ -13,6 +13,43 @@ const refreshFrequency = 1000
 
 const togglePlay = (host, port) => Uebersicht.run(`mpc --host ${host} --port ${port} toggle`)
 
+const setSound = (host, port, volume) => {
+  if (!volume) return
+  Uebersicht.run(`mpc --host ${host} --port ${port} volume ${lin2LogVolume(volume)}`)
+}
+
+const lin2LogVolume = (position) => {
+  // position will be between 0 and 100
+  const minp = 0
+  const maxp = 100
+
+  // The result should be between 0 an 100
+  const minv = Math.log(1)
+  const maxv = Math.log(100)
+
+  // calculate adjustment factor
+  const scale = (maxv - minv) / (maxp - minp)
+
+  if (position === 0) return position
+  return Math.round(Math.exp(minv + scale * (position - minp)))
+}
+
+const log2LinVolume = (volume) => {
+  // volume will be between 0 and 100
+  const minp = 0
+  const maxp = 100
+
+  // The result should be between 0 an 100
+  const minv = Math.log(1)
+  const maxv = Math.log(100)
+
+  // calculate adjustment factor
+  const scale = (maxv - minv) / (maxp - minp)
+
+  if (volume === 0) return volume
+  return Math.round((Math.log(volume) - minv) / scale + minp)
+}
+
 const settings = Settings.get()
 
 export const Widget = () => {
@@ -23,14 +60,18 @@ export const Widget = () => {
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(mpdWidget)
+  const { volume: _volume } = state || {}
+  const [volume, setVolume] = Uebersicht.React.useState(_volume && parseInt(_volume))
+  const [dragging, setDragging] = Uebersicht.React.useState(false)
 
   const getMpd = async () => {
     try {
-      const [playerState, trackInfo] = await Promise.all([
+      const [playerState, trackInfo, volumeState] = await Promise.all([
         Uebersicht.run(
-          `mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null`
+          `mpc --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`
         ),
-        Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`)
+        Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`),
+        Uebersicht.run(`mpc --host ${mpdHost} --port ${mpdPort} volume | sed -e 's/volume:[ ]*//g' -e 's/%//g'`)
       ])
       if (Utils.cleanupOutput(trackInfo) === '') {
         setLoading(false)
@@ -38,7 +79,8 @@ export const Widget = () => {
       }
       setState({
         playerState: Utils.cleanupOutput(playerState),
-        trackInfo: Utils.cleanupOutput(trackInfo)
+        trackInfo: Utils.cleanupOutput(trackInfo),
+        volume: log2LinVolume(Utils.cleanupOutput(volumeState))
       })
       setLoading(false)
     } catch (e) {
@@ -47,6 +89,16 @@ export const Widget = () => {
   }
 
   useWidgetRefresh(mpdWidget, getMpd, refreshFrequency)
+
+  Uebersicht.React.useEffect(() => {
+    if (!dragging) setSound(mpdHost, mpdPort, volume)
+  }, [dragging])
+
+  Uebersicht.React.useEffect(() => {
+    if (_volume && parseInt(_volume) !== volume) {
+      setVolume(parseInt(_volume))
+    }
+  }, [_volume])
 
   if (loading) return <DataWidgetLoader.Widget className="mpd" />
   if (!state) return null
@@ -62,23 +114,40 @@ export const Widget = () => {
     togglePlay(mpdHost, mpdPort)
     getMpd()
   }
+
+  const onChange = (e) => {
+    const value = parseInt(e.target.value)
+    setVolume(value)
+  }
+  const onMouseDown = () => setDragging(true)
+  const onMouseUp = () => setDragging(false)
+
+  const fillerWidth = !volume ? volume : volume / 100 + 0.05
+
   const onMouseEnter = () => Utils.startSliding(ref.current, '.mpd__inner', '.mpd__slider')
   const onMouseLeave = () => Utils.stopSliding(ref.current, '.mpd__slider')
 
-  const classes = Utils.classnames('mpd', { 'mpd--playing': isPlaying })
+  const classes = Utils.classnames('mpd', { 'mpd--playing': isPlaying }, 'sound', { 'sound--dragging': dragging })
 
   return (
-    <DataWidget.Widget
-      ref={ref}
-      classes={classes}
-      Icon={Icon}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+    <DataWidget.Widget ref={ref} classes={classes} Icon={Icon} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {showSpecter && isPlaying && <Specter.Widget />}
-      <div className="mpd__inner">
+      <div className="mpd__inner" onClick={onClick}>
         <div className="mpd__slider">{trackInfo}</div>
+      </div>
+      <div className="sound__slider-container">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value={volume}
+          className="sound__slider"
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onChange={onChange}
+        />
+        <div className="sound__slider-filler" style={{ transform: `scaleX(${fillerWidth})` }} />
       </div>
     </DataWidget.Widget>
   )

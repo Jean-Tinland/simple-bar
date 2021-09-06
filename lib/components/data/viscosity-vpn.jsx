@@ -25,7 +25,7 @@ const settings = Settings.get()
 export const Widget = () => {
   const { widgets, vpnWidgetOptions } = settings
   const { vpnWidget } = widgets
-  const { vpnConnectionName } = vpnWidgetOptions
+  const { vpnConnectionName, vpnShowConnectionName } = vpnWidgetOptions
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(vpnWidget)
@@ -66,7 +66,7 @@ export const Widget = () => {
 
   return (
     <DataWidget.Widget classes={classes} Icon={Icon} onClick={clicked}>
-      {status}
+      {vpnShowConnectionName ? vpnConnectionName : status}
     </DataWidget.Widget>
   )
 }
