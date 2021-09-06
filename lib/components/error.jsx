@@ -19,7 +19,7 @@ export const Component = ({ type, classes }) => {
   return (
     <div className={errorClasses}>
       <span>simple-bar-spaces.jsx: {message[type]}</span>
-      <Settings.Component />
+      <Settings.Wrapper />
     </div>
   )
 }

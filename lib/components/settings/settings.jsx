@@ -89,14 +89,36 @@ const getLastCurrentTab = () => {
   return 0
 }
 
-export const Component = () => {
-  const [visible, setVisible] = Uebersicht.React.useState(false)
+export const Wrapper = () => {
+  const [visible, setVisible] = Uebersicht.React.useState()
+
+  const closeSettings = () => setVisible(false)
+
+  const onKeydown = Uebersicht.React.useCallback((e) => {
+    const { ctrlKey, keyCode, metaKey, which } = e
+    if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
+      e.preventDefault()
+      setVisible(true)
+    }
+  }, [])
+
+  Uebersicht.React.useEffect(() => {
+    document.addEventListener('keydown', onKeydown)
+    return () => document.removeEventListener('keydown', onKeydown)
+  }, [])
+
+  return (
+    <Uebersicht.React.Fragment>
+      {visible && <Component visible={visible} closeSettings={closeSettings} />}
+    </Uebersicht.React.Fragment>
+  )
+}
+
+export const Component = ({ closeSettings }) => {
   const [currentTab, setCurrentTab] = Uebersicht.React.useState(getLastCurrentTab())
   const [pendingChanges, setPendingChanges] = Uebersicht.React.useState(0)
   const settings = Settings.get()
   const [newSettings, setNewSettings] = Uebersicht.React.useState(settings)
-
-  const closeSettings = () => setVisible(false)
 
   const onKeydown = Uebersicht.React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e
@@ -114,10 +136,6 @@ export const Component = () => {
         Settings.set(updatedSettings)
         Utils.hardRefresh()
       }
-    }
-    if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
-      e.preventDefault()
-      setVisible(true)
     }
   }, [])
 
@@ -161,10 +179,8 @@ export const Component = () => {
     return () => document.removeEventListener('keydown', onKeydown)
   }, [])
 
-  const classes = Utils.classnames('settings', { 'settings--visible': visible })
-
   return (
-    <div className={classes}>
+    <div className="settings">
       <div className="settings__overlay" onClick={closeSettings} />
       <div className="settings__outer">
         <div className="settings__header">

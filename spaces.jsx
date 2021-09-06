@@ -63,7 +63,7 @@ const render = ({ output, error }) => {
           windows={windows}
         />
       )}
-      <Settings.Component />
+      <Settings.Wrapper />
     </div>
   )
 }

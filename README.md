@@ -159,7 +159,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
 - Open space options on right click added thanks to [@rosenpin](https://github.com/rosenpin)
-- Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni) and [@anujc4](https://github.com/anujc4), [@SijanC147](https://github.com/SijanC147), [@donaldguy](https://github.com/donaldguy), [@d-miketa](https://github.com/d-miketa)
+- Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni), [@anujc4](https://github.com/anujc4), [@SijanC147](https://github.com/SijanC147), [@donaldguy](https://github.com/donaldguy), [@d-miketa](https://github.com/d-miketa)
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
