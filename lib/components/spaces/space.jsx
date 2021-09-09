@@ -49,7 +49,7 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     } else {
       if (focused === 1) return
       if (SIPDisabled) Yabai.goToSpace(index)
-      else Utils.noYabaiSwitchSpace(currentSpaceIndex, index)
+      else if (spacesDisplay.switchSpacesWithoutYabai) Utils.noYabaiSwitchSpace(currentSpaceIndex, index)
       Utils.clickEffect(e)
     }
   }
