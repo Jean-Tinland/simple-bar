@@ -7,7 +7,7 @@ import * as Settings from '../../settings'
 
 const settings = Settings.get()
 
-const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace }) => {
+const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDisabled, lastOfSpace }) => {
   const labelRef = Uebersicht.React.useRef()
   const [hovered, setHovered] = Uebersicht.React.useState(false)
   const [noDelay, setNoDelay] = Uebersicht.React.useState(false)
@@ -48,7 +48,8 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
       labelRef.current?.select()
     } else {
       if (focused === 1) return
-      Yabai.goToSpace(index)
+      if (SIPDisabled) Yabai.goToSpace(index)
+      else Utils.noYabaiSwitchSpace(currentSpaceIndex, index)
       Utils.clickEffect(e)
     }
   }
