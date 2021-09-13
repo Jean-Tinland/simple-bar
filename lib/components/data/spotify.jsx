@@ -33,11 +33,16 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(spotifyWidget)
 
   const getSpotify = async () => {
-    const isRunning = await Uebersicht.run(
-      `osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`
-    )
-    if (Utils.cleanupOutput(isRunning) === 'false') {
+    const isRunning = await run(
+      `ps aux | grep '[S]potify Helper'`
+      )
+    if (cleanupOutput(isRunning).length == 0) {
       setLoading(false)
+      setState({
+        playerState: "",
+        trackName: "",
+        artistName: ""
+      })
       return
     }
     const [playerState, trackName, artistName] = await Promise.all([
