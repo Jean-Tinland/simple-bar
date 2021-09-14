@@ -29,8 +29,7 @@ const openWeather = (e) => {
   Utils.notification('Opening forecast from wttr.in...')
 }
 
-const getPosition = async () =>
-  new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 3000 }))
+const getPosition = async () => new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve))
 
 const settings = Settings.get()
 
@@ -44,7 +43,8 @@ export const Widget = () => {
   const getWeather = async () => {
     let location = userLocation
     if (!userLocation) {
-      const position = await getPosition()
+      const position = await Promise.race([getPosition(), Utils.timeout(5000)])
+      if (!position) getWeather()
       location = position?.address?.city
     }
     if (!location) {
