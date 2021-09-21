@@ -3,6 +3,7 @@ import * as Uebersicht from 'uebersicht'
 import * as Settings from '../../settings'
 import * as Icons from "../icons.jsx"
 import * as DataWidget from './data-widget.jsx'
+import * as DataWidgetLoader from './data-widget-loader.jsx'
 
 export { cryptoStyles as styles } from '../../styles/components/data/crypto'
 
@@ -34,7 +35,9 @@ export const Widget = () => {
   const enumeratedIdentifiers = identifiers.split(',')
   const { cryptoWidget } = widgets
 
+  
   const [state, setState] = Uebersicht.React.useState()
+  const [loading, setLoading] = Uebersicht.React.useState(cryptoWidget)
 
   const getCrypto = async () => {
     const response = await Uebersicht.run(`curl -s \
@@ -50,10 +53,12 @@ export const Widget = () => {
       priceMap[id] = `${getDenominatorToken(denomination)}${parseFloat(result[id][denomination]).toPrecision(precision)}`
     })
     setState(priceMap)
+    setLoading(false)
   }
 
   useWidgetRefresh(cryptoWidget, getCrypto, refreshFrequency)
 
+  if (loading) return <DataWidgetLoader.Widget className="crypto" />
   if (!state) return null
 
   return enumeratedIdentifiers.map((id) =>
