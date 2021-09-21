@@ -62,7 +62,7 @@ export const Widget = () => {
   if (!state) return null
 
   return enumeratedIdentifiers.map((id) =>
-    <DataWidget.Widget ref={ref} Icon={getIcon(id)}>
+    <DataWidget.Widget key={id} ref={ref} Icon={getIcon(id)}>
       <div className="crypto__inner">{state[id]}</div>
     </DataWidget.Widget>
   )
