@@ -12,6 +12,7 @@ export const Component = ({ output, SIP, displayIndex }) => {
   const { displayStickyWindowsSeparately } = Settings.get().spacesDisplay
   const displays = [...new Set(spaces.map((space) => space.display))]
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
+  const { index: currentSpaceIndex } = spaces.find(({ visible, display }) => visible && display === displayIndex)
   return displays.map((display, i) => {
     if (display !== displayIndex) return null
     const onClick = async (e) => {
@@ -31,6 +32,7 @@ export const Component = ({ output, SIP, displayIndex }) => {
               space={space}
               windows={windows}
               displayIndex={displayIndex}
+              currentSpaceIndex={currentSpaceIndex}
               SIPDisabled={SIPDisabled}
               lastOfSpace={lastOfSpace}
             />

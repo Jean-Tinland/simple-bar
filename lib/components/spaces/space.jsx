@@ -7,7 +7,7 @@ import * as Settings from '../../settings'
 
 const settings = Settings.get()
 
-const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace }) => {
+const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDisabled, lastOfSpace }) => {
   const labelRef = Uebersicht.React.useRef()
   const [hovered, setHovered] = Uebersicht.React.useState(false)
   const [noDelay, setNoDelay] = Uebersicht.React.useState(false)
@@ -46,11 +46,15 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
     if (e.altKey) {
       setEditable(true)
       labelRef.current?.select()
-    } else {
-      if (focused === 1) return
-      Yabai.goToSpace(index)
-      Utils.clickEffect(e)
+      return
     }
+    if (focused === 1) return
+    if (SIPDisabled && !spacesDisplay.switchSpacesWithoutYabai) {
+      Yabai.goToSpace(index)
+      return
+    }
+    Utils.switchSpace(currentSpaceIndex, index)
+    Utils.clickEffect(e)
   }
   const onRightClick = (e) => {
     setHovered(true)
