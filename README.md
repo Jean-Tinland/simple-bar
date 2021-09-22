@@ -153,8 +153,8 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 ## Special thanks
 
-- Pywal integration was added thanks to [@Amar Paul](https://github.com/Amar1729)
-- Wifi toggle on click also added thanks to [@Amar Paul](https://github.com/Amar1729)
+- Pywal integration was added thanks to [@Amar1729](https://github.com/Amar1729)
+- Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
 - Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
@@ -162,6 +162,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni), [@anujc4](https://github.com/anujc4), [@SijanC147](https://github.com/SijanC147), [@donaldguy](https://github.com/donaldguy), [@d-miketa](https://github.com/d-miketa)
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
+- Native space switching added thanks to [@jming422](https://github.com/jming422)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
