@@ -100,6 +100,22 @@ export const Wrapper = () => {
       e.preventDefault()
       setVisible(true)
     }
+    if ((ctrlKey || metaKey) && (which === 84 || keyCode === 84)) {
+      const settings = Settings.get()
+      e.preventDefault()
+      const AUTO = 'auto'
+      const DARK = 'dark'
+      const LIGHT = 'light'
+      const newValue = settings.global.theme === AUTO ? AUTO : settings.global.theme === LIGHT ? DARK : LIGHT
+      Uebersicht.run(
+        `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
+      )
+      if (newValue !== AUTO) {
+        const updatedSettings = { ...settings, global: { ...settings.global, theme: newValue } }
+        Settings.set(updatedSettings)
+        Utils.hardRefresh()
+      }
+    }
   }, [])
 
   Uebersicht.React.useEffect(() => {
@@ -119,25 +135,6 @@ export const Component = ({ closeSettings }) => {
   const [pendingChanges, setPendingChanges] = Uebersicht.React.useState(0)
   const settings = Settings.get()
   const [newSettings, setNewSettings] = Uebersicht.React.useState(settings)
-
-  const onKeydown = Uebersicht.React.useCallback((e) => {
-    const { ctrlKey, keyCode, metaKey, which } = e
-    if ((ctrlKey || metaKey) && (which === 84 || keyCode === 84)) {
-      e.preventDefault()
-      const AUTO = 'auto'
-      const DARK = 'dark'
-      const LIGHT = 'light'
-      const newValue = newSettings.global.theme === AUTO ? AUTO : newSettings.global.theme === LIGHT ? DARK : LIGHT
-      Uebersicht.run(
-        `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
-      )
-      if (newValue !== AUTO) {
-        const updatedSettings = { ...newSettings, global: { ...newSettings.global, theme: newValue } }
-        Settings.set(updatedSettings)
-        Utils.hardRefresh()
-      }
-    }
-  }, [])
 
   const onTabClick = (tab) => {
     setCurrentTab(tab)
@@ -173,11 +170,6 @@ export const Component = ({ closeSettings }) => {
     const deepDiffs = Object.keys(diffs).reduce((acc, key) => [...acc, ...Object.keys(diffs[key])], [])
     setPendingChanges(deepDiffs.length)
   }, [newSettings])
-
-  Uebersicht.React.useEffect(() => {
-    document.addEventListener('keydown', onKeydown)
-    return () => document.removeEventListener('keydown', onKeydown)
-  }, [])
 
   return (
     <div className="settings">
