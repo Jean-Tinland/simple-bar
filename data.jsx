@@ -9,6 +9,7 @@ import * as Mic from './lib/components/data/mic.jsx'
 import * as Wifi from './lib/components/data/wifi.jsx'
 import * as Keyboard from './lib/components/data/keyboard.jsx'
 import * as Spotify from './lib/components/data/spotify.jsx'
+import * as Crypto from './lib/components/data/crypto.jsx'
 import * as Music from './lib/components/data/music.jsx'
 import * as Mpd from './lib/components/data/mpd.jsx'
 import * as BrowserTrack from './lib/components/data/browser-track.jsx'
@@ -59,6 +60,7 @@ const render = () => {
       <Zoom.Widget />
       <BrowserTrack.Widget />
       <Spotify.Widget />
+      <Crypto.Widget />
       <Music.Widget />
       <Mpd.Widget />
       <Weather.Widget />
