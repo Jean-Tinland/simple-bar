@@ -163,6 +163,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Microphone mute & unmute added thanks to [@izifortune](https://github.com/izifortune)
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Native space switching added thanks to [@jming422](https://github.com/jming422)
+- A better spotify process detection added thanks to [@s00500](https://github.com/s00500)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
