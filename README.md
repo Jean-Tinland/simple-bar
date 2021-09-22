@@ -156,6 +156,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 - Pywal integration was added thanks to [@Amar1729](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
+- Crypto widget added thanks to [@yorhodes](https://github.com/yorhodes)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
 - Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
