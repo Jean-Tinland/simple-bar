@@ -1,30 +1,26 @@
-import useWidgetRefresh from "../../hooks/use-widget-refresh"
+import useWidgetRefresh from '../../hooks/use-widget-refresh'
 import * as Uebersicht from 'uebersicht'
 import * as Settings from '../../settings'
-import * as Icons from "../icons.jsx"
+import * as Icons from '../icons.jsx'
 import * as Utils from '../../utils'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
 
 const settings = Settings.get()
 
-const refreshFrequency = 5*60*1000 // 30 seconds * 1000 milliseconds
+const refreshFrequency = 5 * 60 * 1000 // 30 seconds * 1000 milliseconds
 
 const getIcon = (identifier) => {
-  switch (identifier) {
-    case "celo": return Icons.Celo
-    case "ethereum": return Icons.Ethereum
-    case "bitcoin": return Icons.Bitcoin
-    default: return Icons.Moon
-  }
+  if (identifier === 'celo') return Icons.Celo
+  if (identifier === 'ethereum') return Icons.Ethereum
+  if (identifier === 'bitcoin') return Icons.Bitcoin
+  return Icons.Moon
 }
 
 const getDenominatorToken = (denomination) => {
-  switch (denomination) {
-    case "usd": return '$'
-    case "eur": return "€"
-    default: return ''
-  }
+  if (denomination === 'usd') return '$'
+  if (denomination === 'eur') return '€'
+  return ''
 }
 
 const openCrypto = (e) => {
@@ -36,27 +32,25 @@ export const Widget = () => {
   const ref = Uebersicht.React.useRef()
   const { widgets, cryptoWidgetOptions } = settings
   const { denomination, identifiers, precision } = cryptoWidgetOptions
-  const enumeratedIdentifiers = identifiers.split(',')
+  const denominatorToken = getDenominatorToken(denomination)
+  const cleanedUpIdentifiers = identifiers.replace(/ /g, '')
+  const enumeratedIdentifiers = cleanedUpIdentifiers.replace(/ /g, '').split(',')
   const { cryptoWidget } = widgets
 
-  
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(cryptoWidget)
 
   const getCrypto = async () => {
-    const response = await Uebersicht.run(`curl -s \
-      -H "Accept: application/json" \
-      -G https://api.coingecko.com/api/v3/simple/price \
-      -d ids=${identifiers} \
-      -d vs_currencies=${denomination}`
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`
     )
+    const result = await response.json()
 
-    const result = JSON.parse(response)
-    let priceMap = {}
-    enumeratedIdentifiers.forEach((id) => {
-      priceMap[id] = `${getDenominatorToken(denomination)}${parseFloat(result[id][denomination]).toPrecision(precision)}`
+    const prices = enumeratedIdentifiers.map((id) => {
+      const value = result[id][denomination].toPrecision(precision)
+      return `${denominatorToken}${value}`
     })
-    setState(priceMap)
+    setState(prices)
     setLoading(false)
   }
 
@@ -74,7 +68,7 @@ export const Widget = () => {
 
   const classes = Utils.classnames('crypto')
 
-  return enumeratedIdentifiers.map((id) =>
+  return enumeratedIdentifiers.map((id, i) => (
     <DataWidget.Widget
       key={id}
       classes={classes}
@@ -84,7 +78,7 @@ export const Widget = () => {
       onClick={openCrypto}
       onRightClick={refreshCrypto}
     >
-      <div>{state[id]}</div>
+      <div>{state[i]}</div>
     </DataWidget.Widget>
-  )
+  ))
 }
