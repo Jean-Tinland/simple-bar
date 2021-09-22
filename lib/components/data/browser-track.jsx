@@ -30,9 +30,14 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(browserTrackWidget)
 
   const getBrowserTrack = async () => {
+    const firefoxStatus = await Uebersicht.run(
+      `ps aux | grep -v 'grep' | grep -q 'Firefox' && echo "true" || echo "false"`
+    )
+    const isFirefoxRunning = Utils.cleanupOutput(firefoxStatus) === 'true'
+    const target = isFirefoxRunning ? 'firefox' : 'browser'
     const [browserTrackOutput, spotifyStatus] = await Promise.all([
-      Uebersicht.run(`osascript ./simple-bar/lib/scripts/browser-audio.applescript 2>&1`),
-      Uebersicht.run(`ps aux | grep -q '[S]potify Helper' && echo "true" || echo "false"`)
+      Uebersicht.run(`osascript ./simple-bar/lib/scripts/${target}-audio.applescript 2>&1`),
+      Uebersicht.run(`ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`)
     ])
     const browserTrack = JSON.parse(browserTrackOutput)
     setState({

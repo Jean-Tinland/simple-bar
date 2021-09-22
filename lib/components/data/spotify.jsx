@@ -33,7 +33,9 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(spotifyWidget)
 
   const getSpotify = async () => {
-    const isRunning = await Uebersicht.run(`ps aux | grep -q '[S]potify Helper' && echo "true" || echo "false"`)
+    const isRunning = await Uebersicht.run(
+      `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`
+    )
     if (Utils.cleanupOutput(isRunning) === 'false') {
       setLoading(false)
       setState({

@@ -15,15 +15,16 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
 - Show all opened apps (and current) in current space or simply current app name & title
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(1)
-- Spotify, Music/iTunes, browser current track
+- Spotify, Music/iTunes, browser current track(3)
 - Battery, microphone, sound level, wifi, date, time widgets
-- Weather & keyboard language input widgets (disabled by default)(3)
+- Weather & keyboard language input widgets (disabled by default)(4)
 - You can add your own custom widgets in settings(1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (1) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
 (2) Press `cmd + t` while focusing **simple-bar**.\
-(3) You'll be prompted to let Übersicht use you geolocation.
+(3) Currently supported: Google Chrome, Safari & Firefox
+(4) You'll be prompted to let Übersicht use you geolocation.
 
 ## Compatibility & requirements
 
