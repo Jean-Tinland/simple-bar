@@ -46,12 +46,15 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     if (e.altKey) {
       setEditable(true)
       labelRef.current?.select()
-    } else {
-      if (focused === 1) return
-      if (SIPDisabled) Yabai.goToSpace(index)
-      else if (spacesDisplay.switchSpacesWithoutYabai) Utils.noYabaiSwitchSpace(currentSpaceIndex, index)
-      Utils.clickEffect(e)
+      return
     }
+    if (focused === 1) return
+    if (SIPDisabled && !spacesDisplay.switchSpacesWithoutYabai) {
+      Yabai.goToSpace(index)
+      return
+    }
+    Utils.switchSpace(currentSpaceIndex, index)
+    Utils.clickEffect(e)
   }
   const onRightClick = (e) => {
     setHovered(true)
