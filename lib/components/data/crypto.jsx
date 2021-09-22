@@ -2,6 +2,7 @@ import useWidgetRefresh from "../../hooks/use-widget-refresh"
 import * as Uebersicht from 'uebersicht'
 import * as Settings from '../../settings'
 import * as Icons from "../icons.jsx"
+import * as Utils from '../../utils'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
 
@@ -26,6 +27,11 @@ const getDenominatorToken = (denomination) => {
     case "eur": return "€"
     default: return ''
   }
+}
+
+const openCrypto = (e) => {
+  Utils.clickEffect(e)
+  Utils.notification('Opening price chart from coingecko.com...')
 }
 
 export const Widget = () => {
@@ -58,11 +64,28 @@ export const Widget = () => {
 
   useWidgetRefresh(cryptoWidget, getCrypto, refreshFrequency)
 
+  const refreshCrypto = (e) => {
+    Utils.clickEffect(e)
+    setLoading(true)
+    getCrypto()
+    Utils.notification('Refreshing price from coingecko.com...')
+  }
+
   if (loading) return <DataWidgetLoader.Widget className="crypto" />
   if (!state) return null
 
+  const classes = Utils.classnames('crypto')
+
   return enumeratedIdentifiers.map((id) =>
-    <DataWidget.Widget key={id} ref={ref} Icon={getIcon(id)}>
+    <DataWidget.Widget
+      key={id}
+      classes={classes}
+      ref={ref}
+      Icon={getIcon(id)}
+      href={`https://coingecko.com/en/coins/${id}`}
+      onClick={openCrypto}
+      onRightClick={refreshCrypto}
+    >
       <div className="crypto__inner">{state[id]}</div>
     </DataWidget.Widget>
   )
