@@ -32,7 +32,7 @@ export const Widget = () => {
   const getBrowserTrack = async () => {
     const [browserTrackOutput, spotifyStatus] = await Promise.all([
       Uebersicht.run(`osascript ./simple-bar/lib/scripts/browser-audio.applescript 2>&1`),
-      Uebersicht.run(`osascript -e 'tell application "System Events" to (name of processes) contains "Spotify"' 2>&1`)
+      Uebersicht.run(`ps aux | grep -q '[S]potify Helper' && echo "true" || echo "false"`)
     ])
     const browserTrack = JSON.parse(browserTrackOutput)
     setState({
