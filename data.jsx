@@ -37,7 +37,6 @@ Utils.injectStyles('simple-bar-data-styles', [
   Mic.styles,
   Sound.styles,
   Spotify.styles,
-  Crypto.styles,
   Music.styles,
   Mpd.styles,
   BrowserTrack.styles,
