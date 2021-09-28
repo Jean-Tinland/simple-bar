@@ -6,6 +6,8 @@ import * as Utils from '../../utils'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
 
+export { cryptoStyles as styles } from '../../styles/components/data/crypto'
+
 const settings = Settings.get()
 
 const refreshFrequency = 5 * 60 * 1000 // 30 seconds * 1000 milliseconds
@@ -78,7 +80,7 @@ export const Widget = () => {
       onClick={openCrypto}
       onRightClick={refreshCrypto}
     >
-      <div>{state[i]}</div>
+      {state[i]}
     </DataWidget.Widget>
   ))
 }

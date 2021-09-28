@@ -31,6 +31,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Zoom.styles,
   Time.styles,
   Weather.styles,
+  Crypto.styles,
   Battery.styles,
   Wifi.styles,
   Keyboard.styles,
