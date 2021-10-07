@@ -23,6 +23,7 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     displayStickyWindowsSeparately,
     hideDuplicateAppsInSpaces,
     showOptionsOnHover,
+    hideSpaceLabelForNonEmpty,
     hideSticky
   } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
@@ -100,7 +101,7 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div className="spaces__separator" />}
       <div className={classes} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
         <button className="space__inner" onClick={onClick} onContextMenu={onRightClick}>
-          {renderLabel(spaceLabel, spaceApps)}
+          {renderLabel(hideSpaceLabelForNonEmpty, spaceLabel, spaceApps)}
           <OpenedApps spaceLabel={hideSpaceLabelForNonEmpty ? spaceLabel : null} apps={spaceApps} />
         </button>
         {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
@@ -109,16 +110,20 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
   )
 }
 
-const renderLabel = (spaceLabel, apps) => {
+const renderLabel = (hideSpaceLabelForNonEmpty, spaceLabel, apps) => {
+  if (hideSpaceLabelForNonEmpty && apps.length !== 0) {
+    return null
+  }
+  
   if (typeof spaceLabel !== 'number') {
     return (<input
-            ref={labelRef}
-            type="text"
-            className="space__label"
-            onChange={onChange}
-            value={spaceLabel}
+      ref={labelRef}
+      type="text"
+      className="space__label"
+      onChange={onChange}
+      value={spaceLabel}
       style={{ width: `${spaceLabel.length}ch` }}
-            readOnly={!editable}
+      readOnly={!editable}
     />)
   } else {
     const labelString = spaceLabel.toString();
