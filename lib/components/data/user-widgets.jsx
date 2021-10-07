@@ -36,7 +36,7 @@ const UserWidget = ({ widget }) => {
 
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor)
 
-  const property = settings.global.backgroundColorAsForeground ? 'color' : 'backgroundColor'
+  const property = settings.global.backgroundColorAsForegroundForWidgets ? 'color' : 'backgroundColor'
 
   const style = settings.global.noColorInData
     ? undefined

@@ -52,7 +52,7 @@ const render = () => {
     'simple-bar--no-color-in-data': settings.global.noColorInData,
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
-    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForeground
+    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForegroundForWidgets
   })
 
   return (
