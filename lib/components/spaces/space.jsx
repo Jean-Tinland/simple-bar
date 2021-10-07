@@ -4,6 +4,7 @@ import SpaceOptions from './space-options.jsx'
 import * as Utils from '../../utils'
 import * as Yabai from '../../yabai'
 import * as Settings from '../../settings'
+import * as AppIcons from '../../app-icons'
 
 const settings = Settings.get()
 
@@ -21,7 +22,9 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     exclusionsAsRegex,
     displayStickyWindowsSeparately,
     hideDuplicateAppsInSpaces,
-    showOptionsOnHover
+    showOptionsOnHover,
+    hideSpaceLabelForNonEmpty,
+    hideSticky
   } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
@@ -91,27 +94,46 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
   })
 
   const labelSize = typeof spaceLabel === 'number' ? spaceLabel.toString().length : spaceLabel.length
+  const spaceApps = displayStickyWindowsSeparately || hideSticky ? apps : allApps;
 
   return (
     <Uebersicht.React.Fragment>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div className="spaces__separator" />}
       <div className={classes} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
         <button className="space__inner" onClick={onClick} onContextMenu={onRightClick}>
-          <input
-            ref={labelRef}
-            type="text"
-            className="space__label"
-            onChange={onChange}
-            value={spaceLabel}
-            style={{ width: `${labelSize}ch` }}
-            readOnly={!editable}
-          />
-          <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
+          {renderLabel(hideSpaceLabelForNonEmpty, spaceLabel, spaceApps)}
+          <OpenedApps spaceLabel={hideSpaceLabelForNonEmpty ? spaceLabel : null} apps={spaceApps} />
         </button>
         {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
       </div>
     </Uebersicht.React.Fragment>
   )
+}
+
+const renderLabel = (hideSpaceLabelForNonEmpty, spaceLabel, apps) => {
+  if (hideSpaceLabelForNonEmpty && apps.length !== 0) {
+    return null
+  }
+  
+  if (typeof spaceLabel !== 'number') {
+    return (<input
+      ref={labelRef}
+      type="text"
+      className="space__label"
+      onChange={onChange}
+      value={spaceLabel}
+      style={{ width: `${spaceLabel.length}ch` }}
+      readOnly={!editable}
+    />)
+  } else {
+    const labelString = spaceLabel.toString();
+    const LabelIcon = AppIcons.apps[labelString] || AppIcons.apps.Empty
+    if (!spaceLabel || labelString.length == 0) {
+      return null
+    }
+      
+    return <LabelIcon className="space__icon" /> 
+  }
 }
 
 export default Space
