@@ -21,7 +21,8 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     exclusionsAsRegex,
     displayStickyWindowsSeparately,
     hideDuplicateAppsInSpaces,
-    showOptionsOnHover
+    showOptionsOnHover,
+    hideSticky
   } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
@@ -91,6 +92,7 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
   })
 
   const labelSize = typeof spaceLabel === 'number' ? spaceLabel.toString().length : spaceLabel.length
+  const spaceApps = displayStickyWindowsSeparately || hideSticky ? apps : allApps;
 
   return (
     <Uebersicht.React.Fragment>
