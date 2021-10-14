@@ -33,7 +33,8 @@ const render = ({ output, error }) => {
   })
 
   if (error) {
-    console.log('Error in spaces.jsx', error)
+    // eslint-disable-next-line no-console
+    console.error('Error in spaces.jsx', error)
     return <Error.Component type="error" classes={baseClasses} />
   }
   if (!output) return <Error.Component type="noOutput" classes={baseClasses} />
@@ -48,9 +49,7 @@ const render = ({ output, error }) => {
   const displayIndex = displays.find((d) => d.id === displayId).index
   const visibleSpaces = spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
 
-  const classes = Utils.classnames(baseClasses, {
-    'simple-bar--no-shadow': shadow !== 'on'
-  })
+  const classes = Utils.classnames(baseClasses, { 'simple-bar--no-shadow': shadow !== 'on' })
 
   return (
     <div className={classes}>
