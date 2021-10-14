@@ -8,13 +8,7 @@ const message = {
 }
 
 export const Component = ({ type, classes }) => {
-  const errorClasses = Utils.classnames('simple-bar--empty', classes, {
-    'simple-bar--loading': type === 'noOutput'
-  })
-
-  if (type === 'error' || type === 'noData') {
-    Utils.refreshSpaces()
-  }
+  const errorClasses = Utils.classnames('simple-bar--empty', classes, { 'simple-bar--loading': type === 'noOutput' })
 
   return (
     <div className={errorClasses}>
