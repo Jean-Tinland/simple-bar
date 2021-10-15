@@ -10,6 +10,10 @@ const message = {
 export const Component = ({ type, classes }) => {
   const errorClasses = Utils.classnames('simple-bar--empty', classes, { 'simple-bar--loading': type === 'noOutput' })
 
+  if (type === 'error' || type === 'noData') {
+    Utils.refreshSpaces()
+  }
+
   return (
     <div className={errorClasses}>
       <span>simple-bar-spaces.jsx: {message[type]}</span>
