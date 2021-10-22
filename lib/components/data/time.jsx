@@ -53,10 +53,8 @@ export const Widget = () => {
   const fillerWidth = (100 - (100 * diff) / range) / 100
 
   const onClick = (e) => {
-    if (displayNotificationCenter) {
-      Utils.clickEffect(e)
-      displayNotificationCenter()
-    }
+    Utils.clickEffect(e)
+    displayNotificationCenter()
   }
 
   return (
