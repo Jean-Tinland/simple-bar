@@ -55,8 +55,8 @@ export const Widget = ({
       href={href}
       onClick={onClickProp}
       onContextMenu={onRightClick || undefined}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={!disableSlider ? onMouseEnter : undefined}
+      onMouseLeave={!disableSlider ? onMouseLeave : undefined}
       style={style}
     >
       {Icon && <Icon />}
