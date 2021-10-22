@@ -8,7 +8,7 @@ import * as Utils from '../../utils'
 
 export { zoomStyles as styles } from '../../styles/components/data/zoom'
 
-const refreshFrequency = 20000
+const refreshFrequency = 5000
 
 const settings = Settings.get()
 
@@ -35,10 +35,11 @@ export const Widget = () => {
   if (!state || (!state.mic.length && !state.video.length)) return null
 
   const { mic, video } = state
+  const VideoIcon = video === 'off' ? Icons.CameraOff : Icons.Camera
   const MicIcon = mic === 'off' ? Icons.MicOff : Icons.MicOn
   return (
     <DataWidget.Widget classes="zoom">
-      {showVideo && <Icons.Zoom className={`zoom__icon zoom__icon--${video}`} />}
+      {showVideo && <VideoIcon className={`zoom__icon zoom__icon--${video}`} />}
       {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
     </DataWidget.Widget>
   )
