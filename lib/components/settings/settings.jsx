@@ -90,7 +90,7 @@ const getLastCurrentTab = () => {
 }
 
 export const Wrapper = () => {
-  const [visible, setVisible] = Uebersicht.React.useState()
+  const [visible, setVisible] = Uebersicht.React.useState(false)
 
   const closeSettings = () => setVisible(false)
 
