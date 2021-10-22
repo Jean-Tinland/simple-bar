@@ -1,7 +1,7 @@
 import * as Uebersicht from 'uebersicht'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
-import * as Specter from './specter.jsx'
+
 import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 import * as Utils from '../../utils'
@@ -25,7 +25,6 @@ const getIcon = (playerState) => {
 const settings = Settings.get()
 
 export const Widget = () => {
-  const ref = Uebersicht.React.useRef()
   const { widgets, spotifyWidgetOptions } = settings
   const { spotifyWidget } = widgets
 
@@ -93,26 +92,18 @@ export const Widget = () => {
     getSpotify()
   }
 
-  const onMouseEnter = () => Utils.startSliding(ref.current, '.spotify__inner', '.spotify__slider')
-  const onMouseLeave = () => Utils.stopSliding(ref.current, '.spotify__slider')
-
   const classes = Utils.classnames('spotify', { 'spotify--playing': isPlaying })
 
   return (
     <DataWidget.Widget
-      ref={ref}
       classes={classes}
       Icon={Icon}
       onClick={onClick}
       onRightClick={onRightClick}
       onMiddleClick={onMiddleClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      showSpecter={showSpecter && isPlaying}
     >
-      {showSpecter && isPlaying && <Specter.Widget />}
-      <div className="spotify__inner">
-        <div className="spotify__slider">{label}</div>
-      </div>
+      {label}
     </DataWidget.Widget>
   )
 }
