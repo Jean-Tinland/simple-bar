@@ -74,7 +74,7 @@ export const Widget = () => {
   const classes = Utils.classnames('sound', { 'sound--dragging': dragging })
 
   return (
-    <DataWidget.Widget classes={classes} disableSlider>
+    <DataWidget.Widget classes={classes} disableSlider={true}>
       <div className="sound__display">
         <Icon />
         <span className="sound__value">{volume}%</span>

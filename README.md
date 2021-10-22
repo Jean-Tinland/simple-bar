@@ -22,7 +22,7 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (1) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
-(2) Press `cmd + t` while focusing **simple-bar**.\
+(2) Press `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
 (3) Currently supported: Google Chrome, Safari & Firefox.\
 (4) You'll be prompted to let Übersicht use you geolocation.
 

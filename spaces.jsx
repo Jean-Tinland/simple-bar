@@ -51,6 +51,8 @@ const render = ({ output, error }) => {
 
   const classes = Utils.classnames(baseClasses, { 'simple-bar--no-shadow': shadow !== 'on' })
 
+  Utils.handleBarFocus()
+
   return (
     <div className={classes}>
       <Spaces.Component output={spacesList} SIP={SIP} displayIndex={displayIndex} />
