@@ -19,7 +19,9 @@ const UserWidget = ({ widget }) => {
     onClickAction,
     onRightClickAction,
     onMiddleClickAction,
-    refreshFrequency
+    refreshFrequency,
+    active,
+    noIcon
   } = widget
 
   const getUserWidget = async () => {
@@ -34,6 +36,8 @@ const UserWidget = ({ widget }) => {
 
   useWidgetRefresh(true, getUserWidget, refreshFrequency)
 
+  if (!active) return null
+
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor)
 
   const property = settings.global.widgetsBackgroundColorAsForeground ? 'color' : 'backgroundColor'
@@ -44,7 +48,7 @@ const UserWidget = ({ widget }) => {
 
   if (loading) return <DataWidgetLoader.Widget style={style} />
 
-  const Icon = Icons[icon]
+  const Icon = !noIcon ? Icons[icon] : null
 
   const hasOnClickAction = onClickAction?.trim().length > 0
   const hasRightClickAction = onRightClickAction?.trim().length > 0
