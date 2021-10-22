@@ -29,11 +29,12 @@ const render = ({ output, error }) => {
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
     'simple-bar--inline-spaces-options': settings.global.inlineSpacesOptions,
-    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForegroundForSpaces
+    'simple-bar--background-color-as-foreground': settings.global.spacesBackgroundColorAsForeground
   })
 
   if (error) {
-    console.log('Error in spaces.jsx', error)
+    // eslint-disable-next-line no-console
+    console.error('Error in spaces.jsx', error)
     return <Error.Component type="error" classes={baseClasses} />
   }
   if (!output) return <Error.Component type="noOutput" classes={baseClasses} />
