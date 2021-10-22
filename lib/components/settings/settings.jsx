@@ -107,7 +107,10 @@ const getLastCurrentTab = () => {
 export const Wrapper = () => {
   const [visible, setVisible] = Uebersicht.React.useState(false)
 
-  const closeSettings = () => setVisible(false)
+  const closeSettings = () => {
+    setVisible(false)
+    Utils.blurBar()
+  }
 
   const onKeydown = Uebersicht.React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e
