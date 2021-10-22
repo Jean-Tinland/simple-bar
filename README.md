@@ -8,17 +8,17 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 
 - 3 themes behaviours: dark, light or automatic (synced with system)
 - Extensible themes system
-- Numerous customisation options (not sticky to top, no background, etc... Try it out in settings)(1)
-- Toggle theme system wide(2)
+- Numerous customisation options (not sticky to top, no background, etc... Try it out in settings) (1)
+- Toggle theme system wide (2)
 - Display workspace number/label & current space
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
 - Show all opened apps (and current) in current space or simply current app name & title
-- Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(1)
-- Spotify, Music/iTunes, browser current track(3)
+- Settings module (enable/disable each individual widget: see list below - switch dark/light theme) (1)
+- Spotify, Music/iTunes, browser current track (3)
 - Battery, microphone, sound level, wifi, date, time widgets
-- Weather & keyboard language input widgets (disabled by default)(4)
-- You can add your own custom widgets in settings(1)
+- Dnd, crypto, weather & keyboard language input widgets (disabled by default) (4)
+- You can add your own custom widgets in settings (1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (1) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
@@ -166,6 +166,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Native space switching added thanks to [@jming422](https://github.com/jming422)
 - A better spotify process detection added thanks to [@s00500](https://github.com/s00500)
+- Dnd cli by @joeyhoer [dnd](https://github.com/joeyhoer/dnd)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)

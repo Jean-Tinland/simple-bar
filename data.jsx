@@ -7,13 +7,14 @@ import * as Battery from './lib/components/data/battery.jsx'
 import * as Sound from './lib/components/data/sound.jsx'
 import * as Mic from './lib/components/data/mic.jsx'
 import * as Wifi from './lib/components/data/wifi.jsx'
+import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
 import * as Keyboard from './lib/components/data/keyboard.jsx'
 import * as Spotify from './lib/components/data/spotify.jsx'
 import * as Crypto from './lib/components/data/crypto.jsx'
 import * as Music from './lib/components/data/music.jsx'
 import * as Mpd from './lib/components/data/mpd.jsx'
 import * as BrowserTrack from './lib/components/data/browser-track.jsx'
-import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
+import * as Dnd from './lib/components/data/dnd.jsx'
 import * as Specter from './lib/components/data/specter.jsx'
 import * as DataWidgetLoader from './lib/components/data/data-widget-loader.jsx'
 import * as DataWidget from './lib/components/data/data-widget.jsx'
@@ -34,6 +35,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Crypto.styles,
   Battery.styles,
   Wifi.styles,
+  ViscosityVPN.styles,
   Keyboard.styles,
   Mic.styles,
   Sound.styles,
@@ -41,7 +43,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Music.styles,
   Mpd.styles,
   BrowserTrack.styles,
-  ViscosityVPN.styles,
+  Dnd.styles,
   Specter.styles,
   DataWidgetLoader.styles
 ])
@@ -73,6 +75,7 @@ const render = () => {
       <Keyboard.Widget />
       <DateDisplay.Widget />
       <Time.Widget />
+      <Dnd.Widget />
     </div>
   )
 }
