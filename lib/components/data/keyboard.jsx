@@ -8,7 +8,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 20000
+const refreshFrequency = 1000
 
 const settings = Settings.get()
 
@@ -20,7 +20,7 @@ export const Widget = () => {
 
   const getKeyboard = async () => {
     const keyboard = await Uebersicht.run(
-      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g'`
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {print $4}'`
     )
     setState({ keyboard: Utils.cleanupOutput(keyboard) })
     setLoading(false)
