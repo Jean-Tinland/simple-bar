@@ -63,7 +63,7 @@ export const Widget = () => {
   const classes = Utils.classnames('mic', { 'mic--dragging': dragging })
 
   return (
-    <DataWidget.Widget classes={classes} disableSlider={true}>
+    <DataWidget.Widget classes={classes} disableSlider>
       <div className="mic__display">
         <Icon />
         <span className="mic__value">{volume}%</span>
