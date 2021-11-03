@@ -42,8 +42,7 @@ const render = ({ output, error }) => {
   const data = Utils.parseJson(output)
   if (!data) return <Error.Component type="noData" classes={baseClasses} />
 
-  const { displays, shadow, SIP, spaces: spacesList } = data
-  const { spaces, windows } = spacesList
+  const { displays, shadow, SIP, spaces, windows } = data
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
   const displayIndex = displays.find((d) => d.id === displayId).index
@@ -55,7 +54,7 @@ const render = ({ output, error }) => {
 
   return (
     <div className={classes}>
-      <Spaces.Component output={spacesList} SIP={SIP} displayIndex={displayIndex} />
+      <Spaces.Component spaces={spaces} windows={windows} SIP={SIP} displayIndex={displayIndex} />
       {processWidget && (
         <Process.Component
           displayIndex={displayIndex}

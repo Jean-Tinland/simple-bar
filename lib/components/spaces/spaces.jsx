@@ -4,21 +4,28 @@ import * as Icons from '../icons.jsx'
 import * as Utils from '../../utils'
 import * as Yabai from '../../yabai'
 import * as Settings from '../../settings'
+
 export { spacesStyles as styles } from '../../styles/components/spaces/spaces'
 
-export const Component = ({ output, SIP, displayIndex }) => {
-  if (!output) return <div className="spaces-display spaces-display--empty" />
-  const { spaces, windows } = output
-  const { displayStickyWindowsSeparately } = Settings.get().spacesDisplay
+const settings = Settings.get()
+const { displayStickyWindowsSeparately } = settings.spacesDisplay
+
+export const Component = ({ spaces, windows, SIP, displayIndex }) => {
+  if (!spaces && !windows) return <div className="spaces-display spaces-display--empty" />
+
   const displays = [...new Set(spaces.map((space) => space.display))]
   const SIPDisabled = SIP !== 'System Integrity Protection status: enabled.'
+
   const { index: currentSpaceIndex } = spaces.find(({ visible, display }) => visible && display === displayIndex)
+
   return displays.map((display, i) => {
     if (display !== displayIndex) return null
+
     const onClick = async (e) => {
       Utils.clickEffect(e)
       await Yabai.createSpace(displayIndex)
     }
+
     return (
       <div key={i} className="spaces">
         {displayStickyWindowsSeparately && <Stickies display={display} windows={windows} />}

@@ -28,7 +28,8 @@ $YABAI_PATH -m signal --add event=window_title_changed action="osascript -e 'tel
 
 echo $(cat <<-EOF
   {
-    "spaces": { "spaces": $SPACES, "windows": $WINDOWS },
+    "spaces": $SPACES,
+    "windows": $WINDOWS,
     "displays": $DISPLAYS,
     "SIP": "$SIP",
     "shadow": "$SHADOW"
