@@ -9,8 +9,11 @@ import * as DataWidgetLoader from './data-widget-loader.jsx'
 export { cryptoStyles as styles } from '../../styles/components/data/crypto'
 
 const settings = Settings.get()
+const { widgets, cryptoWidgetOptions } = settings
+const { refreshFrequency, denomination, identifiers, precision } = cryptoWidgetOptions
 
-const refreshFrequency = 5 * 60 * 1000 // 30 seconds * 1000 milliseconds
+const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000 // 30 seconds * 1000 milliseconds
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getIcon = (identifier) => {
   if (identifier === 'celo') return Icons.Celo
@@ -32,8 +35,6 @@ const openCrypto = (e) => {
 
 export const Widget = () => {
   const ref = Uebersicht.React.useRef()
-  const { widgets, cryptoWidgetOptions } = settings
-  const { denomination, identifiers, precision } = cryptoWidgetOptions
   const denominatorToken = getDenominatorToken(denomination)
   const cleanedUpIdentifiers = identifiers.replace(/ /g, '')
   const enumeratedIdentifiers = cleanedUpIdentifiers.replace(/ /g, '').split(',')
@@ -56,7 +57,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(cryptoWidget, getCrypto, refreshFrequency)
+  useWidgetRefresh(cryptoWidget, getCrypto, REFRESH_FREQUENCY)
 
   const refreshCrypto = (e) => {
     Utils.clickEffect(e)

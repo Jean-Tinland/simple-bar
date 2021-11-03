@@ -8,7 +8,13 @@ import * as Settings from '../../settings'
 
 export { batteryStyles as styles } from '../../styles/components/data/battery'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, batteryWidgetOptions } = settings
+const { batteryWidget } = widgets
+const { refreshFrequency, toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getTransform = (value) => {
   let transform = `0.${value}`
@@ -27,13 +33,7 @@ const toggleCaffeinate = async (caffeinate, option) => {
   }
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, batteryWidgetOptions } = settings
-  const { batteryWidget } = widgets
-  const { toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget)
 
@@ -51,7 +51,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(batteryWidget, getBattery, refreshFrequency)
+  useWidgetRefresh(batteryWidget, getBattery, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />
   if (!state) return null

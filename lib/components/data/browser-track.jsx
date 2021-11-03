@@ -8,7 +8,13 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { browserTrackStyles as styles } from '../../styles/components/data/browser-track'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, browserTrackWidgetOptions } = settings
+const { browserTrackWidget } = widgets
+const { refreshFrequency, showSpecter } = browserTrackWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getIcon = (browser) => {
   if (browser === 'chrome') return Icons.GoogleChrome
@@ -17,13 +23,8 @@ const getIcon = (browser) => {
   return Icons.Default
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
   const ref = Uebersicht.React.useRef()
-  const { widgets, browserTrackWidgetOptions } = settings
-  const { browserTrackWidget } = widgets
-  const { showSpecter } = browserTrackWidgetOptions
 
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(browserTrackWidget)
@@ -48,7 +49,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(browserTrackWidget, getBrowserTrack, refreshFrequency)
+  useWidgetRefresh(browserTrackWidget, getBrowserTrack, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="browser-track" />
   if (!state) return null

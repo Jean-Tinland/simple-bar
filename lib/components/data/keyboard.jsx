@@ -8,13 +8,15 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 20000
-
 const settings = Settings.get()
+const { widgets, keyboardWidgetOptions } = settings
+const { keyboardWidget } = widgets
+const { refreshFrequency } = keyboardWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 20000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 export const Widget = () => {
-  const { keyboardWidget } = settings.widgets
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(keyboardWidget)
 
@@ -26,7 +28,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(keyboardWidget, getKeyboard, refreshFrequency)
+  useWidgetRefresh(keyboardWidget, getKeyboard, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />
   if (!state) return null

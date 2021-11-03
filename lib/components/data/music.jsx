@@ -8,7 +8,13 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { musicStyles as styles } from '../../styles/components/data/music'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, musicWidgetOptions } = settings
+const { musicWidget } = widgets
+const { refreshFrequency, showSpecter } = musicWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const togglePlay = (isPaused, processName) => {
   if (isPaused) {
@@ -18,13 +24,7 @@ const togglePlay = (isPaused, processName) => {
   }
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, musicWidgetOptions } = settings
-  const { musicWidget } = widgets
-  const { showSpecter } = musicWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(musicWidget)
 
@@ -58,7 +58,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(musicWidget, getMusic, refreshFrequency)
+  useWidgetRefresh(musicWidget, getMusic, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="music" />
   if (!state) return null

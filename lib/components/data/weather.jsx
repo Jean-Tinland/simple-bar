@@ -8,7 +8,13 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { weatherStyles as styles } from '../../styles/components/data/weather'
 
-const refreshFrequency = 1000 * 60 * 10
+const settings = Settings.get()
+const { widgets, weatherWidgetOptions } = settings
+const { weatherWidget } = widgets
+const { refreshFrequency, customLocation, unit, hideLocation, hideGradient } = weatherWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getIcon = (description, atNight) => {
   if (description.includes('snow')) return Icons.Snow
@@ -31,13 +37,9 @@ const openWeather = (e) => {
 
 const getPosition = async () => new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve))
 
-const settings = Settings.get()
-
 export const Widget = () => {
   const [state, setState] = Uebersicht.React.useState()
-  const { weatherWidget } = settings.widgets
   const [loading, setLoading] = Uebersicht.React.useState(weatherWidget)
-  const { customLocation } = settings.weatherWidgetOptions
   const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
 
   const getWeather = async () => {
@@ -57,12 +59,11 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(weatherWidget, getWeather, refreshFrequency)
+  useWidgetRefresh(weatherWidget, getWeather, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="weather" />
   if (!state || !state.data.current_condition) return null
 
-  const { unit, hideLocation, hideGradient } = settings.weatherWidgetOptions
   const { temp_C: tempC, temp_F: tempF, weatherDesc } = state.data.current_condition[0]
   const temperature = unit === 'C' ? tempC : tempF
   const wttrUnitParam = unit === 'C' ? '?m' : '?u'

@@ -8,20 +8,20 @@ import * as Settings from '../../settings'
 
 export { timeStyles as styles } from '../../styles/components/data/time'
 
-const refreshFrequency = 1000
+const settings = Settings.get()
+const { widgets, timeWidgetOptions } = settings
+const { timeWidget } = widgets
+const { refreshFrequency, hour12, dayProgress, showSeconds } = timeWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 1000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const displayNotificationCenter = () =>
   Uebersicht.run(
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   )
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, timeWidgetOptions } = settings
-  const { timeWidget } = widgets
-  const { hour12, dayProgress, showSeconds } = timeWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(timeWidget)
 
@@ -38,7 +38,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(timeWidget, getTime, refreshFrequency)
+  useWidgetRefresh(timeWidget, getTime, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="time" />
   if (!state) return null
@@ -58,7 +58,7 @@ export const Widget = () => {
   }
 
   return (
-    <DataWidget.Widget classes="time" Icon={Icons.Clock} onClick={onClick}>
+    <DataWidget.Widget classes="time" Icon={Icons.Clock} onClick={onClick} disableSlider>
       {time}
       {dayProgress && <div className="time__filler" style={{ transform: `scaleX(${fillerWidth})` }} />}
     </DataWidget.Widget>

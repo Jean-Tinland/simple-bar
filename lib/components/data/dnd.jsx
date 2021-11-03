@@ -8,9 +8,13 @@ import * as Settings from '../../settings'
 
 export { dndStyles as styles } from '../../styles/components/data/dnd'
 
-const refreshFrequency = 60000
-
 const settings = Settings.get()
+const { widgets, dndWidgetOptions } = settings
+const { dndWidget } = widgets
+const { refreshFrequency, showDndLabel } = dndWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 60000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const toggleDnd = async (status) => {
   const newStatus = status === 'on' ? 'off' : 'on'
@@ -18,10 +22,6 @@ const toggleDnd = async (status) => {
 }
 
 export const Widget = () => {
-  const { widgets, dndWidgetOptions } = settings
-  const { dndWidget } = widgets
-  const { showDndLabel } = dndWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(dndWidget)
 
@@ -32,7 +32,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(dndWidget, getDnd, refreshFrequency)
+  useWidgetRefresh(dndWidget, getDnd, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="time" />
   if (!state) return null

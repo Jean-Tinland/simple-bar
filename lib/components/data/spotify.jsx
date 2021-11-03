@@ -9,7 +9,13 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { spotifyStyles as styles } from '../../styles/components/data/spotify'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, spotifyWidgetOptions } = settings
+const { spotifyWidget } = widgets
+const { refreshFrequency, showSpecter } = spotifyWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const togglePlay = (isPaused) => {
   const state = isPaused ? 'play' : 'pause'
@@ -22,12 +28,7 @@ const getIcon = (playerState) => {
   return Icons.Paused
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, spotifyWidgetOptions } = settings
-  const { spotifyWidget } = widgets
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(spotifyWidget)
 
@@ -63,12 +64,11 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(spotifyWidget, getSpotify, refreshFrequency)
+  useWidgetRefresh(spotifyWidget, getSpotify, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="spotify" />
   if (!state) return null
   const { playerState, trackName, artistName } = state
-  const { showSpecter } = spotifyWidgetOptions
 
   if (!trackName.length) return null
 
