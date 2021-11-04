@@ -30,7 +30,8 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
     })
   }
 
-  const onChange = (field) => (e) => onWidgetChange(index, field, (e?.target?.checked ?? e?.target?.value) || '')
+  const onChange = (field, chexbox = false) => (e) =>
+    onWidgetChange(index, field, (chexbox ? e?.target?.checked : e?.target?.value) || '')
 
   const onBeforeClick = () => {
     setWidgets((widgets) => {
@@ -128,9 +129,9 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
           />
         </div>
         <div className="user-widget-creator__input-group">
-          <input id={`active-${index}`} type="checkbox" defaultChecked={active} onChange={onChange('active')} />
+          <input id={`active-${index}`} type="checkbox" defaultChecked={active} onChange={onChange('active', true)} />
           <label htmlFor={`active-${index}`}>Active</label>
-          <input id={`no-icon-${index}`} type="checkbox" defaultChecked={noIcon} onChange={onChange('noIcon')} />
+          <input id={`no-icon-${index}`} type="checkbox" defaultChecked={noIcon} onChange={onChange('noIcon', true)} />
           <label htmlFor={`no-icon-${index}`}>No icon</label>
         </div>
       </div>
@@ -150,6 +151,7 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
 
   const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
+    console.log({ index, field, value })
     const newWidgets = { ...widgets }
     const newKeys = Object.keys(newWidgets)
     const updatedWidgets = newKeys.reduce((acc, key, i) => {
