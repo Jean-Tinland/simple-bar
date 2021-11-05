@@ -111,6 +111,7 @@ export const Widget = () => {
       href={`https://wttr.in/${state.location}${wttrUnitParam}`}
       onClick={openWeather}
       onRightClick={onRightClick}
+      disableSlider
     >
       {!hideGradient && <div className="weather__gradient" />}
       {label}
