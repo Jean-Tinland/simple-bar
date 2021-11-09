@@ -21,8 +21,6 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
 
   const indexAsNumber = parseInt(index)
 
-  console.log(active, noIcon)
-
   const onRemoveClick = () => {
     setWidgets((widgets) => {
       const keys = Object.keys(widgets)
@@ -151,7 +149,6 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
 
   const onClick = () => setWidgets((widgets) => ({ ...widgets, [newId]: { ...Settings.userWidgetDefault } }))
   const onWidgetChange = (index, field, value) => {
-    console.log({ index, field, value })
     const newWidgets = { ...widgets }
     const newKeys = Object.keys(newWidgets)
     const updatedWidgets = newKeys.reduce((acc, key, i) => {
