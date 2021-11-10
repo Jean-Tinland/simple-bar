@@ -10,7 +10,6 @@ const settings = Settings.get()
 const { userWidgetsList } = settings.userWidgets
 
 const UserWidget = ({ index, widget }) => {
-  console.log(index)
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
   const {
