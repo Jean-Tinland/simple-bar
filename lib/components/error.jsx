@@ -3,6 +3,7 @@ import * as Utils from '../utils'
 
 const message = {
   error: 'Something went wrong...',
+  yabaiError: 'yabai is not running',
   noOutput: 'Loading...',
   noData: 'JSON error...'
 }
@@ -12,6 +13,10 @@ export const Component = ({ type, classes }) => {
 
   if (type === 'error' || type === 'noData') {
     Utils.refreshSpaces()
+  }
+
+  if (type === 'yabaiError') {
+    setTimeout(Utils.refreshSpaces, 15000)
   }
 
   return (

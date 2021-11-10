@@ -38,6 +38,9 @@ const render = ({ output, error }) => {
     return <Error.Component type="error" classes={baseClasses} />
   }
   if (!output) return <Error.Component type="noOutput" classes={baseClasses} />
+  if (Utils.cleanupOutput(output) === 'yabaiError') {
+    return <Error.Component type="yabaiError" classes={baseClasses} />
+  }
 
   const data = Utils.parseJson(output)
   if (!data) return <Error.Component type="noData" classes={baseClasses} />
