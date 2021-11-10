@@ -24,7 +24,25 @@ export const Widget = () => {
     const keyboard = await Uebersicht.run(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {print $4}'`
     )
-    setState({ keyboard: Utils.cleanupOutput(keyboard) })
+    const layout = Utils.cleanupOutput(keyboard).replace(';', '')
+    if (layout.length) {
+      setState({ keyboard: layout })
+      setLoading(false)
+      return
+    }
+
+    const inputMode = await Uebersicht.run(
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/"Input Mode" =/ {print $4}'`
+    )
+    const cleanedInputMode = Utils.cleanupOutput(inputMode)
+      .replace(/"com.apple.inputmethod.(.*)"/, '$1')
+      .replace(';', '')
+
+    if (!cleanedInputMode.length) return setLoading(false)
+
+    const splitedInputMode = cleanedInputMode.split('.')
+    const inputModeName = splitedInputMode[splitedInputMode.length - 1]
+    setState({ keyboard: inputModeName })
     setLoading(false)
   }
 
@@ -36,11 +54,9 @@ export const Widget = () => {
 
   if (!keyboard?.length) return null
 
-  const formatedOutput = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
-
   return (
     <DataWidget.Widget classes="keyboard" Icon={Icons.Keyboard}>
-      {formatedOutput}
+      {keyboard}
     </DataWidget.Widget>
   )
 }
