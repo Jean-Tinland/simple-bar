@@ -29,32 +29,35 @@ const render = ({ output, error }) => {
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
     'simple-bar--inline-spaces-options': settings.global.inlineSpacesOptions,
-    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForeground
+    'simple-bar--background-color-as-foreground': settings.global.spacesBackgroundColorAsForeground
   })
 
   if (error) {
-    console.log('Error in spaces.jsx', error)
+    // eslint-disable-next-line no-console
+    console.error('Error in spaces.jsx', error)
     return <Error.Component type="error" classes={baseClasses} />
   }
   if (!output) return <Error.Component type="noOutput" classes={baseClasses} />
+  if (Utils.cleanupOutput(output) === 'yabaiError') {
+    return <Error.Component type="yabaiError" classes={baseClasses} />
+  }
 
   const data = Utils.parseJson(output)
   if (!data) return <Error.Component type="noData" classes={baseClasses} />
 
-  const { displays, shadow, SIP, spaces: spacesList } = data
-  const { spaces, windows } = spacesList
+  const { displays, shadow, SIP, spaces, windows } = data
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
   const displayIndex = displays.find((d) => d.id === displayId).index
   const visibleSpaces = spaces.reduce((acc, space) => (space.visible === 1 ? [...acc, space.index] : acc), [])
 
-  const classes = Utils.classnames(baseClasses, {
-    'simple-bar--no-shadow': shadow !== 'on'
-  })
+  const classes = Utils.classnames(baseClasses, { 'simple-bar--no-shadow': shadow !== 'on' })
+
+  Utils.handleBarFocus()
 
   return (
     <div className={classes}>
-      <Spaces.Component output={spacesList} SIP={SIP} displayIndex={displayIndex} />
+      <Spaces.Component spaces={spaces} windows={windows} SIP={SIP} displayIndex={displayIndex} />
       {processWidget && (
         <Process.Component
           displayIndex={displayIndex}

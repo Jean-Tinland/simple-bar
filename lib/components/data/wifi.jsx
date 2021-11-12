@@ -8,7 +8,13 @@ import * as Settings from '../../settings'
 
 export { wifiStyles as styles } from '../../styles/components/data/wifi'
 
-const refreshFrequency = 20000
+const settings = Settings.get()
+const { widgets, networkWidgetOptions } = settings
+const { wifiWidget } = widgets
+const { refreshFrequency, toggleWifiOnClick, networkDevice } = networkWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 20000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
@@ -32,12 +38,7 @@ const renderName = (name) => {
   return name
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { wifiWidget } = settings.widgets
-  const { toggleWifiOnClick, networkDevice } = settings.networkWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(wifiWidget)
 
@@ -50,7 +51,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(wifiWidget, getWifi, refreshFrequency)
+  useWidgetRefresh(wifiWidget, getWifi, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="wifi" />
   if (!state) return null

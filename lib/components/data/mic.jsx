@@ -8,18 +8,20 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { micStyles as styles } from '../../styles/components/data/mic'
 
-const refreshFrequency = 20000
+const settings = Settings.get()
+const { widgets, micWidgetOptions } = settings
+const { micWidget } = widgets
+const { refreshFrequency } = micWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 20000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const setMic = (volume) => {
   if (volume === undefined) return
   Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`)
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { micWidget } = settings.widgets
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(micWidget)
   const { volume: _volume } = state || {}
@@ -32,7 +34,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(micWidget, getMic, refreshFrequency)
+  useWidgetRefresh(micWidget, getMic, REFRESH_FREQUENCY)
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setMic(volume)
@@ -61,7 +63,7 @@ export const Widget = () => {
   const classes = Utils.classnames('mic', { 'mic--dragging': dragging })
 
   return (
-    <DataWidget.Widget classes={classes}>
+    <DataWidget.Widget classes={classes} disableSlider>
       <div className="mic__display">
         <Icon />
         <span className="mic__value">{volume}%</span>

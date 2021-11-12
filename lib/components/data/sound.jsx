@@ -8,7 +8,13 @@ import * as Utils from '../../utils'
 
 export { soundStyles as styles } from '../../styles/components/data/sound'
 
-const refreshFrequency = 20000
+const settings = Settings.get()
+const { widgets, soundWidgetOptions } = settings
+const { soundWidget } = widgets
+const { refreshFrequency } = soundWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 20000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getIcon = (volume, muted) => {
   if (muted === 'true' || !volume) return Icons.VolumeMuted
@@ -22,11 +28,7 @@ const setSound = (volume) => {
   Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`)
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { soundWidget } = settings.widgets
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(soundWidget)
   const { volume: _volume } = state || {}
@@ -42,7 +44,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(soundWidget, getSound, refreshFrequency)
+  useWidgetRefresh(soundWidget, getSound, REFRESH_FREQUENCY)
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setSound(volume)
@@ -74,7 +76,7 @@ export const Widget = () => {
   const classes = Utils.classnames('sound', { 'sound--dragging': dragging })
 
   return (
-    <DataWidget.Widget classes={classes}>
+    <DataWidget.Widget classes={classes} disableSlider>
       <div className="sound__display">
         <Icon />
         <span className="sound__value">{volume}%</span>

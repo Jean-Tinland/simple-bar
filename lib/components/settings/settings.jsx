@@ -53,6 +53,21 @@ const Item = ({ code, Component, defaultValue, label, type, options, placeholder
       </Uebersicht.React.Fragment>
     )
   }
+  if (type === 'number') {
+    return (
+      <Uebersicht.React.Fragment>
+        <label htmlFor={code}>{label}</label>
+        <input
+          id={code}
+          type="number"
+          value={defaultValue}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete="off"
+        />
+      </Uebersicht.React.Fragment>
+    )
+  }
   if (type === 'textarea') {
     return (
       <Uebersicht.React.Fragment>
@@ -90,9 +105,12 @@ const getLastCurrentTab = () => {
 }
 
 export const Wrapper = () => {
-  const [visible, setVisible] = Uebersicht.React.useState()
+  const [visible, setVisible] = Uebersicht.React.useState(false)
 
-  const closeSettings = () => setVisible(false)
+  const closeSettings = () => {
+    setVisible(false)
+    Utils.blurBar()
+  }
 
   const onKeydown = Uebersicht.React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e
@@ -211,7 +229,7 @@ export const Component = ({ closeSettings }) => {
                   const defaultValue = newSettings[key][subKey]
                   const classes = Utils.classnames('settings__item', {
                     'settings__item--radio': type === 'radio',
-                    'settings__item--text': type === 'text',
+                    'settings__item--text': type === 'text' || type === 'number',
                     'settings__item--textarea': type === 'textarea',
                     'settings__item--full-width': fullWidth
                   })

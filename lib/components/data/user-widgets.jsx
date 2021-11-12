@@ -9,7 +9,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 const settings = Settings.get()
 const { userWidgetsList } = settings.userWidgets
 
-const UserWidget = ({ widget }) => {
+const UserWidget = ({ index, widget }) => {
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
   const {
@@ -19,7 +19,9 @@ const UserWidget = ({ widget }) => {
     onClickAction,
     onRightClickAction,
     onMiddleClickAction,
-    refreshFrequency
+    refreshFrequency,
+    active,
+    noIcon
   } = widget
 
   const getUserWidget = async () => {
@@ -34,9 +36,11 @@ const UserWidget = ({ widget }) => {
 
   useWidgetRefresh(true, getUserWidget, refreshFrequency)
 
+  if (!active) return null
+
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor)
 
-  const property = settings.global.backgroundColorAsForeground ? 'color' : 'backgroundColor'
+  const property = settings.global.widgetsBackgroundColorAsForeground ? 'color' : 'backgroundColor'
 
   const style = settings.global.noColorInData
     ? undefined
@@ -44,7 +48,7 @@ const UserWidget = ({ widget }) => {
 
   if (loading) return <DataWidgetLoader.Widget style={style} />
 
-  const Icon = Icons[icon]
+  const Icon = !noIcon ? Icons[icon] : null
 
   const hasOnClickAction = onClickAction?.trim().length > 0
   const hasRightClickAction = onRightClickAction?.trim().length > 0
@@ -72,7 +76,7 @@ const UserWidget = ({ widget }) => {
   }
 
   return (
-    <DataWidget.Widget Icon={Icon} style={style} {...onClickProps}>
+    <DataWidget.Widget classes={`user-widget user-widget--${index}`} Icon={Icon} style={style} {...onClickProps}>
       {state}
     </DataWidget.Widget>
   )
@@ -80,7 +84,7 @@ const UserWidget = ({ widget }) => {
 
 const UserWidgets = () => {
   const keys = Object.keys(userWidgetsList)
-  return keys.map((key) => <UserWidget key={key} widget={userWidgetsList[key]} />)
+  return keys.map((key) => <UserWidget key={key} index={key} widget={userWidgetsList[key]} />)
 }
 
 export default UserWidgets
