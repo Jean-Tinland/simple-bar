@@ -161,7 +161,7 @@ export const Component = ({ closeSettings }) => {
   const onExportClick = async () => {
     const { externalConfigFile } = newSettings.global
     if (externalConfigFile) {
-      await Uebersicht.run(`echo '${JSON.stringify(newSettings)}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
+      await Uebersicht.run(`echo '${JSON.stringify(newSettings).replace(/'/g, "'\"'\"'")}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`)
     }
   }
 
