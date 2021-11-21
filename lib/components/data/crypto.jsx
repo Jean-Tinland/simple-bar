@@ -50,7 +50,7 @@ export const Widget = () => {
     const result = await response.json()
 
     const prices = enumeratedIdentifiers.map((id) => {
-      const value = result[id][denomination].toPrecision(precision)
+      const value = parseFloat(result[id][denomination]).toFixed(precision)
       return `${denominatorToken}${value}`
     })
     setState(prices)
