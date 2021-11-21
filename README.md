@@ -28,12 +28,11 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date.
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports both yabai v3 & yabai v4.
 
 Becareful, for Big Sur users, some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
 
-`simple-bar` has been tested and is working on both Catalina & Big Sur.
-You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.
+`simple-bar` has been tested and is working on both Catalina, Big Sur & Monterey.
 
 **It is important to note that you'll need to use yabai in `bsp` or `stack` layout mode in order to prevent app windows to overlap simple-bar.**
 
