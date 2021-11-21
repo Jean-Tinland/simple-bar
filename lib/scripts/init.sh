@@ -22,6 +22,7 @@ if [ -z "$windows" ]; then
 fi
 
 if [ -z "$displays" ]; then
+  #? displays="[{\"index\": 1}]"
   displays=$($yabai_path -m query --displays)
 fi
 
