@@ -49,10 +49,6 @@ const render = ({ output, error }) => {
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
   const displayIndex = displays.find((d) => d.id === displayId).index
-  const visibleSpaces = spaces.reduce((acc, space) => {
-    const { 'is-visible': isVisible, visible: __legacyIsVisible, index } = space
-    return isVisible ?? __legacyIsVisible ? [...acc, index] : acc
-  }, [])
 
   const classes = Utils.classnames(baseClasses, { 'simple-bar--no-shadow': shadow !== 'on' })
 
@@ -61,14 +57,7 @@ const render = ({ output, error }) => {
   return (
     <div className={classes}>
       <Spaces.Component spaces={spaces} windows={windows} SIP={SIP} displayIndex={displayIndex} />
-      {processWidget && (
-        <Process.Component
-          displayIndex={displayIndex}
-          spaces={spaces}
-          visibleSpaces={visibleSpaces}
-          windows={windows}
-        />
-      )}
+      {processWidget && <Process.Component displayIndex={displayIndex} spaces={spaces} windows={windows} />}
       <Settings.Wrapper />
     </div>
   )

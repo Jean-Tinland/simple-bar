@@ -6,16 +6,13 @@ export { processStyles as styles } from '../../styles/components/process'
 
 const settings = Settings.get()
 
-export const Component = ({ displayIndex, spaces, visibleSpaces, windows }) => {
+export const Component = ({ displayIndex, spaces, windows }) => {
   if (!windows) return null
   const { process, spacesDisplay } = settings
   const { exclusionsAsRegex } = spacesDisplay
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
-  const currentSpace = spaces.find((space) => {
-    const { 'is-visible': isVisible, visible: __legacyIsVisible, display } = space
-    return (isVisible || __legacyIsVisible) && display === displayIndex
-  })
+  const currentSpace = spaces.find((space) => space.display === displayIndex)
   const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround(
     windows,
     false,
