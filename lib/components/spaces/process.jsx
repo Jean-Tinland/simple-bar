@@ -12,12 +12,15 @@ export const Component = ({ displayIndex, spaces, windows }) => {
   const { exclusionsAsRegex } = spacesDisplay
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
-  const currentSpace = spaces.find((space) => space.display === displayIndex)
+  const currentSpace = spaces.find((space) => {
+    const { 'is-visible': isVisible, visible: __legacyIsVisible, display } = space
+    return (isVisible ?? __legacyIsVisible) && display === displayIndex
+  })
   const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround(
     windows,
     false,
     displayIndex,
-    currentSpace.index,
+    currentSpace?.index,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
@@ -28,7 +31,7 @@ export const Component = ({ displayIndex, spaces, windows }) => {
   return (
     <div className="process">
       <div className="process__container">
-        {process.showCurrentSpaceMode && (
+        {process.showCurrentSpaceMode && currentSpace && (
           <div key={currentSpace.index} className="process__layout">
             {currentSpace.type}
           </div>
