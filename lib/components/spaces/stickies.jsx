@@ -9,15 +9,15 @@ const Stickies = ({ display, windows }) => {
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
-  const { stickyWindows: apps } = Utils.stickyWindowWorkaround(
+  const { stickyWindows: apps } = Utils.stickyWindowWorkaround({
     windows,
-    hideDuplicateAppsInSpaces,
-    display,
-    undefined,
+    uniqueApps: hideDuplicateAppsInSpaces,
+    currentDisplay: display,
+    currentSpace: undefined,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
-  )
+  })
 
   if (
     !apps.filter((app) => {

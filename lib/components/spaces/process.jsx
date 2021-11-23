@@ -16,15 +16,15 @@ export const Component = ({ displayIndex, spaces, windows }) => {
     const { 'is-visible': isVisible, visible: __legacyIsVisible, display } = space
     return (isVisible ?? __legacyIsVisible) && display === displayIndex
   })
-  const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround(
+  const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround({
     windows,
-    false,
-    displayIndex,
-    currentSpace?.index,
+    uniqueApps: false,
+    currentDisplay: displayIndex,
+    currentSpace: currentSpace?.index,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
-  )
+  })
 
   const apps = [...stickyWindows, ...nonStickyWindows]
 

@@ -77,15 +77,15 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     Yabai.renameSpace(index, newLabel)
   }
 
-  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround(
+  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround({
     windows,
-    hideDuplicateAppsInSpaces,
-    display,
-    index,
+    uniqueApps: hideDuplicateAppsInSpaces,
+    currentDisplay: display,
+    currentSpace: index,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
-  )
+  })
   const allApps = [...apps, ...stickyWindows]
 
   if (
