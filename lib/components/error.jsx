@@ -12,7 +12,7 @@ export const Component = ({ type, classes }) => {
   const errorClasses = Utils.classnames('simple-bar--empty', classes, { 'simple-bar--loading': type === 'noOutput' })
 
   if (type === 'error' || type === 'noData') {
-    Utils.refreshSpaces()
+    setTimeout(Utils.refreshSpaces, 2000)
   }
 
   if (type === 'yabaiError') {
