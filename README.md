@@ -168,6 +168,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Dnd cli by @joeyhoer [dnd](https://github.com/joeyhoer/dnd)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
+- Gruvbox Material theme adaptation added thanks to [@is0n](https://github.com/is0n)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
 - Solarized Light & Dark themes implementation thanks to [@Joroovb](https://github.com/Joroovb)
 - CodingInSylens theme implementation thanks to [@Sylenss](https://github.com/Sylenss)
