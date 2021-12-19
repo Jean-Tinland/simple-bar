@@ -121,7 +121,7 @@ export const Widget = () => {
           {showCurrency && currencySymbol}
           {showMarketPrice && marketPrice}
         </span>
-        <span className={stockUp && showColor ? 'stockUp' : 'stockDown'}>
+        <span className={showColor ? (stockUp ? 'stockUp' : 'stockDown') : ''}>
           {(showMarketChange || showMarketPercent) && <span>&nbsp;</span>}
           {showMarketChange && formatPriceChange(marketChange)}
           {showMarketPercent && showMarketChange && ` (${formatPriceChange(marketPercentChange)}%)`}
