@@ -11,6 +11,7 @@ import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
 import * as Keyboard from './lib/components/data/keyboard.jsx'
 import * as Spotify from './lib/components/data/spotify.jsx'
 import * as Crypto from './lib/components/data/crypto.jsx'
+import * as Stock from './lib/components/data/stock.jsx'
 import * as Music from './lib/components/data/music.jsx'
 import * as Mpd from './lib/components/data/mpd.jsx'
 import * as BrowserTrack from './lib/components/data/browser-track.jsx'
@@ -33,6 +34,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Time.styles,
   Weather.styles,
   Crypto.styles,
+  Stock.styles,
   Battery.styles,
   Wifi.styles,
   ViscosityVPN.styles,
@@ -64,6 +66,7 @@ const render = () => {
       <BrowserTrack.Widget />
       <Spotify.Widget />
       <Crypto.Widget />
+      <Stock.Widget />
       <Music.Widget />
       <Mpd.Widget />
       <Weather.Widget />
