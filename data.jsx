@@ -7,13 +7,15 @@ import * as Battery from './lib/components/data/battery.jsx'
 import * as Sound from './lib/components/data/sound.jsx'
 import * as Mic from './lib/components/data/mic.jsx'
 import * as Wifi from './lib/components/data/wifi.jsx'
+import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
 import * as Keyboard from './lib/components/data/keyboard.jsx'
 import * as Spotify from './lib/components/data/spotify.jsx'
 import * as Crypto from './lib/components/data/crypto.jsx'
+import * as Stock from './lib/components/data/stock.jsx'
 import * as Music from './lib/components/data/music.jsx'
 import * as Mpd from './lib/components/data/mpd.jsx'
 import * as BrowserTrack from './lib/components/data/browser-track.jsx'
-import * as ViscosityVPN from './lib/components/data/viscosity-vpn.jsx'
+import * as Dnd from './lib/components/data/dnd.jsx'
 import * as Specter from './lib/components/data/specter.jsx'
 import * as DataWidgetLoader from './lib/components/data/data-widget-loader.jsx'
 import * as DataWidget from './lib/components/data/data-widget.jsx'
@@ -32,8 +34,10 @@ Utils.injectStyles('simple-bar-data-styles', [
   Time.styles,
   Weather.styles,
   Crypto.styles,
+  Stock.styles,
   Battery.styles,
   Wifi.styles,
+  ViscosityVPN.styles,
   Keyboard.styles,
   Mic.styles,
   Sound.styles,
@@ -41,7 +45,7 @@ Utils.injectStyles('simple-bar-data-styles', [
   Music.styles,
   Mpd.styles,
   BrowserTrack.styles,
-  ViscosityVPN.styles,
+  Dnd.styles,
   Specter.styles,
   DataWidgetLoader.styles
 ])
@@ -52,7 +56,7 @@ const render = () => {
     'simple-bar--no-color-in-data': settings.global.noColorInData,
     'simple-bar--no-bar-background': settings.global.noBarBg,
     'simple-bar--on-bottom': settings.global.bottomBar,
-    'simple-bar--background-color-as-foreground': settings.global.backgroundColorAsForegroundForWidgets
+    'simple-bar--background-color-as-foreground': settings.global.widgetsBackgroundColorAsForeground
   })
 
   return (
@@ -62,6 +66,7 @@ const render = () => {
       <BrowserTrack.Widget />
       <Spotify.Widget />
       <Crypto.Widget />
+      <Stock.Widget />
       <Music.Widget />
       <Mpd.Widget />
       <Weather.Widget />
@@ -73,6 +78,7 @@ const render = () => {
       <Keyboard.Widget />
       <DateDisplay.Widget />
       <Time.Widget />
+      <Dnd.Widget />
     </div>
   )
 }

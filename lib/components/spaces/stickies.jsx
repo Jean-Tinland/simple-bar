@@ -9,17 +9,23 @@ const Stickies = ({ display, windows }) => {
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
-  const { stickyWindows: apps } = Utils.stickyWindowWorkaround(
+  const { stickyWindows: apps } = Utils.stickyWindowWorkaround({
     windows,
-    hideDuplicateAppsInSpaces,
-    display,
-    undefined,
+    uniqueApps: hideDuplicateAppsInSpaces,
+    currentDisplay: display,
+    currentSpace: undefined,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
-  )
+  })
 
-  if (!apps.filter((app) => app.minimized === 0)?.length) return null
+  if (
+    !apps.filter((app) => {
+      const { 'is-minimized': isMinimized, minimized: __legacyIsMinimized } = app
+      return !(isMinimized || __legacyIsMinimized)
+    })?.length
+  )
+    return null
 
   return (
     <Uebersicht.React.Fragment>

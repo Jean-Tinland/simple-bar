@@ -8,25 +8,45 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 20000
-
 const settings = Settings.get()
+const { widgets, keyboardWidgetOptions } = settings
+const { keyboardWidget } = widgets
+const { refreshFrequency } = keyboardWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 20000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 export const Widget = () => {
-  const { keyboardWidget } = settings.widgets
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(keyboardWidget)
 
   const getKeyboard = async () => {
     const keyboard = await Uebersicht.run(
-      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g'`
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {print $4}'`
     )
-    setState({ keyboard: Utils.cleanupOutput(keyboard) })
+    const layout = Utils.cleanupOutput(keyboard).replace(';', '')
+    if (layout.length) {
+      setState({ keyboard: layout })
+      setLoading(false)
+      return
+    }
+
+    const inputMode = await Uebersicht.run(
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/"Input Mode" =/ {print $4}'`
+    )
+    const cleanedInputMode = Utils.cleanupOutput(inputMode)
+      .replace(/"com.apple.inputmethod.(.*)"/, '$1')
+      .replace(';', '')
+
+    if (!cleanedInputMode.length) return setLoading(false)
+
+    const splitedInputMode = cleanedInputMode.split('.')
+    const inputModeName = splitedInputMode[splitedInputMode.length - 1]
+    setState({ keyboard: inputModeName })
     setLoading(false)
   }
 
-  useWidgetRefresh(keyboardWidget, getKeyboard, refreshFrequency)
+  useWidgetRefresh(keyboardWidget, getKeyboard, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />
   if (!state) return null
@@ -34,11 +54,9 @@ export const Widget = () => {
 
   if (!keyboard?.length) return null
 
-  const formatedOutput = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
-
   return (
     <DataWidget.Widget classes="keyboard" Icon={Icons.Keyboard}>
-      {formatedOutput}
+      {keyboard}
     </DataWidget.Widget>
   )
 }

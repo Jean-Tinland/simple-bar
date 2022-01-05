@@ -8,32 +8,31 @@ Developed by [Jean Tinland](https://www.jeantinland.com).
 
 - 3 themes behaviours: dark, light or automatic (synced with system)
 - Extensible themes system
-- Numerous customisation options (not sticky to top, no background, etc... Try it out in settings)(1)
-- Toggle theme system wide(2)
+- Numerous customisation options (not sticky to top, no background, etc... Try it out in settings) (1)
+- Toggle theme system wide (2)
 - Display workspace number/label & current space
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
 - Show all opened apps (and current) in current space or simply current app name & title
-- Settings module (enable/disable each individual widget: see list below - switch dark/light theme)(1)
-- Spotify, Music/iTunes, browser current track(3)
+- Settings module (enable/disable each individual widget: see list below - switch dark/light theme) (1)
+- Spotify, Music/iTunes, browser current track (3)
 - Battery, microphone, sound level, wifi, date, time widgets
-- Weather & keyboard language input widgets (disabled by default)(4)
-- You can add your own custom widgets in settings(1)
+- Dnd, crypto, weather & keyboard language input widgets (disabled by default) (4)
+- You can add your own custom widgets in settings (1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (1) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
-(2) Press `cmd + t` while focusing **simple-bar**.\
-(3) Currently supported: Google Chrome, Safari & Firefox.\
+(2) Press `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
+(3) Currently supported: Google Chrome (YouTube & Spotify for browser), Brave (YouTube & Spotify for browser), Safari (YouTube) & Firefox (YouTube).\
 (4) You'll be prompted to let Übersicht use you geolocation.
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date.
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports both yabai v3 & yabai v4.
 
 Becareful, for Big Sur users, some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
 
-`simple-bar` has been tested and is working on both Catalina & Big Sur.
-You'll need a screen with a size of 13" at least and with your screen resolution scaled on "More space" setting.
+`simple-bar` has been tested and is working on both Catalina, Big Sur & Monterey.
 
 **It is important to note that you'll need to use yabai in `bsp` or `stack` layout mode in order to prevent app windows to overlap simple-bar.**
 
@@ -157,6 +156,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Pywal integration was added thanks to [@Amar1729](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
 - Crypto widget added thanks to [@yorhodes](https://github.com/yorhodes)
+- Stocks widget added thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
 - Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
@@ -166,8 +166,10 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Native space switching added thanks to [@jming422](https://github.com/jming422)
 - A better spotify process detection added thanks to [@s00500](https://github.com/s00500)
+- Dnd cli by @joeyhoer [dnd](https://github.com/joeyhoer/dnd)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
+- Gruvbox Material theme adaptation added thanks to [@is0n](https://github.com/is0n)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
 - Solarized Light & Dark themes implementation thanks to [@Joroovb](https://github.com/Joroovb)
 - CodingInSylens theme implementation thanks to [@Sylenss](https://github.com/Sylenss)

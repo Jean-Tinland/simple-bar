@@ -13,7 +13,17 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
   const [hovered, setHovered] = Uebersicht.React.useState(false)
   const [noDelay, setNoDelay] = Uebersicht.React.useState(false)
   const [editable, setEditable] = Uebersicht.React.useState(false)
-  const { index, label, focused, visible, 'native-fullscreen': fullscreen, type } = space
+  const {
+    index,
+    label,
+    'has-focus': hasFocus,
+    focused: __legacyHasFocus,
+    'is-visible': isVisible,
+    visible: __legacyIsVisible,
+    'is-native-fullscreen': isNativeFullscreen,
+    'native-fullscreen': __legacyIsNativeFullscreen,
+    type
+  } = space
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
@@ -51,7 +61,7 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
       labelRef.current?.select()
       return
     }
-    if (focused === 1) return
+    if (hasFocus || __legacyHasFocus) return
     if (SIPDisabled && !spacesDisplay.switchSpacesWithoutYabai) {
       Yabai.goToSpace(index)
       return
@@ -70,31 +80,37 @@ const Space = ({ space, display, windows, displayIndex, currentSpaceIndex, SIPDi
     Yabai.renameSpace(index, newLabel)
   }
 
-  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround(
+  const { nonStickyWindows: apps, stickyWindows } = Utils.stickyWindowWorkaround({
     windows,
-    hideDuplicateAppsInSpaces,
-    display,
-    index,
+    uniqueApps: hideDuplicateAppsInSpaces,
+    currentDisplay: display,
+    currentSpace: index,
     exclusions,
     titleExclusions,
     exclusionsAsRegex
-  )
+  })
   const allApps = [...apps, ...stickyWindows]
 
-  if (!focused && !visible && !allApps.length && spacesDisplay.hideEmptySpaces) return null
+  if (
+    !(hasFocus ?? __legacyHasFocus) &&
+    !(isVisible ?? __legacyHasFocus) &&
+    !allApps.length &&
+    spacesDisplay.hideEmptySpaces
+  )
+    return null
 
   const classes = Utils.classnames(`space space--${type}`, {
-    'space--focused': focused === 1,
-    'space--visible': visible === 1,
-    'space--fullscreen': fullscreen === 1,
+    'space--focused': hasFocus ?? __legacyHasFocus,
+    'space--visible': isVisible ?? __legacyIsVisible,
+    'space--fullscreen': isNativeFullscreen ?? __legacyIsNativeFullscreen,
     'space--hovered': hovered,
     'space--no-delay': noDelay,
     'space--empty': allApps.length,
     'space--editable': editable
   })
 
-  const labelSize = typeof spaceLabel === 'number' ? spaceLabel.toString().length : spaceLabel.length
-  const spaceApps = displayStickyWindowsSeparately || hideSticky ? apps : allApps;
+const labelSize = (typeof spaceLabel === 'number' ? spaceLabel.toString() : spaceLabel).length
+const spaceApps = displayStickyWindowsSeparately || hideSticky ? apps : allApps;
 
   return (
     <Uebersicht.React.Fragment>

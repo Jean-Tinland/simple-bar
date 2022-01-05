@@ -8,7 +8,13 @@ import * as Settings from '../../settings'
 
 export { batteryStyles as styles } from '../../styles/components/data/battery'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, batteryWidgetOptions } = settings
+const { batteryWidget } = widgets
+const { refreshFrequency, toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const getTransform = (value) => {
   let transform = `0.${value}`
@@ -17,9 +23,10 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
-const toggleCaffeinate = async (caffeinate, option) => {
+const toggleCaffeinate = async (system, caffeinate, option) => {
+  const command = system === 'x86_64' ? 'caffeinate' : 'arch -arch arm64 caffeinate'
   if (!caffeinate.length) {
-    Uebersicht.run(`caffeinate ${option} &`)
+    Uebersicht.run(`${command} ${option} &`)
     Utils.notification('Enabling caffeinate...')
   } else {
     await Uebersicht.run('pkill -f caffeinate')
@@ -27,23 +34,19 @@ const toggleCaffeinate = async (caffeinate, option) => {
   }
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, batteryWidgetOptions } = settings
-  const { batteryWidget } = widgets
-  const { toggleCaffeinateOnClick, caffeinateOption } = batteryWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget)
 
   const getBattery = async () => {
-    const [percentage, status, caffeinate] = await Promise.all([
+    const [system, percentage, status, caffeinate] = await Promise.all([
+      Utils.getSystem(),
       Uebersicht.run(`pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`),
       Uebersicht.run(`pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`),
       Uebersicht.run(`pgrep caffeinate`)
     ])
     setState({
+      system,
       percentage: parseInt(percentage),
       charging: Utils.cleanupOutput(status) === 'AC',
       caffeinate: Utils.cleanupOutput(caffeinate)
@@ -51,12 +54,12 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(batteryWidget, getBattery, refreshFrequency)
+  useWidgetRefresh(batteryWidget, getBattery, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />
   if (!state) return null
 
-  const { percentage, charging, caffeinate } = state
+  const { system, percentage, charging, caffeinate } = state
   const isLowBattery = !charging && percentage < 20
 
   const classes = Utils.classnames('battery', {
@@ -68,7 +71,7 @@ export const Widget = () => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e)
-    await toggleCaffeinate(caffeinate, caffeinateOption)
+    await toggleCaffeinate(system, caffeinate, caffeinateOption)
     getBattery()
   }
 
@@ -84,8 +87,8 @@ export const Widget = () => {
   )
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} {...onClickProp}>
-      {caffeinate !== '' && <Icons.Coffee className="battery__caffeinate-icon" />}
+    <DataWidget.Widget classes={classes} Icon={Icon} disableSlider {...onClickProp}>
+      {caffeinate.length > 0 && <Icons.Coffee className="battery__caffeinate-icon" />}
       {percentage}%
     </DataWidget.Widget>
   )

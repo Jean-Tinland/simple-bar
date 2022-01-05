@@ -14,7 +14,9 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
     onClickAction,
     onRightClickAction,
     onMiddleClickAction,
-    refreshFrequency
+    refreshFrequency,
+    active = true,
+    noIcon = false
   } = widget
 
   const indexAsNumber = parseInt(index)
@@ -26,7 +28,8 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
     })
   }
 
-  const onChange = (field) => (e) => onWidgetChange(index, field, e?.target?.value || '')
+  const onChange = (field, chexbox = false) => (e) =>
+    onWidgetChange(index, field, (chexbox ? e?.target?.checked : e?.target?.value) || '')
 
   const onBeforeClick = () => {
     setWidgets((widgets) => {
@@ -79,42 +82,56 @@ const UserWidgetCreator = ({ index, isFirst, isLast, onWidgetChange, setWidgets,
             defaultValue={refreshFrequency}
           />
         </div>
-        <label htmlFor={`output-${index}`}>Command/script path:</label>
-        <input
-          className="user-widget-creator__output"
-          onChange={onChange('output')}
-          id={`output-${index}`}
-          type="text"
-          defaultValue={output}
-          spellCheck={false}
-        />
-        <label htmlFor={`on-click-action-${index}`}>On click command/script path:</label>
-        <input
-          className="user-widget-creator__on-click-action"
-          onChange={onChange('onClickAction')}
-          id={`on-click-action-${index}`}
-          type="text"
-          defaultValue={onClickAction}
-          spellCheck={false}
-        />
-        <label htmlFor={`on-right-click-action-${index}`}>On right click command/script path:</label>
-        <input
-          className="user-widget-creator__on-right-click-action"
-          onChange={onChange('onRightClickAction')}
-          id={`on-right-click-action-${index}`}
-          type="text"
-          defaultValue={onRightClickAction}
-          spellCheck={false}
-        />
-        <label htmlFor={`on-Middle-click-action-${index}`}>On middle click command/script path:</label>
-        <input
-          className="user-widget-creator__on-middle-click-action"
-          onChange={onChange('onMiddleClickAction')}
-          id={`on-middle-click-action-${index}`}
-          type="text"
-          defaultValue={onMiddleClickAction}
-          spellCheck={false}
-        />
+        <div className="user-widget-creator__input-group">
+          <label htmlFor={`output-${index}`}>Command/script path: </label>
+          <input
+            className="user-widget-creator__output"
+            onChange={onChange('output')}
+            id={`output-${index}`}
+            type="text"
+            defaultValue={output}
+            spellCheck={false}
+          />
+        </div>
+        <div className="user-widget-creator__input-group">
+          <label htmlFor={`on-click-action-${index}`}>On click command/script path: </label>
+          <input
+            className="user-widget-creator__on-click-action"
+            onChange={onChange('onClickAction')}
+            id={`on-click-action-${index}`}
+            type="text"
+            defaultValue={onClickAction}
+            spellCheck={false}
+          />
+        </div>
+        <div className="user-widget-creator__input-group">
+          <label htmlFor={`on-right-click-action-${index}`}>On right click command/script path: </label>
+          <input
+            className="user-widget-creator__on-right-click-action"
+            onChange={onChange('onRightClickAction')}
+            id={`on-right-click-action-${index}`}
+            type="text"
+            defaultValue={onRightClickAction}
+            spellCheck={false}
+          />
+        </div>
+        <div className="user-widget-creator__input-group">
+          <label htmlFor={`on-middle-click-action-${index}`}>On middle click command/script path: </label>
+          <input
+            className="user-widget-creator__on-middle-click-action"
+            onChange={onChange('onMiddleClickAction')}
+            id={`on-middle-click-action-${index}`}
+            type="text"
+            defaultValue={onMiddleClickAction}
+            spellCheck={false}
+          />
+        </div>
+        <div className="user-widget-creator__input-group">
+          <input id={`active-${index}`} type="checkbox" defaultChecked={active} onChange={onChange('active', true)} />
+          <label htmlFor={`active-${index}`}>Active</label>
+          <input id={`no-icon-${index}`} type="checkbox" defaultChecked={noIcon} onChange={onChange('noIcon', true)} />
+          <label htmlFor={`no-icon-${index}`}>No icon</label>
+        </div>
       </div>
     </div>
   )
