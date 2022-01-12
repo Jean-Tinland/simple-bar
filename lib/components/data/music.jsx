@@ -1,7 +1,6 @@
 import * as Uebersicht from 'uebersicht'
 import * as DataWidget from './data-widget.jsx'
 import * as DataWidgetLoader from './data-widget-loader.jsx'
-import * as Specter from './specter.jsx'
 import * as Icons from '../icons.jsx'
 import * as Settings from '../../settings'
 import * as Utils from '../../utils'
@@ -9,7 +8,13 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { musicStyles as styles } from '../../styles/components/data/music'
 
-const refreshFrequency = 10000
+const settings = Settings.get()
+const { widgets, musicWidgetOptions } = settings
+const { musicWidget } = widgets
+const { refreshFrequency, showSpecter } = musicWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 10000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const togglePlay = (isPaused, processName) => {
   if (isPaused) {
@@ -19,14 +24,7 @@ const togglePlay = (isPaused, processName) => {
   }
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const ref = Uebersicht.React.useRef()
-  const { widgets, musicWidgetOptions } = settings
-  const { musicWidget } = widgets
-  const { showSpecter } = musicWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(musicWidget)
 
@@ -60,7 +58,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(musicWidget, getMusic, refreshFrequency)
+  useWidgetRefresh(musicWidget, getMusic, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="music" />
   if (!state) return null
@@ -86,28 +84,19 @@ export const Widget = () => {
     Uebersicht.run(`open -a '${processName}'`)
     getMusic()
   }
-  const onMouseEnter = () => Utils.startSliding(ref.current, '.music__inner', '.music__slider')
-  const onMouseLeave = () => Utils.stopSliding(ref.current, '.music__slider')
 
   const classes = Utils.classnames('music', { 'music--playing': isPlaying })
 
   return (
     <DataWidget.Widget
-      ref={ref}
       classes={classes}
       Icon={Icon}
       onClick={onClick}
       onRightClick={onRightClick}
       onMiddleClick={onMiddleClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      showSpecter={showSpecter && isPlaying}
     >
-      {showSpecter && isPlaying && <Specter.Widget />}
-      <div className="music__inner">
-        <div className="music__slider">
-          {trackName} - {artistName}
-        </div>
-      </div>
+      {trackName} - {artistName}
     </DataWidget.Widget>
   )
 }

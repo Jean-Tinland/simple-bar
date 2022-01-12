@@ -8,20 +8,20 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { dateStyles as styles } from '../../styles/components/data/date-display'
 
-const refreshFrequency = 1000
+const settings = Settings.get()
+const { widgets, dateWidgetOptions } = settings
+const { dateWidget } = widgets
+const { refreshFrequency, shortDateFormat, locale, calendarApp } = dateWidgetOptions
+
+const DEFAULT_REFRESH_FREQUENCY = 30000
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp || 'Calendar'
   Uebersicht.run(`open -a "${appName}"`)
 }
 
-const settings = Settings.get()
-
 export const Widget = () => {
-  const { widgets, dateWidgetOptions } = settings
-  const { dateWidget } = widgets
-  const { shortDateFormat, locale, calendarApp } = dateWidgetOptions
-
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(dateWidget)
 
@@ -40,7 +40,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(dateWidget, getDate, refreshFrequency)
+  useWidgetRefresh(dateWidget, getDate, REFRESH_FREQUENCY)
 
   if (loading) return <DataWidgetLoader.Widget className="date-display" />
   if (!state) return null
