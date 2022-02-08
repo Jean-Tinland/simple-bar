@@ -21,7 +21,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - You can add your own custom widgets in settings (1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
-(1) Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. More details in [Settings](#settings) section.\
+(1) Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. More details in [Settings](#settings) section.\
 (2) Press `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
 (3) Currently supported: Google Chrome (YouTube & Spotify for browser), Brave (YouTube & Spotify for browser), Safari (YouTube) & Firefox (YouTube).\
 (4) You'll be prompted to let Übersicht use you geolocation.
