@@ -8,7 +8,7 @@ const settings = Settings.get()
 
 const Window = ({ window }) => {
   const ref = Uebersicht.React.useRef()
-  const { displayOnlyCurrent } = settings.process
+  const { displayOnlyCurrent, hideWindowTitle, displayOnlyIcon } = settings.process
   const {
     'is-minimized': isMinimized,
     minimized: __legacyIsMinimized,
@@ -23,7 +23,8 @@ const Window = ({ window }) => {
   const Icon = AppIcons.apps[appName] || AppIcons.apps.Default
   const classes = Utils.classnames('process__window', {
     'process__window--focused': !displayOnlyCurrent && isFocused,
-    'process__window--only-current': displayOnlyCurrent
+    'process__window--only-current': displayOnlyCurrent,
+    'process__window--only-icon': displayOnlyIcon
   })
   const onClick = (e) => {
     !displayOnlyCurrent && Utils.clickEffect(e)
@@ -32,14 +33,13 @@ const Window = ({ window }) => {
   const onMouseEnter = () => Utils.startSliding(ref.current, '.process__inner', '.process__name')
   const onMouseLeave = () => Utils.stopSliding(ref.current, '.process__name')
 
-  const processName = appName !== title && title.length ? `${appName} / ${title}` : appName
+  const cleanedUpName = appName !== title && title.length ? `${appName} / ${title}` : appName
+  const processName = hideWindowTitle ? appName : cleanedUpName
 
   return (
     <button ref={ref} className={classes} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Icon className="process__icon" />
-      <span className="process__inner">
-        <span className="process__name">{processName}</span>
-      </span>
+      <span className="process__inner">{!displayOnlyIcon && <span className="process__name">{processName}</span>}</span>
     </button>
   )
 }
