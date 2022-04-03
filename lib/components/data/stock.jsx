@@ -22,7 +22,7 @@ const {
   showColor
 } = stockWidgetOptions
 
-const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000  // 15 min
+const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000 // 15 min
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
 
 const openStock = (e) => {
@@ -53,13 +53,9 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(stockWidget)
 
   const getStocks = async () => {
-    const response = await fetch(
-      `https://yfapi.net/v6/finance/quote?symbols=${cleanedUpSymbols}`, {
-        headers: new Headers({
-          'x-api-key': yahooFinanceApiKey
-        })
-      }
-    )
+    const response = await fetch(`https://yfapi.net/v6/finance/quote?symbols=${cleanedUpSymbols}`, {
+      headers: new Headers({ 'x-api-key': yahooFinanceApiKey })
+    })
     if (response.status === 429) {
       // Exceeded daily quota
     } else if (response.status === 403) {
@@ -70,13 +66,14 @@ export const Widget = () => {
 
       if (symbolQuotes.length !== enumeratedSymbols.length) {
         // One or more symbols is invalid
-        const receivedSymbols = symbolQuotes.map(s => s.symbol.toLowerCase())
-        const invalidSymbols = enumeratedSymbols.filter(s => !receivedSymbols.includes(s))
+        const receivedSymbols = symbolQuotes.map((s) => s.symbol.toLowerCase())
+        const invalidSymbols = enumeratedSymbols.filter((s) => !receivedSymbols.includes(s))
         Utils.notification('Invalid stock symbol(s): ' + invalidSymbols)
       } else {
         setState({ symbolQuotes })
       }
     } else {
+      // eslint-disable-next-line no-console
       console.error('Unexpected response from Yahoo Finance API: ', response)
     }
 
@@ -91,7 +88,7 @@ export const Widget = () => {
     getStocks()
   }
 
-  if (loading) return <DataWidgetLoader.Widget className='stock' />
+  if (loading) return <DataWidgetLoader.Widget className="stock" />
   if (!state || !state.symbolQuotes) return null
 
   const classes = Utils.classnames('stock')
@@ -117,7 +114,7 @@ export const Widget = () => {
       >
         <span>
           {showSymbol && symbol}
-          {((showCurrency || showMarketPrice) && showSymbol) && <span>&nbsp;</span>}
+          {(showCurrency || showMarketPrice) && showSymbol && <span>&nbsp;</span>}
           {showCurrency && currencySymbol}
           {showMarketPrice && marketPrice}
         </span>

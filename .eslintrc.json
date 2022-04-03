@@ -1,6 +1,6 @@
 {
   "plugins": ["react-hooks"],
-  "extends": ["standard", "prettier", "react-app"],
+  "extends": ["prettier", "react-app"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
