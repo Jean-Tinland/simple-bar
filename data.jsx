@@ -76,9 +76,9 @@ const render = () => {
       <ViscosityVPN.Widget />
       <Wifi.Widget />
       <Keyboard.Widget />
+      <Dnd.Widget />
       <DateDisplay.Widget />
       <Time.Widget />
-      <Dnd.Widget />
     </div>
   )
 }

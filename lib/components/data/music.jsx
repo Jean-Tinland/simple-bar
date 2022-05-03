@@ -87,6 +87,21 @@ export const Widget = () => {
 
   const classes = Utils.classnames('music', { 'music--playing': isPlaying })
 
+  if (trackName === 'unknown track' && artistName === 'unknown artist') {
+    return (
+      <DataWidget.Widget
+        classes={classes}
+        Icon={Icon}
+        onClick={onClick}
+        onRightClick={onRightClick}
+        onMiddleClick={onMiddleClick}
+        showSpecter={showSpecter && isPlaying}
+      >
+        Music Not Launched
+      </DataWidget.Widget>
+    )
+  }
+
   return (
     <DataWidget.Widget
       classes={classes}
