@@ -38,13 +38,15 @@ Becareful, for Big Sur users (and above), some actions must be taken in order to
 
 On the first **simple-bar** execution, an alert should pop on your screen saying that Übersicht want access your browser control (only the first time you launch your favorite browser with **simple-bar** opened). It is required to agree to this in order to make the CurrentTrack widget work.
 
+**_`simple-bar` is optimized for the english language. Icon association is not localized._**
+
 **_`simple-bar` has only be fully tested on several Intel based Macs and is working on Catalina, Big Sur & Monterey. I can't guaranty it will fully work on all M1 Macs._**
 
-**_As of now, mac book with top notch may be subject to display issues if you use the process widget. Among the possible solutions, you can stick `simple-bar` to your bottom screen for now. I plan to fix this issue but like for the others that are happening on the latest mac books I don't have the hardware in order to test/reproduce/fix issues correctly._**
+**_Mac book with top notch may be subject to display issues if you use the process widget: you can now uncheck "Center process widget" in the settings module.._**
 
 ## Preview
 
-![img](./images/preview.jpg)
+![img](./images/preview.png)
 
 You'll find more information & images on [simple-bar website](https://www.simple-bar.com/en/).
 
@@ -66,10 +68,7 @@ There is a setting in the settings module allowing a custom yabai path.
 
 ## Usage
 
-After cloning the project, simply activate both **simple-bar** widgets in Übersicht's widgets list.
-
-- `simple-bar-data-jsx`
-- `simple-bar-spaces-jsx`
+After cloning the project, simply activate **simple-bar** widget in Übersicht's widgets list: `simple-bar-index-jsx`.
 
 ## Settings
 
@@ -144,7 +143,7 @@ export const appIcons = {
 
 If there is no icon defined for a running process, there is a default one which will be used as fallback.
 
-Same as for themes, feel free to open an issue if you have an icon request.
+Same as for themes, feel free to post a message in [this issue](https://github.com/Jean-Tinland/simple-bar/issues/189) if you have an icon request.
 
 ### Override default styles
 
