@@ -28,8 +28,12 @@ export const Component = ({ displayIndex, spaces, windows }) => {
 
   const apps = [...stickyWindows, ...nonStickyWindows]
 
+  const classes = Utils.classnames('process', {
+    'process--centered': process.centered
+  })
+
   return (
-    <div className="process">
+    <div className={classes}>
       <div className="process__container">
         {process.showCurrentSpaceMode && currentSpace && (
           <div key={currentSpace.index} className="process__layout">
