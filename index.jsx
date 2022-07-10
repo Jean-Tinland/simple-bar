@@ -89,7 +89,9 @@ const render = ({ output, error }) => {
   const { displays, shadow, SIP, spaces, windows } = data
 
   const displayId = parseInt(window.location.pathname.replace('/', ''))
-  const displayIndex = displays.find((d) => d.id === displayId).index
+  const { index: displayIndex } = displays.find((d) => {
+    return d.id === displayId
+  })
 
   const classes = Utils.classnames(baseClasses, { 'simple-bar--no-shadow': shadow !== 'on' })
 
