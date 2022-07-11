@@ -178,4 +178,5 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Sylens theme implementation thanks to [@Sylenss](https://github.com/Sylenss)
 - SpaceDuck theme implementation thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Cisco theme implementation thanks to [@mrzone64](https://github.com/mrzone64)
+- Material theme implementation thanks to [@devinbhatt](https://github.com/devinbhatt)
 - Everyone opening issues that are helping me improve this little project by adding icons, fixing what they can, and every other things...
