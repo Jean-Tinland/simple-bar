@@ -12,16 +12,16 @@ export const Component = ({ type, classes }) => {
   const errorClasses = Utils.classnames('simple-bar--empty', classes, { 'simple-bar--loading': type === 'noOutput' })
 
   if (type === 'error' || type === 'noData') {
-    setTimeout(Utils.refreshSpaces, 2000)
+    setTimeout(Utils.softRefresh, 2000)
   }
 
   if (type === 'yabaiError') {
-    setTimeout(Utils.refreshSpaces, 15000)
+    setTimeout(Utils.softRefresh, 15000)
   }
 
   return (
     <div className={errorClasses}>
-      <span>simple-bar-spaces.jsx: {message[type]}</span>
+      <span>simple-bar-index.jsx: {message[type]}</span>
       <Settings.Wrapper />
     </div>
   )

@@ -35,7 +35,7 @@ const { processWidget } = settings.widgets
 
 const command = `${shell} simple-bar/lib/scripts/init.sh ${yabaiPath}`
 
-Utils.injectStyles('simple-bar-spaces-styles', [
+Utils.injectStyles('simple-bar-index-styles', [
   Variables.styles,
   Base.styles,
   Spaces.styles,
