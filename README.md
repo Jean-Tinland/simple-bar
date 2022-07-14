@@ -2,6 +2,8 @@
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
 
+Special thanks to the whole simple-bar team for making this. I just modified some stuff to make a m1 fork lol
+
 IMPORTANT: THIS ONLY WORKS ON M1 MACS INTEL IS NOT SUPPORTED. 
 9for intel version go to https://github.com/Jean-Tinland/simple-bar
 
