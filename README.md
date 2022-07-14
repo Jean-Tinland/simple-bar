@@ -43,7 +43,7 @@ On the first **simple-bar** execution, an alert should pop on your screen saying
 
 **_`simple-bar` is optimized for the english language. Icon association is not localized._**
 
-**_`simple-bar` has only be fully tested on several Intel based Macs and is working on Catalina, Big Sur & Monterey. I can't guaranty it will fully work on all M1 Macs._**
+
 
 **_Mac book with top notch may be subject to display issues if you use the process widget: you can now uncheck "Center process widget" in the settings module.._**
 
@@ -178,6 +178,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Gruvbox Material theme adaptation added thanks to [@is0n](https://github.com/is0n)
 - Amarena Dark theme implementation thanks to [@MikoMagni](https://github.com/MikoMagni)
 - Solarized Light & Dark themes implementation thanks to [@Joroovb](https://github.com/Joroovb)
+- M1 implementation thank to[@Gitmaster511] (https://github.com/Gitmaster511)
 - Sylens theme implementation thanks to [@Sylenss](https://github.com/Sylenss)
 - SpaceDuck theme implementation thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Cisco theme implementation thanks to [@mrzone64](https://github.com/mrzone64)
