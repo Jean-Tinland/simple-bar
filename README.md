@@ -2,9 +2,10 @@
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
 
-⚠️ **As I do not pocess a M1 mac book I can't solve any issue happening on these models. Feel free to open some pull requests if you want to help me about these. See "Compatibility & requirements" section for more information.** ⚠️
+IMPORTANT: THIS ONLY WORKS ON M1 MACS INTEL IS NOT SUPPORTED. 
+9for intel version go to https://github.com/Jean-Tinland/simple-bar
 
-A more "lite" & less ressource greedy version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
+
 
 ## Features
 
