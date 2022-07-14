@@ -58,7 +58,7 @@ You'll find more information & images on [simple-bar website](https://www.simple
 Clone this repo to your Übersicht widgets directory with the following command.
 
 ```bash
-$ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+$ git clone https://github.com/Gitmaster511/simple-bar-m1 $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
 **Becareful, the folder containing the widget must be name `simple-bar`, otherwise, simple-bar will never launch.**
