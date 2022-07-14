@@ -5,7 +5,7 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 Special thanks to the whole simple-bar team for making this. I just modified some stuff to make a m1 fork lol
 
 IMPORTANT: THIS ONLY WORKS ON M1 MACS INTEL IS NOT SUPPORTED. 
-9for intel version go to https://github.com/Jean-Tinland/simple-bar
+(for intel version go to https://github.com/Jean-Tinland/simple-bar which is the orignal fork)
 
 
 
