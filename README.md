@@ -72,7 +72,7 @@ After cloning the project, simply activate **simple-bar** widget in Übersicht's
 
 ## Settings
 
-As explained at the begining of this README file, Settings can be opened by pressing `cmd + ,` after cliking on **simple-bar** widget. You may want to click at the top center of the screen, where the process name of the current app is displayed in order to easily get focus on **simple-bar** before pressing `cmd + ,`.
+As explained at the begining of this README file, Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. You may want to click at the top center of the screen, where the process name of the current app is displayed in order to easily get focus on **simple-bar** before pressing `cmd + ,`.
 
 In this settings module you'll find all the customization options available from layout to specific widgets show/hide toggle.
 
