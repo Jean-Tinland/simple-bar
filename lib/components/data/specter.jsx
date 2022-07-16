@@ -1,4 +1,4 @@
-export { specterStyles as styles } from '../../styles/components/data/specter'
+export { specterStyles as styles } from "../../styles/components/data/specter";
 
 export const Widget = () => {
   return (
@@ -7,5 +7,5 @@ export const Widget = () => {
         <span key={i} />
       ))}
     </div>
-  )
-}
+  );
+};

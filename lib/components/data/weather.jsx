@@ -1,108 +1,130 @@
-import * as Uebersicht from 'uebersicht'
-import * as DataWidget from './data-widget.jsx'
-import * as DataWidgetLoader from './data-widget-loader.jsx'
-import * as Icons from '../icons.jsx'
-import * as Utils from '../../utils'
-import * as Settings from '../../settings'
-import useWidgetRefresh from '../../hooks/use-widget-refresh'
+import * as Uebersicht from "uebersicht";
+import * as DataWidget from "./data-widget.jsx";
+import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons.jsx";
+import * as Utils from "../../utils";
+import * as Settings from "../../settings";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
 
-export { weatherStyles as styles } from '../../styles/components/data/weather'
+export { weatherStyles as styles } from "../../styles/components/data/weather";
 
-const settings = Settings.get()
-const { widgets, weatherWidgetOptions } = settings
-const { weatherWidget } = widgets
-const { refreshFrequency, customLocation, unit, hideLocation, hideGradient } = weatherWidgetOptions
+const settings = Settings.get();
+const { widgets, weatherWidgetOptions } = settings;
+const { weatherWidget } = widgets;
+const { refreshFrequency, customLocation, unit, hideLocation, hideGradient } =
+  weatherWidgetOptions;
 
-const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
+const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30;
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
+  refreshFrequency,
+  DEFAULT_REFRESH_FREQUENCY
+);
 
 const getIcon = (description, atNight) => {
-  if (description.includes('snow')) return Icons.Snow
-  if (description.includes('rain')) return Icons.Rain
-  if (description.includes('cloud')) return Icons.Cloud
-  if (atNight) return Icons.Moon
-  return Icons.Sun
-}
+  if (description.includes("snow")) return Icons.Snow;
+  if (description.includes("rain")) return Icons.Rain;
+  if (description.includes("cloud")) return Icons.Cloud;
+  if (atNight) return Icons.Moon;
+  return Icons.Sun;
+};
 
 const getLabel = (location, temperature, unit, hideLocation) => {
-  if (!location) return 'Fetching...'
-  if (hideLocation) return `${temperature}°${unit}`
-  return `${location}, ${temperature}°${unit}`
-}
+  if (!location) return "Fetching...";
+  if (hideLocation) return `${temperature}°${unit}`;
+  return `${location}, ${temperature}°${unit}`;
+};
 
 const openWeather = (e) => {
-  Utils.clickEffect(e)
-  Utils.notification('Opening forecast from wttr.in...')
-}
+  Utils.clickEffect(e);
+  Utils.notification("Opening forecast from wttr.in...");
+};
 
-const getPosition = async () => new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve))
+const getPosition = async () =>
+  new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve));
 
 export const Widget = () => {
-  const [state, setState] = Uebersicht.React.useState()
-  const [loading, setLoading] = Uebersicht.React.useState(weatherWidget)
-  const userLocation = weatherWidget && customLocation.length ? customLocation : undefined
+  const [state, setState] = Uebersicht.React.useState();
+  const [loading, setLoading] = Uebersicht.React.useState(weatherWidget);
+  const userLocation =
+    weatherWidget && customLocation.length ? customLocation : undefined;
 
   const getWeather = async () => {
-    let location = userLocation
+    let location = userLocation;
     if (!userLocation) {
-      const position = await Promise.race([getPosition(), Utils.timeout(5000)])
-      if (!position) getWeather()
-      location = position?.address?.city
+      const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
+      if (!position) getWeather();
+      location = position?.address?.city;
     }
     if (!location) {
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-    const result = await fetch(`https://wttr.in/${location}?format=j1`)
-    const data = await result.json()
-    setState({ location, data })
-    setLoading(false)
-  }
+    const result = await fetch(`https://wttr.in/${location}?format=j1`);
+    const data = await result.json();
+    setState({ location, data });
+    setLoading(false);
+  };
 
-  useWidgetRefresh(weatherWidget, getWeather, REFRESH_FREQUENCY)
+  useWidgetRefresh(weatherWidget, getWeather, REFRESH_FREQUENCY);
 
-  if (loading) return <DataWidgetLoader.Widget className="weather" />
-  if (!state || !state.data.current_condition) return null
+  if (loading) return <DataWidgetLoader.Widget className="weather" />;
+  if (!state || !state.data.current_condition) return null;
 
-  const { temp_C: tempC, temp_F: tempF, weatherDesc } = state.data.current_condition[0]
-  const temperature = unit === 'C' ? tempC : tempF
-  const wttrUnitParam = unit === 'C' ? '?m' : '?u'
+  const {
+    temp_C: tempC,
+    temp_F: tempF,
+    weatherDesc,
+  } = state.data.current_condition[0];
+  const temperature = unit === "C" ? tempC : tempF;
+  const wttrUnitParam = unit === "C" ? "?m" : "?u";
 
-  const description = weatherDesc[0].value
+  const description = weatherDesc[0].value;
 
-  const { astronomy } = state.data.weather[0]
-  const sunriseData = astronomy[0].sunrise.replace(' AM', '').split(':')
-  const sunsetData = astronomy[0].sunset.replace(' PM', '').split(':')
+  const { astronomy } = state.data.weather[0];
+  const sunriseData = astronomy[0].sunrise.replace(" AM", "").split(":");
+  const sunsetData = astronomy[0].sunset.replace(" PM", "").split(":");
 
-  const now = new Date()
-  const nowIntervalStart = new Date()
-  nowIntervalStart.setHours(nowIntervalStart.getHours() - 1)
-  const nowIntervalStop = new Date()
-  nowIntervalStop.setHours(nowIntervalStop.getHours() + 1)
-  const sunriseTime = new Date()
-  sunriseTime.setHours(parseInt(sunriseData[0]), parseInt(sunriseData[1]), 0, 0)
-  const sunsetTime = new Date()
-  sunsetTime.setHours(parseInt(sunsetData[0]) + 12, parseInt(sunsetData[1]), 0, 0)
+  const now = new Date();
+  const nowIntervalStart = new Date();
+  nowIntervalStart.setHours(nowIntervalStart.getHours() - 1);
+  const nowIntervalStop = new Date();
+  nowIntervalStop.setHours(nowIntervalStop.getHours() + 1);
+  const sunriseTime = new Date();
+  sunriseTime.setHours(
+    parseInt(sunriseData[0]),
+    parseInt(sunriseData[1]),
+    0,
+    0
+  );
+  const sunsetTime = new Date();
+  sunsetTime.setHours(
+    parseInt(sunsetData[0]) + 12,
+    parseInt(sunsetData[1]),
+    0,
+    0
+  );
 
-  const atNight = sunriseTime >= now || now >= sunsetTime
+  const atNight = sunriseTime >= now || now >= sunsetTime;
 
-  const Icon = getIcon(description, atNight)
-  const label = getLabel(state.location, temperature, unit, hideLocation)
+  const Icon = getIcon(description, atNight);
+  const label = getLabel(state.location, temperature, unit, hideLocation);
 
-  const sunrising = sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop
-  const sunsetting = sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop
+  const sunrising =
+    sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop;
+  const sunsetting =
+    sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop;
 
   const onRightClick = (e) => {
-    Utils.clickEffect(e)
-    setLoading(true)
-    getWeather()
-    Utils.notification('Refreshing forecast from wttr.in...')
-  }
+    Utils.clickEffect(e);
+    setLoading(true);
+    getWeather();
+    Utils.notification("Refreshing forecast from wttr.in...");
+  };
 
-  const classes = Utils.classnames('weather', {
-    'weather--sunrise': sunrising,
-    'weather--sunset': sunsetting
-  })
+  const classes = Utils.classnames("weather", {
+    "weather--sunrise": sunrising,
+    "weather--sunset": sunsetting,
+  });
 
   return (
     <DataWidget.Widget
@@ -116,5 +138,5 @@ export const Widget = () => {
       {!hideGradient && <div className="weather__gradient" />}
       {label}
     </DataWidget.Widget>
-  )
-}
+  );
+};

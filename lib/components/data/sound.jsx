@@ -1,79 +1,91 @@
-import * as Uebersicht from 'uebersicht'
-import * as DataWidget from './data-widget.jsx'
-import * as DataWidgetLoader from './data-widget-loader.jsx'
-import * as Icons from '../icons.jsx'
-import useWidgetRefresh from '../../hooks/use-widget-refresh'
-import * as Settings from '../../settings'
-import * as Utils from '../../utils'
+import * as Uebersicht from "uebersicht";
+import * as DataWidget from "./data-widget.jsx";
+import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import * as Settings from "../../settings";
+import * as Utils from "../../utils";
 
-export { soundStyles as styles } from '../../styles/components/data/sound'
+export { soundStyles as styles } from "../../styles/components/data/sound";
 
-const settings = Settings.get()
-const { widgets, soundWidgetOptions } = settings
-const { soundWidget } = widgets
-const { refreshFrequency } = soundWidgetOptions
+const settings = Settings.get();
+const { widgets, soundWidgetOptions } = settings;
+const { soundWidget } = widgets;
+const { refreshFrequency } = soundWidgetOptions;
 
-const DEFAULT_REFRESH_FREQUENCY = 20000
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
+const DEFAULT_REFRESH_FREQUENCY = 20000;
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
+  refreshFrequency,
+  DEFAULT_REFRESH_FREQUENCY
+);
 
 const getIcon = (volume, muted) => {
-  if (muted === 'true' || !volume) return Icons.VolumeMuted
-  if (volume < 20) return Icons.NoVolume
-  if (volume < 50) return Icons.VolumeLow
-  return Icons.VolumeHigh
-}
+  if (muted === "true" || !volume) return Icons.VolumeMuted;
+  if (volume < 20) return Icons.NoVolume;
+  if (volume < 50) return Icons.VolumeLow;
+  return Icons.VolumeHigh;
+};
 
 const setSound = (volume) => {
-  if (volume === undefined) return
-  Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`)
-}
+  if (volume === undefined) return;
+  Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
+};
 
 export const Widget = () => {
-  const [state, setState] = Uebersicht.React.useState()
-  const [loading, setLoading] = Uebersicht.React.useState(soundWidget)
-  const { volume: _volume } = state || {}
-  const [volume, setVolume] = Uebersicht.React.useState(_volume && parseInt(_volume))
-  const [dragging, setDragging] = Uebersicht.React.useState(false)
+  const [state, setState] = Uebersicht.React.useState();
+  const [loading, setLoading] = Uebersicht.React.useState(soundWidget);
+  const { volume: _volume } = state || {};
+  const [volume, setVolume] = Uebersicht.React.useState(
+    _volume && parseInt(_volume)
+  );
+  const [dragging, setDragging] = Uebersicht.React.useState(false);
 
   const getSound = async () => {
     const [volume, muted] = await Promise.all([
-      Uebersicht.run(`osascript -e 'set ovol to output volume of (get volume settings)'`),
-      Uebersicht.run(`osascript -e 'set ovol to output muted of (get volume settings)'`)
-    ])
-    setState({ volume: Utils.cleanupOutput(volume), muted: Utils.cleanupOutput(muted) })
-    setLoading(false)
-  }
+      Uebersicht.run(
+        `osascript -e 'set ovol to output volume of (get volume settings)'`
+      ),
+      Uebersicht.run(
+        `osascript -e 'set ovol to output muted of (get volume settings)'`
+      ),
+    ]);
+    setState({
+      volume: Utils.cleanupOutput(volume),
+      muted: Utils.cleanupOutput(muted),
+    });
+    setLoading(false);
+  };
 
-  useWidgetRefresh(soundWidget, getSound, REFRESH_FREQUENCY)
+  useWidgetRefresh(soundWidget, getSound, REFRESH_FREQUENCY);
 
   Uebersicht.React.useEffect(() => {
-    if (!dragging) setSound(volume)
-  }, [dragging])
+    if (!dragging) setSound(volume);
+  }, [dragging]);
 
   Uebersicht.React.useEffect(() => {
     if (_volume && parseInt(_volume) !== volume) {
-      setVolume(parseInt(_volume))
+      setVolume(parseInt(_volume));
     }
-  }, [_volume])
+  }, [_volume]);
 
-  if (loading) return <DataWidgetLoader.Widget className="sound" />
-  if (!state || volume === undefined) return null
+  if (loading) return <DataWidgetLoader.Widget className="sound" />;
+  if (!state || volume === undefined) return null;
 
-  const { muted } = state
-  if (_volume === 'missing value' || muted === 'missing value') return null
+  const { muted } = state;
+  if (_volume === "missing value" || muted === "missing value") return null;
 
-  const Icon = getIcon(volume, muted)
+  const Icon = getIcon(volume, muted);
 
   const onChange = (e) => {
-    const value = parseInt(e.target.value)
-    setVolume(value)
-  }
-  const onMouseDown = () => setDragging(true)
-  const onMouseUp = () => setDragging(false)
+    const value = parseInt(e.target.value);
+    setVolume(value);
+  };
+  const onMouseDown = () => setDragging(true);
+  const onMouseUp = () => setDragging(false);
 
-  const fillerWidth = !volume ? volume : volume / 100 + 0.05
+  const fillerWidth = !volume ? volume : volume / 100 + 0.05;
 
-  const classes = Utils.classnames('sound', { 'sound--dragging': dragging })
+  const classes = Utils.classnames("sound", { "sound--dragging": dragging });
 
   return (
     <DataWidget.Widget classes={classes} disableSlider>
@@ -93,8 +105,11 @@ export const Widget = () => {
           onMouseUp={onMouseUp}
           onChange={onChange}
         />
-        <div className="sound__slider-filler" style={{ transform: `scaleX(${fillerWidth})` }} />
+        <div
+          className="sound__slider-filler"
+          style={{ transform: `scaleX(${fillerWidth})` }}
+        />
       </div>
     </DataWidget.Widget>
-  )
-}
+  );
+};

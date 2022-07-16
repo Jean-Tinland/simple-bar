@@ -1,74 +1,83 @@
-import * as Uebersicht from 'uebersicht'
-import * as DataWidget from './data-widget.jsx'
-import * as DataWidgetLoader from './data-widget-loader.jsx'
-import * as Icons from '../icons.jsx'
-import useWidgetRefresh from '../../hooks/use-widget-refresh'
-import * as Utils from '../../utils'
-import * as Settings from '../../settings'
+import * as Uebersicht from "uebersicht";
+import * as DataWidget from "./data-widget.jsx";
+import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import * as Utils from "../../utils";
+import * as Settings from "../../settings";
 
-export { wifiStyles as styles } from '../../styles/components/data/wifi'
+export { wifiStyles as styles } from "../../styles/components/data/wifi";
 
-const settings = Settings.get()
-const { widgets, networkWidgetOptions } = settings
-const { wifiWidget } = widgets
-const { refreshFrequency, toggleWifiOnClick, networkDevice } = networkWidgetOptions
+const settings = Settings.get();
+const { widgets, networkWidgetOptions } = settings;
+const { wifiWidget } = widgets;
+const { refreshFrequency, toggleWifiOnClick, networkDevice } =
+  networkWidgetOptions;
 
-const DEFAULT_REFRESH_FREQUENCY = 20000
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY)
+const DEFAULT_REFRESH_FREQUENCY = 20000;
+const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
+  refreshFrequency,
+  DEFAULT_REFRESH_FREQUENCY
+);
 
 const toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
-    Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`)
-    Utils.notification('Disabling network...')
+    Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
+    Utils.notification("Disabling network...");
   } else {
-    Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`)
-    Utils.notification('Enabling network...')
+    Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`);
+    Utils.notification("Enabling network...");
   }
-}
+};
 
 const openWifiPreferences = (e) => {
-  Utils.clickEffect(e)
-  Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`)
-}
+  Utils.clickEffect(e);
+  Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`);
+};
 
 const renderName = (name) => {
-  if (!name) return ''
-  if (name === 'with an AirPort network.y off.') return 'Disabled'
-  if (name === 'with an AirPort network.') return 'Searching...'
-  return name
-}
+  if (!name) return "";
+  if (name === "with an AirPort network.y off.") return "Disabled";
+  if (name === "with an AirPort network.") return "Searching...";
+  return name;
+};
 
 export const Widget = () => {
-  const [state, setState] = Uebersicht.React.useState()
-  const [loading, setLoading] = Uebersicht.React.useState(wifiWidget)
+  const [state, setState] = Uebersicht.React.useState();
+  const [loading, setLoading] = Uebersicht.React.useState(wifiWidget);
 
   const getWifi = async () => {
     const [status, ssid] = await Promise.all([
       Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
-      Uebersicht.run(`networksetup -getairportnetwork ${networkDevice} | cut -c 24-`)
-    ])
-    setState({ status: Utils.cleanupOutput(status), ssid: Utils.cleanupOutput(ssid) })
-    setLoading(false)
-  }
+      Uebersicht.run(
+        `networksetup -getairportnetwork ${networkDevice} | cut -c 24-`
+      ),
+    ]);
+    setState({
+      status: Utils.cleanupOutput(status),
+      ssid: Utils.cleanupOutput(ssid),
+    });
+    setLoading(false);
+  };
 
-  useWidgetRefresh(wifiWidget, getWifi, REFRESH_FREQUENCY)
+  useWidgetRefresh(wifiWidget, getWifi, REFRESH_FREQUENCY);
 
-  if (loading) return <DataWidgetLoader.Widget className="wifi" />
-  if (!state) return null
+  if (loading) return <DataWidgetLoader.Widget className="wifi" />;
+  if (!state) return null;
 
-  const { status, ssid } = state
-  const isActive = status === 'active'
-  const name = renderName(ssid)
+  const { status, ssid } = state;
+  const isActive = status === "active";
+  const name = renderName(ssid);
 
-  const classes = Utils.classnames('wifi', { 'wifi--inactive': !isActive })
+  const classes = Utils.classnames("wifi", { "wifi--inactive": !isActive });
 
-  const Icon = isActive ? Icons.Wifi : Icons.WifiOff
+  const Icon = isActive ? Icons.Wifi : Icons.WifiOff;
 
   const onClick = (e) => {
-    Utils.clickEffect(e)
-    toggleWifi(isActive, networkDevice)
-    getWifi()
-  }
+    Utils.clickEffect(e);
+    toggleWifi(isActive, networkDevice);
+    getWifi();
+  };
 
   return (
     <DataWidget.Widget
@@ -79,5 +88,5 @@ export const Widget = () => {
     >
       {name}
     </DataWidget.Widget>
-  )
-}
+  );
+};
