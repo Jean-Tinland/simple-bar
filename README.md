@@ -1,6 +1,6 @@
 # <img src="./images/logo-simple-bar.png" width="200" alt="simple-bar" />
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://jean-tinland.github.io/simple-bar-website/).
 
 ⚠️ **As I do not pocess a M1 mac book I can't solve any issue happening on these models. Feel free to open some pull requests if you want to help me about these. See "Compatibility & requirements" section for more information.** ⚠️
 
