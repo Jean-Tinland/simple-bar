@@ -62,6 +62,14 @@ $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application
 
 [JetBrains Mono](https://www.jetbrains.com/lp/mono/) is used by default. You can set your own font in the "Global" settings tab.
 
+### For users having the latest ARM64 chipset devices (M1 and M2 variants)
+
+Yabai is installed by default in `/opt/homebrew/bin/yabai` path for arm64 chipset devices. In order to use simple-bar without having any errors, create a symbolic link of yabai's binary using the command provided below for simple-bar to work properly.
+
+```bash
+ln -s /opt/homebrew/bin/yabai /usr/local/bin/yabai
+```
+
 ### For users with a custom yabai install (path)
 
 There is a setting in the settings module allowing a custom yabai path.
