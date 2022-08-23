@@ -187,4 +187,5 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - SpaceDuck theme implementation thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Cisco theme implementation thanks to [@mrzone64](https://github.com/mrzone64)
 - Material theme implementation thanks to [@devinbhatt](https://github.com/devinbhatt)
+- Night Owl theme implementation thanks to [@mdwitr0](https://github.com/mdwitr0)
 - Everyone opening issues that are helping me improve this little project by adding icons, fixing what they can, and every other things...
