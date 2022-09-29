@@ -27,8 +27,8 @@ const togglePlay = (isPaused) => {
 
 const getIcon = (playerState) => {
   if (playerState === "stopped") return Icons.Stopped;
-  if (playerState === "playing") return Icons.Playing;
-  return Icons.Paused;
+  if (playerState === "playing") return Icons.Paused;
+  return Icons.Playing;
 };
 
 export const Widget = () => {
