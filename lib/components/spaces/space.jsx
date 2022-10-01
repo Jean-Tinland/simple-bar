@@ -146,7 +146,7 @@ const Space = ({
             className="space__label"
             onChange={onChange}
             value={spaceLabel}
-            style={{ width: `${labelSize}ch` }}
+            style={{ width: `${labelSize}em` }}
             readOnly={!editable}
           />
           <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
