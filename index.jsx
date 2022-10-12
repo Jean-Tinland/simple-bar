@@ -70,8 +70,6 @@ const render = ({ output, error }) => {
     "simple-bar--no-bar-background": settings.global.noBarBg,
     "simple-bar--on-bottom": settings.global.bottomBar,
     "simple-bar--inline-spaces-options": settings.global.inlineSpacesOptions,
-    "simple-bar--background-color-as-foreground":
-      settings.global.spacesBackgroundColorAsForeground,
     "simple-bar--spaces-background-color-as-foreground":
       settings.global.spacesBackgroundColorAsForeground,
     "simple-bar--widgets-background-color-as-foreground":

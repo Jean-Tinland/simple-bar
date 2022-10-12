@@ -8,7 +8,8 @@ import * as Settings from "../../settings";
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
 const settings = Settings.get();
-const { displayStickyWindowsSeparately } = settings.spacesDisplay;
+const { displayStickyWindowsSeparately, spacesExclusions, exclusionsAsRegex } =
+  settings.spacesDisplay;
 
 export const Component = ({ spaces, windows, SIP, displayIndex }) => {
   if (!spaces && !windows)
@@ -39,9 +40,19 @@ export const Component = ({ spaces, windows, SIP, displayIndex }) => {
           const { label, index } = space;
           const lastOfSpace =
             i !== 0 && space.display !== spaces[i - 1].display;
+
+          const key = label?.length ? label : index;
+          const isExcluded = Utils.isSpaceExcluded(
+            key,
+            spacesExclusions,
+            exclusionsAsRegex
+          );
+
+          if (isExcluded) return null;
+
           return (
             <Space
-              key={label?.length ? label : index}
+              key={key}
               display={display}
               space={space}
               windows={windows}
