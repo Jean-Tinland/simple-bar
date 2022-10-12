@@ -11,8 +11,12 @@ export { wifiStyles as styles } from "../../styles/components/data/wifi";
 const settings = Settings.get();
 const { widgets, networkWidgetOptions } = settings;
 const { wifiWidget } = widgets;
-const { refreshFrequency, toggleWifiOnClick, networkDevice } =
-  networkWidgetOptions;
+const {
+  refreshFrequency,
+  hideWifiIfDisabled,
+  toggleWifiOnClick,
+  networkDevice,
+} = networkWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -68,6 +72,8 @@ export const Widget = () => {
   const { status, ssid } = state;
   const isActive = status === "active";
   const name = renderName(ssid);
+
+  if (hideWifiIfDisabled && !isActive) return null;
 
   const classes = Utils.classnames("wifi", { "wifi--inactive": !isActive });
 
