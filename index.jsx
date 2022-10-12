@@ -72,6 +72,10 @@ const render = ({ output, error }) => {
     "simple-bar--inline-spaces-options": settings.global.inlineSpacesOptions,
     "simple-bar--background-color-as-foreground":
       settings.global.spacesBackgroundColorAsForeground,
+    "simple-bar--spaces-background-color-as-foreground":
+      settings.global.spacesBackgroundColorAsForeground,
+    "simple-bar--widgets-background-color-as-foreground":
+      settings.global.widgetsBackgroundColorAsForeground,
   });
 
   if (error) {
