@@ -45,23 +45,21 @@ const getPosition = async () =>
 export const Widget = () => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(weatherWidget);
-  const userLocation =
+  let location =
     weatherWidget && customLocation.length ? customLocation : undefined;
 
   const getWeather = async () => {
-    let location = userLocation;
-    if (!userLocation) {
-      const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
-      if (!position) getWeather();
-      location = position?.address?.city;
-    }
     if (!location) {
-      setLoading(false);
-      return;
+      const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
+      if (!position) await getWeather();
+      location = position?.address?.city;
+      if (!location) return setLoading(false);
     }
-    const result = await fetch(`https://wttr.in/${location}?format=j1`);
-    const data = await result.json();
-    setState({ location, data });
+    try {
+      const result = await fetch(`https://wttr.in/${location}?format=j1`);
+      const data = await result.json();
+      setState({ location, data });
+    } catch (e) {}
     setLoading(false);
   };
 
