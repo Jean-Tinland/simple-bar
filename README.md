@@ -2,7 +2,7 @@
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.jeantinland.com/toolbox/simple-bar).
 
-⚠️ **As I do not pocess a M1 mac book I can't solve any issue happening on these models. Feel free to open some pull requests if you want to help me about these. See "Compatibility & requirements" section for more information.** ⚠️
+⚠️ **As I do not possess a M1 mac book I can't solve any issue happening on these models. Feel free to open some pull requests if you want to help me about these. See "Compatibility & requirements" section for more information.** ⚠️
 
 A more "lite" & less ressource greedy version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
 
@@ -40,7 +40,7 @@ On the first **simple-bar** execution, an alert should pop on your screen saying
 
 **_`simple-bar` is optimized for the english language. Icon association is not localized._**
 
-**_`simple-bar` has only be fully tested on several Intel based Macs and is working on Catalina, Big Sur & Monterey. I can't guaranty it will fully work on all M1 Macs._**
+**_`simple-bar` has only been fully tested on several Intel based Macs and is working on Catalina, Big Sur & Monterey. I can't guarantee it will fully work on all M1 Macs._**
 
 **_Mac book with top notch may be subject to display issues if you use the process widget: you can now uncheck "Center process widget" in the settings module.._**
 
@@ -58,7 +58,7 @@ Clone this repo to your Übersicht widgets directory with the following command.
 $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-**Becareful, the folder containing the widget must be name `simple-bar`, otherwise, simple-bar will never launch.**
+**Be careful, the folder containing the widget must be named `simple-bar`, otherwise, simple-bar will never launch.**
 
 [JetBrains Mono](https://www.jetbrains.com/lp/mono/) is used by default. You can set your own font in the "Global" settings tab.
 
@@ -80,13 +80,13 @@ After cloning the project, simply activate **simple-bar** widget in Übersicht's
 
 ## Settings
 
-As explained at the begining of this README file, Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. You may want to click at the top center of the screen, where the process name of the current app is displayed in order to easily get focus on **simple-bar** before pressing `cmd + ,`.
+As explained at the beginning of this README file, Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. You may want to click at the top center of the screen, where the process name of the current app is displayed in order to easily get focus on **simple-bar** before pressing `cmd + ,`.
 
 In this settings module you'll find all the customization options available from layout to specific widgets show/hide toggle.
 
 ## Clickable elements
 
-Some elements of **simple-bar** are interactives. For example :
+Some elements of **simple-bar** are interactive. For example :
 
 - Toggle caffeinate mode on battery widget click (prevent your mac to sleep while activate)
 - Toggle wifi on/off on wifi widget click
@@ -103,11 +103,11 @@ Clickable elements have an outline showing up on hover in order to easily identi
 
 ### Colors & theme
 
-If you want to customize the colors, shadows, fonts, etc... you can simply tweak and existing theme or create your own in `simple-bar > lib > styles > themes`.
+If you want to customize the colors, shadows, fonts, etc... you can simply tweak an existing theme or create your own in `simple-bar > lib > styles > themes`.
 
 You can duplicate an existing theme and change the exported function name, the "name" and the "kind" (light or dark) properties.
 
-Once you created your theme, you can import it in `simple-bar > lib > styles > themes > themes.js` and add it in the already exported themes. You theme should now appear in the "Themes" settings tab.
+Once you have created your theme, you can import it in `simple-bar > lib > styles > themes > themes.js` and add it in the already exported themes. Your theme should now appear in the "Themes" settings tab.
 
 Feel free to open an issue if you want me to add a theme or if you created a theme and are willing to share it.
 
@@ -155,11 +155,11 @@ Same as for themes, feel free to post a message in [this issue](https://github.c
 
 ### Override default styles
 
-As I tried to automate a lot of things, there may be some elements impossible to specificaly change by creating your own theme.
+As I tried to automate a lot of things, there may be some specific elements that are impossible to change when creating your own theme.
 
 To remedy this problem, there is a tab in settings allowing you to override any **simple-bar** style you want.
 
-You can simply add your styles here. As it is loaded after all the other styles this will naturally override the default styles.\
+You can simply add your styles there. As it is loaded after all the other styles this will naturally override the default styles.\
 You can use the **Übersicht debug console** in order to inspect the widgets composing simple-bar and **get the class names you need to override**.
 
 ## Special thanks
@@ -169,7 +169,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - Crypto widget added thanks to [@yorhodes](https://github.com/yorhodes)
 - Stocks widget added thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
-- Sticky windows workaround & several sticky windows options in settins added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
+- Sticky windows workaround & several sticky windows options in settings added thanks to [@kvndrsslr](https://github.com/kvndrsslr)
 - Right & middle click actions in Spotify, Wifi & all user widgets added thanks to [@rosenpin](https://github.com/rosenpin)
 - Open space options on right click added thanks to [@rosenpin](https://github.com/rosenpin)
 - Large selection of icons added thanks to [@jamieweavis](https://github.com/jamieweavis), [@MikoMagni](https://github.com/MikoMagni), [@anujc4](https://github.com/anujc4), [@SijanC147](https://github.com/SijanC147), [@donaldguy](https://github.com/donaldguy), [@d-miketa](https://github.com/d-miketa)
