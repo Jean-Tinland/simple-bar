@@ -68,6 +68,7 @@ const render = ({ output, error }) => {
   const baseClasses = Utils.classnames("simple-bar", {
     "simple-bar--floating": settings.global.floatingBar,
     "simple-bar--no-bar-background": settings.global.noBarBg,
+    "simple-bar--no-color-in-data": settings.global.noColorInData,
     "simple-bar--on-bottom": settings.global.bottomBar,
     "simple-bar--inline-spaces-options": settings.global.inlineSpacesOptions,
     "simple-bar--spaces-background-color-as-foreground":
