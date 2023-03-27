@@ -24,7 +24,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 
 (1) Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. More details in [Settings](#settings) section.\
-(2) Press `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
+(2) Toggle dark/light mode by pressing `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
 (3) Currently supported: Google Chrome (YouTube & Spotify for browser), Brave (YouTube & Spotify for browser), Safari (YouTube) & Firefox (YouTube).\
 (4) You'll be prompted to let Übersicht use you geolocation.
 
@@ -32,7 +32,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports both yabai v3 & yabai v4.
 
-Becareful, for Big Sur users (and above), some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
+Be careful, for Big Sur users (and above), some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
 
 **It is important to note that you'll need to use yabai in `bsp` or `stack` layout mode in order to prevent app windows to overlap simple-bar.**
 
