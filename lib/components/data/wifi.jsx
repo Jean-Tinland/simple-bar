@@ -16,7 +16,7 @@ const {
   hideWifiIfDisabled,
   toggleWifiOnClick,
   networkDevice,
-  showNetworkName,
+  hideNetworkName,
 } = networkWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
@@ -42,7 +42,7 @@ const openWifiPreferences = (e) => {
 
 const renderName = (name) => {
   if (!name) return "";
-  if (!showNetworkName) return "";
+  if (hideNetworkName) return "";
   if (name === "with an AirPort network.y off.") return "Disabled";
   if (name === "with an AirPort network.") return "Searching...";
   return name;
