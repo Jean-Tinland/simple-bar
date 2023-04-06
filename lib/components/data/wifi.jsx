@@ -41,8 +41,7 @@ const openWifiPreferences = (e) => {
 };
 
 const renderName = (name) => {
-  if (!name) return "";
-  if (hideNetworkName) return "";
+  if (!name || hideNetworkName) return "";
   if (name === "with an AirPort network.y off.") return "Disabled";
   if (name === "with an AirPort network.") return "Searching...";
   return name;
@@ -77,7 +76,10 @@ export const Widget = () => {
 
   if (hideWifiIfDisabled && !isActive) return null;
 
-  const classes = Utils.classnames("wifi", { "wifi--inactive": !isActive });
+  const classes = Utils.classnames("wifi", {
+    "wifi--hidden-name": !name,
+    "wifi--inactive": !isActive,
+  });
 
   const Icon = isActive ? Icons.Wifi : Icons.WifiOff;
 
