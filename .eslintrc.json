@@ -1,5 +1,4 @@
 {
-  "plugins": ["react-hooks"],
   "extends": ["prettier", "react-app"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
