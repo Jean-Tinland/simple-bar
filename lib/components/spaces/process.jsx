@@ -6,7 +6,7 @@ export { processStyles as styles } from "../../styles/components/process";
 
 const settings = Settings.get();
 
-export const Component = ({ displayIndex, spaces, windows }) => {
+export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
   if (!windows) return null;
   const { process, spacesDisplay } = settings;
   const { exclusionsAsRegex } = spacesDisplay;
@@ -40,12 +40,20 @@ export const Component = ({ displayIndex, spaces, windows }) => {
     "process--centered": process.centered,
   });
 
+  const currentSkhdMode = skhdMode.mode === "default" ? null : skhdMode.mode;
+  const skhdModeColor = "var(--" + skhdMode.color + ")";
+
   return (
     <div className={classes}>
       <div className="process__container">
         {process.showCurrentSpaceMode && currentSpace && (
           <div key={currentSpace.index} className="process__layout">
             {currentSpace.type}
+          </div>
+        )}
+        {process.displaySkhdMode && currentSkhdMode && (
+          <div className="process__skhd_mode " style={{"backgroundColor": skhdModeColor}}>
+            {currentSkhdMode}
           </div>
         )}
         {Utils.sortWindows(apps).map((window, i) => (

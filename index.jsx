@@ -90,7 +90,7 @@ const render = ({ output, error }) => {
   const data = Utils.parseJson(output);
   if (!data) return <Error.Component type="noData" classes={baseClasses} />;
 
-  const { displays, shadow, SIP, spaces, windows } = data;
+  const { displays, shadow, skhd_mode, SIP, spaces, windows } = data;
 
   const displayId = parseInt(window.location.pathname.replace("/", ""));
   const { index: displayIndex } = displays.find((d) => {
@@ -116,6 +116,7 @@ const render = ({ output, error }) => {
           displayIndex={displayIndex}
           spaces={spaces}
           windows={windows}
+          skhdMode={skhd_mode}
         />
       )}
       <div className="simple-bar__data">
