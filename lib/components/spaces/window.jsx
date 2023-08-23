@@ -8,9 +8,16 @@ const settings = Settings.get();
 
 const Window = ({ window }) => {
   const ref = Uebersicht.React.useRef();
-  const { displayOnlyCurrent, hideWindowTitle, displayOnlyIcon } =
+  const {
+    displayOnlyCurrent,
+    hideWindowTitle,
+    displayOnlyIcon,
+    displayStackIndex,
+    displayOnlyCurrentStack,
+  } =
     settings.process;
   const {
+    "stack-index": stackIndex,
     "is-minimized": isMinimized,
     minimized: __legacyIsMinimized,
     "has-focus": hasFocus,
@@ -57,6 +64,13 @@ const Window = ({ window }) => {
           <span className="process__name">{processName}</span>
         )}
       </span>
+      {displayStackIndex &&
+        (!displayOnlyCurrentStack || isFocused) &&
+        stackIndex > 0 && (
+        <span className="process__window process__stack_index">
+          {stackIndex}
+        </span>
+      )}
     </button>
   );
 };

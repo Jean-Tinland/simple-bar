@@ -16,6 +16,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - Navigate to workspace on click
 - For each space display an icon for every opened app (you can exclude specific apps/windows in settings based on process name or window title)
 - Show all opened apps (and current) in current space or simply current app name & title
+- Show all opened (or only focused) apps `stack-index` (from `yabai`) if you use stacking
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme) (1)
 - Spotify, Music/iTunes, browser current track (3)
 - Battery, microphone, sound level, wifi, date, time widgets
