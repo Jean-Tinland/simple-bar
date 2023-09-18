@@ -104,8 +104,6 @@ const render = ({ output, error }) => {
 
   Utils.handleBarFocus();
 
-  console.log({ skhdMode });
-
   return (
     <div className={classes}>
       <Spaces.Component
