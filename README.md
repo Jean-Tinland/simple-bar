@@ -23,6 +23,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - Dnd, crypto, weather & keyboard language input widgets (disabled by default) (4)
 - You can add your own custom widgets in settings (1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
+- Show current mode for `skhd`
 
 (1) Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. More details in [Settings](#settings) section.\
 (2) Toggle dark/light mode by pressing `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
@@ -117,6 +118,29 @@ Feel free to open an issue if you want me to add a theme or if you created a the
 To use pywal colors instead, run the `pywal-gen.sh` script in `simple-bar > lib > styles > pywal`, then edit `simple-bar > lib > styles > theme.js` : `const WITH_PYWAL = false` must be set to "true".\
 This should be done after running `pywal`.\
 As I am not using this myself, I may have missed some problems, feel free to open an issue about it anytime.
+
+### `skhd` Mode Indicator
+
+Configuring a mode indicator for `skhd` requires defining on `on_enter` command for any modes you want to show. This `on_enter` command calls a script provided by `simple-bar` to cache the name of the mode as well as your preferred color (default color is white).
+
+You can use any color (e.g. the 8 standard shell colors) defined as a variable by simple-bar (see `./lib/styles/core/variables.js`, or the Uebersicht debug console).
+
+```
+# ~/.skhdrc
+
+# define a mode named "default". A mode named "default" will NOT be shown by simple-bar.
+:: default : ~/.config/ubersicht/widgets/simple-bar/lib/scripts/yabai-set-mode.sh default
+
+# define a mode named "tree" that will be colored blue
+:: tree : ~/.config/ubersicht/widgets/simple-bar/lib/scripts/yabai-set-mode.sh tree blue
+
+# define a mode called "binding" (in skhd) that will display in simple-bar as "binds"
+:: binding : ~/.config/ubersicht/widgets/simple-bar/lib/scripts/yabai-set-mode.sh binds green
+```
+
+The `yabai-set-mode.sh` script uses an AppleScript command to refresh `simple-bar`. That command requires permissions, which you can set in System Preferences > Privacy & Security > Automation > skhd > ubersicht.
+
+The mode indicator should appear within about a second after you enter a mode, in the process widget. You can debug this if it doesn't work by moving your mouse to different windows, or checking the skhd log/err files.
 
 ### Icons
 
