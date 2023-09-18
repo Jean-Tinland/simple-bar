@@ -14,8 +14,7 @@ const Window = ({ window }) => {
     displayOnlyIcon,
     displayStackIndex,
     displayOnlyCurrentStack,
-  } =
-    settings.process;
+  } = settings.process;
   const {
     "stack-index": stackIndex,
     "is-minimized": isMinimized,
@@ -67,10 +66,8 @@ const Window = ({ window }) => {
       {displayStackIndex &&
         (!displayOnlyCurrentStack || isFocused) &&
         stackIndex > 0 && (
-        <span className="process__window process__stack_index">
-          {stackIndex}
-        </span>
-      )}
+          <span className="process__stack-index">{stackIndex}</span>
+        )}
     </button>
   );
 };
