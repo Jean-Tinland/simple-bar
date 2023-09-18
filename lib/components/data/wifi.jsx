@@ -25,12 +25,12 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-const toggleWifi = (isActive, networkDevice) => {
+const async toggleWifi = (isActive, networkDevice) => {
   if (isActive) {
-    Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
+    await Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
     Utils.notification("Disabling network...");
   } else {
-    Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`);
+    await Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`);
     Utils.notification("Enabling network...");
   }
 };
@@ -83,9 +83,9 @@ export const Widget = () => {
 
   const Icon = isActive ? Icons.Wifi : Icons.WifiOff;
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     Utils.clickEffect(e);
-    toggleWifi(isActive, networkDevice);
+    await toggleWifi(isActive, networkDevice);
     getWifi();
   };
 
