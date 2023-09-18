@@ -25,7 +25,7 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-const async toggleWifi = (isActive, networkDevice) => {
+const toggleWifi = async (isActive, networkDevice) => {
   if (isActive) {
     await Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
     Utils.notification("Disabling network...");
