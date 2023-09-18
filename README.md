@@ -191,6 +191,8 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 - Pywal integration was added thanks to [@Amar1729](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
+- Stack index indicator also added thanks to [@Amar1729](https://github.com/Amar1729)
+- SKHD mode indicator also thanks to [@Amar1729](https://github.com/Amar1729)
 - Crypto widget added thanks to [@yorhodes](https://github.com/yorhodes)
 - Stocks widget added thanks to [@ZhongXiLu](https://github.com/ZhongXiLu)
 - Spotify current track & play/pause toggle on click and Dracula theme adaptation added thanks to [@jamieweavis](https://github.com/jamieweavis)
