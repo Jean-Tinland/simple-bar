@@ -1,4 +1,5 @@
 yabai_path=$1
+display_skhd_mode=$2
 
 pgrep -x yabai > /dev/null
 
@@ -7,14 +8,12 @@ if [ $? -eq 1 ]; then
   exit 0
 fi
 
-SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
 spaces=$($yabai_path -m query --spaces)
 windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
 displays=$($yabai_path -m query --displays)
 SIP=$(csrutil status)
 shadow_enabled=$($yabai_path -m config window_shadow)
-skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode.sh --query)")
 
 if [ -z "$spaces" ]; then
   spaces=$($yabai_path -m query --spaces)
@@ -37,6 +36,13 @@ $yabai_path -m signal --add event=application_front_switched action="osascript -
 $yabai_path -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar when an application window is closed"
 $yabai_path -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar when current window title changes"
 
+if [ $display_skhd_mode = "true" ]; then
+  SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+  skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode.sh --query)")
+else
+  skhd_mode="{}"
+fi
+
 echo $(cat <<-EOF
   {
     "spaces": $spaces,
@@ -44,7 +50,7 @@ echo $(cat <<-EOF
     "displays": $displays,
     "SIP": "$SIP",
     "shadow": "$shadow_enabled",
-    "skhd_mode": $skhd_mode
+    "skhdMode": $skhd_mode
   }
 EOF
 )

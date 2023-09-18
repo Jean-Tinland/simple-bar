@@ -32,8 +32,9 @@ const refreshFrequency = false;
 const settings = Settings.get();
 const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
 const { processWidget } = settings.widgets;
+const { displaySkhdMode } = settings.process;
 
-const command = `${shell} simple-bar/lib/scripts/init.sh ${yabaiPath}`;
+const command = `${shell} simple-bar/lib/scripts/init.sh ${yabaiPath} ${displaySkhdMode}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
   Variables.styles,
@@ -90,7 +91,7 @@ const render = ({ output, error }) => {
   const data = Utils.parseJson(output);
   if (!data) return <Error.Component type="noData" classes={baseClasses} />;
 
-  const { displays, shadow, skhd_mode, SIP, spaces, windows } = data;
+  const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
   const displayId = parseInt(window.location.pathname.replace("/", ""));
   const { index: displayIndex } = displays.find((d) => {
@@ -102,6 +103,8 @@ const render = ({ output, error }) => {
   });
 
   Utils.handleBarFocus();
+
+  console.log({ skhdMode });
 
   return (
     <div className={classes}>
@@ -116,7 +119,7 @@ const render = ({ output, error }) => {
           displayIndex={displayIndex}
           spaces={spaces}
           windows={windows}
-          skhdMode={skhd_mode}
+          skhdMode={skhdMode}
         />
       )}
       <div className="simple-bar__data">

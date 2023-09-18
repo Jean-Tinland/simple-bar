@@ -52,7 +52,10 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
           </div>
         )}
         {process.displaySkhdMode && currentSkhdMode && (
-          <div className="process__skhd_mode " style={{"backgroundColor": skhdModeColor}}>
+          <div
+            className="process__skhd-mode"
+            style={{ backgroundColor: skhdModeColor }}
+          >
             {currentSkhdMode}
           </div>
         )}
