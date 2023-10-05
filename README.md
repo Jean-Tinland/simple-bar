@@ -2,8 +2,6 @@
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.jeantinland.com/toolbox/simple-bar).
 
-⚠️ **As I do not possess a M1 mac book I can't solve any issue happening on these models. Feel free to open some pull requests if you want to help me about these. See "Compatibility & requirements" section for more information.** ⚠️
-
 A more "lite" & less ressource greedy version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
 
 ## Features
@@ -32,7 +30,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports both yabai v3 & yabai v4.
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports yabai v3, v4 & v5.
 
 Be careful, for Big Sur users (and above), some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
 
@@ -42,7 +40,7 @@ On the first **simple-bar** execution, an alert should pop on your screen saying
 
 **_`simple-bar` is optimized for the english language. Icon association is not localized._**
 
-**_`simple-bar` has only been fully tested on several Intel based Macs and is working on Catalina, Big Sur & Monterey. I can't guarantee it will fully work on all M1 Macs._**
+**_`simple-bar` has only been tested on several Intel & Apple Silicon based Macs and is working on Catalina, Big Sur & above... Apple Silicon users will need to read the section <a href="#apple-sillicon-instructions">`For users having the latest ARM64 chipset devices (M1 and M2 variants)`</a>_**
 
 **_Mac book with top notch may be subject to display issues if you use the process widget: you can now uncheck "Center process widget" in the settings module.._**
 
@@ -63,6 +61,8 @@ $ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application
 **Be careful, the folder containing the widget must be named `simple-bar`, otherwise, simple-bar will never launch.**
 
 [JetBrains Mono](https://www.jetbrains.com/lp/mono/) is used by default. You can set your own font in the "Global" settings tab.
+
+<div id="apple-sillicon-instructions"></div>
 
 ### For users having the latest ARM64 chipset devices (M1 and M2 variants)
 
@@ -189,7 +189,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 ## Special thanks
 
-- Pywal integration was added thanks to [@Amar1729](https://github.com/Amar1729)
+- Pywal integration added thanks to [@Amar1729](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
 - Stack index indicator also added thanks to [@Amar1729](https://github.com/Amar1729)
 - SKHD mode indicator also thanks to [@Amar1729](https://github.com/Amar1729)
