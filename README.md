@@ -24,7 +24,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - Show current mode for `skhd`
 
 (1) Settings can be opened by pressing `cmd + ,` after clicking on **simple-bar** widget. More details in [Settings](#settings) section.\
-(2) Toggle dark/light mode by pressing `cmd + t` while focusing **simple-bar** (a light blue border should be visible at this moment).\
+(2) Toggle dark/light mode by pressing `cmd + t` while focusing **simple-bar** (a red border should be visible at this moment).\
 (3) Currently supported: Google Chrome (YouTube & Spotify for browser), Brave (YouTube & Spotify for browser), Safari (YouTube) & Firefox (YouTube).\
 (4) You'll be prompted to let Übersicht use you geolocation.
 
