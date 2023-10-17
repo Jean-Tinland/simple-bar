@@ -30,7 +30,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 ## Compatibility & requirements
 
-In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports yabai v3, v4 & v5.
+In order to make this custom bar work, you'll need to install both [yabai](https://github.com/koekeishiya/yabai) and [Übersicht](https://github.com/felixhageloh/uebersicht), both of them must be up to date. `simple-bar` supports yabai from v3 to v6 (v6 is mandatory on Sonoma).
 
 Be careful, for Big Sur users (and above), some actions must be taken in order to make yabai fully operational: [see here for more details](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup>).
 
