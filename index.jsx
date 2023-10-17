@@ -76,6 +76,7 @@ const render = ({ output, error }) => {
       settings.global.spacesBackgroundColorAsForeground,
     "simple-bar--widgets-background-color-as-foreground":
       settings.global.widgetsBackgroundColorAsForeground,
+    "simple-bar--process-aligned-to-left": !settings.global.centered,
   });
 
   if (error) {
