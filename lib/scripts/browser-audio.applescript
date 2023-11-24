@@ -88,16 +88,4 @@ if application "Safari" is running then
   end tell
 end if
 
--- if application "Firefox" is running then
---   tell application "Firefox"
---     set the_title to (name of windows whose name contains "- YouTube") as text
-    
---     if "- YouTube" is in the_title then
---       if active_tab is 0 then set title_string to " " & text 1 thru -11 of the_title
---       set browser to "firefox"
---       set active_tab to 1
---     end if
---   end tell
--- end if
-
 return "{ \"browser\": \"" & browser & "\", \"title\": \"" & replace_chars(title_string, "\"", "Ò") & "\" }"
