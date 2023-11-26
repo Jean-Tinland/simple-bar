@@ -38,13 +38,17 @@ export const Widget = () => {
   const [loading, setLoading] = Uebersicht.React.useState(netstatsWidget);
 
   const getNetstats = async () => {
-    const output = await Uebersicht.run(
-      `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`
-    );
-    const data = Utils.cleanupOutput(output);
-    const json = JSON.parse(data);
-    setState(json);
-    setLoading(false);
+    try {
+      const output = await Uebersicht.run(
+        `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`
+      );
+      const data = Utils.cleanupOutput(output);
+      const json = JSON.parse(data);
+      setState(json);
+      setLoading(false);
+    } catch (e) {
+      setTimeout(getNetstats, 1000);
+    }
   };
 
   useWidgetRefresh(netstatsWidget, getNetstats, REFRESH_FREQUENCY);
