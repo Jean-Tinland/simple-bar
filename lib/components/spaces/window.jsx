@@ -49,6 +49,11 @@ const Window = ({ window }) => {
     appName !== title && title.length ? `${appName} / ${title}` : appName;
   const processName = hideWindowTitle ? appName : cleanedUpName;
 
+  const showStackIndex =
+    displayStackIndex &&
+    (!displayOnlyCurrentStack || isFocused) &&
+    stackIndex > 0;
+
   return (
     <button
       ref={ref}
@@ -63,11 +68,9 @@ const Window = ({ window }) => {
           <span className="process__name">{processName}</span>
         )}
       </span>
-      {displayStackIndex &&
-        (!displayOnlyCurrentStack || isFocused) &&
-        stackIndex > 0 && (
-          <span className="process__stack-index">{stackIndex}</span>
-        )}
+      {showStackIndex && (
+        <span className="process__stack-index">{stackIndex}</span>
+      )}
     </button>
   );
 };
