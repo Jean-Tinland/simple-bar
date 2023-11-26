@@ -8,8 +8,12 @@ import * as Settings from "../../settings";
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
 const settings = Settings.get();
-const { displayStickyWindowsSeparately, spacesExclusions, exclusionsAsRegex } =
-  settings.spacesDisplay;
+const {
+  displayStickyWindowsSeparately,
+  spacesExclusions,
+  exclusionsAsRegex,
+  hideCreateSpaceButton,
+} = settings.spacesDisplay;
 
 export const Component = ({ spaces, windows, SIP, displayIndex }) => {
   if (!spaces && !windows)
@@ -63,10 +67,12 @@ export const Component = ({ spaces, windows, SIP, displayIndex }) => {
             />
           );
         })}
-        {SIPDisabled && (
+        {SIPDisabled && !hideCreateSpaceButton ? (
           <button className="spaces__add" onClick={onClick}>
             <Icons.Add />
           </button>
+        ) : (
+          <div className="spaces__end-separator" />
         )}
       </div>
     );
