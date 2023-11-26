@@ -1,6 +1,6 @@
 # <img src="./images/logo-simple-bar.png" width="200" alt="simple-bar" />
 
-A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.jeantinland.com/toolbox/simple-bar).
+A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/). Visit **simple-bar** website [here](https://www.jeantinland.com/en/toolbox/simple-bar).
 
 A more "lite" & less ressource greedy version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
 
@@ -189,6 +189,7 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 
 ## Special thanks
 
+- Network stats widget with a shell script adapted from [this repo](https://github.com/dionmunk/ubersicht-network-throughput) by [@dionmunk](https://github.com/dionmunk) (under Creative Commons Attribution-NonCommercial 4.0 International License)
 - Pywal integration added thanks to [@Amar1729](https://github.com/Amar1729)
 - Wifi toggle on click also added thanks to [@Amar1729](https://github.com/Amar1729)
 - Stack index indicator also added thanks to [@Amar1729](https://github.com/Amar1729)

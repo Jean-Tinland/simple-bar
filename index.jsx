@@ -8,6 +8,7 @@ import * as Zoom from "./lib/components/data/zoom.jsx";
 import * as Time from "./lib/components/data/time.jsx";
 import * as DateDisplay from "./lib/components/data/date-display.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
+import * as Netstats from "./lib/components/data/netstats.jsx";
 import * as Battery from "./lib/components/data/battery.jsx";
 import * as Sound from "./lib/components/data/sound.jsx";
 import * as Mic from "./lib/components/data/mic.jsx";
@@ -48,6 +49,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Zoom.styles,
   Time.styles,
   Weather.styles,
+  Netstats.styles,
   Crypto.styles,
   Stock.styles,
   Battery.styles,
@@ -132,6 +134,7 @@ const render = ({ output, error }) => {
         <Music.Widget />
         <Mpd.Widget />
         <Weather.Widget />
+        <Netstats.Widget />
         <Battery.Widget />
         <Mic.Widget />
         <Sound.Widget />
