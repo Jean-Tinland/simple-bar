@@ -18,7 +18,6 @@ A more "lite" & less ressource greedy version is available [here](https://github
 - Settings module (enable/disable each individual widget: see list below - switch dark/light theme) (1)
 - Spotify, Music/iTunes, browser current track (3)
 - Battery, microphone, sound level, wifi, date, time widgets
-- Dnd, crypto, weather & keyboard language input widgets (disabled by default) (4)
 - You can add your own custom widgets in settings (1)
 - **Only with SIP disabled**: create new workspace on "+" click, move or destroy workspace on space hover
 - Show current mode for `skhd`
@@ -205,7 +204,6 @@ You can use the **Übersicht debug console** in order to inspect the widgets com
 - A way better multiple display behaviour & handling added thanks to [@theshortcut](https://github.com/theshortcut)
 - Native space switching added thanks to [@jming422](https://github.com/jming422)
 - A better spotify process detection added thanks to [@s00500](https://github.com/s00500)
-- Dnd cli by @joeyhoer [dnd](https://github.com/joeyhoer/dnd)
 - Gruvbox Dark theme adaptation added thanks to [@spwx](https://github.com/spwx)
 - Gruvbox Light theme adaptation added thanks to [@basbebe](https://github.com/basbebe)
 - Gruvbox Material theme adaptation added thanks to [@is0n](https://github.com/is0n)

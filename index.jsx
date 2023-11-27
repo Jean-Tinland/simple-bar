@@ -21,7 +21,6 @@ import * as Stock from "./lib/components/data/stock.jsx";
 import * as Music from "./lib/components/data/music.jsx";
 import * as Mpd from "./lib/components/data/mpd.jsx";
 import * as BrowserTrack from "./lib/components/data/browser-track.jsx";
-import * as Dnd from "./lib/components/data/dnd.jsx";
 import * as Specter from "./lib/components/data/specter.jsx";
 import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx";
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
@@ -62,7 +61,6 @@ Utils.injectStyles("simple-bar-index-styles", [
   Music.styles,
   Mpd.styles,
   BrowserTrack.styles,
-  Dnd.styles,
   Specter.styles,
   DataWidgetLoader.styles,
 ]);
@@ -143,7 +141,6 @@ const render = ({ output, error }) => {
         <Keyboard.Widget />
         <DateDisplay.Widget />
         <Time.Widget />
-        <Dnd.Widget />
       </div>
     </div>
   );
