@@ -26,6 +26,7 @@ import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx"
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
+import ContextProvider from "./lib/components/context.jsx";
 
 const refreshFrequency = false;
 
@@ -106,43 +107,45 @@ const render = ({ output, error }) => {
   Utils.handleBarFocus();
 
   return (
-    <div className={classes}>
-      <Spaces.Component
-        spaces={spaces}
-        windows={windows}
-        SIP={SIP}
-        displayIndex={displayIndex}
-      />
-      {processWidget && (
-        <Process.Component
-          displayIndex={displayIndex}
+    <ContextProvider>
+      <div className={classes}>
+        <Spaces.Component
           spaces={spaces}
           windows={windows}
-          skhdMode={skhdMode}
+          SIP={SIP}
+          displayIndex={displayIndex}
         />
-      )}
-      <div className="simple-bar__data">
-        <Settings.Wrapper />
-        <UserWidgets />
-        <Zoom.Widget />
-        <BrowserTrack.Widget />
-        <Spotify.Widget />
-        <Crypto.Widget />
-        <Stock.Widget />
-        <Music.Widget />
-        <Mpd.Widget />
-        <Weather.Widget />
-        <Netstats.Widget />
-        <Battery.Widget />
-        <Mic.Widget />
-        <Sound.Widget />
-        <ViscosityVPN.Widget />
-        <Wifi.Widget />
-        <Keyboard.Widget />
-        <DateDisplay.Widget />
-        <Time.Widget />
+        {processWidget && (
+          <Process.Component
+            displayIndex={displayIndex}
+            spaces={spaces}
+            windows={windows}
+            skhdMode={skhdMode}
+          />
+        )}
+        <div className="simple-bar__data">
+          <Settings.Wrapper />
+          <UserWidgets />
+          <Zoom.Widget />
+          <BrowserTrack.Widget />
+          <Spotify.Widget />
+          <Crypto.Widget />
+          <Stock.Widget />
+          <Music.Widget />
+          <Mpd.Widget />
+          <Weather.Widget />
+          <Netstats.Widget />
+          <Battery.Widget />
+          <Mic.Widget />
+          <Sound.Widget />
+          <ViscosityVPN.Widget />
+          <Wifi.Widget />
+          <Keyboard.Widget />
+          <DateDisplay.Widget />
+          <Time.Widget />
+        </div>
       </div>
-    </div>
+    </ContextProvider>
   );
 };
 

@@ -46,6 +46,8 @@ else
   skhd_mode="{}"
 fi
 
+npm install --prefix ./simple-bar &> /dev/null && node "./simple-bar/lib/server/index.js" &> /dev/null & 
+
 echo $(cat <<-EOF
   {
     "spaces": $spaces,
