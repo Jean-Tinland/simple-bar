@@ -7,15 +7,8 @@
     "lint": "eslint 'lib/**/*.{js,jsx}'"
   },
   "devDependencies": {
-    "eslint": "8.45.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-config-react-app": "7.0.1",
-    "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-react": "7.33.0",
+    "eslint": "8.54.0",
+    "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0"
   }
 }

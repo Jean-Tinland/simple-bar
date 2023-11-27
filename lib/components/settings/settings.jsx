@@ -209,7 +209,9 @@ export const Component = ({ closeSettings }) => {
       fileExists = Boolean(
         await Uebersicht.run(`ls ${EXTERNAL_CONFIG_FILE_PATH}`)
       );
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
     if (!fileExists) return;
     const externalConfig = JSON.parse(
       await Uebersicht.run(`cat ${EXTERNAL_CONFIG_FILE_PATH}`)

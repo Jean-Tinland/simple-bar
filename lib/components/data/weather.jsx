@@ -59,7 +59,9 @@ export const Widget = () => {
       const result = await fetch(`https://wttr.in/${location}?format=j1`);
       const data = await result.json();
       setState({ location, data });
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
     setLoading(false);
   };
 

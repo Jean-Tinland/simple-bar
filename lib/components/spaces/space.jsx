@@ -80,7 +80,7 @@ const Space = ({
     Utils.switchSpace(currentSpaceIndex, index);
     Utils.clickEffect(e);
   };
-  const onRightClick = (e) => {
+  const onRightClick = () => {
     setHovered(true);
     setNoDelay(true);
   };
