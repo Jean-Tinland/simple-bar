@@ -46,6 +46,7 @@ else
   skhd_mode="{}"
 fi
 
+pkill simple-bar-server &> /dev/null
 npm install --prefix ./simple-bar &> /dev/null && node "./simple-bar/lib/server/index.js" &> /dev/null & 
 
 echo $(cat <<-EOF
