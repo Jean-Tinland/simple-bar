@@ -23,7 +23,7 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 const togglePlay = (host, port) =>
   Uebersicht.run(`mpc --host ${host} --port ${port} toggle`);
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(mpdWidget);
 
@@ -80,4 +80,4 @@ export const Widget = () => {
       {trackInfo}
     </DataWidget.Widget>
   );
-};
+});

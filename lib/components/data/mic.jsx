@@ -24,7 +24,7 @@ const setMic = (volume) => {
   Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(micWidget);
   const { volume: _volume } = state || {};
@@ -95,4 +95,4 @@ export const Widget = () => {
       </div>
     </DataWidget.Widget>
   );
-};
+});

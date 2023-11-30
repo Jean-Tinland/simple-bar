@@ -31,7 +31,7 @@ const getIcon = (playerState) => {
   return Icons.Paused;
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(spotifyWidget);
 
@@ -111,4 +111,4 @@ export const Widget = () => {
       {label}
     </DataWidget.Widget>
   );
-};
+});

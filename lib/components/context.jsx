@@ -1,35 +1,21 @@
 import * as Uebersicht from "uebersicht";
 
-const SimpleBarContext = Uebersicht.React.createContext({});
+const SimpleBarContext = Uebersicht.React.createContext({
+  settings: {},
+  setSettings: () => {},
+});
 
 export const useSimpleBarContext = () =>
   Uebersicht.React.useContext(SimpleBarContext);
 
 export default Uebersicht.React.memo(ContextProvider);
 
-function ContextProvider({ children }) {
-  const [socket, setSocket] = Uebersicht.React.useState();
-
-  Uebersicht.React.useEffect(() => {
-    if (socket === undefined) {
-      const runEffect = async () => {
-        try {
-          const newSocket = new WebSocket("ws://localhost:7777");
-          newSocket.onmessage = (e) => {
-            console.log(e);
-          };
-          setSocket(newSocket);
-        } catch (e) {
-          console.warn(e);
-        }
-      };
-      runEffect();
-    }
-  }, [socket]);
-
-  console.log(socket);
+function ContextProvider({ initialSettings, children }) {
+  const [settings, setSettings] = Uebersicht.React.useState(initialSettings);
 
   return (
-    <SimpleBarContext.Provider value={{}}>{children}</SimpleBarContext.Provider>
+    <SimpleBarContext.Provider value={{ settings, setSettings }}>
+      {children}
+    </SimpleBarContext.Provider>
   );
 }

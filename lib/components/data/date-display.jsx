@@ -25,7 +25,7 @@ const openCalendarApp = (calendarApp) => {
   Uebersicht.run(`open -a "${appName}"`);
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(dateWidget);
 
@@ -64,4 +64,4 @@ export const Widget = () => {
       {now}
     </DataWidget.Widget>
   );
-};
+});

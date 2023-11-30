@@ -46,15 +46,6 @@ else
   skhd_mode="{}"
 fi
 
-lsof -ti:7776 > /dev/null
-
-if [ $? -eq 1 ]; then
-  npm install --prefix ./simple-bar &> /dev/null
-  node "./simple-bar/lib/server/index.js" &> /dev/null &
-fi
-
-
-
 echo $(cat <<-EOF
   {
     "spaces": $spaces,

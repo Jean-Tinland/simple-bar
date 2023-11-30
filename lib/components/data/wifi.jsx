@@ -47,7 +47,7 @@ const renderName = (name) => {
   return name;
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(wifiWidget);
 
@@ -99,4 +99,4 @@ export const Widget = () => {
       {name}
     </DataWidget.Widget>
   );
-};
+});

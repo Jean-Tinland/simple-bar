@@ -19,7 +19,7 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(zoomWidget);
 
@@ -53,4 +53,4 @@ export const Widget = () => {
       {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
     </DataWidget.Widget>
   );
-};
+});

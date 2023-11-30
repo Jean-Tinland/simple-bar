@@ -33,21 +33,22 @@ const formatBytes = (bytes, decimals = 1) => {
   }</em>`;
 };
 
-export const Widget = () => {
+const getStats = async () =>
+  Uebersicht.run(`bash ./simple-bar/lib/scripts/netstats.sh 2>&1`);
+
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(netstatsWidget);
 
   const getNetstats = async () => {
     try {
-      const output = await Uebersicht.run(
-        `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`
-      );
+      const output = await getStats();
       const data = Utils.cleanupOutput(output);
       const json = JSON.parse(data);
       setState(json);
       setLoading(false);
     } catch (e) {
-      setTimeout(getNetstats, 1000);
+      //
     }
   };
 
@@ -89,4 +90,4 @@ export const Widget = () => {
       </DataWidget.Widget>
     </Uebersicht.React.Fragment>
   );
-};
+});

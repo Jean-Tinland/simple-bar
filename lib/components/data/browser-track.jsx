@@ -27,7 +27,7 @@ const getIcon = (browser) => {
   return Icons.Default;
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const ref = Uebersicht.React.useRef();
 
   const [state, setState] = Uebersicht.React.useState();
@@ -94,4 +94,4 @@ export const Widget = () => {
       {title}
     </DataWidget.Widget>
   );
-};
+});

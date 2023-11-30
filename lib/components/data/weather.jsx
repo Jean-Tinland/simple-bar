@@ -42,7 +42,7 @@ const openWeather = (e) => {
 const getPosition = async () =>
   new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve));
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(weatherWidget);
   let location =
@@ -139,4 +139,4 @@ export const Widget = () => {
       {label}
     </DataWidget.Widget>
   );
-};
+});

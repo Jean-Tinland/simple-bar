@@ -138,7 +138,6 @@ export const Wrapper = () => {
     setVisible(false);
     Utils.blurBar();
   };
-
   const onKeydown = Uebersicht.React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e;
     if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {

@@ -5,27 +5,31 @@ import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import * as Utils from "../../utils";
 import * as Settings from "../../settings";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../context.jsx";
 
 export { timeStyles as styles } from "../../styles/components/data/time";
 
-const settings = Settings.get();
-const { widgets, timeWidgetOptions } = settings;
-const { timeWidget } = widgets;
-const { refreshFrequency, hour12, dayProgress, showSeconds } =
-  timeWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 1000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
 const displayNotificationCenter = () =>
   Uebersicht.run(
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   );
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { settings } = useSimpleBarContext();
+  const { widgets, timeWidgetOptions } = settings;
+  const { timeWidget } = widgets;
+  const { refreshFrequency, hour12, dayProgress, showSeconds } =
+    timeWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(timeWidget);
 
@@ -36,13 +40,19 @@ export const Widget = () => {
     hour12,
   };
 
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
   const getTime = () => {
     const time = new Date().toLocaleString("en-UK", options);
     setState({ time });
     setLoading(false);
   };
 
-  useWidgetRefresh(timeWidget, getTime, REFRESH_FREQUENCY);
+  useServerSocket("time", getTime, resetWidget);
+  useWidgetRefresh(timeWidget, getTime, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;
   if (!state) return null;
@@ -77,4 +87,4 @@ export const Widget = () => {
       )}
     </DataWidget.Widget>
   );
-};
+});

@@ -34,7 +34,7 @@ const toggleVPN = (isConnected, vpnConnectionName) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(vpnWidget);
 
@@ -79,4 +79,4 @@ export const Widget = () => {
       {vpnShowConnectionName ? vpnConnectionName : status}
     </DataWidget.Widget>
   );
-};
+});

@@ -46,7 +46,7 @@ const formatPriceChange = (priceChange) => {
   return (priceChange.startsWith("-") ? "" : "+") + priceChange;
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const ref = Uebersicht.React.useRef();
   const cleanedUpSymbols = symbols.replace(/ /g, "");
   const enumeratedSymbols = cleanedUpSymbols.replace(/ /g, "").split(",");
@@ -143,4 +143,4 @@ export const Widget = () => {
       </DataWidget.Widget>
     );
   });
-};
+});

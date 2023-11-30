@@ -31,7 +31,7 @@ const setSound = (volume) => {
   Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(soundWidget);
   const { volume: _volume } = state || {};
@@ -112,4 +112,4 @@ export const Widget = () => {
       </div>
     </DataWidget.Widget>
   );
-};
+});

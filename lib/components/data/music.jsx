@@ -27,7 +27,7 @@ const togglePlay = (isPaused, processName) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(musicWidget);
 
@@ -105,4 +105,4 @@ export const Widget = () => {
       {trackName} - {artistName}
     </DataWidget.Widget>
   );
-};
+});

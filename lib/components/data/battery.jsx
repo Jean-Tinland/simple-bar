@@ -39,7 +39,7 @@ const toggleCaffeinate = async (system, caffeinate, option) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(batteryWidget);
 
@@ -111,4 +111,4 @@ export const Widget = () => {
       {percentage}%
     </DataWidget.Widget>
   );
-};
+});
