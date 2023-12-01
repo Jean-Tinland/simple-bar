@@ -59,8 +59,8 @@ const Window = ({ window }) => {
       ref={ref}
       className={classes}
       onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={displayOnlyIcon ? undefined : onMouseEnter}
+      onMouseLeave={displayOnlyIcon ? undefined : onMouseLeave}
     >
       <Icon className="process__icon" />
       <span className="process__inner">
