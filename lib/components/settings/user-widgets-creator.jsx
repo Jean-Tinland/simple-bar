@@ -92,6 +92,9 @@ const UserWidgetCreator = ({
       <button className="user-widget-creator__remove" onClick={onRemoveClick}>
         <Icons.Remove />
       </button>
+      <div className="user-widget-creator__index">
+        n°<b>{index}</b>
+      </div>
       <IconPicker callback={onWidgetChange} index={index} selectedIcon={icon} />
       <div className="user-widget-creator__right">
         <div className="user-widget-creator__right-top">
