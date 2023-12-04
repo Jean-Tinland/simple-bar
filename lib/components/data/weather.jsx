@@ -21,6 +21,9 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 );
 
 const getIcon = (description, atNight) => {
+  if (description.includes("fog") || description.includes("mist"))
+    return Icons.Fog;
+  if (description.includes("storm")) return Icons.Storm;
   if (description.includes("snow")) return Icons.Snow;
   if (description.includes("rain")) return Icons.Rain;
   if (description.includes("cloud")) return Icons.Cloud;
