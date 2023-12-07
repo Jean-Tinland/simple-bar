@@ -16,8 +16,9 @@ const {
 } = settings.spacesDisplay;
 
 export const Component = ({ spaces, windows, SIP, displayIndex }) => {
-  if (!spaces && !windows)
-    return <div className="spaces-display spaces-display--empty" />;
+  if (!spaces && !windows) {
+    return <div className="spaces spaces--empty" />;
+  }
 
   const displays = [...new Set(spaces.map((space) => space.display))];
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
