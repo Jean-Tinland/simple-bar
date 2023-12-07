@@ -385,7 +385,7 @@ export const Component = ({ closeSettings }) => {
             onClick={onRefreshClick}
             disabled={!pendingChanges}
           >
-            Refresh simple-bar
+            Confirm changes and refresh simple-bar
           </button>
         </div>
       </div>
