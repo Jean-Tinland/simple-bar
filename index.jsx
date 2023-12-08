@@ -32,9 +32,11 @@ const refreshFrequency = false;
 const settings = Settings.get();
 const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
 const { processWidget } = settings.widgets;
-const { displaySkhdMode } = settings.process;
+const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
-const command = `${shell} simple-bar/lib/scripts/init.sh ${yabaiPath} ${displaySkhdMode}`;
+const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
+const args = `${yabaiPath} ${displaySkhdMode} ${enableTitleChangedSignal}`;
+const command = `${shell} simple-bar/lib/scripts/init.sh ${args}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
   Variables.styles,
