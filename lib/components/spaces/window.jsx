@@ -63,11 +63,11 @@ const Window = ({ window }) => {
       onMouseLeave={displayOnlyIcon ? undefined : onMouseLeave}
     >
       <Icon className="process__icon" />
-      <span className="process__inner">
-        {!displayOnlyIcon && (
+      {!displayOnlyIcon && (
+        <span className="process__inner">
           <span className="process__name">{processName}</span>
-        )}
-      </span>
+        </span>
+      )}
       {showStackIndex && (
         <span className="process__stack-index">{stackIndex}</span>
       )}
