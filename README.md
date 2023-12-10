@@ -4,7 +4,7 @@ A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersich
 
 [Website](https://www.jeantinland.com/en/toolbox/simple-bar) • [Documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation)
 
-A more "lite" & less ressource greedy version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
+A more "lite" & basic version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
 
 ## Features
 
@@ -16,9 +16,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 <!-- https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3 -->
 
-<video muted autoplay loop>
-  <source src="https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3" type="video/mp4">
-</video>
+<video muted autoplay loop src="https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3" type="video/mp4"></video>
 
 ## Installation
 
