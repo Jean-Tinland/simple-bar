@@ -14,9 +14,7 @@ A more "lite" & basic version is available [here](https://github.com/Jean-Tinlan
 
 ![image](./images/preview.png)
 
-<!-- https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3 -->
-
-<video muted autoplay loop src="https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3" type="video/mp4"></video>
+<video src="https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3" type="video/mp4" muted autoplay loop></video>
 
 ## Installation
 
