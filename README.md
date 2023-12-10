@@ -14,11 +14,7 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 ![image](./images/preview.png)
 
-https://jt-admin.jeantinland.com/uploads/simple_bar_demo_06488e57ed.mp4
-
-<video>
-  <source src="https://jt-admin.jeantinland.com/uploads/simple_bar_demo_06488e57ed.mp4" type="video/mp4">
-</video>
+https://github.com/Jean-Tinland/simple-bar/assets/43068795/e16e83ee-0736-4176-bdcf-53efc4ff3ed9
 
 ## Installation
 
