@@ -14,7 +14,11 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 ![image](./images/preview.png)
 
-https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3
+<!-- https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3 -->
+
+<video muted autoplay loop>
+  <source src="https://github.com/Jean-Tinland/simple-bar/assets/43068795/0f988d1b-e21b-4b82-a1dc-4a1c76f580f3" type="video/mp4">
+</video>
 
 ## Installation
 
