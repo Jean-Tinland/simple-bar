@@ -14,7 +14,11 @@ A more "lite" & less ressource greedy version is available [here](https://github
 
 ![image](./images/preview.png)
 
-![video](https://jt-admin.jeantinland.com/uploads/simple_bar_demo_06488e57ed.mp4)
+https://jt-admin.jeantinland.com/uploads/simple_bar_demo_06488e57ed.mp4
+
+<video>
+  <source src="https://jt-admin.jeantinland.com/uploads/simple_bar_demo_06488e57ed.mp4" type="video/mp4">
+</video>
 
 ## Installation
 
