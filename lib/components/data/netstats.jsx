@@ -53,11 +53,17 @@ export const Widget = () => {
 
   useWidgetRefresh(netstatsWidget, getNetstats, REFRESH_FREQUENCY);
 
-  if (loading) return <DataWidgetLoader.Widget className="netstats" />;
-  if (!state) return null;
-  const { download, upload } = state;
+  if (loading)
+    return (
+      <Uebersicht.React.Fragment>
+        <DataWidgetLoader.Widget className="netstats" />
+        <DataWidgetLoader.Widget className="netstats" />
+      </Uebersicht.React.Fragment>
+    );
 
-  if (download === undefined || upload === undefined) return null;
+  if (!state?.download || !state?.upload) return null;
+
+  const { download, upload } = state;
 
   return (
     <Uebersicht.React.Fragment>
