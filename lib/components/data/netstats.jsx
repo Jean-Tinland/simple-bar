@@ -11,7 +11,7 @@ export { netstatsStyles as styles } from "../../styles/components/data/netstats"
 const settings = Settings.get();
 const { widgets, netstatsWidgetOptions } = settings;
 const { netstatsWidget } = widgets;
-const { refreshFrequency } = netstatsWidgetOptions;
+const { refreshFrequency, showOnDisplay } = netstatsWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -33,9 +33,12 @@ const formatBytes = (bytes, decimals = 1) => {
   }</em>`;
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && netstatsWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(netstatsWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getNetstats = async () => {
     try {
@@ -51,7 +54,7 @@ export const Widget = () => {
     }
   };
 
-  useWidgetRefresh(netstatsWidget, getNetstats, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getNetstats, REFRESH_FREQUENCY);
 
   if (loading)
     return (

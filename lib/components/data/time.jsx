@@ -11,7 +11,7 @@ export { timeStyles as styles } from "../../styles/components/data/time";
 const settings = Settings.get();
 const { widgets, timeWidgetOptions } = settings;
 const { timeWidget } = widgets;
-const { refreshFrequency, hour12, dayProgress, showSeconds } =
+const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay } =
   timeWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 1000;
@@ -25,9 +25,12 @@ const displayNotificationCenter = () =>
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   );
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && timeWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(timeWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const options = {
     hour: "numeric",
@@ -42,7 +45,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(timeWidget, getTime, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getTime, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;
   if (!state) return null;

@@ -9,7 +9,7 @@ import useWidgetRefresh from "../../hooks/use-widget-refresh";
 const settings = Settings.get();
 const { userWidgetsList } = settings.userWidgets;
 
-const UserWidget = ({ index, widget }) => {
+const UserWidget = ({ index, widget, display }) => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(true);
   const {
@@ -22,7 +22,10 @@ const UserWidget = ({ index, widget }) => {
     refreshFrequency,
     active,
     noIcon,
+    showOnDisplay = "",
   } = widget;
+
+  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && active;
 
   const getUserWidget = async () => {
     const widgetOutput = await Uebersicht.run(output);
@@ -34,9 +37,9 @@ const UserWidget = ({ index, widget }) => {
     setLoading(false);
   };
 
-  useWidgetRefresh(true, getUserWidget, refreshFrequency);
+  useWidgetRefresh(visible, getUserWidget, refreshFrequency);
 
-  if (!active) return null;
+  if (!visible) return null;
 
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor);
 
@@ -91,10 +94,15 @@ const UserWidget = ({ index, widget }) => {
   );
 };
 
-const UserWidgets = () => {
+const UserWidgets = ({ display }) => {
   const keys = Object.keys(userWidgetsList);
   return keys.map((key) => (
-    <UserWidget key={key} index={key} widget={userWidgetsList[key]} />
+    <UserWidget
+      key={key}
+      index={key}
+      widget={userWidgetsList[key]}
+      display={display}
+    />
   ));
 };
 

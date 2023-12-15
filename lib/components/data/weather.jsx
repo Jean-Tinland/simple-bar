@@ -11,8 +11,14 @@ export { weatherStyles as styles } from "../../styles/components/data/weather";
 const settings = Settings.get();
 const { widgets, weatherWidgetOptions } = settings;
 const { weatherWidget } = widgets;
-const { refreshFrequency, customLocation, unit, hideLocation, hideGradient } =
-  weatherWidgetOptions;
+const {
+  refreshFrequency,
+  customLocation,
+  unit,
+  hideLocation,
+  hideGradient,
+  showOnDisplay,
+} = weatherWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -45,11 +51,13 @@ const openWeather = (e) => {
 const getPosition = async () =>
   new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve));
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && weatherWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(weatherWidget);
-  let location =
-    weatherWidget && customLocation.length ? customLocation : undefined;
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  let location = visible && customLocation.length ? customLocation : undefined;
 
   const getWeather = async () => {
     if (!location) {
@@ -68,7 +76,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(weatherWidget, getWeather, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getWeather, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="weather" />;
   if (!state || !state.data.current_condition) return null;
@@ -94,15 +102,15 @@ export const Widget = () => {
   nowIntervalStop.setHours(nowIntervalStop.getHours() + 1);
   const sunriseTime = new Date();
   sunriseTime.setHours(
-    parseInt(sunriseData[0]),
-    parseInt(sunriseData[1]),
+    parseInt(sunriseData[0], 10),
+    parseInt(sunriseData[1], 10),
     0,
     0
   );
   const sunsetTime = new Date();
   sunsetTime.setHours(
-    parseInt(sunsetData[0]) + 12,
-    parseInt(sunsetData[1]),
+    parseInt(sunsetData[0], 10) + 12,
+    parseInt(sunsetData[1], 10),
     0,
     0
   );

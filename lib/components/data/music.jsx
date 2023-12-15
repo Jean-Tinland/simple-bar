@@ -11,7 +11,7 @@ export { musicStyles as styles } from "../../styles/components/data/music";
 const settings = Settings.get();
 const { widgets, musicWidgetOptions } = settings;
 const { musicWidget } = widgets;
-const { refreshFrequency, showSpecter } = musicWidgetOptions;
+const { refreshFrequency, showSpecter, showOnDisplay } = musicWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -27,9 +27,12 @@ const togglePlay = (isPaused, processName) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && musicWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(musicWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getMusic = async () => {
     const osVersion = await Uebersicht.run(`sw_vers -productVersion`);
@@ -62,7 +65,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(musicWidget, getMusic, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getMusic, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="music" />;
   if (!state) return null;

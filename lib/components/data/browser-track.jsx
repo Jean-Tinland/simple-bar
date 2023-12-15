@@ -11,7 +11,8 @@ export { browserTrackStyles as styles } from "../../styles/components/data/brows
 const settings = Settings.get();
 const { widgets, browserTrackWidgetOptions } = settings;
 const { browserTrackWidget } = widgets;
-const { refreshFrequency, showSpecter } = browserTrackWidgetOptions;
+const { refreshFrequency, showSpecter, showOnDisplay } =
+  browserTrackWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -27,11 +28,14 @@ const getIcon = (browser) => {
   return Icons.Default;
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && browserTrackWidget;
+
   const ref = Uebersicht.React.useRef();
 
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(browserTrackWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getBrowserTrack = async () => {
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
@@ -66,7 +70,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(browserTrackWidget, getBrowserTrack, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getBrowserTrack, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="browser-track" />;
   if (!state) return null;

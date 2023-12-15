@@ -10,6 +10,7 @@ export { stockStyles as styles } from "../../styles/components/data/stock";
 
 const settings = Settings.get();
 const { widgets, stockWidgetOptions } = settings;
+const { stockWidget } = widgets;
 const {
   refreshFrequency,
   yahooFinanceApiKey,
@@ -20,6 +21,7 @@ const {
   showMarketChange,
   showMarketPercent,
   showColor,
+  showOnDisplay,
 } = stockWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000; // 15 min
@@ -46,14 +48,16 @@ const formatPriceChange = (priceChange) => {
   return (priceChange.startsWith("-") ? "" : "+") + priceChange;
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && stockWidget;
+
   const ref = Uebersicht.React.useRef();
   const cleanedUpSymbols = symbols.replace(/ /g, "");
   const enumeratedSymbols = cleanedUpSymbols.replace(/ /g, "").split(",");
-  const { stockWidget } = widgets;
 
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(stockWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getStocks = async () => {
     const response = await fetch(
@@ -88,7 +92,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(stockWidget, getStocks, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getStocks, REFRESH_FREQUENCY);
 
   const refreshStocks = (e) => {
     Utils.clickEffect(e);

@@ -24,9 +24,10 @@ const UserWidgetCreator = ({
     refreshFrequency,
     active = true,
     noIcon = false,
+    showOnDisplay = "",
   } = widget;
 
-  const indexAsNumber = parseInt(index);
+  const indexAsNumber = parseInt(index, 10);
 
   const onRemoveClick = () => {
     setWidgets((widgets) => {
@@ -118,6 +119,18 @@ const UserWidgetCreator = ({
           />
         </div>
         <div className="user-widget-creator__input-group">
+          <label htmlFor={`show-on-display-${index}`}>Show on display: </label>
+          <input
+            className="user-widget-creator__show-on-display"
+            onChange={onChange("showOnDisplay")}
+            id={`show-on-display-${index}`}
+            type="text"
+            defaultValue={showOnDisplay}
+            placeholder="example: 1,2 (leave blank to show on all displays)"
+            spellCheck={false}
+          />
+        </div>
+        <div className="user-widget-creator__input-group">
           <label htmlFor={`output-${index}`}>Command/script path: </label>
           <input
             className="user-widget-creator__output"
@@ -193,7 +206,7 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
   const keys = Object.keys(widgets);
 
   const highestId = keys.reduce((acc, key) => {
-    const keyAsNumber = parseInt(key);
+    const keyAsNumber = parseInt(key, 10);
     return keyAsNumber > acc ? keyAsNumber : acc;
   }, 1);
   const newId = highestId + 1;

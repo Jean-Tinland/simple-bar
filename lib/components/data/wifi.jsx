@@ -17,6 +17,7 @@ const {
   toggleWifiOnClick,
   networkDevice,
   hideNetworkName,
+  showOnDisplay,
 } = networkWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
@@ -47,9 +48,12 @@ const renderName = (name) => {
   return name;
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && wifiWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(wifiWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getWifi = async () => {
     const [status, ssid] = await Promise.all([
@@ -65,7 +69,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(wifiWidget, getWifi, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getWifi, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="wifi" />;
   if (!state) return null;

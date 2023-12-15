@@ -11,8 +11,12 @@ export { batteryStyles as styles } from "../../styles/components/data/battery";
 const settings = Settings.get();
 const { widgets, batteryWidgetOptions } = settings;
 const { batteryWidget } = widgets;
-const { refreshFrequency, toggleCaffeinateOnClick, caffeinateOption } =
-  batteryWidgetOptions;
+const {
+  refreshFrequency,
+  toggleCaffeinateOnClick,
+  caffeinateOption,
+  showOnDisplay,
+} = batteryWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -39,9 +43,12 @@ const toggleCaffeinate = async (system, caffeinate, option) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && batteryWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(batteryWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getBattery = async () => {
     const [system, percentage, status, caffeinate] = await Promise.all([
@@ -56,14 +63,14 @@ export const Widget = () => {
     ]);
     setState({
       system,
-      percentage: parseInt(percentage),
+      percentage: parseInt(percentage, 10),
       charging: Utils.cleanupOutput(status) === "AC",
       caffeinate: Utils.cleanupOutput(caffeinate),
     });
     setLoading(false);
   };
 
-  useWidgetRefresh(batteryWidget, getBattery, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getBattery, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />;
   if (!state) return null;

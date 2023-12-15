@@ -11,8 +11,12 @@ export { viscosityVPNStyles as styles } from "../../styles/components/data/visco
 const settings = Settings.get();
 const { widgets, vpnWidgetOptions } = settings;
 const { vpnWidget } = widgets;
-const { refreshFrequency, vpnConnectionName, vpnShowConnectionName } =
-  vpnWidgetOptions;
+const {
+  refreshFrequency,
+  vpnConnectionName,
+  vpnShowConnectionName,
+  showOnDisplay,
+} = vpnWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 8000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -34,9 +38,11 @@ const toggleVPN = (isConnected, vpnConnectionName) => {
   }
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && vpnWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(vpnWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getVPN = async () => {
     const isRunning = await Uebersicht.run(
@@ -54,7 +60,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(vpnWidget, getVPN, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getVPN, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />;
   if (!state || !vpnConnectionName.length) return null;

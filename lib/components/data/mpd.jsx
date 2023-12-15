@@ -11,8 +11,14 @@ export { mpdStyles as styles } from "../../styles/components/data/mpd";
 const settings = Settings.get();
 const { widgets, mpdWidgetOptions } = settings;
 const { mpdWidget } = widgets;
-const { refreshFrequency, showSpecter, mpdHost, mpdPort, mpdFormatString } =
-  mpdWidgetOptions;
+const {
+  refreshFrequency,
+  showSpecter,
+  mpdHost,
+  mpdPort,
+  mpdFormatString,
+  showOnDisplay,
+} = mpdWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -23,9 +29,11 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 const togglePlay = (host, port) =>
   Uebersicht.run(`mpc --host ${host} --port ${port} toggle`);
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && mpdWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(mpdWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getMpd = async () => {
     try {
@@ -51,7 +59,7 @@ export const Widget = () => {
     }
   };
 
-  useWidgetRefresh(mpdWidget, getMpd, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getMpd, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="mpd" />;
   if (!state) return null;

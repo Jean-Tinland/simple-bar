@@ -11,7 +11,7 @@ export { micStyles as styles } from "../../styles/components/data/mic";
 const settings = Settings.get();
 const { widgets, micWidgetOptions } = settings;
 const { micWidget } = widgets;
-const { refreshFrequency } = micWidgetOptions;
+const { refreshFrequency, showOnDisplay } = micWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -24,12 +24,14 @@ const setMic = (volume) => {
   Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && micWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(micWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
   const { volume: _volume } = state || {};
   const [volume, setVolume] = Uebersicht.React.useState(
-    _volume && parseInt(_volume)
+    _volume && parseInt(_volume, 10)
   );
   const [dragging, setDragging] = Uebersicht.React.useState(false);
 
@@ -41,15 +43,15 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(micWidget, getMic, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getMic, REFRESH_FREQUENCY);
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setMic(volume);
   }, [dragging]);
 
   Uebersicht.React.useEffect(() => {
-    if (_volume && parseInt(_volume) !== volume) {
-      setVolume(parseInt(_volume));
+    if (_volume && parseInt(_volume, 10) !== volume) {
+      setVolume(parseInt(_volume, 10));
     }
   }, [_volume]);
 
@@ -60,7 +62,7 @@ export const Widget = () => {
   const Icon = !volume ? Icons.MicOff : Icons.MicOn;
 
   const onChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value, 10);
     setVolume(value);
   };
   const onMouseDown = () => setDragging(true);

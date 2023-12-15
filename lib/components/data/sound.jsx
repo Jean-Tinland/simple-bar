@@ -11,7 +11,7 @@ export { soundStyles as styles } from "../../styles/components/data/sound";
 const settings = Settings.get();
 const { widgets, soundWidgetOptions } = settings;
 const { soundWidget } = widgets;
-const { refreshFrequency } = soundWidgetOptions;
+const { refreshFrequency, showOnDisplay } = soundWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -31,12 +31,15 @@ const setSound = (volume) => {
   Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && soundWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(soundWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
   const { volume: _volume } = state || {};
   const [volume, setVolume] = Uebersicht.React.useState(
-    _volume && parseInt(_volume)
+    _volume && parseInt(_volume, 10)
   );
   const [dragging, setDragging] = Uebersicht.React.useState(false);
 
@@ -56,15 +59,15 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(soundWidget, getSound, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getSound, REFRESH_FREQUENCY);
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setSound(volume);
   }, [dragging]);
 
   Uebersicht.React.useEffect(() => {
-    if (_volume && parseInt(_volume) !== volume) {
-      setVolume(parseInt(_volume));
+    if (_volume && parseInt(_volume, 10) !== volume) {
+      setVolume(parseInt(_volume, 10));
     }
   }, [_volume]);
 
@@ -77,7 +80,7 @@ export const Widget = () => {
   const Icon = getIcon(volume, muted);
 
   const onChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value, 10);
     setVolume(value);
   };
   const onMouseDown = () => setDragging(true);
