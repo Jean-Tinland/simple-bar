@@ -21,7 +21,7 @@ A more "lite" & basic version is available [here](https://github.com/Jean-Tinlan
 Simply clone this repo in your Übersicht widgets directory with the following command.
 
 ```bash
-$ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/installation/).
