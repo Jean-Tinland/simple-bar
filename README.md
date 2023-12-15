@@ -8,6 +8,15 @@ A more "lite" & basic version is available [here](https://github.com/Jean-Tinlan
 
 ## Features
 
+Among the principal features of `simple-bar`, you'll find:
+
+- **Show all opened apps** (with their icon) in every space with `stack-index` (from `yabai`)
+- Interactions: **navigate to workspace** on click, launch scripts, toggle states
+- **Multi-monitor support**: enable individual widget on specific displays
+- Add your own custom widgets in settings (it displays scripts outputs)
+- **Extensible** themes system with 3 theme behaviors: **dark**, **light**, or **system**
+- Numerous customization options (try them out in settings)
+
 [See all features in documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/features/).
 
 ## Preview
