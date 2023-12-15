@@ -10,8 +10,14 @@ export { cryptoStyles as styles } from "../../styles/components/data/crypto";
 
 const settings = Settings.get();
 const { widgets, cryptoWidgetOptions } = settings;
-const { refreshFrequency, denomination, identifiers, precision } =
-  cryptoWidgetOptions;
+const { cryptoWidget } = widgets;
+const {
+  refreshFrequency,
+  denomination,
+  identifiers,
+  precision,
+  showOnDisplay,
+} = cryptoWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000; // 30 seconds * 1000 milliseconds
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -37,17 +43,19 @@ const openCrypto = (e) => {
   Utils.notification("Opening price chart from coingecko.com...");
 };
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && cryptoWidget;
+
   const ref = Uebersicht.React.useRef();
   const denominatorToken = getDenominatorToken(denomination);
   const cleanedUpIdentifiers = identifiers.replace(/ /g, "");
   const enumeratedIdentifiers = cleanedUpIdentifiers
     .replace(/ /g, "")
     .split(",");
-  const { cryptoWidget } = widgets;
 
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(cryptoWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getCrypto = async () => {
     const response = await fetch(
@@ -63,7 +71,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(cryptoWidget, getCrypto, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getCrypto, REFRESH_FREQUENCY);
 
   const refreshCrypto = (e) => {
     Utils.clickEffect(e);

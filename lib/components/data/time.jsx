@@ -17,12 +17,15 @@ const displayNotificationCenter = () =>
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   );
 
-export const Widget = Uebersicht.React.memo(() => {
+export const Widget = Uebersicht.React.memo(({ display }) => {
   const { settings } = useSimpleBarContext();
   const { widgets, timeWidgetOptions } = settings;
   const { timeWidget } = widgets;
-  const { refreshFrequency, hour12, dayProgress, showSeconds } =
+  const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay } =
     timeWidgetOptions;
+
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && timeWidget;
 
   const refresh = Uebersicht.React.useMemo(
     () =>
@@ -31,7 +34,7 @@ export const Widget = Uebersicht.React.memo(() => {
   );
 
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(timeWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const options = {
     hour: "numeric",
@@ -52,7 +55,7 @@ export const Widget = Uebersicht.React.memo(() => {
   };
 
   useServerSocket("time", getTime, resetWidget);
-  useWidgetRefresh(timeWidget, getTime, refresh);
+  useWidgetRefresh(visible, getTime, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;
   if (!state) return null;

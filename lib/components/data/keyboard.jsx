@@ -11,7 +11,7 @@ export { keyboardStyles as styles } from "../../styles/components/data/keyboard"
 const settings = Settings.get();
 const { widgets, keyboardWidgetOptions } = settings;
 const { keyboardWidget } = widgets;
-const { refreshFrequency } = keyboardWidgetOptions;
+const { refreshFrequency, showOnDisplay } = keyboardWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -19,9 +19,12 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-export const Widget = () => {
+export const Widget = ({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && keyboardWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(keyboardWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getKeyboard = async () => {
     const keyboard = await Uebersicht.run(
@@ -49,7 +52,7 @@ export const Widget = () => {
     setLoading(false);
   };
 
-  useWidgetRefresh(keyboardWidget, getKeyboard, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getKeyboard, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />;
   if (!state) return null;

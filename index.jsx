@@ -97,7 +97,7 @@ const render = ({ output, error }) => {
 
   const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
-  const displayId = parseInt(window.location.pathname.replace("/", ""));
+  const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
   const { index: displayIndex } = displays.find((d) => {
     return d.id === displayId;
   });
@@ -127,24 +127,24 @@ const render = ({ output, error }) => {
         )}
         <div className="simple-bar__data">
           <Settings.Wrapper />
-          <UserWidgets />
-          <Zoom.Widget />
-          <BrowserTrack.Widget />
-          <Spotify.Widget />
-          <Crypto.Widget />
-          <Stock.Widget />
-          <Music.Widget />
-          <Mpd.Widget />
-          <Weather.Widget />
-          <Netstats.Widget />
-          <Battery.Widget />
-          <Mic.Widget />
-          <Sound.Widget />
-          <ViscosityVPN.Widget />
-          <Wifi.Widget />
-          <Keyboard.Widget />
-          <DateDisplay.Widget />
-          <Time.Widget />
+          <UserWidgets display={displayIndex} />
+          <Zoom.Widget display={displayIndex} />
+          <BrowserTrack.Widget display={displayIndex} />
+          <Spotify.Widget display={displayIndex} />
+          <Crypto.Widget display={displayIndex} />
+          <Stock.Widget display={displayIndex} />
+          <Music.Widget display={displayIndex} />
+          <Mpd.Widget display={displayIndex} />
+          <Weather.Widget display={displayIndex} />
+          <Netstats.Widget display={displayIndex} />
+          <Battery.Widget display={displayIndex} />
+          <Mic.Widget display={displayIndex} />
+          <Sound.Widget display={displayIndex} />
+          <ViscosityVPN.Widget display={displayIndex} />
+          <Wifi.Widget display={displayIndex} />
+          <Keyboard.Widget display={displayIndex} />
+          <DateDisplay.Widget display={displayIndex} />
+          <Time.Widget display={displayIndex} />
         </div>
       </div>
     </ContextProvider>

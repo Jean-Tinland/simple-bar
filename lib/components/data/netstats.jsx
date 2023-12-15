@@ -11,7 +11,7 @@ export { netstatsStyles as styles } from "../../styles/components/data/netstats"
 const settings = Settings.get();
 const { widgets, netstatsWidgetOptions } = settings;
 const { netstatsWidget } = widgets;
-const { refreshFrequency } = netstatsWidgetOptions;
+const { refreshFrequency, showOnDisplay } = netstatsWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -36,9 +36,12 @@ const formatBytes = (bytes, decimals = 1) => {
 const getStats = async () =>
   Uebersicht.run(`bash ./simple-bar/lib/scripts/netstats.sh 2>&1`);
 
-export const Widget = Uebersicht.React.memo(() => {
+export const Widget = Uebersicht.React.memo(({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && netstatsWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(netstatsWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getNetstats = async () => {
     try {
@@ -52,13 +55,19 @@ export const Widget = Uebersicht.React.memo(() => {
     }
   };
 
-  useWidgetRefresh(netstatsWidget, getNetstats, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getNetstats, REFRESH_FREQUENCY);
 
-  if (loading) return <DataWidgetLoader.Widget className="netstats" />;
-  if (!state) return null;
+  if (loading)
+    return (
+      <Uebersicht.React.Fragment>
+        <DataWidgetLoader.Widget className="netstats" />
+        <DataWidgetLoader.Widget className="netstats" />
+      </Uebersicht.React.Fragment>
+    );
+
+  if (!state?.download || !state?.upload) return null;
+
   const { download, upload } = state;
-
-  if (download === undefined || upload === undefined) return null;
 
   return (
     <Uebersicht.React.Fragment>

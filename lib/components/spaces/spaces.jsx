@@ -8,14 +8,24 @@ import * as Settings from "../../settings";
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
 const settings = Settings.get();
+const { spacesDisplay, process } = settings;
 const {
   displayStickyWindowsSeparately,
   spacesExclusions,
   exclusionsAsRegex,
   hideCreateSpaceButton,
-} = settings.spacesDisplay;
+  showOnDisplay,
+} = spacesDisplay;
 
 export const Component = ({ spaces, windows, SIP, displayIndex }) => {
+  const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
+  const isProcessVisible = Utils.isVisibleOnDisplay(
+    displayIndex,
+    process.showOnDisplay
+  );
+
+  if (!visible) return null;
+
   if (!spaces && !windows) {
     return <div className="spaces spaces--empty" />;
   }
@@ -73,7 +83,7 @@ export const Component = ({ spaces, windows, SIP, displayIndex }) => {
             <Icons.Add />
           </button>
         ) : (
-          <div className="spaces__end-separator" />
+          isProcessVisible && <div className="spaces__end-separator" />
         )}
       </div>
     );

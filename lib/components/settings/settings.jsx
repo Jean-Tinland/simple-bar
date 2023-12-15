@@ -127,7 +127,7 @@ const LAST_CURRENT_TAB = "simple-bar-last-current-settings-tab";
 
 const getLastCurrentTab = () => {
   const storedLastCurrentTab = window.sessionStorage.getItem(LAST_CURRENT_TAB);
-  if (storedLastCurrentTab) return parseInt(storedLastCurrentTab);
+  if (storedLastCurrentTab) return parseInt(storedLastCurrentTab, 10);
   return 0;
 };
 

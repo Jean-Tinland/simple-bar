@@ -1503,6 +1503,22 @@ export const FreeTube = (props) => (
   </Icon>
 );
 
+export const SuperProductivity = (props) => (
+  <Icon {...props}>
+    <path d="M11.3814 17.75 0 12.5 12.3711 24 24 0 11.3814 17.75Z" />
+  </Icon>
+);
+
+export const GnuCash = (props) => (
+  <Icon {...props}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4 4C1.7909 4 0 5.7909 0 8v1h24V8c0-2.2091-1.7909-4-4-4H4Zm20 8H0v4c0 2.2091 1.7909 4 4 4h16c2.2091 0 4-1.7909 4-4v-4Z"
+    />
+  </Icon>
+);
+
 export const Upload = (props) => (
   <Icon {...props}>
     <path d="M11 22a1 1 0 1 1 2 0 1 1 0 0 1-2 0ZM11 16a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0v-3ZM11 4a1 1 0 1 1 2 0v9a1 1 0 1 1-2 0V4Z" />

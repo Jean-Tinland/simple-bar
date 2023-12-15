@@ -12,7 +12,7 @@ export { spotifyStyles as styles } from "../../styles/components/data/spotify";
 const settings = Settings.get();
 const { widgets, spotifyWidgetOptions } = settings;
 const { spotifyWidget } = widgets;
-const { refreshFrequency, showSpecter } = spotifyWidgetOptions;
+const { refreshFrequency, showSpecter, showOnDisplay } = spotifyWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
@@ -31,9 +31,12 @@ const getIcon = (playerState) => {
   return Icons.Paused;
 };
 
-export const Widget = Uebersicht.React.memo(() => {
+export const Widget = Uebersicht.React.memo(({ display }) => {
+  const visible =
+    Utils.isVisibleOnDisplay(display, showOnDisplay) && spotifyWidget;
+
   const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(spotifyWidget);
+  const [loading, setLoading] = Uebersicht.React.useState(visible);
 
   const getSpotify = async () => {
     const isRunning = await Uebersicht.run(
@@ -67,7 +70,7 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useWidgetRefresh(spotifyWidget, getSpotify, REFRESH_FREQUENCY);
+  useWidgetRefresh(visible, getSpotify, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="spotify" />;
   if (!state) return null;

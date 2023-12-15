@@ -5,17 +5,25 @@ import * as Utils from "../../utils";
 export { processStyles as styles } from "../../styles/components/process";
 
 const settings = Settings.get();
+const { process, spacesDisplay } = settings;
+const { exclusionsAsRegex } = spacesDisplay;
+const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
+  process;
 
 export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
-  if (!windows) return null;
-  const { process, spacesDisplay } = settings;
-  const { exclusionsAsRegex } = spacesDisplay;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && windows;
+
+  if (!visible) return null;
+
   const exclusions = exclusionsAsRegex
     ? spacesDisplay.exclusions
     : spacesDisplay.exclusions.split(", ");
+
   const titleExclusions = exclusionsAsRegex
     ? spacesDisplay.titleExclusions
     : spacesDisplay.titleExclusions.split(", ");
+
   const currentSpace = spaces.find((space) => {
     const {
       "is-visible": isVisible,
@@ -24,6 +32,7 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
     } = space;
     return (isVisible ?? __legacyIsVisible) && display === displayIndex;
   });
+
   const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround({
     windows,
     uniqueApps: false,
@@ -37,7 +46,7 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
   const apps = [...stickyWindows, ...nonStickyWindows];
 
   const classes = Utils.classnames("process", {
-    "process--centered": process.centered,
+    "process--centered": centered,
   });
 
   const currentSkhdMode = skhdMode.mode === "default" ? null : skhdMode.mode;
@@ -46,12 +55,12 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
   return (
     <div className={classes}>
       <div className="process__container">
-        {process.showCurrentSpaceMode && currentSpace && (
+        {showCurrentSpaceMode && currentSpace && (
           <div key={currentSpace.index} className="process__layout">
             {currentSpace.type}
           </div>
         )}
-        {process.displaySkhdMode && currentSkhdMode && (
+        {displaySkhdMode && currentSkhdMode && (
           <div
             className="process__skhd-mode"
             style={{ backgroundColor: skhdModeColor }}
