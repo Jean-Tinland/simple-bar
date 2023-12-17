@@ -47,8 +47,6 @@ export const Widget = ({ display }) => {
     }
   }, [setGraph]);
 
-  console.log(graph);
-
   useWidgetRefresh(visible, getNetstats, REFRESH_FREQUENCY);
 
   if (loading)
