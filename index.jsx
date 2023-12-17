@@ -10,6 +10,7 @@ import * as Time from "./lib/components/data/time.jsx";
 import * as DateDisplay from "./lib/components/data/date-display.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
 import * as Netstats from "./lib/components/data/netstats.jsx";
+import * as Cpu from "./lib/components/data/cpu.jsx";
 import * as Battery from "./lib/components/data/battery.jsx";
 import * as Sound from "./lib/components/data/sound.jsx";
 import * as Mic from "./lib/components/data/mic.jsx";
@@ -23,6 +24,7 @@ import * as Music from "./lib/components/data/music.jsx";
 import * as Mpd from "./lib/components/data/mpd.jsx";
 import * as BrowserTrack from "./lib/components/data/browser-track.jsx";
 import * as Specter from "./lib/components/data/specter.jsx";
+import * as Graph from "./lib/components/data/graph.jsx";
 import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx";
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as Utils from "./lib/utils";
@@ -52,6 +54,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Time.styles,
   Weather.styles,
   Netstats.styles,
+  Cpu.styles,
   Crypto.styles,
   Stock.styles,
   Battery.styles,
@@ -65,6 +68,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Mpd.styles,
   BrowserTrack.styles,
   Specter.styles,
+  Graph.styles,
   DataWidgetLoader.styles,
 ]);
 
@@ -137,6 +141,7 @@ const render = ({ output, error }) => {
           <Mpd.Widget display={displayIndex} />
           <Weather.Widget display={displayIndex} />
           <Netstats.Widget display={displayIndex} />
+          <Cpu.Widget display={displayIndex} />
           <Battery.Widget display={displayIndex} />
           <Mic.Widget display={displayIndex} />
           <Sound.Widget display={displayIndex} />
