@@ -1537,6 +1537,13 @@ export const TablePlus = (props) => (
   </Icon>
 );
 
+export const Anytype = (props) => (
+  <Icon {...props}>
+    <path d="M3.5 0h14.4v5.2H3.5zm14.4 5.2h5.6v18.7h-5.6z"/>
+    <circle cx="8" cy="16.5" r="7.5"/>
+  </Icon>
+);
+
 export const Upload = (props) => (
   <Icon {...props}>
     <path d="M11 22a1 1 0 1 1 2 0 1 1 0 0 1-2 0ZM11 16a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0v-3ZM11 4a1 1 0 1 1 2 0v9a1 1 0 1 1-2 0V4Z" />
