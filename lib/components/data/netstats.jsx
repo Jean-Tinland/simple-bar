@@ -67,8 +67,8 @@ export const Widget = ({ display }) => {
     return null;
   }
 
-  const formatedDownload = formatBytes(download);
-  const formatedUpload = formatBytes(upload);
+  const formatedDownload = Utils.formatBytes(download);
+  const formatedUpload = Utils.formatBytes(upload);
 
   if (displayAsGraph) {
     return (
@@ -117,17 +117,3 @@ export const Widget = ({ display }) => {
     </Uebersicht.React.Fragment>
   );
 };
-
-function formatBytes(bytes, decimals = 1) {
-  if (!+bytes) return "0b";
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["b", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))}<em>${
-    sizes[i]
-  }</em>`;
-}

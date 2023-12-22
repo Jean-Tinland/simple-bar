@@ -10,6 +10,7 @@ import * as DateDisplay from "./lib/components/data/date-display.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
 import * as Netstats from "./lib/components/data/netstats.jsx";
 import * as Cpu from "./lib/components/data/cpu.jsx";
+import * as Memory from "./lib/components/data/memory.jsx";
 import * as Battery from "./lib/components/data/battery.jsx";
 import * as Sound from "./lib/components/data/sound.jsx";
 import * as Mic from "./lib/components/data/mic.jsx";
@@ -54,6 +55,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Weather.styles,
   Netstats.styles,
   Cpu.styles,
+  Memory.styles,
   Crypto.styles,
   Stock.styles,
   Battery.styles,
@@ -140,6 +142,7 @@ const render = ({ output, error }) => {
         <Weather.Widget display={displayIndex} />
         <Netstats.Widget display={displayIndex} />
         <Cpu.Widget display={displayIndex} />
+        <Memory.Widget display={displayIndex} />
         <Battery.Widget display={displayIndex} />
         <Mic.Widget display={displayIndex} />
         <Sound.Widget display={displayIndex} />

@@ -1,4 +1,5 @@
 #!/bin/bash
+
 function getNetstats {
   netstat -w1 > /tmp/netstats.out & sleep 1.5; kill $!;
 }
