@@ -3,48 +3,40 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { viscosityVPNStyles as styles } from "../../styles/components/data/viscosity-vpn";
 
-const settings = Settings.get();
-const { widgets, vpnWidgetOptions } = settings;
-const { vpnWidget } = widgets;
-const {
-  refreshFrequency,
-  vpnConnectionName,
-  vpnShowConnectionName,
-  showOnDisplay,
-} = vpnWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 8000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
-
-const toggleVPN = (isConnected, vpnConnectionName) => {
-  if (isConnected) {
-    Uebersicht.run(
-      `osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`
-    );
-    Utils.notification(`Disabling Viscosity ${vpnConnectionName} network...`);
-  } else {
-    Uebersicht.run(
-      `osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`
-    );
-    Utils.notification(`Enabling Viscosity ${vpnConnectionName} network...`);
-  }
-};
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, vpnWidgetOptions } = settings;
+  const { vpnWidget } = widgets;
+  const {
+    refreshFrequency,
+    vpnConnectionName,
+    vpnShowConnectionName,
+    showOnDisplay,
+  } = vpnWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && vpnWidget;
 
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
+
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
 
   const getVPN = async () => {
     const isRunning = await Uebersicht.run(
@@ -62,7 +54,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getVPN, REFRESH_FREQUENCY);
+  useServerSocket("viscosity-vpn", visible, getVPN, resetWidget);
+  useWidgetRefresh(visible, getVPN, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />;
   if (!state || !vpnConnectionName.length) return null;
@@ -88,3 +81,17 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+function toggleVPN(isConnected, vpnConnectionName) {
+  if (isConnected) {
+    Uebersicht.run(
+      `osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`
+    );
+    Utils.notification(`Disabling Viscosity ${vpnConnectionName} network...`);
+  } else {
+    Uebersicht.run(
+      `osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`
+    );
+    Utils.notification(`Enabling Viscosity ${vpnConnectionName} network...`);
+  }
+}

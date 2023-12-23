@@ -11,11 +11,6 @@ export { timeStyles as styles } from "../../styles/components/data/time";
 
 const DEFAULT_REFRESH_FREQUENCY = 1000;
 
-const displayNotificationCenter = () =>
-  Uebersicht.run(
-    `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
-  );
-
 export const Widget = Uebersicht.React.memo(() => {
   const { display, settings } = useSimpleBarContext();
   const { widgets, timeWidgetOptions } = settings;
@@ -53,7 +48,7 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useServerSocket("time", getTime, resetWidget);
+  useServerSocket("time", visible, getTime, resetWidget);
   useWidgetRefresh(visible, getTime, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;
@@ -68,18 +63,8 @@ export const Widget = Uebersicht.React.memo(() => {
   const diff = Math.max(0, dayEnd - new Date());
   const fillerWidth = (100 - (100 * diff) / range) / 100;
 
-  const onClick = (e) => {
-    Utils.clickEffect(e);
-    displayNotificationCenter();
-  };
-
   return (
-    <DataWidget.Widget
-      classes="time"
-      Icon={Icons.Clock}
-      onClick={onClick}
-      disableSlider
-    >
+    <DataWidget.Widget classes="time" Icon={Icons.Clock} disableSlider>
       {time}
       {dayProgress && (
         <div

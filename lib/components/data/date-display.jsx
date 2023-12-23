@@ -11,11 +11,6 @@ export { dateStyles as styles } from "../../styles/components/data/date-display"
 
 const DEFAULT_REFRESH_FREQUENCY = 30000;
 
-const openCalendarApp = (calendarApp) => {
-  const appName = calendarApp || "Calendar";
-  Uebersicht.run(`open -a "${appName}"`);
-};
-
 export const Widget = Uebersicht.React.memo(() => {
   const { display, settings } = useSimpleBarContext();
   const { widgets, dateWidgetOptions } = settings;
@@ -60,7 +55,7 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useServerSocket("date-display", getDate, resetWidget);
+  useServerSocket("date-display", visible, getDate, resetWidget);
   useWidgetRefresh(visible, getDate, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="date-display" />;
@@ -82,3 +77,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+function openCalendarApp(calendarApp) {
+  const appName = calendarApp || "Calendar";
+  Uebersicht.run(`open -a "${appName}"`);
+}

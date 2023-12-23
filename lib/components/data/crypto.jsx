@@ -1,51 +1,34 @@
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
-import { useSimpleBarContext } from "../context.jsx";
 import * as Uebersicht from "uebersicht";
-import * as Settings from "../../settings";
-import * as Icons from "../icons.jsx";
-import * as Utils from "../../utils";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../context.jsx";
+import * as Utils from "../../utils";
 
 export { cryptoStyles as styles } from "../../styles/components/data/crypto";
 
-const settings = Settings.get();
-const { widgets, cryptoWidgetOptions } = settings;
-const { cryptoWidget } = widgets;
-const {
-  refreshFrequency,
-  denomination,
-  identifiers,
-  precision,
-  showOnDisplay,
-} = cryptoWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000; // 30 seconds * 1000 milliseconds
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
-
-const getIcon = (identifier) => {
-  if (identifier === "celo") return Icons.Celo;
-  if (identifier === "ethereum") return Icons.Ethereum;
-  if (identifier === "bitcoin") return Icons.Bitcoin;
-  return Icons.Moon;
-};
-
-const getDenominatorToken = (denomination) => {
-  if (denomination === "usd") return "$";
-  if (denomination === "eur") return "€";
-  return "";
-};
-
-const openCrypto = (e) => {
-  Utils.clickEffect(e);
-  Utils.notification("Opening price chart from coingecko.com...");
-};
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, cryptoWidgetOptions } = settings;
+  const { cryptoWidget } = widgets;
+  const {
+    refreshFrequency,
+    denomination,
+    identifiers,
+    precision,
+    showOnDisplay,
+  } = cryptoWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && cryptoWidget;
 
@@ -58,6 +41,11 @@ export const Widget = Uebersicht.React.memo(() => {
 
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
+
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
 
   const getCrypto = async () => {
     const response = await fetch(
@@ -73,7 +61,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getCrypto, REFRESH_FREQUENCY);
+  useServerSocket("crypto", visible, getCrypto, resetWidget);
+  useWidgetRefresh(visible, getCrypto, refresh);
 
   const refreshCrypto = (e) => {
     Utils.clickEffect(e);
@@ -101,3 +90,21 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   ));
 });
+
+function getIcon(identifier) {
+  if (identifier === "celo") return Icons.Celo;
+  if (identifier === "ethereum") return Icons.Ethereum;
+  if (identifier === "bitcoin") return Icons.Bitcoin;
+  return Icons.Moon;
+}
+
+function getDenominatorToken(denomination) {
+  if (denomination === "usd") return "$";
+  if (denomination === "eur") return "€";
+  return "";
+}
+
+function openCrypto(e) {
+  Utils.clickEffect(e);
+  Utils.notification("Opening price chart from coingecko.com...");
+}

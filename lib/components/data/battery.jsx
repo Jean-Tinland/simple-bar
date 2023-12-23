@@ -11,25 +11,6 @@ export { batteryStyles as styles } from "../../styles/components/data/battery";
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-const getTransform = (value) => {
-  let transform = `0.${value}`;
-  if (value === 100) transform = "1";
-  if (value < 10) transform = `0.0${value}`;
-  return `scaleX(${transform})`;
-};
-
-const toggleCaffeinate = async (system, caffeinate, option) => {
-  const command =
-    system === "x86_64" ? "caffeinate" : "arch -arch arm64 caffeinate";
-  if (!caffeinate.length) {
-    Uebersicht.run(`${command} ${option} &`);
-    Utils.notification("Enabling caffeinate...");
-  } else {
-    await Uebersicht.run("pkill -f caffeinate");
-    Utils.notification("Disabling caffeinate...");
-  }
-};
-
 export const Widget = Uebersicht.React.memo(() => {
   const { display, settings } = useSimpleBarContext();
   const { widgets, batteryWidgetOptions } = settings;
@@ -44,9 +25,10 @@ export const Widget = Uebersicht.React.memo(() => {
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && batteryWidget;
 
-  const refresh = Utils.getRefreshFrequency(
-    refreshFrequency,
-    DEFAULT_REFRESH_FREQUENCY
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
   );
 
   const [state, setState] = Uebersicht.React.useState();
@@ -77,7 +59,7 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useServerSocket("battery", getBattery, resetWidget);
+  useServerSocket("battery", visible, getBattery, resetWidget);
   useWidgetRefresh(visible, getBattery, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />;
@@ -127,3 +109,22 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+function getTransform(value) {
+  let transform = `0.${value}`;
+  if (value === 100) transform = "1";
+  if (value < 10) transform = `0.0${value}`;
+  return `scaleX(${transform})`;
+}
+
+async function toggleCaffeinate(system, caffeinate, option) {
+  const command =
+    system === "x86_64" ? "caffeinate" : "arch -arch arm64 caffeinate";
+  if (!caffeinate.length) {
+    Uebersicht.run(`${command} ${option} &`);
+    Utils.notification("Enabling caffeinate...");
+  } else {
+    await Uebersicht.run("pkill -f caffeinate");
+    Utils.notification("Disabling caffeinate...");
+  }
+}

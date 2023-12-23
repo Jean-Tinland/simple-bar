@@ -2,23 +2,14 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import * as Utils from "../../utils";
 import { useSimpleBarContext } from "../context.jsx";
 
 export { micStyles as styles } from "../../styles/components/data/mic";
 
-const settings = Settings.get();
-const { widgets, micWidgetOptions } = settings;
-const { micWidget } = widgets;
-const { refreshFrequency, showOnDisplay } = micWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 20000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
 const setMic = (volume) => {
   if (volume === undefined) return;
@@ -26,7 +17,17 @@ const setMic = (volume) => {
 };
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, micWidgetOptions } = settings;
+  const { micWidget } = widgets;
+  const { refreshFrequency, showOnDisplay } = micWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && micWidget;
 
   const [state, setState] = Uebersicht.React.useState();
@@ -37,6 +38,11 @@ export const Widget = Uebersicht.React.memo(() => {
   );
   const [dragging, setDragging] = Uebersicht.React.useState(false);
 
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
   const getMic = async () => {
     const volume = await Uebersicht.run(
       `osascript -e 'set ovol to input volume of (get volume settings)'`
@@ -45,7 +51,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getMic, REFRESH_FREQUENCY);
+  useServerSocket("mic", visible, getMic, resetWidget);
+  useWidgetRefresh(visible, getMic, refresh);
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setMic(volume);

@@ -4,32 +4,38 @@ import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import Graph from "./graph.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { cpuStyles as styles } from "../../styles/components/data/cpu";
 
-const settings = Settings.get();
-const { widgets, cpuWidgetOptions } = settings;
-const { cpuWidget } = widgets;
-const { refreshFrequency, showOnDisplay, displayAsGraph } = cpuWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 2000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
 const GRAPH_LENGTH = 50;
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, cpuWidgetOptions } = settings;
+  const { cpuWidget } = widgets;
+  const { refreshFrequency, showOnDisplay, displayAsGraph } = cpuWidgetOptions;
+
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && cpuWidget;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
 
   const [graph, setGraph] = Uebersicht.React.useState([]);
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
+
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
 
   const getCpu = async () => {
     const usage = await Uebersicht.run(
@@ -43,7 +49,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getCpu, REFRESH_FREQUENCY);
+  useServerSocket("cpu", visible, getCpu, resetWidget);
+  useWidgetRefresh(visible, getCpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;
   if (!state) return null;

@@ -4,25 +4,6 @@ import * as Utils from "../../utils";
 
 export { dataWidgetStyles as styles } from "../../styles/components/data/data-widget";
 
-const getTag = (onClick, href) => {
-  if (href) return "a";
-  if (onClick) return "button";
-  return "div";
-};
-
-const isMiddleClick = (e) => {
-  return e.button === 1 || e["button&2"] === 1;
-};
-
-const Inner = ({ disableSlider, children }) => {
-  if (disableSlider) return children;
-  return (
-    <div className="data-widget__inner">
-      <div className="data-widget__slider">{children}</div>
-    </div>
-  );
-};
-
 export const Widget = ({
   Icon,
   classes,
@@ -73,3 +54,22 @@ export const Widget = ({
     </Tag>
   );
 };
+
+function Inner({ disableSlider, children }) {
+  if (disableSlider) return children;
+  return (
+    <div className="data-widget__inner">
+      <div className="data-widget__slider">{children}</div>
+    </div>
+  );
+}
+
+function getTag(onClick, href) {
+  if (href) return "a";
+  if (onClick) return "button";
+  return "div";
+}
+
+function isMiddleClick(e) {
+  return e.button === 1 || e["button&2"] === 1;
+}
