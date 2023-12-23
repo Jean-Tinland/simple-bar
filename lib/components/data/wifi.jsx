@@ -10,6 +10,7 @@ import * as Utils from "../../utils";
 export { wifiStyles as styles } from "../../styles/components/data/wifi";
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
+
 export const Widget = Uebersicht.React.memo(() => {
   const { display, settings } = useSimpleBarContext();
   const { widgets, networkWidgetOptions } = settings;
@@ -39,7 +40,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getWifi = async () => {
+  const getWifi = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const [status, ssid] = await Promise.all([
       Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
       Uebersicht.run(
@@ -51,7 +53,7 @@ export const Widget = Uebersicht.React.memo(() => {
       ssid: Utils.cleanupOutput(ssid),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("wifi", visible, getWifi, resetWidget);
   useWidgetRefresh(visible, getWifi, refresh);
@@ -89,6 +91,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Wifi";
 
 async function toggleWifi(isActive, networkDevice) {
   if (isActive) {

@@ -28,14 +28,17 @@ export const Widget = ({
     if (action) action(e);
   };
 
-  const onMouseEnter = () =>
+  const onMouseEnter = () => {
     Utils.startSliding(
       ref.current,
       ".data-widget__inner",
       ".data-widget__slider"
     );
-  const onMouseLeave = () =>
+  };
+
+  const onMouseLeave = () => {
     Utils.stopSliding(ref.current, ".data-widget__slider");
+  };
 
   return (
     <Tag

@@ -2,16 +2,24 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
-import { useSimpleBarContext } from "../context.jsx";
 
-const settings = Settings.get();
-const { userWidgetsList } = settings.userWidgets;
+export default function UserWidgets() {
+  const { settings } = useSimpleBarContext();
+  const { userWidgetsList } = settings.userWidgets;
 
-const UserWidget = ({ index, widget }) => {
-  const { display } = useSimpleBarContext();
+  const keys = Object.keys(userWidgetsList);
+  return keys.map((key) => (
+    <UserWidget key={key} index={key} widget={userWidgetsList[key]} />
+  ));
+}
+
+const UserWidget = Uebersicht.React.memo(({ index, widget }) => {
+  const { display, settings } = useSimpleBarContext();
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(true);
   const {
@@ -29,7 +37,13 @@ const UserWidget = ({ index, widget }) => {
 
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && active;
 
-  const getUserWidget = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getUserWidget = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const widgetOutput = await Uebersicht.run(output);
     if (!Utils.cleanupOutput(widgetOutput).length) {
       setLoading(false);
@@ -37,8 +51,9 @@ const UserWidget = ({ index, widget }) => {
     }
     setState(widgetOutput);
     setLoading(false);
-  };
+  }, [visible]);
 
+  useServerSocket("user-widget", visible, getUserWidget, resetWidget, index);
   useWidgetRefresh(visible, getUserWidget, refreshFrequency);
 
   if (!visible) return null;
@@ -94,13 +109,4 @@ const UserWidget = ({ index, widget }) => {
       {state}
     </DataWidget.Widget>
   );
-};
-
-const UserWidgets = () => {
-  const keys = Object.keys(userWidgetsList);
-  return keys.map((key) => (
-    <UserWidget key={key} index={key} widget={userWidgetsList[key]} />
-  ));
-};
-
-export default UserWidgets;
+});

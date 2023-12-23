@@ -47,7 +47,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getCrypto = async () => {
+  const getCrypto = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`
     );
@@ -59,7 +60,7 @@ export const Widget = Uebersicht.React.memo(() => {
     });
     setState(prices);
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("crypto", visible, getCrypto, resetWidget);
   useWidgetRefresh(visible, getCrypto, refresh);
@@ -90,6 +91,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   ));
 });
+
+Widget.displayName = "Crypto";
 
 function getIcon(identifier) {
   if (identifier === "celo") return Icons.Celo;

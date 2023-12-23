@@ -37,17 +37,22 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getCpu = async () => {
-    const usage = await Uebersicht.run(
-      `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
-    );
-    const formatedUsage = { usage: parseInt(usage, 10).toFixed(0) };
-    setState(formatedUsage);
-    if (displayAsGraph) {
-      Utils.addToGraphHistory(formatedUsage, setGraph, GRAPH_LENGTH);
+  const getCpu = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
+    try {
+      const usage = await Uebersicht.run(
+        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
+      );
+      const formatedUsage = { usage: parseInt(usage, 10).toFixed(0) };
+      setState(formatedUsage);
+      if (displayAsGraph) {
+        Utils.addToGraphHistory(formatedUsage, setGraph, GRAPH_LENGTH);
+      }
+      setLoading(false);
+    } catch (e) {
+      setTimeout(getCpu, 1000);
     }
-    setLoading(false);
-  };
+  }, [displayAsGraph, setGraph, visible]);
 
   useServerSocket("cpu", visible, getCpu, resetWidget);
   useWidgetRefresh(visible, getCpu, refresh);
@@ -83,3 +88,5 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Cpu";

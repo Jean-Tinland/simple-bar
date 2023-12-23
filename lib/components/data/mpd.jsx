@@ -2,42 +2,46 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
+import * as Utils from "../../utils";
 
 export { mpdStyles as styles } from "../../styles/components/data/mpd";
 
-const settings = Settings.get();
-const { widgets, mpdWidgetOptions } = settings;
-const { mpdWidget } = widgets;
-const {
-  refreshFrequency,
-  showSpecter,
-  mpdHost,
-  mpdPort,
-  mpdFormatString,
-  showOnDisplay,
-} = mpdWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 10000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
-
-const togglePlay = (host, port) =>
-  Uebersicht.run(`mpc --host ${host} --port ${port} toggle`);
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, mpdWidgetOptions } = settings;
+  const { mpdWidget } = widgets;
+  const {
+    refreshFrequency,
+    showSpecter,
+    mpdHost,
+    mpdPort,
+    mpdFormatString,
+    showOnDisplay,
+  } = mpdWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && mpdWidget;
 
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
 
-  const getMpd = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getMpd = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     try {
       const [playerState, trackInfo] = await Promise.all([
         Uebersicht.run(
@@ -59,9 +63,10 @@ export const Widget = Uebersicht.React.memo(() => {
     } catch (e) {
       setLoading(false);
     }
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getMpd, REFRESH_FREQUENCY);
+  useServerSocket("mpd", visible, getMpd, resetWidget);
+  useWidgetRefresh(visible, getMpd, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="mpd" />;
   if (!state) return null;
@@ -91,3 +96,9 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Mpd";
+
+async function togglePlay(host, port) {
+  return Uebersicht.run(`mpc --host ${host} --port ${port} toggle`);
+}

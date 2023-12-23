@@ -38,7 +38,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getVPN = async () => {
+  const getVPN = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const isRunning = await Uebersicht.run(
       `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`
     );
@@ -52,7 +53,7 @@ export const Widget = Uebersicht.React.memo(() => {
     if (!status.length) return;
     setState({ status: Utils.cleanupOutput(status) });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("viscosity-vpn", visible, getVPN, resetWidget);
   useWidgetRefresh(visible, getVPN, refresh);
@@ -81,6 +82,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "ViscosityVPN";
 
 function toggleVPN(isConnected, vpnConnectionName) {
   if (isConnected) {

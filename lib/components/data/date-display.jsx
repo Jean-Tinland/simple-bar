@@ -49,11 +49,12 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getDate = () => {
+  const getDate = Uebersicht.React.useCallback(() => {
+    if (!visible) return;
     const now = new Date().toLocaleDateString(_locale, options);
     setState({ now });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("date-display", visible, getDate, resetWidget);
   useWidgetRefresh(visible, getDate, refresh);
@@ -77,6 +78,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "DateDisplay";
 
 function openCalendarApp(calendarApp) {
   const appName = calendarApp || "Calendar";

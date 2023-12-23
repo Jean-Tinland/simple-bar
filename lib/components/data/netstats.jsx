@@ -3,28 +3,29 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import Graph from "./graph.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh.js";
+import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
 import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils.js";
-import * as Settings from "../../settings.js";
 
 export { netstatsStyles as styles } from "../../styles/components/data/netstats";
 
-const settings = Settings.get();
-const { widgets, netstatsWidgetOptions } = settings;
-const { netstatsWidget } = widgets;
-const { refreshFrequency, showOnDisplay, displayAsGraph } =
-  netstatsWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 2000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 const GRAPH_LENGTH = 30;
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, netstatsWidgetOptions } = settings;
+  const { netstatsWidget } = widgets;
+  const { refreshFrequency, showOnDisplay, displayAsGraph } =
+    netstatsWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && netstatsWidget;
 
@@ -32,7 +33,13 @@ export const Widget = Uebersicht.React.memo(() => {
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
 
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
   const getNetstats = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     try {
       const output = await Uebersicht.run(
         `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`
@@ -47,9 +54,10 @@ export const Widget = Uebersicht.React.memo(() => {
     } catch (e) {
       setTimeout(getNetstats, 1000);
     }
-  }, [setGraph]);
+  }, [displayAsGraph, setGraph, visible]);
 
-  useWidgetRefresh(visible, getNetstats, REFRESH_FREQUENCY);
+  useServerSocket("netstats", visible, getNetstats, resetWidget);
+  useWidgetRefresh(visible, getNetstats, refresh);
 
   if (loading)
     return (
@@ -119,6 +127,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </Uebersicht.React.Fragment>
   );
 });
+
+Widget.displayName = "Netstats";
 
 function formatBytes(bytes, decimals = 1) {
   if (!+bytes) return "0b";

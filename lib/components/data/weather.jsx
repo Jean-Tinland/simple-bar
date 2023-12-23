@@ -42,7 +42,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getWeather = async () => {
+  const getWeather = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     if (!location) {
       const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
       if (!position) await getWeather();
@@ -57,7 +58,7 @@ export const Widget = Uebersicht.React.memo(() => {
       //
     }
     setLoading(false);
-  };
+  }, [visible, location]);
 
   useServerSocket("weather", visible, getWeather, resetWidget);
   useWidgetRefresh(visible, getWeather, refresh);
@@ -135,6 +136,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Weather";
 
 function getIcon(description, atNight) {
   if (description.includes("fog") || description.includes("mist")) {

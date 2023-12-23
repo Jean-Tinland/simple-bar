@@ -42,11 +42,12 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getTime = () => {
+  const getTime = Uebersicht.React.useCallback(() => {
+    if (!visible) return;
     const time = new Date().toLocaleString("en-UK", options);
     setState({ time });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("time", visible, getTime, resetWidget);
   useWidgetRefresh(visible, getTime, refresh);
@@ -75,3 +76,5 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Time";

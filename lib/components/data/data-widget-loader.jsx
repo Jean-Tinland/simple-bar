@@ -18,3 +18,5 @@ export const Widget = Uebersicht.React.memo(
     );
   }
 );
+
+Widget.displayName = "DataWidgetLoader";

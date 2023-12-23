@@ -3,37 +3,26 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
-import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 
 export { soundStyles as styles } from "../../styles/components/data/sound";
 
-const settings = Settings.get();
-const { widgets, soundWidgetOptions } = settings;
-const { soundWidget } = widgets;
-const { refreshFrequency, showOnDisplay } = soundWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 20000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
-
-const getIcon = (volume, muted) => {
-  if (muted === "true" || !volume) return Icons.VolumeMuted;
-  if (volume < 20) return Icons.NoVolume;
-  if (volume < 50) return Icons.VolumeLow;
-  return Icons.VolumeHigh;
-};
-
-const setSound = (volume) => {
-  if (volume === undefined) return;
-  Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
-};
 
 export const Widget = Uebersicht.React.memo(() => {
-  const { display } = useSimpleBarContext();
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, soundWidgetOptions } = settings;
+  const { soundWidget } = widgets;
+  const { refreshFrequency, showOnDisplay } = soundWidgetOptions;
+
+  const refresh = Uebersicht.React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && soundWidget;
 
@@ -45,7 +34,13 @@ export const Widget = Uebersicht.React.memo(() => {
   );
   const [dragging, setDragging] = Uebersicht.React.useState(false);
 
-  const getSound = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getSound = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const [volume, muted] = await Promise.all([
       Uebersicht.run(
         `osascript -e 'set ovol to output volume of (get volume settings)'`
@@ -59,9 +54,10 @@ export const Widget = Uebersicht.React.memo(() => {
       muted: Utils.cleanupOutput(muted),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getSound, REFRESH_FREQUENCY);
+  useServerSocket("sound", visible, getSound, resetWidget);
+  useWidgetRefresh(visible, getSound, refresh);
 
   Uebersicht.React.useEffect(() => {
     if (!dragging) setSound(volume);
@@ -118,3 +114,17 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Sound";
+
+function getIcon(volume, muted) {
+  if (muted === "true" || !volume) return Icons.VolumeMuted;
+  if (volume < 20) return Icons.NoVolume;
+  if (volume < 50) return Icons.VolumeLow;
+  return Icons.VolumeHigh;
+}
+
+function setSound(volume) {
+  if (volume === undefined) return;
+  Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
+}

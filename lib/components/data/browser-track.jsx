@@ -36,7 +36,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getBrowserTrack = async () => {
+  const getBrowserTrack = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
       Uebersicht.run(
         `ps aux | grep -v 'grep' | grep -q 'Firefox' && echo "true" || echo "false"`
@@ -68,7 +69,7 @@ export const Widget = Uebersicht.React.memo(() => {
       isSpotifyRunning: Utils.cleanupOutput(spotifyStatus) === "true",
     });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("browser-track", visible, getBrowserTrack, resetWidget);
   useWidgetRefresh(visible, getBrowserTrack, refresh);
@@ -100,6 +101,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "BrowserTrack";
 
 function getIcon(browser) {
   if (browser === "chrome") return Icons.GoogleChrome;

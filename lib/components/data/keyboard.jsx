@@ -34,7 +34,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getKeyboard = async () => {
+  const getKeyboard = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const keyboard = await Uebersicht.run(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {print $4}'`
     );
@@ -58,7 +59,7 @@ export const Widget = Uebersicht.React.memo(() => {
     const inputModeName = splitedInputMode[splitedInputMode.length - 1];
     setState({ keyboard: inputModeName });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("keyboard", visible, getKeyboard, resetWidget);
   useWidgetRefresh(visible, getKeyboard, refresh);
@@ -75,3 +76,5 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Keyboard";

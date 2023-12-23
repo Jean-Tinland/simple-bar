@@ -10,3 +10,5 @@ export const Widget = Uebersicht.React.memo(() => {
     </div>
   );
 });
+
+Widget.displayName = "Specter";

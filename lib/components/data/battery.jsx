@@ -39,7 +39,8 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getBattery = async () => {
+  const getBattery = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const [system, percentage, status, caffeinate] = await Promise.all([
       Utils.getSystem(),
       Uebersicht.run(
@@ -57,7 +58,7 @@ export const Widget = Uebersicht.React.memo(() => {
       caffeinate: Utils.cleanupOutput(caffeinate),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("battery", visible, getBattery, resetWidget);
   useWidgetRefresh(visible, getBattery, refresh);
@@ -109,6 +110,8 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Battery";
 
 function getTransform(value) {
   let transform = `0.${value}`;

@@ -11,11 +11,6 @@ export { micStyles as styles } from "../../styles/components/data/mic";
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
-const setMic = (volume) => {
-  if (volume === undefined) return;
-  Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
-};
-
 export const Widget = Uebersicht.React.memo(() => {
   const { display, settings } = useSimpleBarContext();
   const { widgets, micWidgetOptions } = settings;
@@ -43,13 +38,14 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getMic = async () => {
+  const getMic = Uebersicht.React.useCallback(async () => {
+    if (!visible) return;
     const volume = await Uebersicht.run(
       `osascript -e 'set ovol to input volume of (get volume settings)'`
     );
     setState({ volume: Utils.cleanupOutput(volume) });
     setLoading(false);
-  };
+  }, [visible]);
 
   useServerSocket("mic", visible, getMic, resetWidget);
   useWidgetRefresh(visible, getMic, refresh);
@@ -107,3 +103,10 @@ export const Widget = Uebersicht.React.memo(() => {
     </DataWidget.Widget>
   );
 });
+
+Widget.displayName = "Mic";
+
+function setMic(volume) {
+  if (volume === undefined) return;
+  Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
+}
