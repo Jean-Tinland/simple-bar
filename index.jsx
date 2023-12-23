@@ -34,6 +34,9 @@ const refreshFrequency = false;
 const settings = Settings.get();
 const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
 const { processWidget } = settings.widgets;
+const hasAnyWidgetEnabled = Object.entries(settings.widgets)
+  .filter(([widgetName]) => widgetName !== "processWidget")
+  .some(([_, enabled]) => enabled);
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
 const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
@@ -127,28 +130,30 @@ const render = ({ output, error }) => {
           skhdMode={skhdMode}
         />
       )}
-      <div className="simple-bar__data">
-        <Settings.Wrapper />
-        <UserWidgets display={displayIndex} />
-        <Zoom.Widget display={displayIndex} />
-        <BrowserTrack.Widget display={displayIndex} />
-        <Spotify.Widget display={displayIndex} />
-        <Crypto.Widget display={displayIndex} />
-        <Stock.Widget display={displayIndex} />
-        <Music.Widget display={displayIndex} />
-        <Mpd.Widget display={displayIndex} />
-        <Weather.Widget display={displayIndex} />
-        <Netstats.Widget display={displayIndex} />
-        <Cpu.Widget display={displayIndex} />
-        <Battery.Widget display={displayIndex} />
-        <Mic.Widget display={displayIndex} />
-        <Sound.Widget display={displayIndex} />
-        <ViscosityVPN.Widget display={displayIndex} />
-        <Wifi.Widget display={displayIndex} />
-        <Keyboard.Widget display={displayIndex} />
-        <DateDisplay.Widget display={displayIndex} />
-        <Time.Widget display={displayIndex} />
-      </div>
+      <Settings.Wrapper />
+      {hasAnyWidgetEnabled && (
+        <div className="simple-bar__data">
+          <UserWidgets display={displayIndex} />
+          <Zoom.Widget display={displayIndex} />
+          <BrowserTrack.Widget display={displayIndex} />
+          <Spotify.Widget display={displayIndex} />
+          <Crypto.Widget display={displayIndex} />
+          <Stock.Widget display={displayIndex} />
+          <Music.Widget display={displayIndex} />
+          <Mpd.Widget display={displayIndex} />
+          <Weather.Widget display={displayIndex} />
+          <Netstats.Widget display={displayIndex} />
+          <Cpu.Widget display={displayIndex} />
+          <Battery.Widget display={displayIndex} />
+          <Mic.Widget display={displayIndex} />
+          <Sound.Widget display={displayIndex} />
+          <ViscosityVPN.Widget display={displayIndex} />
+          <Wifi.Widget display={displayIndex} />
+          <Keyboard.Widget display={displayIndex} />
+          <DateDisplay.Widget display={displayIndex} />
+          <Time.Widget display={displayIndex} />
+        </div>
+      )}
     </div>
   );
 };
