@@ -10,7 +10,7 @@ If you are interested in making a code contribution and would like to learn more
 - [Übersicht documentation](https://github.com/felixhageloh/uebersicht#%C3%BCbersicht)
 - [yabai documentation](https://github.com/koekeishiya/yabai)
 
-## Coding conventions
+## Coding style conventions
 
 Your PR should:
 
