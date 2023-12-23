@@ -4,6 +4,7 @@ import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 import * as Settings from "../../settings";
+import { useSimpleBarContext } from "../context.jsx";
 
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
@@ -17,7 +18,8 @@ const {
   showOnDisplay,
 } = spacesDisplay;
 
-export const Component = ({ spaces, windows, SIP, displayIndex }) => {
+export const Component = ({ spaces, windows }) => {
+  const { SIPDisabled, display: displayIndex } = useSimpleBarContext();
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
@@ -31,7 +33,6 @@ export const Component = ({ spaces, windows, SIP, displayIndex }) => {
   }
 
   const displays = [...new Set(spaces.map((space) => space.display))];
-  const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
 
   const { index: currentSpaceIndex } = spaces.find((space) => {
     const { "has-focus": hasFocus, focused: __legacyHasFocus } = space;

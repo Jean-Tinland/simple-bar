@@ -3,6 +3,7 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import Graph from "./graph.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh.js";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils.js";
 import * as Settings from "../../settings.js";
@@ -22,7 +23,8 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 );
 const GRAPH_LENGTH = 30;
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && netstatsWidget;
 

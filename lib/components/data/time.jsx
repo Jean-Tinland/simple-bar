@@ -3,10 +3,9 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
-import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../context.jsx";
+import * as Utils from "../../utils";
 
 export { timeStyles as styles } from "../../styles/components/data/time";
 
@@ -17,8 +16,8 @@ const displayNotificationCenter = () =>
     `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
   );
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
-  const { settings } = useSimpleBarContext();
+export const Widget = Uebersicht.React.memo(() => {
+  const { display, settings } = useSimpleBarContext();
   const { widgets, timeWidgetOptions } = settings;
   const { timeWidget } = widgets;
   const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay } =
@@ -29,7 +28,7 @@ export const Widget = Uebersicht.React.memo(({ display }) => {
 
   const refresh = Uebersicht.React.useMemo(
     () =>
-      Settings.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 

@@ -5,6 +5,7 @@ import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils";
 import * as Settings from "../../settings";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 
 export { weatherStyles as styles } from "../../styles/components/data/weather";
 
@@ -51,7 +52,8 @@ const openWeather = (e) => {
 const getPosition = async () =>
   new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve));
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && weatherWidget;
 

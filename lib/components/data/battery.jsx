@@ -3,26 +3,13 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { batteryStyles as styles } from "../../styles/components/data/battery";
 
-const settings = Settings.get();
-const { widgets, batteryWidgetOptions } = settings;
-const { batteryWidget } = widgets;
-const {
-  refreshFrequency,
-  toggleCaffeinateOnClick,
-  caffeinateOption,
-  showOnDisplay,
-} = batteryWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 10000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
 const getTransform = (value) => {
   let transform = `0.${value}`;
@@ -43,12 +30,32 @@ const toggleCaffeinate = async (system, caffeinate, option) => {
   }
 };
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display, settings } = useSimpleBarContext();
+  const { widgets, batteryWidgetOptions } = settings;
+  const { batteryWidget } = widgets;
+  const {
+    refreshFrequency,
+    toggleCaffeinateOnClick,
+    caffeinateOption,
+    showOnDisplay,
+  } = batteryWidgetOptions;
+
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && batteryWidget;
 
+  const refresh = Utils.getRefreshFrequency(
+    refreshFrequency,
+    DEFAULT_REFRESH_FREQUENCY
+  );
+
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
+
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
 
   const getBattery = async () => {
     const [system, percentage, status, caffeinate] = await Promise.all([
@@ -70,7 +77,8 @@ export const Widget = Uebersicht.React.memo(({ display }) => {
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getBattery, REFRESH_FREQUENCY);
+  useServerSocket("battery", getBattery, resetWidget);
+  useWidgetRefresh(visible, getBattery, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />;
   if (!state) return null;

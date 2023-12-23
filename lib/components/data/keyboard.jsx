@@ -2,9 +2,10 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
 
 export { keyboardStyles as styles } from "../../styles/components/data/keyboard";
 
@@ -19,7 +20,8 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-export const Widget = ({ display }) => {
+export const Widget = () => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && keyboardWidget;
 

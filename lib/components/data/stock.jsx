@@ -1,4 +1,5 @@
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Uebersicht from "uebersicht";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
@@ -48,7 +49,8 @@ const formatPriceChange = (priceChange) => {
   return (priceChange.startsWith("-") ? "" : "+") + priceChange;
 };
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && stockWidget;
 

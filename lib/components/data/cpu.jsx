@@ -4,6 +4,7 @@ import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import Graph from "./graph.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
 import * as Settings from "../../settings";
 
@@ -22,7 +23,8 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 
 const GRAPH_LENGTH = 50;
 
-export const Widget = ({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && cpuWidget;
 
   const [graph, setGraph] = Uebersicht.React.useState([]);
@@ -73,4 +75,4 @@ export const Widget = ({ display }) => {
       <span className="cpu__usage">{usage}%</span>
     </DataWidget.Widget>
   );
-};
+});

@@ -3,6 +3,7 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 
@@ -31,7 +32,8 @@ const setSound = (volume) => {
   Uebersicht.run(`osascript -e 'set volume output volume ${volume}'`);
 };
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && soundWidget;
 

@@ -34,7 +34,6 @@ const refreshFrequency = false;
 
 const settings = Settings.get();
 const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
-const { processWidget } = settings.widgets;
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
 const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
@@ -47,6 +46,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Spaces.styles,
   Process.styles,
   Settings.styles,
+  // TODO: move custom styles at the end of the list
   settings.customStyles.styles,
   DataWidget.styles,
   DateDisplay.styles,
@@ -101,6 +101,8 @@ const render = ({ output, error }) => {
 
   const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
+  const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
+
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
   const { index: displayIndex } = displays.find((d) => {
     return d.id === displayId;
@@ -113,43 +115,39 @@ const render = ({ output, error }) => {
   Utils.handleBarFocus();
 
   return (
-    <ContextProvider initialSettings={settings}>
+    <ContextProvider
+      initialSettings={settings}
+      display={displayIndex}
+      SIPDisabled={SIPDisabled}
+    >
       <div className={classes}>
-        <Spaces.Component
+        <Spaces.Component spaces={spaces} windows={windows} />
+        <Process.Component
           spaces={spaces}
           windows={windows}
-          SIP={SIP}
-          displayIndex={displayIndex}
+          skhdMode={skhdMode}
         />
-        {processWidget && (
-          <Process.Component
-            displayIndex={displayIndex}
-            spaces={spaces}
-            windows={windows}
-            skhdMode={skhdMode}
-          />
-        )}
+        <Settings.Wrapper />
         <div className="simple-bar__data">
-          <Settings.Wrapper />
-          <UserWidgets display={displayIndex} />
-          <Zoom.Widget display={displayIndex} />
-          <BrowserTrack.Widget display={displayIndex} />
-          <Spotify.Widget display={displayIndex} />
-          <Crypto.Widget display={displayIndex} />
-          <Stock.Widget display={displayIndex} />
-          <Music.Widget display={displayIndex} />
-          <Mpd.Widget display={displayIndex} />
-          <Weather.Widget display={displayIndex} />
-          <Netstats.Widget display={displayIndex} />
-          <Cpu.Widget display={displayIndex} />
-          <Battery.Widget display={displayIndex} />
-          <Mic.Widget display={displayIndex} />
-          <Sound.Widget display={displayIndex} />
-          <ViscosityVPN.Widget display={displayIndex} />
-          <Wifi.Widget display={displayIndex} />
-          <Keyboard.Widget display={displayIndex} />
-          <DateDisplay.Widget display={displayIndex} />
-          <Time.Widget display={displayIndex} />
+          <UserWidgets />
+          <Zoom.Widget />
+          <BrowserTrack.Widget />
+          <Spotify.Widget />
+          <Crypto.Widget />
+          <Stock.Widget />
+          <Music.Widget />
+          <Mpd.Widget />
+          <Weather.Widget />
+          <Netstats.Widget />
+          <Cpu.Widget />
+          <Battery.Widget />
+          <Mic.Widget />
+          <Sound.Widget />
+          <ViscosityVPN.Widget />
+          <Wifi.Widget />
+          <Keyboard.Widget />
+          <DateDisplay.Widget />
+          <Time.Widget />
         </div>
       </div>
     </ContextProvider>

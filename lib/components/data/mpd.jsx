@@ -5,6 +5,7 @@ import * as Icons from "../icons.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 
 export { mpdStyles as styles } from "../../styles/components/data/mpd";
 
@@ -29,7 +30,8 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 const togglePlay = (host, port) =>
   Uebersicht.run(`mpc --host ${host} --port ${port} toggle`);
 
-export const Widget = Uebersicht.React.memo(({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && mpdWidget;
 
   const [state, setState] = Uebersicht.React.useState();

@@ -5,11 +5,13 @@ import * as Icons from "../icons.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 
 const settings = Settings.get();
 const { userWidgetsList } = settings.userWidgets;
 
-const UserWidget = ({ index, widget, display }) => {
+const UserWidget = ({ index, widget }) => {
+  const { display } = useSimpleBarContext();
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(true);
   const {
@@ -94,15 +96,10 @@ const UserWidget = ({ index, widget, display }) => {
   );
 };
 
-const UserWidgets = ({ display }) => {
+const UserWidgets = () => {
   const keys = Object.keys(userWidgetsList);
   return keys.map((key) => (
-    <UserWidget
-      key={key}
-      index={key}
-      widget={userWidgetsList[key]}
-      display={display}
-    />
+    <UserWidget key={key} index={key} widget={userWidgetsList[key]} />
   ));
 };
 

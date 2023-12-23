@@ -1,18 +1,23 @@
 import Window from "./window.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
+import { useSimpleBarContext } from "../context.jsx";
 
 export { processStyles as styles } from "../../styles/components/process";
 
 const settings = Settings.get();
-const { process, spacesDisplay } = settings;
+const { process, spacesDisplay, widgets } = settings;
+const { processWidget } = widgets;
 const { exclusionsAsRegex } = spacesDisplay;
 const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
   process;
 
-export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
+export const Component = ({ spaces, windows, skhdMode }) => {
+  const { display: displayIndex } = useSimpleBarContext();
   const visible =
-    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && windows;
+    processWidget &&
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) &&
+    windows;
 
   if (!visible) return null;
 

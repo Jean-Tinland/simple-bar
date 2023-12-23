@@ -1,4 +1,5 @@
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Uebersicht from "uebersicht";
 import * as Settings from "../../settings";
 import * as Icons from "../icons.jsx";
@@ -43,7 +44,8 @@ const openCrypto = (e) => {
   Utils.notification("Opening price chart from coingecko.com...");
 };
 
-export const Widget = ({ display }) => {
+export const Widget = Uebersicht.React.memo(() => {
+  const { display } = useSimpleBarContext();
   const visible =
     Utils.isVisibleOnDisplay(display, showOnDisplay) && cryptoWidget;
 
@@ -98,4 +100,4 @@ export const Widget = ({ display }) => {
       {state[i]}
     </DataWidget.Widget>
   ));
-};
+});
