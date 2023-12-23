@@ -75,6 +75,7 @@ const Space = ({
     if (hasFocus || __legacyHasFocus) return;
     if (SIPDisabled && !spacesDisplay.switchSpacesWithoutYabai) {
       Yabai.goToSpace(index);
+      Utils.clickEffect(e);
       return;
     }
     Utils.switchSpace(currentSpaceIndex, index);
