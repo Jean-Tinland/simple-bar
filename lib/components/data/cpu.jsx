@@ -62,6 +62,7 @@ export const Widget = ({ display }) => {
           }}
           values={graph}
           maxLength={GRAPH_LENGTH}
+          maxValue={100}
         />
       </DataWidget.Widget>
     );

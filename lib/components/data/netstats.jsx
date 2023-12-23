@@ -57,11 +57,16 @@ export const Widget = Uebersicht.React.memo(({ display }) => {
       </Uebersicht.React.Fragment>
     );
 
-  if (!state?.download === undefined || !state?.upload === undefined) {
+  if (!state) {
     return null;
   }
 
   const { download, upload } = state;
+
+  if (download === undefined || upload === undefined) {
+    return null;
+  }
+
   const formatedDownload = formatBytes(download);
   const formatedUpload = formatBytes(upload);
 

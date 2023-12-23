@@ -2,14 +2,22 @@ import * as Utils from "../../utils.js";
 
 export { graphStyles as styles } from "../../styles/components/data/graph";
 
-export default function Graph({ className, caption, values = [], maxLength }) {
+export default function Graph({
+  className,
+  caption,
+  values = [],
+  maxLength,
+  maxValue,
+}) {
   if (!caption) {
     return null;
   }
 
   const captionKeys = Object.keys(caption);
-  const allValues = values.map((value) => Object.values(value)).flat();
-  const maxValue = Math.max(...allValues);
+  if (maxValue === undefined) {
+    const allValues = values.map((value) => Object.values(value)).flat();
+    maxValue = Math.max(...allValues);
+  }
 
   const classes = Utils.classnames("graph", className);
 
