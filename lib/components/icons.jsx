@@ -1537,6 +1537,12 @@ export const TablePlus = (props) => (
   </Icon>
 );
 
+export const Anytype = (props) => (
+  <Icon {...props}>
+    <path d="M3.6304 0h15.0261v5.2H3.6305V0Zm15.0261 5.2H24.5v18.7h-5.8435V5.2ZM8.326 24c4.3223 0 7.8262-3.3579 7.8262-7.5S12.6483 9 8.3261 9C4.0039 9 .5 12.3579.5 16.5S4.0039 24 8.326 24Z" />
+  </Icon>
+);
+
 export const Upload = (props) => (
   <Icon {...props}>
     <path d="M11 22a1 1 0 1 1 2 0 1 1 0 0 1-2 0ZM11 16a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0v-3ZM11 4a1 1 0 1 1 2 0v9a1 1 0 1 1-2 0V4Z" />
