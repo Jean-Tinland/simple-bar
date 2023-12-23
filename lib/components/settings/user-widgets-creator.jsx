@@ -5,6 +5,8 @@ import * as Utils from "../../utils";
 import ColorPicker from "./color-picker.jsx";
 import IconPicker from "./icon-picker.jsx";
 
+const { React } = Uebersicht;
+
 const UserWidgetCreator = ({
   index,
   isFirst,
@@ -205,7 +207,7 @@ const UserWidgetCreator = ({
 };
 
 const UserWidgetsCreator = ({ defaultValue, onChange }) => {
-  const [widgets, setWidgets] = Uebersicht.React.useState(defaultValue || {});
+  const [widgets, setWidgets] = React.useState(defaultValue || {});
   const keys = Object.keys(widgets);
 
   const highestId = keys.reduce((acc, key) => {
@@ -232,11 +234,11 @@ const UserWidgetsCreator = ({ defaultValue, onChange }) => {
     setWidgets(updatedWidgets);
   };
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     const diffs = Utils.compareObjects(defaultValue, widgets);
     const hasDiffs = Object.keys(diffs).length > 0;
     if (hasDiffs) onChange({ target: { value: widgets } });
-  }, [widgets]);
+  }, [defaultValue, onChange, widgets]);
 
   return (
     <div className="user-widgets-creator">

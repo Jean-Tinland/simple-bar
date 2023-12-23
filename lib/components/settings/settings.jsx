@@ -4,6 +4,8 @@ import * as Settings from "../../settings";
 
 export { settingsStyles as styles } from "../../styles/components/settings/settings";
 
+const { React } = Uebersicht;
+
 const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`;
 
 const Item = ({
@@ -23,7 +25,7 @@ const Item = ({
   }
   if (type === "select") {
     return (
-      <Uebersicht.React.Fragment>
+      <React.Fragment>
         <label htmlFor={code}>{label}</label>
         <select
           id={code}
@@ -37,7 +39,7 @@ const Item = ({
             </option>
           ))}
         </select>
-      </Uebersicht.React.Fragment>
+      </React.Fragment>
     );
   }
   if (type === "radio") {
@@ -58,7 +60,7 @@ const Item = ({
   }
   if (type === "text") {
     return (
-      <Uebersicht.React.Fragment>
+      <React.Fragment>
         <label htmlFor={code}>{label}</label>
         <input
           id={code}
@@ -71,12 +73,12 @@ const Item = ({
           autoCapitalize="off"
           spellCheck={false}
         />
-      </Uebersicht.React.Fragment>
+      </React.Fragment>
     );
   }
   if (type === "number") {
     return (
-      <Uebersicht.React.Fragment>
+      <React.Fragment>
         <label htmlFor={code}>{label}</label>
         <input
           id={code}
@@ -86,12 +88,12 @@ const Item = ({
           onChange={onChange}
           autoComplete="off"
         />
-      </Uebersicht.React.Fragment>
+      </React.Fragment>
     );
   }
   if (type === "textarea") {
     return (
-      <Uebersicht.React.Fragment>
+      <React.Fragment>
         <label htmlFor={code}>{label}</label>
         <textarea
           id={code}
@@ -104,11 +106,11 @@ const Item = ({
           spellCheck={false}
           style={{ minHeight }}
         />
-      </Uebersicht.React.Fragment>
+      </React.Fragment>
     );
   }
   return (
-    <Uebersicht.React.Fragment>
+    <React.Fragment>
       <input
         id={code}
         type="checkbox"
@@ -119,7 +121,7 @@ const Item = ({
       <label htmlFor={code} onClick={onClick}>
         {label}
       </label>
-    </Uebersicht.React.Fragment>
+    </React.Fragment>
   );
 };
 
@@ -132,13 +134,13 @@ const getLastCurrentTab = () => {
 };
 
 export const Wrapper = () => {
-  const [visible, setVisible] = Uebersicht.React.useState(false);
+  const [visible, setVisible] = React.useState(false);
 
   const closeSettings = () => {
     setVisible(false);
     Utils.blurBar();
   };
-  const onKeydown = Uebersicht.React.useCallback((e) => {
+  const onKeydown = React.useCallback((e) => {
     const { ctrlKey, keyCode, metaKey, which } = e;
     if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
       e.preventDefault();
@@ -170,25 +172,23 @@ export const Wrapper = () => {
     }
   }, []);
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
-  }, []);
+  }, [onKeydown]);
 
   return (
-    <Uebersicht.React.Fragment>
+    <React.Fragment>
       {visible && <Component visible={visible} closeSettings={closeSettings} />}
-    </Uebersicht.React.Fragment>
+    </React.Fragment>
   );
 };
 
 export const Component = ({ closeSettings }) => {
-  const [currentTab, setCurrentTab] = Uebersicht.React.useState(
-    getLastCurrentTab()
-  );
-  const [pendingChanges, setPendingChanges] = Uebersicht.React.useState(0);
+  const [currentTab, setCurrentTab] = React.useState(getLastCurrentTab());
+  const [pendingChanges, setPendingChanges] = React.useState(0);
   const settings = Settings.get();
-  const [newSettings, setNewSettings] = Uebersicht.React.useState(settings);
+  const [newSettings, setNewSettings] = React.useState(settings);
 
   const onTabClick = (tab) => {
     setCurrentTab(tab);
@@ -230,7 +230,7 @@ export const Component = ({ closeSettings }) => {
     }
   };
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     const diffs = Utils.compareObjects(Settings.get(), newSettings);
     const deepDiffs = Object.keys(diffs).reduce(
       (acc, key) => [...acc, ...Object.keys(diffs[key])],
@@ -311,7 +311,7 @@ export const Component = ({ closeSettings }) => {
                   };
 
                   return (
-                    <Uebersicht.React.Fragment key={subKey}>
+                    <React.Fragment key={subKey}>
                       {title && (
                         <div className="settings__item-title">{title}</div>
                       )}
@@ -332,7 +332,7 @@ export const Component = ({ closeSettings }) => {
                           minHeight={minHeight}
                         />
                       </div>
-                    </Uebersicht.React.Fragment>
+                    </React.Fragment>
                   );
                 })}
                 {infos && infos.length && (
@@ -353,7 +353,7 @@ export const Component = ({ closeSettings }) => {
         </div>
         <div className="settings__bottom">
           {settings.global.externalConfigFile && (
-            <Uebersicht.React.Fragment>
+            <React.Fragment>
               <button
                 className="settings__import-button"
                 onClick={onImportClick}
@@ -372,7 +372,7 @@ export const Component = ({ closeSettings }) => {
               <span className="settings__import-export-label">
                 all settings
               </span>
-            </Uebersicht.React.Fragment>
+            </React.Fragment>
           )}
           {pendingChanges !== 0 && (
             <div className="settings__pending-changes">

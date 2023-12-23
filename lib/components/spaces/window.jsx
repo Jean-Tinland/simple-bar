@@ -1,13 +1,14 @@
 import * as Uebersicht from "uebersicht";
 import * as AppIcons from "../../app-icons";
-import * as Settings from "../../settings";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 
-const settings = Settings.get();
+const { React } = Uebersicht;
 
 const Window = ({ window }) => {
-  const ref = Uebersicht.React.useRef();
+  const { settings } = useSimpleBarContext();
+  const ref = React.useRef();
   const {
     displayOnlyCurrent,
     hideWindowTitle,

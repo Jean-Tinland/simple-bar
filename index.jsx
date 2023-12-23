@@ -46,8 +46,6 @@ Utils.injectStyles("simple-bar-index-styles", [
   Spaces.styles,
   Process.styles,
   Settings.styles,
-  // TODO: move custom styles at the end of the list
-  settings.customStyles.styles,
   DataWidget.styles,
   DateDisplay.styles,
   Zoom.styles,
@@ -70,6 +68,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Specter.styles,
   Graph.styles,
   DataWidgetLoader.styles,
+  settings.customStyles.styles,
 ]);
 
 const render = ({ output, error }) => {
@@ -103,11 +102,6 @@ const render = ({ output, error }) => {
 
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
 
-  const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
-  const { index: displayIndex } = displays.find((d) => {
-    return d.id === displayId;
-  });
-
   const classes = Utils.classnames(baseClasses, {
     "simple-bar--no-shadow": shadow !== "on",
   });
@@ -117,16 +111,15 @@ const render = ({ output, error }) => {
   return (
     <ContextProvider
       initialSettings={settings}
-      display={displayIndex}
       SIPDisabled={SIPDisabled}
+      displays={displays}
+      spaces={spaces}
+      windows={windows}
+      skhdMode={skhdMode}
     >
       <div className={classes}>
-        <Spaces.Component spaces={spaces} windows={windows} />
-        <Process.Component
-          spaces={spaces}
-          windows={windows}
-          skhdMode={skhdMode}
-        />
+        <Spaces.Component />
+        <Process.Component />
         <Settings.Wrapper />
         <div className="simple-bar__data">
           <UserWidgets />

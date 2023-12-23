@@ -9,10 +9,12 @@ import * as Utils from "../../utils";
 
 export { mpdStyles as styles } from "../../styles/components/data/mpd";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, mpdWidgetOptions } = settings;
   const { mpdWidget } = widgets;
   const {
@@ -24,23 +26,24 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = mpdWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && mpdWidget;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && mpdWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getMpd = Uebersicht.React.useCallback(async () => {
+  const getMpd = React.useCallback(async () => {
     if (!visible) return;
     try {
       const [playerState, trackInfo] = await Promise.all([
@@ -63,7 +66,7 @@ export const Widget = Uebersicht.React.memo(() => {
     } catch (e) {
       setLoading(false);
     }
-  }, [visible]);
+  }, [visible, mpdHost, mpdPort, mpdFormatString]);
 
   useServerSocket("mpd", visible, getMpd, resetWidget);
   useWidgetRefresh(visible, getMpd, refresh);

@@ -3,6 +3,7 @@
     "browser": true,
     "es2021": true
   },
+  "plugins": ["react", "react-hooks"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -15,7 +16,6 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "react-hooks"],
   "rules": {
     "no-console": "warn",
     "react/prop-types": "off",

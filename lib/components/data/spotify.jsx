@@ -9,32 +9,34 @@ import * as Utils from "../../utils";
 
 export { spotifyStyles as styles } from "../../styles/components/data/spotify";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, spotifyWidgetOptions } = settings;
   const { spotifyWidget } = widgets;
   const { refreshFrequency, showSpecter, showOnDisplay } = spotifyWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && spotifyWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && spotifyWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getSpotify = Uebersicht.React.useCallback(async () => {
+  const getSpotify = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Uebersicht.run(
       `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`

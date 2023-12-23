@@ -9,37 +9,37 @@ import * as Utils from "../../utils";
 
 export { soundStyles as styles } from "../../styles/components/data/sound";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, soundWidgetOptions } = settings;
   const { soundWidget } = widgets;
   const { refreshFrequency, showOnDisplay } = soundWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && soundWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && soundWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
   const { volume: _volume } = state || {};
-  const [volume, setVolume] = Uebersicht.React.useState(
-    _volume && parseInt(_volume, 10)
-  );
-  const [dragging, setDragging] = Uebersicht.React.useState(false);
+  const [volume, setVolume] = React.useState(_volume && parseInt(_volume, 10));
+  const [dragging, setDragging] = React.useState(false);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getSound = Uebersicht.React.useCallback(async () => {
+  const getSound = React.useCallback(async () => {
     if (!visible) return;
     const [volume, muted] = await Promise.all([
       Uebersicht.run(
@@ -59,14 +59,16 @@ export const Widget = Uebersicht.React.memo(() => {
   useServerSocket("sound", visible, getSound, resetWidget);
   useWidgetRefresh(visible, getSound, refresh);
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     if (!dragging) setSound(volume);
-  }, [dragging]);
+  }, [dragging, volume]);
 
-  Uebersicht.React.useEffect(() => {
-    if (_volume && parseInt(_volume, 10) !== volume) {
-      setVolume(parseInt(_volume, 10));
-    }
+  React.useEffect(() => {
+    setVolume((currentVolume) => {
+      if (_volume && currentVolume !== parseInt(_volume, 10)) {
+        return parseInt(_volume, 10);
+      }
+    });
   }, [_volume]);
 
   if (loading) return <DataWidgetLoader.Widget className="sound" />;

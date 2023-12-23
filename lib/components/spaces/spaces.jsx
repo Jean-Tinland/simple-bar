@@ -1,25 +1,26 @@
+import * as Uebersicht from "uebersicht";
 import Space from "./space.jsx";
 import Stickies from "./stickies.jsx";
 import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
-import * as Settings from "../../settings";
 import { useSimpleBarContext } from "../context.jsx";
 
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
-const settings = Settings.get();
-const { spacesDisplay, process } = settings;
-const {
-  displayStickyWindowsSeparately,
-  spacesExclusions,
-  exclusionsAsRegex,
-  hideCreateSpaceButton,
-  showOnDisplay,
-} = spacesDisplay;
+const { React } = Uebersicht;
 
-export const Component = ({ spaces, windows }) => {
-  const { SIPDisabled, display: displayIndex } = useSimpleBarContext();
+export const Component = React.memo(() => {
+  const { SIPDisabled, displayIndex, spaces, windows, settings } =
+    useSimpleBarContext();
+  const { spacesDisplay, process } = settings;
+  const {
+    displayStickyWindowsSeparately,
+    spacesExclusions,
+    exclusionsAsRegex,
+    hideCreateSpaceButton,
+    showOnDisplay,
+  } = spacesDisplay;
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
@@ -34,10 +35,11 @@ export const Component = ({ spaces, windows }) => {
 
   const displays = [...new Set(spaces.map((space) => space.display))];
 
-  const { index: currentSpaceIndex } = spaces.find((space) => {
-    const { "has-focus": hasFocus, focused: __legacyHasFocus } = space;
-    return hasFocus ?? __legacyHasFocus;
-  });
+  const { index: currentSpaceIndex } =
+    spaces.find((space) => {
+      const { "has-focus": hasFocus, focused: __legacyHasFocus } = space;
+      return hasFocus ?? __legacyHasFocus;
+    }) || {};
 
   return displays.map((display, i) => {
     if (display !== displayIndex) return null;
@@ -49,9 +51,7 @@ export const Component = ({ spaces, windows }) => {
 
     return (
       <div key={i} className="spaces">
-        {displayStickyWindowsSeparately && (
-          <Stickies display={display} windows={windows} />
-        )}
+        {displayStickyWindowsSeparately && <Stickies display={display} />}
         {spaces.map((space, i) => {
           const { label, index } = space;
           const lastOfSpace =
@@ -71,10 +71,7 @@ export const Component = ({ spaces, windows }) => {
               key={key}
               display={display}
               space={space}
-              windows={windows}
-              displayIndex={displayIndex}
               currentSpaceIndex={currentSpaceIndex}
-              SIPDisabled={SIPDisabled}
               lastOfSpace={lastOfSpace}
             />
           );
@@ -89,4 +86,6 @@ export const Component = ({ spaces, windows }) => {
       </div>
     );
   });
-};
+});
+
+Component.displayName = "Spaces";

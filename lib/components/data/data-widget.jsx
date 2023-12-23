@@ -4,6 +4,8 @@ import * as Utils from "../../utils";
 
 export { dataWidgetStyles as styles } from "../../styles/components/data/data-widget";
 
+const { React } = Uebersicht;
+
 export const Widget = ({
   Icon,
   classes,
@@ -16,7 +18,7 @@ export const Widget = ({
   showSpecter,
   children,
 }) => {
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
   const Tag = getTag(onClick, href);
   const dataWidgetClasses = Utils.classnames("data-widget", classes, {
     "data-widget--clickable": onClick,

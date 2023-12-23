@@ -7,38 +7,39 @@ import useServerSocket from "../../hooks/use-server-socket";
 import * as Utils from "../../utils";
 import { useSimpleBarContext } from "../context.jsx";
 
+const { React } = Uebersicht;
+
 export { micStyles as styles } from "../../styles/components/data/mic";
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, micWidgetOptions } = settings;
   const { micWidget } = widgets;
   const { refreshFrequency, showOnDisplay } = micWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && micWidget;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && micWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
   const { volume: _volume } = state || {};
-  const [volume, setVolume] = Uebersicht.React.useState(
-    _volume && parseInt(_volume, 10)
-  );
-  const [dragging, setDragging] = Uebersicht.React.useState(false);
+  const [volume, setVolume] = React.useState(_volume && parseInt(_volume, 10));
+  const [dragging, setDragging] = React.useState(false);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getMic = Uebersicht.React.useCallback(async () => {
+  const getMic = React.useCallback(async () => {
     if (!visible) return;
     const volume = await Uebersicht.run(
       `osascript -e 'set ovol to input volume of (get volume settings)'`
@@ -50,15 +51,15 @@ export const Widget = Uebersicht.React.memo(() => {
   useServerSocket("mic", visible, getMic, resetWidget);
   useWidgetRefresh(visible, getMic, refresh);
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     if (!dragging) setMic(volume);
-  }, [dragging]);
+  }, [dragging, volume]);
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     if (_volume && parseInt(_volume, 10) !== volume) {
       setVolume(parseInt(_volume, 10));
     }
-  }, [_volume]);
+  }, [_volume, volume]);
 
   if (loading) return <DataWidgetLoader.Widget className="mic" />;
   if (!state || volume === undefined || _volume === "missing value")

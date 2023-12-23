@@ -8,6 +8,8 @@ import { useSimpleBarContext } from "../context.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 
+const { React } = Uebersicht;
+
 export default function UserWidgets() {
   const { settings } = useSimpleBarContext();
   const { userWidgetsList } = settings.userWidgets;
@@ -18,10 +20,10 @@ export default function UserWidgets() {
   ));
 }
 
-const UserWidget = Uebersicht.React.memo(({ index, widget }) => {
-  const { display, settings } = useSimpleBarContext();
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(true);
+const UserWidget = React.memo(({ index, widget }) => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(true);
   const {
     icon,
     backgroundColor,
@@ -35,14 +37,15 @@ const UserWidget = Uebersicht.React.memo(({ index, widget }) => {
     showOnDisplay = "",
   } = widget;
 
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && active;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && active;
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getUserWidget = Uebersicht.React.useCallback(async () => {
+  const getUserWidget = React.useCallback(async () => {
     if (!visible) return;
     const widgetOutput = await Uebersicht.run(output);
     if (!Utils.cleanupOutput(widgetOutput).length) {
@@ -51,7 +54,7 @@ const UserWidget = Uebersicht.React.memo(({ index, widget }) => {
     }
     setState(widgetOutput);
     setLoading(false);
-  }, [visible]);
+  }, [visible, output]);
 
   useServerSocket("user-widget", visible, getUserWidget, resetWidget, index);
   useWidgetRefresh(visible, getUserWidget, refreshFrequency);
@@ -110,3 +113,5 @@ const UserWidget = Uebersicht.React.memo(({ index, widget }) => {
     </DataWidget.Widget>
   );
 });
+
+UserWidget.displayName = "UserWidget";

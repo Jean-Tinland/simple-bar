@@ -1,11 +1,13 @@
 import * as Uebersicht from "uebersicht";
 import * as Settings from "../../settings";
 
+const { React } = Uebersicht;
+
 const ColorPicker = ({ callback, index, selectedColor }) => {
   const isSelectedCustom = !Settings.userWidgetColors.includes(selectedColor);
-  const [open, setOpen] = Uebersicht.React.useState(false);
-  const [selected, setSelected] = Uebersicht.React.useState(selectedColor);
-  const [customColor, setCustomColor] = Uebersicht.React.useState(
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(selectedColor);
+  const [customColor, setCustomColor] = React.useState(
     isSelectedCustom ? selectedColor : undefined
   );
 
@@ -17,9 +19,9 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
     setOpen(false);
   };
 
-  Uebersicht.React.useEffect(
+  React.useEffect(
     () => callback?.(index, "backgroundColor", selected),
-    [selected]
+    [index, callback, selected]
   );
 
   return (

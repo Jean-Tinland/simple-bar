@@ -1,10 +1,13 @@
 import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
+import { useSimpleBarContext } from "../context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
-const Stickies = ({ display, windows }) => {
-  const { spacesDisplay } = Settings.get();
+const { React } = Uebersicht;
+
+const Stickies = ({ display }) => {
+  const { settings, windows } = useSimpleBarContext();
+  const { spacesDisplay } = settings;
   const { exclusionsAsRegex, hideDuplicateAppsInSpaces } = spacesDisplay;
   const exclusions = exclusionsAsRegex
     ? spacesDisplay.exclusions
@@ -33,13 +36,13 @@ const Stickies = ({ display, windows }) => {
     return null;
 
   return (
-    <Uebersicht.React.Fragment>
+    <React.Fragment>
       <div className="stickies">
         <button className="stickies__inner">
           <OpenedApps apps={apps} />
         </button>
       </div>
-    </Uebersicht.React.Fragment>
+    </React.Fragment>
   );
 };
 

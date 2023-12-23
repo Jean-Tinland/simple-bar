@@ -9,10 +9,12 @@ import * as Utils from "../../utils";
 
 export { viscosityVPNStyles as styles } from "../../styles/components/data/viscosity-vpn";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 8000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, vpnWidgetOptions } = settings;
   const { vpnWidget } = widgets;
   const {
@@ -22,23 +24,24 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = vpnWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && vpnWidget;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && vpnWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getVPN = Uebersicht.React.useCallback(async () => {
+  const getVPN = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Uebersicht.run(
       `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`
@@ -53,7 +56,7 @@ export const Widget = Uebersicht.React.memo(() => {
     if (!status.length) return;
     setState({ status: Utils.cleanupOutput(status) });
     setLoading(false);
-  }, [visible]);
+  }, [visible, vpnConnectionName]);
 
   useServerSocket("viscosity-vpn", visible, getVPN, resetWidget);
   useWidgetRefresh(visible, getVPN, refresh);

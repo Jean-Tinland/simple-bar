@@ -9,10 +9,12 @@ import * as Utils from "../../utils";
 
 export { wifiStyles as styles } from "../../styles/components/data/wifi";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, networkWidgetOptions } = settings;
   const { wifiWidget } = widgets;
   const {
@@ -24,23 +26,23 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = networkWidgetOptions;
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && wifiWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && wifiWidget;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getWifi = Uebersicht.React.useCallback(async () => {
+  const getWifi = React.useCallback(async () => {
     if (!visible) return;
     const [status, ssid] = await Promise.all([
       Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
@@ -53,7 +55,7 @@ export const Widget = Uebersicht.React.memo(() => {
       ssid: Utils.cleanupOutput(ssid),
     });
     setLoading(false);
-  }, [visible]);
+  }, [networkDevice, visible]);
 
   useServerSocket("wifi", visible, getWifi, resetWidget);
   useWidgetRefresh(visible, getWifi, refresh);

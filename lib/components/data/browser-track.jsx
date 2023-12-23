@@ -9,34 +9,36 @@ import * as Utils from "../../utils";
 
 export { browserTrackStyles as styles } from "../../styles/components/data/browser-track";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, browserTrackWidgetOptions } = settings;
   const { browserTrackWidget } = widgets;
   const { refreshFrequency, showSpecter, showOnDisplay } =
     browserTrackWidgetOptions;
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && browserTrackWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && browserTrackWidget;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getBrowserTrack = Uebersicht.React.useCallback(async () => {
+  const getBrowserTrack = React.useCallback(async () => {
     if (!visible) return;
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
       Uebersicht.run(

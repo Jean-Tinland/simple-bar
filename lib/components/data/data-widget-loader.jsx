@@ -3,7 +3,9 @@ import * as Utils from "../../utils";
 
 export { dataWidgetLoaderStyles as styles } from "../../styles/components/data/data-widget-loader";
 
-export const Widget = Uebersicht.React.memo(
+const { React } = Uebersicht;
+
+export const Widget = React.memo(
   ({ width = 14, height = 14, className, style }) => {
     const classes = Utils.classnames("data-widget-loader data-widget", {
       [className]: className,

@@ -1,18 +1,20 @@
 import * as Uebersicht from "uebersicht";
 import * as Icons from "../icons.jsx";
 
+const { React } = Uebersicht;
+
 const IconPicker = ({ callback, index, selectedIcon }) => {
-  const [open, setOpen] = Uebersicht.React.useState(false);
-  const [selected, setSelected] = Uebersicht.React.useState(selectedIcon);
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(selectedIcon);
 
   const Icon = Icons[selected];
   const keys = Object.keys(Icons);
 
   const onClick = () => setOpen(!open);
 
-  Uebersicht.React.useEffect(
+  React.useEffect(
     () => callback?.(index, "icon", selected),
-    [selected]
+    [callback, index, selected]
   );
 
   return (

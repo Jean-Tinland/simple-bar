@@ -9,10 +9,12 @@ import { useSimpleBarContext } from "../context.jsx";
 
 export { dateStyles as styles } from "../../styles/components/data/date-display";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 30000;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, dateWidgetOptions } = settings;
   const { dateWidget } = widgets;
   const {
@@ -24,24 +26,27 @@ export const Widget = Uebersicht.React.memo(() => {
   } = dateWidgetOptions;
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && dateWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && dateWidget;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const formatOptions = shortDateFormat ? "short" : "long";
 
-  const options = {
-    weekday: formatOptions,
-    month: formatOptions,
-    day: "numeric",
-  };
+  const options = React.useMemo(
+    () => ({
+      weekday: formatOptions,
+      month: formatOptions,
+      day: "numeric",
+    }),
+    [formatOptions]
+  );
   const _locale = locale.length > 4 ? locale : "en-UK";
 
   const resetWidget = () => {
@@ -49,12 +54,12 @@ export const Widget = Uebersicht.React.memo(() => {
     setLoading(false);
   };
 
-  const getDate = Uebersicht.React.useCallback(() => {
+  const getDate = React.useCallback(() => {
     if (!visible) return;
     const now = new Date().toLocaleDateString(_locale, options);
     setState({ now });
     setLoading(false);
-  }, [visible]);
+  }, [_locale, options, visible]);
 
   useServerSocket("date-display", visible, getDate, resetWidget);
   useWidgetRefresh(visible, getDate, refresh);

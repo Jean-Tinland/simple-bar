@@ -9,22 +9,23 @@ if [ $? -eq 1 ]; then
   exit 0
 fi
 
-spaces=$($yabai_path -m query --spaces)
-windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
-displays=$($yabai_path -m query --displays)
 SIP=$(csrutil status)
 shadow_enabled=$($yabai_path -m config window_shadow)
 
+spaces=$($yabai_path -m query --spaces)
+windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
+displays=$($yabai_path -m query --displays)
+
 if [ -z "$spaces" ]; then
-  spaces=$($yabai_path -m query --spaces)
+    spaces=$($yabai_path -m query --spaces)
 fi
 
 if [ -z "$windows" ]; then
-  windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
+    windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
 fi
 
 if [ -z "$displays" ]; then
-  displays=$($yabai_path -m query --displays)
+    displays=$($yabai_path -m query --displays)
 fi
 
 $yabai_path -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar when focused application changes"
@@ -34,13 +35,13 @@ $yabai_path -m signal --add event=space_changed action="osascript -e 'tell appli
 $yabai_path -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on display focus change"
 
 if [ $enable_window_title_changed_signal = "true" ]; then
-  $yabai_path -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar when current window title changes"
+    $yabai_path -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar when current window title changes"
 fi
 
 yabai_major_version=$($yabai_path -v | awk -F '.' '{print $1}' | sed 's/yabai-v//')
 if [ $yabai_major_version -ge 6 ]; then
-  $yabai_path -m signal --add event=space_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space removal"
-  $yabai_path -m signal --add event=space_created action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space creation"
+    $yabai_path -m signal --add event=space_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space removal"
+    $yabai_path -m signal --add event=space_created action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space creation"
 fi
 
 if [ $display_skhd_mode = "true" ]; then
@@ -49,6 +50,7 @@ if [ $display_skhd_mode = "true" ]; then
 else
   skhd_mode="{}"
 fi
+
 
 echo $(cat <<-EOF
   {

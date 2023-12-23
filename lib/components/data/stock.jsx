@@ -9,10 +9,12 @@ import * as Utils from "../../utils";
 
 export { stockStyles as styles } from "../../styles/components/data/stock";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000; // 15 min
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, stockWidgetOptions } = settings;
   const { stockWidget } = widgets;
   const {
@@ -28,28 +30,28 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = stockWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && stockWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && stockWidget;
 
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
   const cleanedUpSymbols = symbols.replace(/ /g, "");
   const enumeratedSymbols = cleanedUpSymbols.replace(/ /g, "").split(",");
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getStocks = Uebersicht.React.useCallback(async () => {
+  const getStocks = React.useCallback(async () => {
     if (!visible) return;
     const response = await fetch(
       `https://yfapi.net/v6/finance/quote?symbols=${cleanedUpSymbols}`,
@@ -81,7 +83,7 @@ export const Widget = Uebersicht.React.memo(() => {
     }
 
     setLoading(false);
-  }, [visible]);
+  }, [visible, cleanedUpSymbols, enumeratedSymbols, yahooFinanceApiKey]);
 
   useServerSocket("stock", visible, getStocks, resetWidget);
   useWidgetRefresh(visible, getStocks, refresh);

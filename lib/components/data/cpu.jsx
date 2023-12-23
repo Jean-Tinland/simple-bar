@@ -10,34 +10,36 @@ import * as Utils from "../../utils";
 
 export { cpuStyles as styles } from "../../styles/components/data/cpu";
 
-const DEFAULT_REFRESH_FREQUENCY = 2000;
+const { React } = Uebersicht;
 
+const DEFAULT_REFRESH_FREQUENCY = 2000;
 const GRAPH_LENGTH = 50;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cpuWidgetOptions } = settings;
   const { cpuWidget } = widgets;
   const { refreshFrequency, showOnDisplay, displayAsGraph } = cpuWidgetOptions;
 
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && cpuWidget;
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cpuWidget;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
-  const [graph, setGraph] = Uebersicht.React.useState([]);
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [graph, setGraph] = React.useState([]);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getCpu = Uebersicht.React.useCallback(async () => {
+  const getCpu = React.useCallback(async () => {
     if (!visible) return;
     try {
       const usage = await Uebersicht.run(

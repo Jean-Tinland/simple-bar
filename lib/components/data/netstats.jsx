@@ -10,35 +10,37 @@ import * as Utils from "../../utils.js";
 
 export { netstatsStyles as styles } from "../../styles/components/data/netstats";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const GRAPH_LENGTH = 30;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, netstatsWidgetOptions } = settings;
   const { netstatsWidget } = widgets;
   const { refreshFrequency, showOnDisplay, displayAsGraph } =
     netstatsWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && netstatsWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && netstatsWidget;
 
-  const [graph, setGraph] = Uebersicht.React.useState([]);
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [graph, setGraph] = React.useState([]);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getNetstats = Uebersicht.React.useCallback(async () => {
+  const getNetstats = React.useCallback(async () => {
     if (!visible) return;
     try {
       const output = await Uebersicht.run(
@@ -61,10 +63,10 @@ export const Widget = Uebersicht.React.memo(() => {
 
   if (loading)
     return (
-      <Uebersicht.React.Fragment>
+      <React.Fragment>
         <DataWidgetLoader.Widget className="netstats" />
         {!displayAsGraph && <DataWidgetLoader.Widget className="netstats" />}
-      </Uebersicht.React.Fragment>
+      </React.Fragment>
     );
 
   if (!state) {
@@ -105,7 +107,7 @@ export const Widget = Uebersicht.React.memo(() => {
   }
 
   return (
-    <Uebersicht.React.Fragment>
+    <React.Fragment>
       <DataWidget.Widget classes="netstats" disableSlider>
         <div className="netstats__item">
           <Icons.Download className="netstats__icon netstats__icon--download" />
@@ -124,7 +126,7 @@ export const Widget = Uebersicht.React.memo(() => {
           />
         </div>
       </DataWidget.Widget>
-    </Uebersicht.React.Fragment>
+    </React.Fragment>
   );
 });
 

@@ -9,10 +9,12 @@ import { useSimpleBarContext } from "../context.jsx";
 
 export { weatherStyles as styles } from "../../styles/components/data/weather";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30;
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, weatherWidgetOptions } = settings;
   const { weatherWidget } = widgets;
   const {
@@ -24,30 +26,32 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = weatherWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && weatherWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && weatherWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
-  let location = visible && customLocation.length ? customLocation : undefined;
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
+  const location = React.useRef(
+    visible && customLocation.length ? customLocation : undefined
+  );
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getWeather = Uebersicht.React.useCallback(async () => {
+  const getWeather = React.useCallback(async () => {
     if (!visible) return;
     if (!location) {
       const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
       if (!position) await getWeather();
-      location = position?.address?.city;
+      location.current = position?.address?.city;
       if (!location) return setLoading(false);
     }
     try {

@@ -9,10 +9,12 @@ import * as Utils from "../../utils";
 
 export { cryptoStyles as styles } from "../../styles/components/data/crypto";
 
+const { React } = Uebersicht;
+
 const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000; // 30 seconds * 1000 milliseconds
 
-export const Widget = Uebersicht.React.memo(() => {
-  const { display, settings } = useSimpleBarContext();
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cryptoWidgetOptions } = settings;
   const { cryptoWidget } = widgets;
   const {
@@ -23,31 +25,31 @@ export const Widget = Uebersicht.React.memo(() => {
     showOnDisplay,
   } = cryptoWidgetOptions;
 
-  const refresh = Uebersicht.React.useMemo(
+  const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && cryptoWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cryptoWidget;
 
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
   const denominatorToken = getDenominatorToken(denomination);
   const cleanedUpIdentifiers = identifiers.replace(/ /g, "");
   const enumeratedIdentifiers = cleanedUpIdentifiers
     .replace(/ /g, "")
     .split(",");
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
-  const getCrypto = Uebersicht.React.useCallback(async () => {
+  const getCrypto = React.useCallback(async () => {
     if (!visible) return;
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`
@@ -60,7 +62,14 @@ export const Widget = Uebersicht.React.memo(() => {
     });
     setState(prices);
     setLoading(false);
-  }, [visible]);
+  }, [
+    visible,
+    cleanedUpIdentifiers,
+    denomination,
+    enumeratedIdentifiers,
+    precision,
+    denominatorToken,
+  ]);
 
   useServerSocket("crypto", visible, getCrypto, resetWidget);
   useWidgetRefresh(visible, getCrypto, refresh);

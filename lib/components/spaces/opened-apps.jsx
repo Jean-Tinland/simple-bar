@@ -14,7 +14,7 @@ const OpenedApps = ({ apps }) => {
       "zoom-parent": __legacyHasParentZoom,
       "has-fullscreen-zoom": hasFullscreenZoom,
       "zoom-fullscreen": __legacyHasFullscreenZoom,
-      "is-topmost": isTopmost
+      "is-topmost": isTopmost,
     } = app;
     if (isMinimized ?? __legacyIsMinimized) return null;
 
@@ -24,8 +24,9 @@ const OpenedApps = ({ apps }) => {
       "space__icon--fullscreen":
         (hasParentZoom ?? __legacyHasParentZoom) ||
         (hasFullscreenZoom ?? __legacyHasFullscreenZoom),
-      "space__icon--topmost": isTopmost
+      "space__icon--topmost": isTopmost,
     });
+
     return <Icon className={classes} key={i} />;
   });
 };
