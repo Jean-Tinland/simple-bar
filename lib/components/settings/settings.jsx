@@ -140,7 +140,7 @@ export const Wrapper = () => {
     setVisible(false);
     Utils.blurBar();
   };
-  const onKeydown = React.useCallback((e) => {
+  const onKeydown = (e) => {
     const { ctrlKey, keyCode, metaKey, which } = e;
     if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
       e.preventDefault();
@@ -170,12 +170,12 @@ export const Wrapper = () => {
         Utils.hardRefresh();
       }
     }
-  }, []);
+  };
 
   React.useEffect(() => {
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
-  }, [onKeydown]);
+  }, []);
 
   return (
     <React.Fragment>

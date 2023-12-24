@@ -12,11 +12,6 @@ const IconPicker = ({ callback, index, selectedIcon }) => {
 
   const onClick = () => setOpen(!open);
 
-  React.useEffect(
-    () => callback?.(index, "icon", selected),
-    [callback, index, selected]
-  );
-
   return (
     <div className="icon-picker">
       <button className="icon-picker__button" onClick={onClick}>
@@ -28,6 +23,7 @@ const IconPicker = ({ callback, index, selectedIcon }) => {
             const onClick = (e) => {
               e.stopPropagation();
               setSelected(key);
+              callback?.(index, "icon", key);
               setOpen(false);
             };
             const Icon = Icons[key];

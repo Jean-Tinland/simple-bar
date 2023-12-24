@@ -13,16 +13,15 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
 
   const onClick = () => setOpen(!open);
 
-  const onCustomColorChange = (e) => setCustomColor(e.target.value);
+  const onCustomColorChange = (e) => {
+    const value = e.target.value;
+    setCustomColor(value);
+    callback?.(index, "backgroundColor", value);
+  };
   const onCustomColorSubmit = () => {
     setSelected(customColor);
     setOpen(false);
   };
-
-  React.useEffect(
-    () => callback?.(index, "backgroundColor", selected),
-    [index, callback, selected]
-  );
 
   return (
     <div className="color-picker">
@@ -40,6 +39,7 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
               e.stopPropagation();
               setCustomColor(undefined);
               setSelected(color);
+              callback?.(index, "backgroundColor", color);
               setOpen(false);
             };
             return (
