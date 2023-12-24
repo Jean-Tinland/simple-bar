@@ -68,6 +68,7 @@ export const Widget = React.memo(() => {
       if (_volume && currentVolume !== parseInt(_volume, 10)) {
         return parseInt(_volume, 10);
       }
+      return currentVolume;
     });
   }, [_volume]);
 

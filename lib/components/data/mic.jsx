@@ -56,10 +56,13 @@ export const Widget = React.memo(() => {
   }, [dragging, volume]);
 
   React.useEffect(() => {
-    if (_volume && parseInt(_volume, 10) !== volume) {
-      setVolume(parseInt(_volume, 10));
-    }
-  }, [_volume, volume]);
+    setVolume((currentVolume) => {
+      if (_volume && currentVolume !== parseInt(_volume, 10)) {
+        return parseInt(_volume, 10);
+      }
+      return currentVolume;
+    });
+  }, [_volume]);
 
   if (loading) return <DataWidgetLoader.Widget className="mic" />;
   if (!state || volume === undefined || _volume === "missing value")
