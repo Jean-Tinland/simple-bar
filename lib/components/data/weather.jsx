@@ -48,16 +48,18 @@ export const Widget = React.memo(() => {
 
   const getWeather = React.useCallback(async () => {
     if (!visible) return;
-    if (!location) {
+    if (!location.current) {
       const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
       if (!position) await getWeather();
       location.current = position?.address?.city;
-      if (!location) return setLoading(false);
+      if (!location.current) return setLoading(false);
     }
     try {
-      const result = await fetch(`https://wttr.in/${location}?format=j1`);
+      const result = await fetch(
+        `https://wttr.in/${location.current}?format=j1`
+      );
       const data = await result.json();
-      setState({ location, data });
+      setState({ location: location.current, data });
     } catch (e) {
       //
     }
