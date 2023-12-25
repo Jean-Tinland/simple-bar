@@ -13,7 +13,7 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-export const Widget = React.memo(() => {
+export const Widget = () => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, batteryWidgetOptions } = settings;
   const { batteryWidget } = widgets;
@@ -43,21 +43,25 @@ export const Widget = React.memo(() => {
 
   const getBattery = React.useCallback(async () => {
     if (!visible) return;
-    const [system, percentage, status, caffeinate] = await Promise.all([
-      Utils.getSystem(),
-      Uebersicht.run(
-        `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`
-      ),
-      Uebersicht.run(
-        `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`
-      ),
-      Uebersicht.run(`pgrep caffeinate`),
-    ]);
+    // TODO: merge these into one call and parse result
+    const [system, percentage, status, caffeinate, lowPowerMode] =
+      await Promise.all([
+        Utils.getSystem(),
+        Uebersicht.run(
+          `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`
+        ),
+        Uebersicht.run(
+          `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`
+        ),
+        Uebersicht.run(`pgrep caffeinate`),
+        Uebersicht.run(`pmset -g | grep lowpowermode | awk '{print $2}'`),
+      ]);
     setState({
       system,
       percentage: parseInt(percentage, 10),
       charging: Utils.cleanupOutput(status) === "AC",
       caffeinate: Utils.cleanupOutput(caffeinate),
+      lowPowerMode: Utils.cleanupOutput(lowPowerMode) === "1",
     });
     setLoading(false);
   }, [visible]);
@@ -68,11 +72,12 @@ export const Widget = React.memo(() => {
   if (loading) return <DataWidgetLoader.Widget className="battery" />;
   if (!state) return null;
 
-  const { system, percentage, charging, caffeinate } = state;
+  const { system, percentage, charging, caffeinate, lowPowerMode } = state;
   const isLowBattery = !charging && percentage < 20;
 
   const classes = Utils.classnames("battery", {
     "battery--low": isLowBattery,
+    "battery--low-power-mode": lowPowerMode,
     "battery--caffeinate": caffeinate.length,
   });
 
@@ -111,9 +116,9 @@ export const Widget = React.memo(() => {
       {percentage}%
     </DataWidget.Widget>
   );
-});
+};
 
-Widget.displayName = "Battery";
+// Widget.displayName = "Battery";
 
 function getTransform(value) {
   let transform = `0.${value}`;
