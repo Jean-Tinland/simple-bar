@@ -1,6 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as AppIcons from "../../app-icons";
-import { useSimpleBarContext } from "../context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 

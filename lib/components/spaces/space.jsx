@@ -1,14 +1,21 @@
 import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
 import SpaceOptions from "./space-options.jsx";
-import { useSimpleBarContext } from "../context.jsx";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 
 const { React } = Uebersicht;
 
-const Space = ({ space, display, currentSpaceIndex, lastOfSpace }) => {
-  const { SIPDisabled, windows, settings } = useSimpleBarContext();
+export default function Space({
+  space,
+  display,
+  currentSpaceIndex,
+  lastOfSpace,
+}) {
+  const { windows } = useYabaiContext();
+  const { SIPDisabled, settings } = useSimpleBarContext();
   const { spacesDisplay } = settings;
   const {
     displayAllSpacesOnAllScreens,
@@ -150,6 +157,4 @@ const Space = ({ space, display, currentSpaceIndex, lastOfSpace }) => {
       </div>
     </React.Fragment>
   );
-};
-
-export default Space;
+}

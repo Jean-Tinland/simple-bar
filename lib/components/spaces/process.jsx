@@ -1,12 +1,16 @@
+import * as Uebersicht from "uebersicht";
 import Window from "./window.jsx";
 import * as Utils from "../../utils";
-import { useSimpleBarContext } from "../context.jsx";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 
 export { processStyles as styles } from "../../styles/components/process";
 
-export const Component = () => {
-  const { displayIndex, spaces, windows, skhdMode, settings } =
-    useSimpleBarContext();
+const { React } = Uebersicht;
+
+export const Component = React.memo(() => {
+  const { spaces, windows, skhdMode } = useYabaiContext();
+  const { displayIndex, settings } = useSimpleBarContext();
   const { process, spacesDisplay, widgets } = settings;
   const { processWidget } = widgets;
   const { exclusionsAsRegex } = spacesDisplay;
@@ -78,4 +82,6 @@ export const Component = () => {
       </div>
     </div>
   );
-};
+});
+
+Component.displayName = "Process";

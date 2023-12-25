@@ -5,7 +5,7 @@ import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
-import { useSimpleBarContext } from "../context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 
 export { dateStyles as styles } from "../../styles/components/data/date-display";
 

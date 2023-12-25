@@ -11,15 +11,10 @@ const SimpleBarContext = React.createContext({
 
 export const useSimpleBarContext = () => React.useContext(SimpleBarContext);
 
-export default React.memo(ContextProvider);
-
-function ContextProvider({
+export default function SimpleBarContextProvider({
   initialSettings,
-  spaces,
-  windows,
   displays,
   SIPDisabled,
-  skhdMode,
   children,
 }) {
   const [settings, setSettings] = React.useState(initialSettings);
@@ -35,10 +30,6 @@ function ContextProvider({
         SIPDisabled,
         settings,
         setSettings,
-        spaces,
-        windows,
-        displays,
-        skhdMode,
       }}
     >
       {children}

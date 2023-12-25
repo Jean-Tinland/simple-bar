@@ -4,7 +4,7 @@ import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
-import { useSimpleBarContext } from "../context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 
 export { viscosityVPNStyles as styles } from "../../styles/components/data/viscosity-vpn";

@@ -1,7 +1,7 @@
 import * as AppIcons from "../../app-icons";
 import * as Utils from "../../utils";
 
-const OpenedApps = ({ apps }) => {
+export default function OpenedApps({ apps }) {
   if (!apps.length) return null;
   return Utils.sortWindows(apps).map((app, i) => {
     const {
@@ -29,6 +29,4 @@ const OpenedApps = ({ apps }) => {
 
     return <Icon className={classes} key={i} />;
   });
-};
-
-export default OpenedApps;
+}

@@ -1,12 +1,14 @@
 import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
-import { useSimpleBarContext } from "../context.jsx";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 
 const { React } = Uebersicht;
 
 const Stickies = ({ display }) => {
-  const { settings, windows } = useSimpleBarContext();
+  const { windows } = useYabaiContext();
+  const { settings } = useSimpleBarContext();
   const { spacesDisplay } = settings;
   const { exclusionsAsRegex, hideDuplicateAppsInSpaces } = spacesDisplay;
   const exclusions = exclusionsAsRegex

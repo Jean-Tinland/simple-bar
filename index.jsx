@@ -1,6 +1,6 @@
 import UserWidgets from "./lib/components/data/user-widgets.jsx";
 import * as Error from "./lib/components/error.jsx";
-import ContextProvider from "./lib/components/context.jsx";
+import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
 import * as Spaces from "./lib/components/spaces/spaces.jsx";
 import * as Process from "./lib/components/spaces/process.jsx";
 import * as Variables from "./lib/styles/core/variables";
@@ -29,6 +29,7 @@ import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx"
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
+import YabaiContextProvider from "./lib/components/yabai-context.jsx";
 
 const refreshFrequency = false;
 
@@ -109,17 +110,20 @@ const render = ({ output, error }) => {
   Utils.handleBarFocus();
 
   return (
-    <ContextProvider
+    <SimpleBarContextProvider
       initialSettings={settings}
-      SIPDisabled={SIPDisabled}
       displays={displays}
-      spaces={spaces}
-      windows={windows}
-      skhdMode={skhdMode}
+      SIPDisabled={SIPDisabled}
     >
       <div className={classes}>
-        <Spaces.Component />
-        <Process.Component />
+        <YabaiContextProvider
+          spaces={spaces}
+          windows={windows}
+          skhdMode={skhdMode}
+        >
+          <Spaces.Component />
+          <Process.Component />
+        </YabaiContextProvider>
         <Settings.Wrapper />
         <div className="simple-bar__data">
           <UserWidgets />
@@ -143,7 +147,7 @@ const render = ({ output, error }) => {
           <Time.Widget />
         </div>
       </div>
-    </ContextProvider>
+    </SimpleBarContextProvider>
   );
 };
 

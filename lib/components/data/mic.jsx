@@ -5,7 +5,7 @@ import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import * as Utils from "../../utils";
-import { useSimpleBarContext } from "../context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 
 const { React } = Uebersicht;
 

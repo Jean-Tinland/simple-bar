@@ -2,17 +2,18 @@ import * as Uebersicht from "uebersicht";
 import Space from "./space.jsx";
 import Stickies from "./stickies.jsx";
 import * as Icons from "../icons.jsx";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
-import { useSimpleBarContext } from "../context.jsx";
 
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
 const { React } = Uebersicht;
 
 export const Component = React.memo(() => {
-  const { SIPDisabled, displayIndex, spaces, windows, settings } =
-    useSimpleBarContext();
+  const { spaces, windows } = useYabaiContext();
+  const { SIPDisabled, displayIndex, settings } = useSimpleBarContext();
   const { spacesDisplay, process } = settings;
   const {
     displayStickyWindowsSeparately,
