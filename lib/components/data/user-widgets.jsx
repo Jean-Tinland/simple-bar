@@ -10,7 +10,9 @@ import * as Utils from "../../utils";
 
 const { React } = Uebersicht;
 
-export default function UserWidgets() {
+export default React.memo(UserWidgets);
+
+function UserWidgets() {
   const { settings } = useSimpleBarContext();
   const { userWidgetsList } = settings.userWidgets;
 
@@ -19,6 +21,8 @@ export default function UserWidgets() {
     <UserWidget key={key} index={key} widget={userWidgetsList[key]} />
   ));
 }
+
+UserWidgets.displayName = "UserWidgets";
 
 const UserWidget = React.memo(({ index, widget }) => {
   const { displayIndex, settings } = useSimpleBarContext();
