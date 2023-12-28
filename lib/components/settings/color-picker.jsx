@@ -3,7 +3,7 @@ import * as Settings from "../../settings";
 
 const { React } = Uebersicht;
 
-const ColorPicker = ({ callback, index, selectedColor }) => {
+export default function ColorPicker({ callback, index, selectedColor }) {
   const isSelectedCustom = !Settings.userWidgetColors.includes(selectedColor);
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(selectedColor);
@@ -81,6 +81,4 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
       )}
     </div>
   );
-};
-
-export default ColorPicker;
+}

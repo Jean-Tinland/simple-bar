@@ -9,7 +9,7 @@ const message = {
 };
 
 export const Component = ({ type, classes }) => {
-  const errorClasses = Utils.classnames("simple-bar--empty", classes, {
+  const errorClasses = Utils.classNames("simple-bar--empty", classes, {
     "simple-bar--loading": type === "noOutput",
   });
 

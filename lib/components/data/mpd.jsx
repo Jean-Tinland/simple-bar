@@ -86,7 +86,9 @@ export const Widget = React.memo(() => {
     await getMpd();
   };
 
-  const classes = Utils.classnames("mpd", { "mpd--playing": isPlaying });
+  const classes = Utils.classNames("mpd", {
+    "mpd--playing": isPlaying,
+  });
 
   return (
     <DataWidget.Widget

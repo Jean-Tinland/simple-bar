@@ -13,7 +13,7 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
-export const Widget = () => {
+export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, batteryWidgetOptions } = settings;
   const { batteryWidget } = widgets;
@@ -75,7 +75,7 @@ export const Widget = () => {
   const { system, percentage, charging, caffeinate, lowPowerMode } = state;
   const isLowBattery = !charging && percentage < 20;
 
-  const classes = Utils.classnames("battery", {
+  const classes = Utils.classNames("battery", {
     "battery--low": isLowBattery,
     "battery--low-power-mode": lowPowerMode,
     "battery--caffeinate": caffeinate.length,
@@ -116,9 +116,9 @@ export const Widget = () => {
       {percentage}%
     </DataWidget.Widget>
   );
-};
+});
 
-// Widget.displayName = "Battery";
+Widget.displayName = "Battery";
 
 function getTransform(value) {
   let transform = `0.${value}`;

@@ -6,7 +6,7 @@ import * as Utils from "../../utils";
 
 const { React } = Uebersicht;
 
-const Stickies = ({ display }) => {
+export default function Stickies({ display }) {
   const { windows } = useYabaiContext();
   const { settings } = useSimpleBarContext();
   const { spacesDisplay } = settings;
@@ -46,6 +46,4 @@ const Stickies = ({ display }) => {
       </div>
     </React.Fragment>
   );
-};
-
-export default Stickies;
+}

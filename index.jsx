@@ -72,8 +72,8 @@ Utils.injectStyles("simple-bar-index-styles", [
   settings.customStyles.styles,
 ]);
 
-const render = ({ output, error }) => {
-  const baseClasses = Utils.classnames("simple-bar", {
+function render({ output, error }) {
+  const baseClasses = Utils.classNames("simple-bar", {
     "simple-bar--floating": settings.global.floatingBar,
     "simple-bar--no-bar-background": settings.global.noBarBg,
     "simple-bar--no-color-in-data": settings.global.noColorInData,
@@ -103,7 +103,7 @@ const render = ({ output, error }) => {
 
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
 
-  const classes = Utils.classnames(baseClasses, {
+  const classes = Utils.classNames(baseClasses, {
     "simple-bar--no-shadow": shadow !== "on",
   });
 
@@ -149,6 +149,6 @@ const render = ({ output, error }) => {
       </div>
     </SimpleBarContextProvider>
   );
-};
+}
 
 export { command, refreshFrequency, render };

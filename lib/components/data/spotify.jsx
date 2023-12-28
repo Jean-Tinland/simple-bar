@@ -98,7 +98,7 @@ export const Widget = React.memo(() => {
     getSpotify();
   };
 
-  const classes = Utils.classnames("spotify", {
+  const classes = Utils.classNames("spotify", {
     "spotify--playing": isPlaying,
   });
 

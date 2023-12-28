@@ -79,7 +79,9 @@ export const Widget = React.memo(() => {
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05;
 
-  const classes = Utils.classnames("mic", { "mic--dragging": dragging });
+  const classes = Utils.classNames("mic", {
+    "mic--dragging": dragging,
+  });
 
   return (
     <DataWidget.Widget classes={classes} disableSlider>

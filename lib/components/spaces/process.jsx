@@ -53,7 +53,7 @@ export const Component = React.memo(() => {
 
   const apps = [...stickyWindows, ...nonStickyWindows];
 
-  const classes = Utils.classnames("process", {
+  const classes = Utils.classNames("process", {
     "process--centered": centered,
   });
 

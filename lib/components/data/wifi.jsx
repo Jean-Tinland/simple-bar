@@ -69,7 +69,7 @@ export const Widget = React.memo(() => {
 
   if (hideWifiIfDisabled && !isActive) return null;
 
-  const classes = Utils.classnames("wifi", {
+  const classes = Utils.classNames("wifi", {
     "wifi--hidden-name": !name,
     "wifi--inactive": !isActive,
   });

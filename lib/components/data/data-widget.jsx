@@ -6,7 +6,7 @@ export { dataWidgetStyles as styles } from "../../styles/components/data/data-wi
 
 const { React } = Uebersicht;
 
-export const Widget = ({
+export function Widget({
   Icon,
   classes,
   href,
@@ -17,10 +17,10 @@ export const Widget = ({
   disableSlider,
   showSpecter,
   children,
-}) => {
+}) {
   const ref = React.useRef();
   const Tag = getTag(onClick, href);
-  const dataWidgetClasses = Utils.classnames("data-widget", classes, {
+  const dataWidgetClasses = Utils.classNames("data-widget", classes, {
     "data-widget--clickable": onClick,
   });
 
@@ -58,7 +58,7 @@ export const Widget = ({
       <Inner disableSlider={disableSlider}>{children}</Inner>
     </Tag>
   );
-};
+}
 
 function Inner({ disableSlider, children }) {
   if (disableSlider) return children;

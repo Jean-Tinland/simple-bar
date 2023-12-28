@@ -67,7 +67,7 @@ export const Widget = React.memo(() => {
   const { status } = state;
   const isConnected = status === "Connected";
 
-  const classes = Utils.classnames("viscosity-vpn", {
+  const classes = Utils.classNames("viscosity-vpn", {
     "viscosity-vpn--disconnected": !isConnected,
   });
 

@@ -98,7 +98,9 @@ export const Widget = React.memo(() => {
     getMusic();
   };
 
-  const classes = Utils.classnames("music", { "music--playing": isPlaying });
+  const classes = Utils.classNames("music", {
+    "music--playing": isPlaying,
+  });
 
   return (
     <DataWidget.Widget

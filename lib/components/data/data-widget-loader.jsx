@@ -7,7 +7,7 @@ const { React } = Uebersicht;
 
 export const Widget = React.memo(
   ({ width = 14, height = 14, className, style }) => {
-    const classes = Utils.classnames("data-widget-loader data-widget", {
+    const classes = Utils.classNames("data-widget-loader data-widget", {
       [className]: className,
     });
     return (

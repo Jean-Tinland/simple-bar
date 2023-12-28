@@ -3,7 +3,7 @@ import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 
-const SpaceOptions = ({ index, setHovered }) => {
+export default function SpaceOptions({ index, setHovered }) {
   const { displayIndex } = useSimpleBarContext();
 
   const onRemoveClick = async (e) => {
@@ -46,6 +46,4 @@ const SpaceOptions = ({ index, setHovered }) => {
       </div>
     </span>
   );
-};
-
-export default SpaceOptions;
+}

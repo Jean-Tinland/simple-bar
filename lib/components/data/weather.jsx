@@ -123,7 +123,7 @@ export const Widget = React.memo(() => {
     Utils.notification("Refreshing forecast from wttr.in...");
   };
 
-  const classes = Utils.classnames("weather", {
+  const classes = Utils.classNames("weather", {
     "weather--sunrise": sunrising,
     "weather--sunset": sunsetting,
   });

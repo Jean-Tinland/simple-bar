@@ -90,20 +90,23 @@ const UserWidget = React.memo(({ index, widget }) => {
     await Uebersicht.run(onClickAction);
     getUserWidget();
   };
+
   const onRightClick = async (e) => {
     Utils.clickEffect(e);
     await Uebersicht.run(onRightClickAction);
     getUserWidget();
   };
+
   const onMiddleClick = async (e) => {
     Utils.clickEffect(e);
     await Uebersicht.run(onMiddleClickAction);
     getUserWidget();
   };
+
   const onClickProps = {
-    onClick: hasOnClickAction && onClick,
-    onRightClick: hasRightClickAction && onRightClick,
-    onMiddleClick: hasMiddleClickAction && onMiddleClick,
+    onClick: hasOnClickAction ? onClick : undefined,
+    onRightClick: hasRightClickAction ? onRightClick : undefined,
+    onMiddleClick: hasMiddleClickAction ? onMiddleClick : undefined,
   };
 
   return (

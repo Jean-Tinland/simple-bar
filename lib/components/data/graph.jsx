@@ -19,7 +19,7 @@ export default function Graph({
     maxValue = Math.max(...allValues);
   }
 
-  const classes = Utils.classnames("graph", className);
+  const classes = Utils.classNames("graph", className);
 
   return (
     <div className={classes}>

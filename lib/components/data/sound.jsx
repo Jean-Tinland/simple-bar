@@ -89,7 +89,9 @@ export const Widget = React.memo(() => {
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05;
 
-  const classes = Utils.classnames("sound", { "sound--dragging": dragging });
+  const classes = Utils.classNames("sound", {
+    "sound--dragging": dragging,
+  });
 
   return (
     <DataWidget.Widget classes={classes} disableSlider>

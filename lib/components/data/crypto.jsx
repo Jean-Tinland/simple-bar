@@ -84,7 +84,7 @@ export const Widget = React.memo(() => {
   if (loading) return <DataWidgetLoader.Widget className="crypto" />;
   if (!state) return null;
 
-  const classes = Utils.classnames("crypto");
+  const classes = Utils.classNames("crypto");
 
   return enumeratedIdentifiers.map((id, i) => (
     <DataWidget.Widget

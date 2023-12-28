@@ -19,7 +19,8 @@ export default function OpenedApps({ apps }) {
     if (isMinimized ?? __legacyIsMinimized) return null;
 
     const Icon = AppIcons.apps[appName] || AppIcons.apps.Default;
-    const classes = Utils.classnames("space__icon", {
+
+    const classes = Utils.classNames("space__icon", {
       "space__icon--focused": hasFocus ?? __legacyHasFocus,
       "space__icon--fullscreen":
         (hasParentZoom ?? __legacyHasParentZoom) ||

@@ -113,7 +113,7 @@ export default function Space({
 
   if (hidden) return null;
 
-  const classes = Utils.classnames(`space space--${type}`, {
+  const classes = Utils.classNames(`space space--${type}`, {
     "space--focused": hasFocus ?? __legacyHasFocus,
     "space--visible": isVisible ?? __legacyIsVisible,
     "space--fullscreen": isNativeFullscreen ?? __legacyIsNativeFullscreen,

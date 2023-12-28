@@ -97,8 +97,6 @@ export const Widget = React.memo(() => {
   if (loading) return <DataWidgetLoader.Widget className="stock" />;
   if (!state || !state.symbolQuotes) return null;
 
-  const classes = Utils.classnames("stock");
-
   return enumeratedSymbols.map((symbolName, i) => {
     const symbolQuote = state.symbolQuotes[i];
     const symbol = symbolQuote.symbol;
@@ -113,7 +111,7 @@ export const Widget = React.memo(() => {
     return (
       <DataWidget.Widget
         key={symbolName}
-        classes={classes}
+        classes="stock"
         ref={ref}
         Icon={stockUp ? Icons.UpArrow : Icons.DownArrow}
         href={`https://finance.yahoo.com/quote/${symbolName}`}

@@ -3,7 +3,7 @@ import * as Icons from "../icons.jsx";
 
 const { React } = Uebersicht;
 
-const IconPicker = ({ callback, index, selectedIcon }) => {
+export default function IconPicker({ callback, index, selectedIcon }) {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(selectedIcon);
 
@@ -37,6 +37,4 @@ const IconPicker = ({ callback, index, selectedIcon }) => {
       )}
     </div>
   );
-};
-
-export default IconPicker;
+}

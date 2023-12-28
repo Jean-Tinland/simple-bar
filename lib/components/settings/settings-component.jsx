@@ -80,7 +80,7 @@ export default function Component({ closeSettings }) {
             const setting = Settings.data[key];
             if (!setting) return null;
             const { label } = setting;
-            const classes = Utils.classnames("settings__tab", {
+            const classes = Utils.classNames("settings__tab", {
               "settings__tab--current": i === currentTab,
             });
             return (
@@ -116,7 +116,7 @@ export default function Component({ closeSettings }) {
                     minHeight,
                   } = subSetting;
                   const defaultValue = newSettings[key][subKey];
-                  const classes = Utils.classnames("settings__item", {
+                  const classes = Utils.classNames("settings__item", {
                     "settings__item--radio": type === "radio",
                     "settings__item--text":
                       type === "text" || type === "number",

@@ -33,7 +33,8 @@ const Window = ({ window }) => {
     return null;
   const isFocused = hasFocus ?? __legacyHasFocus;
   const Icon = AppIcons.apps[appName] || AppIcons.apps.Default;
-  const classes = Utils.classnames("process__window", {
+
+  const classes = Utils.classNames("process__window", {
     "process__window--focused": !displayOnlyCurrent && isFocused,
     "process__window--only-current": displayOnlyCurrent,
     "process__window--only-icon": displayOnlyIcon,
