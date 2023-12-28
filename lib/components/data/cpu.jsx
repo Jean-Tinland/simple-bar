@@ -37,6 +37,7 @@ export const Widget = React.memo(() => {
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
+    setGraph([]);
   };
 
   const getCpu = React.useCallback(async () => {
