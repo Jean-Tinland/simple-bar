@@ -1,10 +1,7 @@
-import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
 import { useYabaiContext } from "../yabai-context.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
-
-const { React } = Uebersicht;
 
 export default function Stickies({ display }) {
   const { windows } = useYabaiContext();
@@ -28,22 +25,18 @@ export default function Stickies({ display }) {
     exclusionsAsRegex,
   });
 
-  if (
-    !apps.filter((app) => {
-      const { "is-minimized": isMinimized, minimized: __legacyIsMinimized } =
-        app;
-      return !(isMinimized || __legacyIsMinimized);
-    })?.length
-  )
-    return null;
+  const notMinimizedStikies = apps.filter((app) => {
+    const { "is-minimized": isMinimized, minimized: __legacyIsMinimized } = app;
+    return !(isMinimized || __legacyIsMinimized);
+  });
+
+  if (!notMinimizedStikies?.length) return null;
 
   return (
-    <React.Fragment>
-      <div className="stickies">
-        <button className="stickies__inner">
-          <OpenedApps apps={apps} />
-        </button>
+    <div className="stickies">
+      <div className="stickies__inner">
+        <OpenedApps apps={apps} />
       </div>
-    </React.Fragment>
+    </div>
   );
 }
