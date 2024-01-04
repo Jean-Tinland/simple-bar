@@ -39,11 +39,12 @@ Simply clone this repo in your Übersicht widgets directory with the following c
 git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-**For users having the latest M1 and M2 mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.
+> [!NOTE] > **For users having the latest M1 and M2 mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.
 
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/installation/).
 
-If you experience some freezing issues with Übersicht, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).
+> [!TIP]
+> If you experience some freezing issues with Übersicht or if you simply want to improve `simple-bar` responsiveness & energy consumption, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).
 
 ## Special thanks
 
