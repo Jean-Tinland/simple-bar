@@ -16,6 +16,7 @@ Among the principal features of `simple-bar`, you'll find:
 - **Multi-monitor support**: enable individual widget on specific displays
 - Add your own custom widgets in settings (it displays scripts outputs)
 - **Refresh and toggle widgets on the fly** with `curl` commands by installing [simple-bar-server](https://github.com/Jean-Tinland/simple-bar-server) and enabling the server in settings
+- **Refresh spaces & processes** on the fly with `curl` commands by installing [simple-bar-server](https://github.com/Jean-Tinland/simple-bar-server#yabai) and enabling the right signales in your `.yabairc`(way faster than Übersicht refresh triggered by applescript)
 - **Extensible** themes system with 3 theme behaviors: **dark**, **light**, or **system**
 - Numerous customization options (try them out in settings)
 - A handfull selection of widgets
