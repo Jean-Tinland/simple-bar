@@ -39,7 +39,8 @@ Simply clone this repo in your Übersicht widgets directory with the following c
 git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-> [!NOTE] > **For users having the latest M1 and M2 mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.
+> [!NOTE]\
+> **For users having the latest M1 and M2 mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.
 
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/installation/).
 
