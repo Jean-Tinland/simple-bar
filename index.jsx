@@ -34,11 +34,18 @@ import YabaiContextProvider from "./lib/components/yabai-context.jsx";
 const refreshFrequency = false;
 
 const settings = Settings.get();
-const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
+const {
+  yabaiPath = "/usr/local/bin/yabai",
+  shell,
+  enableServer,
+  yabaiServerRefresh,
+} = settings.global;
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
+const disableSignals = enableServer && yabaiServerRefresh;
 const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
-const args = `${yabaiPath} ${displaySkhdMode} ${enableTitleChangedSignal}`;
+
+const args = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const command = `${shell} simple-bar/lib/scripts/init.sh ${args}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
