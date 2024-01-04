@@ -45,6 +45,16 @@ if [ $disable_signals = "false" ]; then
         $yabai_path -m signal --add event=space_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space removal"
         $yabai_path -m signal --add event=space_created action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'" label="Refresh simple-bar on space creation"
     fi
+else
+    $yabai_path -m signal --remove label="Refresh simple-bar when focused application changes" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar when a window is minimized" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar when a window is resized" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar when an application window is closed" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar on space change" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar on display focus change" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar when current window title changes" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar on space removal" >/dev/null 2>&1 || true
+    $yabai_path -m signal --remove label="Refresh simple-bar on space creation" >/dev/null 2>&1 || true
 fi
 
 if [ $display_skhd_mode = "true" ]; then
