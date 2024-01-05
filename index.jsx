@@ -1,6 +1,7 @@
-import UserWidgets from "./lib/components/data/user-widgets.jsx";
 import * as Error from "./lib/components/error.jsx";
 import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
+import YabaiContextProvider from "./lib/components/yabai-context.jsx";
+import UserWidgets from "./lib/components/data/user-widgets.jsx";
 import * as Spaces from "./lib/components/spaces/spaces.jsx";
 import * as Process from "./lib/components/spaces/process.jsx";
 import * as Variables from "./lib/styles/core/variables";
@@ -29,7 +30,6 @@ import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx"
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
-import YabaiContextProvider from "./lib/components/yabai-context.jsx";
 
 const refreshFrequency = false;
 
