@@ -1,5 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as Utils from "../../utils";
+import * as Icons from "../icons.jsx";
 import * as Settings from "../../settings";
 
 const { React } = Uebersicht;
@@ -94,7 +95,7 @@ export default function Component({ closeSettings }) {
           {Object.keys(Settings.defaultSettings).map((key) => {
             const setting = Settings.data[key];
             if (!setting) return null;
-            const { label, infos } = setting;
+            const { label, infos, documentation } = setting;
             return (
               <div
                 key={key}
@@ -158,6 +159,20 @@ export default function Component({ closeSettings }) {
                     </React.Fragment>
                   );
                 })}
+                {documentation && (
+                  <div className="settings__documentation">
+                    <Icons.OpenBook className="settings__documentation-icon" />
+                    <span className="settings__documentation-title">
+                      You{"'"}ll find all the information about these settings{" "}
+                      <a
+                        href={`https://www.jeantinland.com/toolbox/simple-bar/documentation${documentation}`}
+                      >
+                        here on the documentation
+                      </a>{" "}
+                      hosted on jeantinland.com.
+                    </span>
+                  </div>
+                )}
                 {infos && infos.length && (
                   <div className="settings__infos">
                     <div className="settings__infos-title">Tips</div>
