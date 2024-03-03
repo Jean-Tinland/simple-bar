@@ -14,7 +14,7 @@ Among the principal features of `simple-bar`, you'll find:
 
 - **Show all opened apps** in every space
 - **Show all opened windows** on the current space and its current layout mode (bsp, stack, float)
-- Interactions: **navigate to workspace** or **focus window** on click, launch scripts, toggle states
+- Interactions: **focus window** on click, launch scripts, toggle states
 - **Multi-monitor support**: enable individual widget on specific displays
 - Add your own custom widgets in settings (it displays scripts outputs)
 - **Refresh and toggle widgets on the fly** with `curl` commands by installing [simple-bar-server](https://github.com/Jean-Tinland/simple-bar-server) and enabling the server in settings
@@ -22,6 +22,7 @@ Among the principal features of `simple-bar`, you'll find:
 - **Extensible** themes system with 3 theme behaviors: **dark**, **light**, or **system**
 - Numerous customization options (try them out in settings)
 - A handfull selection of widgets
+- Other features available only with SIP disabled and yabai scripting addition installed (**navigate to workspace**, **create new workspace on "+" click**, **move or destroy workspace on space hover**)
 
 [See all features in documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/features/).
 
