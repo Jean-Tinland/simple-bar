@@ -43,7 +43,7 @@ const {
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
 const disableSignals = enableServer && yabaiServerRefresh;
-const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
+const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 
 const args = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const command = `${shell} simple-bar/lib/scripts/init.sh ${args}`;
