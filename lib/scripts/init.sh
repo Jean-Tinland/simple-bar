@@ -14,7 +14,7 @@ SIP=$(csrutil status)
 shadow_enabled=$($yabai_path -m config window_shadow)
 
 spaces=$($yabai_path -m query --spaces)
-windows=$($yabai_path -m query --windows | sed 's/\n//g')
+windows=$($yabai_path -m query --windows)
 displays=$($yabai_path -m query --displays)
 
 if [ -z "$spaces" ]; then
@@ -22,8 +22,10 @@ if [ -z "$spaces" ]; then
 fi
 
 if [ -z "$windows" ]; then
-    windows=$($yabai_path -m query --windows | sed 's/\\.//g; s/\n//g')
+    windows=$($yabai_path -m query --windows | sed 's/\\.//g;')
 fi
+
+windows=$(echo $windows | tr -d '\n')
 
 if [ -z "$displays" ]; then
     displays=$($yabai_path -m query --displays)
