@@ -59,7 +59,11 @@ fi
 
 if [ $display_skhd_mode = "true" ]; then
   SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-  skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode.sh --query)")
+  if [ $disable_signals = "false" ]; then
+    skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode.sh --query)")
+  else
+    skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode-server.sh --query)")
+  fi  
 else
   skhd_mode="{}"
 fi
