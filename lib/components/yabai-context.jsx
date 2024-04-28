@@ -17,8 +17,6 @@ export function useYabaiContext() {
 
 export default React.memo(YabaiContextProvider);
 
-let renderCount = 0;
-
 function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
   const { settings, setYabaiDisplays } = useSimpleBarContext();
   const { enableServer, yabaiServerRefresh } = settings.global;
@@ -57,8 +55,6 @@ function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
   useServerSocket("spaces", serverEnabled, getSpaces, resetSpaces);
   useServerSocket("windows", serverEnabled, getWindows, resetWindows);
   useServerSocket("displays", serverEnabled, getDisplays, resetDisplays);
-
-  renderCount = renderCount + 1;
 
   return (
     <YabaiContext.Provider
