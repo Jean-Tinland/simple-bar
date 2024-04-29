@@ -22,10 +22,8 @@ if [ -z "$spaces" ]; then
 fi
 
 if [ -z "$windows" ]; then
-    windows=$($yabai_path -m query --windows | sed 's/\\.//g;')
+    windows=$($yabai_path -m query --windows | sed 's/\\.//g;' | tr -d '\n')
 fi
-
-windows=$(echo $windows | tr -d '\n')
 
 if [ -z "$displays" ]; then
     displays=$($yabai_path -m query --displays)
