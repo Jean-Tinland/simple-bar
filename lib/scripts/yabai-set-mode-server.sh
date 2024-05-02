@@ -26,6 +26,8 @@ main () {
     echo \
         "{\"mode\": \"$1\", \"color\": \"$color\"}" \
         > "$CACHE_FILE"
+
+    curl http://localhost:7776/skhd/mode/refresh
 }
 
 case "$1" in
