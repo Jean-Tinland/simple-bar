@@ -2,39 +2,42 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import * as Utils from "../../utils";
 
 export { musicStyles as styles } from "../../styles/components/data/music";
 
-const settings = Settings.get();
-const { widgets, musicWidgetOptions } = settings;
-const { musicWidget } = widgets;
-const { refreshFrequency, showSpecter, showOnDisplay } = musicWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const togglePlay = (isPaused, processName) => {
-  if (isPaused) {
-    Uebersicht.run(`osascript -e 'tell application "${processName}" to play'`);
-  } else {
-    Uebersicht.run(`osascript -e 'tell application "${processName}" to pause'`);
-  }
-};
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, musicWidgetOptions } = settings;
+  const { musicWidget } = widgets;
+  const { refreshFrequency, showSpecter, showOnDisplay } = musicWidgetOptions;
 
-export const Widget = ({ display }) => {
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && musicWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && musicWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getMusic = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getMusic = React.useCallback(async () => {
+    if (!visible) return;
     const osVersion = await Uebersicht.run(`sw_vers -productVersion`);
     const processName =
       Utils.cleanupOutput(osVersion) === "10.15" ? "iTunes" : "Music";
@@ -63,9 +66,10 @@ export const Widget = ({ display }) => {
       processName: Utils.cleanupOutput(processName),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getMusic, REFRESH_FREQUENCY);
+  useServerSocket("music", visible, getMusic, resetWidget);
+  useWidgetRefresh(visible, getMusic, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="music" />;
   if (!state) return null;
@@ -94,7 +98,9 @@ export const Widget = ({ display }) => {
     getMusic();
   };
 
-  const classes = Utils.classnames("music", { "music--playing": isPlaying });
+  const classes = Utils.classNames("music", {
+    "music--playing": isPlaying,
+  });
 
   return (
     <DataWidget.Widget
@@ -108,4 +114,14 @@ export const Widget = ({ display }) => {
       {trackName} - {artistName}
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Music";
+
+function togglePlay(isPaused, processName) {
+  if (isPaused) {
+    Uebersicht.run(`osascript -e 'tell application "${processName}" to play'`);
+  } else {
+    Uebersicht.run(`osascript -e 'tell application "${processName}" to pause'`);
+  }
+}

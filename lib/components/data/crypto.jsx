@@ -1,63 +1,56 @@
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import * as Uebersicht from "uebersicht";
-import * as Settings from "../../settings";
-import * as Icons from "../icons.jsx";
-import * as Utils from "../../utils";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import * as Utils from "../../utils";
 
 export { cryptoStyles as styles } from "../../styles/components/data/crypto";
 
-const settings = Settings.get();
-const { widgets, cryptoWidgetOptions } = settings;
-const { cryptoWidget } = widgets;
-const {
-  refreshFrequency,
-  denomination,
-  identifiers,
-  precision,
-  showOnDisplay,
-} = cryptoWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000; // 30 seconds * 1000 milliseconds
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const getIcon = (identifier) => {
-  if (identifier === "celo") return Icons.Celo;
-  if (identifier === "ethereum") return Icons.Ethereum;
-  if (identifier === "bitcoin") return Icons.Bitcoin;
-  return Icons.Moon;
-};
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, cryptoWidgetOptions } = settings;
+  const { cryptoWidget } = widgets;
+  const {
+    refreshFrequency,
+    denomination,
+    identifiers,
+    precision,
+    showOnDisplay,
+  } = cryptoWidgetOptions;
 
-const getDenominatorToken = (denomination) => {
-  if (denomination === "usd") return "$";
-  if (denomination === "eur") return "€";
-  return "";
-};
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
 
-const openCrypto = (e) => {
-  Utils.clickEffect(e);
-  Utils.notification("Opening price chart from coingecko.com...");
-};
-
-export const Widget = ({ display }) => {
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && cryptoWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cryptoWidget;
 
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
   const denominatorToken = getDenominatorToken(denomination);
   const cleanedUpIdentifiers = identifiers.replace(/ /g, "");
   const enumeratedIdentifiers = cleanedUpIdentifiers
     .replace(/ /g, "")
     .split(",");
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getCrypto = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getCrypto = React.useCallback(async () => {
+    if (!visible) return;
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`
     );
@@ -69,9 +62,17 @@ export const Widget = ({ display }) => {
     });
     setState(prices);
     setLoading(false);
-  };
+  }, [
+    visible,
+    cleanedUpIdentifiers,
+    denomination,
+    enumeratedIdentifiers,
+    precision,
+    denominatorToken,
+  ]);
 
-  useWidgetRefresh(visible, getCrypto, REFRESH_FREQUENCY);
+  useServerSocket("crypto", visible, getCrypto, resetWidget);
+  useWidgetRefresh(visible, getCrypto, refresh);
 
   const refreshCrypto = (e) => {
     Utils.clickEffect(e);
@@ -83,7 +84,7 @@ export const Widget = ({ display }) => {
   if (loading) return <DataWidgetLoader.Widget className="crypto" />;
   if (!state) return null;
 
-  const classes = Utils.classnames("crypto");
+  const classes = Utils.classNames("crypto");
 
   return enumeratedIdentifiers.map((id, i) => (
     <DataWidget.Widget
@@ -98,4 +99,24 @@ export const Widget = ({ display }) => {
       {state[i]}
     </DataWidget.Widget>
   ));
-};
+});
+
+Widget.displayName = "Crypto";
+
+function getIcon(identifier) {
+  if (identifier === "celo") return Icons.Celo;
+  if (identifier === "ethereum") return Icons.Ethereum;
+  if (identifier === "bitcoin") return Icons.Bitcoin;
+  return Icons.Moon;
+}
+
+function getDenominatorToken(denomination) {
+  if (denomination === "usd") return "$";
+  if (denomination === "eur") return "€";
+  return "";
+}
+
+function openCrypto(e) {
+  Utils.clickEffect(e);
+  Utils.notification("Opening price chart from coingecko.com...");
+}

@@ -13,7 +13,7 @@ const { memoryWidget } = widgets;
 const { refreshFrequency, showOnDisplay } = memoryWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 5000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
+const REFRESH_FREQUENCY = Utils.getRefreshFrequency(
   refreshFrequency,
   DEFAULT_REFRESH_FREQUENCY
 );
@@ -30,7 +30,6 @@ export const Widget = ({ display }) => {
       `bash ./simple-bar/lib/scripts/memory.sh 2>&1`
     );
     const data = Utils.cleanupOutput(output);
-    console.log(data);
     const json = JSON.parse(data);
     setState(json);
     setLoading(false);

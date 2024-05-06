@@ -8,8 +8,8 @@ const message = {
   noData: "JSON error...",
 };
 
-export const Component = ({ type, classes }) => {
-  const errorClasses = Utils.classnames("simple-bar--empty", classes, {
+export function Component({ type, classes }) {
+  const errorClasses = Utils.classNames("simple-bar--empty", classes, {
     "simple-bar--loading": type === "noOutput",
   });
 
@@ -27,4 +27,4 @@ export const Component = ({ type, classes }) => {
       <Settings.Wrapper />
     </div>
   );
-};
+}

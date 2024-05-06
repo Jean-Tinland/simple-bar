@@ -1,44 +1,43 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-
-import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import * as Icons from "../icons.jsx";
+import * as Utils from "../../utils";
 
 export { spotifyStyles as styles } from "../../styles/components/data/spotify";
 
-const settings = Settings.get();
-const { widgets, spotifyWidgetOptions } = settings;
-const { spotifyWidget } = widgets;
-const { refreshFrequency, showSpecter, showOnDisplay } = spotifyWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const togglePlay = (isPaused) => {
-  const state = isPaused ? "play" : "pause";
-  Uebersicht.run(`osascript -e 'tell application "Spotify" to ${state}'`);
-};
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, spotifyWidgetOptions } = settings;
+  const { spotifyWidget } = widgets;
+  const { refreshFrequency, showSpecter, showOnDisplay } = spotifyWidgetOptions;
 
-const getIcon = (playerState) => {
-  if (playerState === "stopped") return Icons.Stopped;
-  if (playerState === "playing") return Icons.Playing;
-  return Icons.Paused;
-};
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
 
-export const Widget = ({ display }) => {
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && spotifyWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && spotifyWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getSpotify = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getSpotify = React.useCallback(async () => {
+    if (!visible) return;
     const isRunning = await Uebersicht.run(
       `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`
     );
@@ -68,9 +67,10 @@ export const Widget = ({ display }) => {
       artistName: Utils.cleanupOutput(artistName),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getSpotify, REFRESH_FREQUENCY);
+  useServerSocket("spotify", visible, getSpotify, resetWidget);
+  useWidgetRefresh(visible, getSpotify, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="spotify" />;
   if (!state) return null;
@@ -98,7 +98,7 @@ export const Widget = ({ display }) => {
     getSpotify();
   };
 
-  const classes = Utils.classnames("spotify", {
+  const classes = Utils.classNames("spotify", {
     "spotify--playing": isPlaying,
   });
 
@@ -114,4 +114,17 @@ export const Widget = ({ display }) => {
       {label}
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Spotify";
+
+function togglePlay(isPaused) {
+  const state = isPaused ? "play" : "pause";
+  Uebersicht.run(`osascript -e 'tell application "Spotify" to ${state}'`);
+}
+
+function getIcon(playerState) {
+  if (playerState === "stopped") return Icons.Stopped;
+  if (playerState === "playing") return Icons.Playing;
+  return Icons.Paused;
+}

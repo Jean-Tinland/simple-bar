@@ -1,7 +1,7 @@
 import * as AppIcons from "../../app-icons";
 import * as Utils from "../../utils";
 
-const OpenedApps = ({ apps }) => {
+export default function OpenedApps({ apps }) {
   if (!apps.length) return null;
   return Utils.sortWindows(apps).map((app, i) => {
     const {
@@ -14,20 +14,20 @@ const OpenedApps = ({ apps }) => {
       "zoom-parent": __legacyHasParentZoom,
       "has-fullscreen-zoom": hasFullscreenZoom,
       "zoom-fullscreen": __legacyHasFullscreenZoom,
-      "is-topmost": isTopmost
+      "is-topmost": isTopmost,
     } = app;
     if (isMinimized ?? __legacyIsMinimized) return null;
 
     const Icon = AppIcons.apps[appName] || AppIcons.apps.Default;
-    const classes = Utils.classnames("space__icon", {
+
+    const classes = Utils.classNames("space__icon", {
       "space__icon--focused": hasFocus ?? __legacyHasFocus,
       "space__icon--fullscreen":
         (hasParentZoom ?? __legacyHasParentZoom) ||
         (hasFullscreenZoom ?? __legacyHasFullscreenZoom),
-      "space__icon--topmost": isTopmost
+      "space__icon--topmost": isTopmost,
     });
+
     return <Icon className={classes} key={i} />;
   });
-};
-
-export default OpenedApps;
+}

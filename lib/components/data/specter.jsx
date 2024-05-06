@@ -1,6 +1,9 @@
+import * as Uebersicht from "uebersicht";
 export { specterStyles as styles } from "../../styles/components/data/specter";
 
-export const Widget = () => {
+const { React } = Uebersicht;
+
+export const Widget = React.memo(() => {
   return (
     <div className="specter">
       {[...new Array(6)].map((_, i) => (
@@ -8,4 +11,6 @@ export const Widget = () => {
       ))}
     </div>
   );
-};
+});
+
+Widget.displayName = "Specter";

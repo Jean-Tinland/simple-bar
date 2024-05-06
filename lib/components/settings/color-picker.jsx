@@ -1,26 +1,27 @@
 import * as Uebersicht from "uebersicht";
 import * as Settings from "../../settings";
 
-const ColorPicker = ({ callback, index, selectedColor }) => {
+const { React } = Uebersicht;
+
+export default function ColorPicker({ callback, index, selectedColor }) {
   const isSelectedCustom = !Settings.userWidgetColors.includes(selectedColor);
-  const [open, setOpen] = Uebersicht.React.useState(false);
-  const [selected, setSelected] = Uebersicht.React.useState(selectedColor);
-  const [customColor, setCustomColor] = Uebersicht.React.useState(
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(selectedColor);
+  const [customColor, setCustomColor] = React.useState(
     isSelectedCustom ? selectedColor : undefined
   );
 
   const onClick = () => setOpen(!open);
 
-  const onCustomColorChange = (e) => setCustomColor(e.target.value);
+  const onCustomColorChange = (e) => {
+    const value = e.target.value;
+    setCustomColor(value);
+    callback?.(index, "backgroundColor", value);
+  };
   const onCustomColorSubmit = () => {
     setSelected(customColor);
     setOpen(false);
   };
-
-  Uebersicht.React.useEffect(
-    () => callback?.(index, "backgroundColor", selected),
-    [selected]
-  );
 
   return (
     <div className="color-picker">
@@ -38,6 +39,7 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
               e.stopPropagation();
               setCustomColor(undefined);
               setSelected(color);
+              callback?.(index, "backgroundColor", color);
               setOpen(false);
             };
             return (
@@ -79,6 +81,4 @@ const ColorPicker = ({ callback, index, selectedColor }) => {
       )}
     </div>
   );
-};
-
-export default ColorPicker;
+}

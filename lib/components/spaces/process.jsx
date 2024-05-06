@@ -1,18 +1,26 @@
+import * as Uebersicht from "uebersicht";
 import Window from "./window.jsx";
-import * as Settings from "../../settings";
 import * as Utils from "../../utils";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 
 export { processStyles as styles } from "../../styles/components/process";
 
-const settings = Settings.get();
-const { process, spacesDisplay } = settings;
-const { exclusionsAsRegex } = spacesDisplay;
-const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
-  process;
+const { React } = Uebersicht;
 
-export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
+export const Component = React.memo(() => {
+  const { spaces, windows, skhdMode } = useYabaiContext();
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { process, spacesDisplay, widgets } = settings;
+  const { processWidget } = widgets;
+  const { exclusionsAsRegex } = spacesDisplay;
+  const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
+    process;
+
   const visible =
-    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && windows;
+    processWidget &&
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) &&
+    windows;
 
   if (!visible) return null;
 
@@ -45,7 +53,7 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
 
   const apps = [...stickyWindows, ...nonStickyWindows];
 
-  const classes = Utils.classnames("process", {
+  const classes = Utils.classNames("process", {
     "process--centered": centered,
   });
 
@@ -74,4 +82,6 @@ export const Component = ({ displayIndex, spaces, windows, skhdMode }) => {
       </div>
     </div>
   );
-};
+});
+
+Component.displayName = "Process";

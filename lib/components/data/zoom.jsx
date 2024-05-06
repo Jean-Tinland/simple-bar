@@ -3,31 +3,42 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
-import * as Settings from "../../settings";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 
 export { zoomStyles as styles } from "../../styles/components/data/zoom";
 
-const settings = Settings.get();
-const { widgets, zoomWidgetOptions } = settings;
-const { zoomWidget } = widgets;
-const { refreshFrequency, showVideo, showMic, showOnDisplay } =
-  zoomWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 5000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-export const Widget = ({ display }) => {
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, zoomWidgetOptions } = settings;
+  const { zoomWidget } = widgets;
+  const { refreshFrequency, showVideo, showMic, showOnDisplay } =
+    zoomWidgetOptions;
+
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && zoomWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && zoomWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getZoom = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getZoom = React.useCallback(async () => {
+    if (!visible) return;
     const [mic, video] = await Promise.all([
       Uebersicht.run(
         `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`
@@ -41,20 +52,25 @@ export const Widget = ({ display }) => {
       video: Utils.cleanupOutput(video),
     });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getZoom, REFRESH_FREQUENCY);
+  useServerSocket("zoom", visible, getZoom, resetWidget);
+  useWidgetRefresh(visible, getZoom, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="zoom" />;
   if (!state || (!state.mic.length && !state.video.length)) return null;
 
   const { mic, video } = state;
+
   const VideoIcon = video === "off" ? Icons.CameraOff : Icons.Camera;
   const MicIcon = mic === "off" ? Icons.MicOff : Icons.MicOn;
+
   return (
     <DataWidget.Widget classes="zoom">
       {showVideo && <VideoIcon className={`zoom__icon zoom__icon--${video}`} />}
       {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Zoom";

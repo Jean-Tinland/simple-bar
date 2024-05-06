@@ -1,19 +1,24 @@
 import * as Icons from "../icons.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 
-const SpaceOptions = ({ index, setHovered, displayIndex }) => {
+export default function SpaceOptions({ index, setHovered }) {
+  const { displayIndex } = useSimpleBarContext();
+
   const onRemoveClick = async (e) => {
     e.stopPropagation();
     Utils.clickEffect(e);
     setHovered(false);
     await Yabai.removeSpace(index, displayIndex);
   };
+
   const onChevronClick = (direction) => async (e) => {
     Utils.clickEffect(e);
     setHovered(false);
     await Yabai.swapSpace(index, direction);
   };
+
   const onMouseDown = (e) => e.preventDefault();
   const onMouseLeave = () => setHovered(false);
 
@@ -41,6 +46,4 @@ const SpaceOptions = ({ index, setHovered, displayIndex }) => {
       </div>
     </span>
   );
-};
-
-export default SpaceOptions;
+}

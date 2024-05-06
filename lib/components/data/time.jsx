@@ -3,49 +3,59 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { timeStyles as styles } from "../../styles/components/data/time";
 
-const settings = Settings.get();
-const { widgets, timeWidgetOptions } = settings;
-const { timeWidget } = widgets;
-const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay } =
-  timeWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 1000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const displayNotificationCenter = () =>
-  Uebersicht.run(
-    `osascript -e 'tell application "System Events" to click menu bar item "Clock" of menu bar 1 of application process "ControlCenter"'`
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, timeWidgetOptions } = settings;
+  const { timeWidget } = widgets;
+  const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay } =
+    timeWidgetOptions;
+
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && timeWidget;
+
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
   );
 
-export const Widget = ({ display }) => {
-  const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && timeWidget;
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const options = React.useMemo(
+    () => ({
+      hour: "numeric",
+      minute: "numeric",
+      second: showSeconds ? "numeric" : undefined,
+      hour12,
+    }),
+    [hour12, showSeconds]
+  );
 
-  const options = {
-    hour: "numeric",
-    minute: "numeric",
-    second: showSeconds ? "numeric" : undefined,
-    hour12,
-  };
-
-  const getTime = () => {
-    const time = new Date().toLocaleString("en-UK", options);
-    setState({ time });
+  const resetWidget = () => {
+    setState(undefined);
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getTime, REFRESH_FREQUENCY);
+  const getTime = React.useCallback(() => {
+    if (!visible) return;
+    const time = new Date().toLocaleString("en-UK", options);
+    setState({ time });
+    setLoading(false);
+  }, [visible, options]);
+
+  useServerSocket("time", visible, getTime, resetWidget);
+  useWidgetRefresh(visible, getTime, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;
   if (!state) return null;
@@ -59,18 +69,8 @@ export const Widget = ({ display }) => {
   const diff = Math.max(0, dayEnd - new Date());
   const fillerWidth = (100 - (100 * diff) / range) / 100;
 
-  const onClick = (e) => {
-    Utils.clickEffect(e);
-    displayNotificationCenter();
-  };
-
   return (
-    <DataWidget.Widget
-      classes="time"
-      Icon={Icons.Clock}
-      onClick={onClick}
-      disableSlider
-    >
+    <DataWidget.Widget classes="time" Icon={Icons.Clock} disableSlider>
       {time}
       {dayProgress && (
         <div
@@ -80,4 +80,6 @@ export const Widget = ({ display }) => {
       )}
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Time";

@@ -1,65 +1,58 @@
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import * as Uebersicht from "uebersicht";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import * as Utils from "../../utils";
 
 export { stockStyles as styles } from "../../styles/components/data/stock";
 
-const settings = Settings.get();
-const { widgets, stockWidgetOptions } = settings;
-const { stockWidget } = widgets;
-const {
-  refreshFrequency,
-  yahooFinanceApiKey,
-  symbols,
-  showSymbol,
-  showCurrency,
-  showMarketPrice,
-  showMarketChange,
-  showMarketPercent,
-  showColor,
-  showOnDisplay,
-} = stockWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000; // 15 min
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const openStock = (e) => {
-  Utils.clickEffect(e);
-};
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, stockWidgetOptions } = settings;
+  const { stockWidget } = widgets;
+  const {
+    refreshFrequency,
+    yahooFinanceApiKey,
+    symbols,
+    showSymbol,
+    showCurrency,
+    showMarketPrice,
+    showMarketChange,
+    showMarketPercent,
+    showColor,
+    showOnDisplay,
+  } = stockWidgetOptions;
 
-const getCurrencySymbol = (currency) => {
-  if (currency === "EUR") return "€";
-  if (currency === "USD") return "$";
-  if (currency === "GBP") return "£";
-  if (currency === "CNY") return "¥";
-  if (currency === "JPY") return "¥";
-  return `${currency} `;
-};
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
 
-const formatPriceChange = (priceChange) => {
-  // Add a '+' for positive changes
-  return (priceChange.startsWith("-") ? "" : "+") + priceChange;
-};
-
-export const Widget = ({ display }) => {
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && stockWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && stockWidget;
 
-  const ref = Uebersicht.React.useRef();
+  const ref = React.useRef();
   const cleanedUpSymbols = symbols.replace(/ /g, "");
   const enumeratedSymbols = cleanedUpSymbols.replace(/ /g, "").split(",");
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getStocks = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getStocks = React.useCallback(async () => {
+    if (!visible) return;
     const response = await fetch(
       `https://yfapi.net/v6/finance/quote?symbols=${cleanedUpSymbols}`,
       {
@@ -90,9 +83,10 @@ export const Widget = ({ display }) => {
     }
 
     setLoading(false);
-  };
+  }, [visible, cleanedUpSymbols, enumeratedSymbols, yahooFinanceApiKey]);
 
-  useWidgetRefresh(visible, getStocks, REFRESH_FREQUENCY);
+  useServerSocket("stock", visible, getStocks, resetWidget);
+  useWidgetRefresh(visible, getStocks, refresh);
 
   const refreshStocks = (e) => {
     Utils.clickEffect(e);
@@ -102,8 +96,6 @@ export const Widget = ({ display }) => {
 
   if (loading) return <DataWidgetLoader.Widget className="stock" />;
   if (!state || !state.symbolQuotes) return null;
-
-  const classes = Utils.classnames("stock");
 
   return enumeratedSymbols.map((symbolName, i) => {
     const symbolQuote = state.symbolQuotes[i];
@@ -119,7 +111,7 @@ export const Widget = ({ display }) => {
     return (
       <DataWidget.Widget
         key={symbolName}
-        classes={classes}
+        classes="stock"
         ref={ref}
         Icon={stockUp ? Icons.UpArrow : Icons.DownArrow}
         href={`https://finance.yahoo.com/quote/${symbolName}`}
@@ -147,4 +139,24 @@ export const Widget = ({ display }) => {
       </DataWidget.Widget>
     );
   });
-};
+});
+
+Widget.displayName = "Stock";
+
+function openStock(e) {
+  Utils.clickEffect(e);
+}
+
+function getCurrencySymbol(currency) {
+  if (currency === "EUR") return "€";
+  if (currency === "USD") return "$";
+  if (currency === "GBP") return "£";
+  if (currency === "CNY") return "¥";
+  if (currency === "JPY") return "¥";
+  return `${currency} `;
+}
+
+function formatPriceChange(priceChange) {
+  // Add a '+' for positive changes
+  return (priceChange.startsWith("-") ? "" : "+") + priceChange;
+}

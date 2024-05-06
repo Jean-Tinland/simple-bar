@@ -1,5 +1,7 @@
-import UserWidgets from "./lib/components/data/user-widgets.jsx";
 import * as Error from "./lib/components/error.jsx";
+import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
+import YabaiContextProvider from "./lib/components/yabai-context.jsx";
+import UserWidgets from "./lib/components/data/user-widgets.jsx";
 import * as Spaces from "./lib/components/spaces/spaces.jsx";
 import * as Process from "./lib/components/spaces/process.jsx";
 import * as Variables from "./lib/styles/core/variables";
@@ -33,12 +35,18 @@ import * as Settings from "./lib/settings";
 const refreshFrequency = false;
 
 const settings = Settings.get();
-const { yabaiPath = "/usr/local/bin/yabai", shell } = settings.global;
-const { processWidget } = settings.widgets;
+const {
+  yabaiPath = "/usr/local/bin/yabai",
+  shell,
+  enableServer,
+  yabaiServerRefresh,
+} = settings.global;
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
-const enableTitleChangedSignal = hideWindowTitle || displayOnlyIcon;
-const args = `${yabaiPath} ${displaySkhdMode} ${enableTitleChangedSignal}`;
+const disableSignals = enableServer && yabaiServerRefresh;
+const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
+
+const args = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const command = `${shell} simple-bar/lib/scripts/init.sh ${args}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
@@ -47,7 +55,6 @@ Utils.injectStyles("simple-bar-index-styles", [
   Spaces.styles,
   Process.styles,
   Settings.styles,
-  settings.customStyles.styles,
   DataWidget.styles,
   DateDisplay.styles,
   Zoom.styles,
@@ -71,10 +78,11 @@ Utils.injectStyles("simple-bar-index-styles", [
   Specter.styles,
   Graph.styles,
   DataWidgetLoader.styles,
+  settings.customStyles.styles,
 ]);
 
-const render = ({ output, error }) => {
-  const baseClasses = Utils.classnames("simple-bar", {
+function render({ output, error }) {
+  const baseClasses = Utils.classNames("simple-bar", {
     "simple-bar--floating": settings.global.floatingBar,
     "simple-bar--no-bar-background": settings.global.noBarBg,
     "simple-bar--no-color-in-data": settings.global.noColorInData,
@@ -102,58 +110,55 @@ const render = ({ output, error }) => {
 
   const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
-  const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
-  const { index: displayIndex } = displays.find((d) => {
-    return d.id === displayId;
-  });
+  const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
 
-  const classes = Utils.classnames(baseClasses, {
+  const classes = Utils.classNames(baseClasses, {
     "simple-bar--no-shadow": shadow !== "on",
   });
 
   Utils.handleBarFocus();
 
   return (
-    <div className={classes}>
-      <Spaces.Component
-        spaces={spaces}
-        windows={windows}
-        SIP={SIP}
-        displayIndex={displayIndex}
-      />
-      {processWidget && (
-        <Process.Component
-          displayIndex={displayIndex}
+    <SimpleBarContextProvider
+      initialSettings={settings}
+      displays={displays}
+      SIPDisabled={SIPDisabled}
+    >
+      <div className={classes}>
+        <YabaiContextProvider
           spaces={spaces}
           windows={windows}
           skhdMode={skhdMode}
-        />
-      )}
-      <div className="simple-bar__data">
+        >
+          <Spaces.Component />
+          <Process.Component />
+        </YabaiContextProvider>
         <Settings.Wrapper />
-        <UserWidgets display={displayIndex} />
-        <Zoom.Widget display={displayIndex} />
-        <BrowserTrack.Widget display={displayIndex} />
-        <Spotify.Widget display={displayIndex} />
-        <Crypto.Widget display={displayIndex} />
-        <Stock.Widget display={displayIndex} />
-        <Music.Widget display={displayIndex} />
-        <Mpd.Widget display={displayIndex} />
-        <Weather.Widget display={displayIndex} />
-        <Netstats.Widget display={displayIndex} />
-        <Cpu.Widget display={displayIndex} />
-        <Memory.Widget display={displayIndex} />
-        <Battery.Widget display={displayIndex} />
-        <Mic.Widget display={displayIndex} />
-        <Sound.Widget display={displayIndex} />
-        <ViscosityVPN.Widget display={displayIndex} />
-        <Wifi.Widget display={displayIndex} />
-        <Keyboard.Widget display={displayIndex} />
-        <DateDisplay.Widget display={displayIndex} />
-        <Time.Widget display={displayIndex} />
+        <div className="simple-bar__data">
+          <UserWidgets />
+          <Zoom.Widget />
+          <BrowserTrack.Widget />
+          <Spotify.Widget />
+          <Crypto.Widget />
+          <Stock.Widget />
+          <Music.Widget />
+          <Mpd.Widget />
+          <Weather.Widget />
+          <Netstats.Widget />
+          <Cpu.Widget />
+          <Memory.Widget />
+          <Battery.Widget />
+          <Mic.Widget />
+          <Sound.Widget />
+          <ViscosityVPN.Widget />
+          <Wifi.Widget />
+          <Keyboard.Widget />
+          <DateDisplay.Widget />
+          <Time.Widget />
+        </div>
       </div>
-    </div>
+    </SimpleBarContextProvider>
   );
-};
+}
 
 export { command, refreshFrequency, render };

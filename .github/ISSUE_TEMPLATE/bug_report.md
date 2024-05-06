@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: ""
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 **Describe the bug**
@@ -12,6 +11,7 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. See error
@@ -23,9 +23,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Information (please complete the following information):**
- - OS version [e.g. Sonoma 14.1.1]
- - Yabai version [e.g. yabai-v6.0.1] (output of `yabai --version`)
- - Übersicht version [e.g. Version 1.6 (82)]
+
+- OS version [e.g. Sonoma 14.1.1]
+- Yabai version [e.g. yabai-v6.0.1] (output of `yabai --version`)
+- Übersicht version [e.g. Version 1.6 (82)]
 
 **Additional context**
 Add any other context about the problem here.

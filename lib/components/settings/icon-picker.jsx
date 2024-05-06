@@ -1,19 +1,16 @@
 import * as Uebersicht from "uebersicht";
 import * as Icons from "../icons.jsx";
 
-const IconPicker = ({ callback, index, selectedIcon }) => {
-  const [open, setOpen] = Uebersicht.React.useState(false);
-  const [selected, setSelected] = Uebersicht.React.useState(selectedIcon);
+const { React } = Uebersicht;
+
+export default function IconPicker({ callback, index, selectedIcon }) {
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(selectedIcon);
 
   const Icon = Icons[selected];
   const keys = Object.keys(Icons);
 
   const onClick = () => setOpen(!open);
-
-  Uebersicht.React.useEffect(
-    () => callback?.(index, "icon", selected),
-    [selected]
-  );
 
   return (
     <div className="icon-picker">
@@ -26,6 +23,7 @@ const IconPicker = ({ callback, index, selectedIcon }) => {
             const onClick = (e) => {
               e.stopPropagation();
               setSelected(key);
+              callback?.(index, "icon", key);
               setOpen(false);
             };
             const Icon = Icons[key];
@@ -39,6 +37,4 @@ const IconPicker = ({ callback, index, selectedIcon }) => {
       )}
     </div>
   );
-};
-
-export default IconPicker;
+}

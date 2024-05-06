@@ -1,25 +1,34 @@
 import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
 import SpaceOptions from "./space-options.jsx";
+import { useYabaiContext } from "../yabai-context.jsx";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
-import * as Settings from "../../settings";
 
-const settings = Settings.get();
+const { React } = Uebersicht;
 
-const Space = ({
+export default function Space({
   space,
   display,
-  windows,
-  displayIndex,
   currentSpaceIndex,
-  SIPDisabled,
   lastOfSpace,
-}) => {
-  const labelRef = Uebersicht.React.useRef();
-  const [hovered, setHovered] = Uebersicht.React.useState(false);
-  const [noDelay, setNoDelay] = Uebersicht.React.useState(false);
-  const [editable, setEditable] = Uebersicht.React.useState(false);
+}) {
+  const { windows } = useYabaiContext();
+  const { SIPDisabled, settings } = useSimpleBarContext();
+  const { spacesDisplay } = settings;
+  const {
+    displayAllSpacesOnAllScreens,
+    exclusionsAsRegex,
+    displayStickyWindowsSeparately,
+    hideDuplicateAppsInSpaces,
+    showOptionsOnHover,
+  } = spacesDisplay;
+
+  const labelRef = React.useRef();
+  const [hovered, setHovered] = React.useState(false);
+  const [noDelay, setNoDelay] = React.useState(false);
+  const [editable, setEditable] = React.useState(false);
   const {
     index,
     label,
@@ -31,18 +40,10 @@ const Space = ({
     "native-fullscreen": __legacyIsNativeFullscreen,
     type,
   } = space;
-  const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(
+  const [spaceLabel, setSpaceLabel] = React.useState(
     label?.length ? label : index
   );
 
-  const { spacesDisplay } = settings;
-  const {
-    displayAllSpacesOnAllScreens,
-    exclusionsAsRegex,
-    displayStickyWindowsSeparately,
-    hideDuplicateAppsInSpaces,
-    showOptionsOnHover,
-  } = spacesDisplay;
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null;
 
   const exclusions = exclusionsAsRegex
@@ -75,6 +76,7 @@ const Space = ({
     if (hasFocus || __legacyHasFocus) return;
     if (SIPDisabled && !spacesDisplay.switchSpacesWithoutYabai) {
       Yabai.goToSpace(index);
+      Utils.clickEffect(e);
       return;
     }
     Utils.switchSpace(currentSpaceIndex, index);
@@ -103,15 +105,15 @@ const Space = ({
     });
   const allApps = [...apps, ...stickyWindows];
 
-  if (
+  const hidden =
     !(hasFocus ?? __legacyHasFocus) &&
     !(isVisible ?? __legacyHasFocus) &&
     !allApps.length &&
-    spacesDisplay.hideEmptySpaces
-  )
-    return null;
+    spacesDisplay.hideEmptySpaces;
 
-  const classes = Utils.classnames(`space space--${type}`, {
+  if (hidden) return null;
+
+  const classes = Utils.classNames(`space space--${type}`, {
     "space--focused": hasFocus ?? __legacyHasFocus,
     "space--visible": isVisible ?? __legacyIsVisible,
     "space--fullscreen": isNativeFullscreen ?? __legacyIsNativeFullscreen,
@@ -126,7 +128,7 @@ const Space = ({
   ).length;
 
   return (
-    <Uebersicht.React.Fragment>
+    <React.Fragment>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && (
         <div className="spaces__separator" />
       )}
@@ -151,16 +153,8 @@ const Space = ({
           />
           <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
         </button>
-        {SIPDisabled && (
-          <SpaceOptions
-            index={index}
-            setHovered={setHovered}
-            displayIndex={displayIndex}
-          />
-        )}
+        {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} />}
       </div>
-    </Uebersicht.React.Fragment>
+    </React.Fragment>
   );
-};
-
-export default Space;
+}

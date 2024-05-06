@@ -4,44 +4,61 @@ import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import Graph from "./graph.jsx";
 import * as Icons from "../icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { cpuStyles as styles } from "../../styles/components/data/cpu";
 
-const settings = Settings.get();
-const { widgets, cpuWidgetOptions } = settings;
-const { cpuWidget } = widgets;
-const { refreshFrequency, showOnDisplay, displayAsGraph } = cpuWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 2000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
-
 const GRAPH_LENGTH = 50;
 
-export const Widget = ({ display }) => {
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && cpuWidget;
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, cpuWidgetOptions } = settings;
+  const { cpuWidget } = widgets;
+  const { refreshFrequency, showOnDisplay, displayAsGraph } = cpuWidgetOptions;
 
-  const [graph, setGraph] = Uebersicht.React.useState([]);
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cpuWidget;
 
-  const getCpu = async () => {
-    const usage = await Uebersicht.run(
-      `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
-    );
-    const formatedUsage = { usage: parseInt(usage, 10).toFixed(0) };
-    setState(formatedUsage);
-    if (displayAsGraph) {
-      Utils.addToGraphHistory(formatedUsage, setGraph, GRAPH_LENGTH);
-    }
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
+  const [graph, setGraph] = React.useState([]);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
+
+  const resetWidget = () => {
+    setState(undefined);
     setLoading(false);
+    setGraph([]);
   };
 
-  useWidgetRefresh(visible, getCpu, REFRESH_FREQUENCY);
+  const getCpu = React.useCallback(async () => {
+    if (!visible) return;
+    try {
+      const usage = await Uebersicht.run(
+        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
+      );
+      const formatedUsage = { usage: parseInt(usage, 10).toFixed(0) };
+      setState(formatedUsage);
+      if (displayAsGraph) {
+        Utils.addToGraphHistory(formatedUsage, setGraph, GRAPH_LENGTH);
+      }
+      setLoading(false);
+    } catch (e) {
+      setTimeout(getCpu, 1000);
+    }
+  }, [displayAsGraph, setGraph, visible]);
+
+  useServerSocket("cpu", visible, getCpu, resetWidget);
+  useWidgetRefresh(visible, getCpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;
   if (!state) return null;
@@ -73,4 +90,6 @@ export const Widget = ({ display }) => {
       <span className="cpu__usage">{usage}%</span>
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Cpu";

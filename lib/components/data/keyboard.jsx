@@ -2,31 +2,42 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import * as Utils from "../../utils";
 
 export { keyboardStyles as styles } from "../../styles/components/data/keyboard";
 
-const settings = Settings.get();
-const { widgets, keyboardWidgetOptions } = settings;
-const { keyboardWidget } = widgets;
-const { refreshFrequency, showOnDisplay } = keyboardWidgetOptions;
+const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-export const Widget = ({ display }) => {
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, keyboardWidgetOptions } = settings;
+  const { keyboardWidget } = widgets;
+  const { refreshFrequency, showOnDisplay } = keyboardWidgetOptions;
+
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && keyboardWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && keyboardWidget;
 
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
-  const getKeyboard = async () => {
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getKeyboard = React.useCallback(async () => {
+    if (!visible) return;
     const keyboard = await Uebersicht.run(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {print $4}'`
     );
@@ -50,9 +61,10 @@ export const Widget = ({ display }) => {
     const inputModeName = splitedInputMode[splitedInputMode.length - 1];
     setState({ keyboard: inputModeName });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getKeyboard, REFRESH_FREQUENCY);
+  useServerSocket("keyboard", visible, getKeyboard, resetWidget);
+  useWidgetRefresh(visible, getKeyboard, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />;
   if (!state) return null;
@@ -65,4 +77,6 @@ export const Widget = ({ display }) => {
       {keyboard}
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Keyboard";

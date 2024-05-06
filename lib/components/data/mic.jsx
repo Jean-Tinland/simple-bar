@@ -2,57 +2,66 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons.jsx";
-import * as Settings from "../../settings";
-import * as Utils from "../../utils";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import * as Utils from "../../utils";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
+
+const { React } = Uebersicht;
 
 export { micStyles as styles } from "../../styles/components/data/mic";
 
-const settings = Settings.get();
-const { widgets, micWidgetOptions } = settings;
-const { micWidget } = widgets;
-const { refreshFrequency, showOnDisplay } = micWidgetOptions;
-
 const DEFAULT_REFRESH_FREQUENCY = 20000;
-const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
 
-const setMic = (volume) => {
-  if (volume === undefined) return;
-  Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
-};
+export const Widget = React.memo(() => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, micWidgetOptions } = settings;
+  const { micWidget } = widgets;
+  const { refreshFrequency, showOnDisplay } = micWidgetOptions;
 
-export const Widget = ({ display }) => {
-  const visible = Utils.isVisibleOnDisplay(display, showOnDisplay) && micWidget;
-
-  const [state, setState] = Uebersicht.React.useState();
-  const [loading, setLoading] = Uebersicht.React.useState(visible);
-  const { volume: _volume } = state || {};
-  const [volume, setVolume] = Uebersicht.React.useState(
-    _volume && parseInt(_volume, 10)
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
   );
-  const [dragging, setDragging] = Uebersicht.React.useState(false);
 
-  const getMic = async () => {
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && micWidget;
+
+  const [state, setState] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
+  const { volume: _volume } = state || {};
+  const [volume, setVolume] = React.useState(_volume && parseInt(_volume, 10));
+  const [dragging, setDragging] = React.useState(false);
+
+  const resetWidget = () => {
+    setState(undefined);
+    setLoading(false);
+  };
+
+  const getMic = React.useCallback(async () => {
+    if (!visible) return;
     const volume = await Uebersicht.run(
       `osascript -e 'set ovol to input volume of (get volume settings)'`
     );
     setState({ volume: Utils.cleanupOutput(volume) });
     setLoading(false);
-  };
+  }, [visible]);
 
-  useWidgetRefresh(visible, getMic, REFRESH_FREQUENCY);
+  useServerSocket("mic", visible, getMic, resetWidget);
+  useWidgetRefresh(visible, getMic, refresh);
 
-  Uebersicht.React.useEffect(() => {
+  React.useEffect(() => {
     if (!dragging) setMic(volume);
-  }, [dragging]);
+  }, [dragging, volume]);
 
-  Uebersicht.React.useEffect(() => {
-    if (_volume && parseInt(_volume, 10) !== volume) {
-      setVolume(parseInt(_volume, 10));
-    }
+  React.useEffect(() => {
+    setVolume((currentVolume) => {
+      if (_volume && currentVolume !== parseInt(_volume, 10)) {
+        return parseInt(_volume, 10);
+      }
+      return currentVolume;
+    });
   }, [_volume]);
 
   if (loading) return <DataWidgetLoader.Widget className="mic" />;
@@ -70,7 +79,9 @@ export const Widget = ({ display }) => {
 
   const fillerWidth = !volume ? volume : volume / 100 + 0.05;
 
-  const classes = Utils.classnames("mic", { "mic--dragging": dragging });
+  const classes = Utils.classNames("mic", {
+    "mic--dragging": dragging,
+  });
 
   return (
     <DataWidget.Widget classes={classes} disableSlider>
@@ -97,4 +108,11 @@ export const Widget = ({ display }) => {
       </div>
     </DataWidget.Widget>
   );
-};
+});
+
+Widget.displayName = "Mic";
+
+function setMic(volume) {
+  if (volume === undefined) return;
+  Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);
+}
