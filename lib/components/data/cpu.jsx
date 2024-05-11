@@ -19,7 +19,8 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cpuWidgetOptions } = settings;
   const { cpuWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp } = cpuWidgetOptions;
+  const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp } =
+    cpuWidgetOptions;
 
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cpuWidget;
@@ -65,14 +66,21 @@ export const Widget = React.memo(() => {
 
   const { usage } = state;
 
-  const onClick = cpuMonitorApp === "None" ? undefined : (e) => {
-    Utils.clickEffect(e);
-    openCpuUsageApp(cpuMonitorApp);
-  };
+  const onClick =
+    cpuMonitorApp === "None"
+      ? undefined
+      : (e) => {
+          Utils.clickEffect(e);
+          openCpuUsageApp(cpuMonitorApp);
+        };
 
   if (displayAsGraph) {
     return (
-      <DataWidget.Widget classes="cpu cpu--graph" onClick={onClick} disableSlider>
+      <DataWidget.Widget
+        classes="cpu cpu--graph"
+        onClick={onClick}
+        disableSlider
+      >
         <Graph
           className="cpu__graph"
           caption={{
@@ -104,8 +112,8 @@ function openCpuUsageApp(cpuUsageApp) {
     case "Activity Monitor":
       Uebersicht.run(`open -a "Activity Monitor"`);
       break;
-    case "Top": 
-      Utils.runInUserTerminal('top')
+    case "Top":
+      Utils.runInUserTerminal("top");
       break;
   }
 }
