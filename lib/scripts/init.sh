@@ -79,4 +79,4 @@ echo $(cat <<-EOF
     "skhdMode": $skhd_mode
   }
 EOF
-) | tr -d '\n'
+) | tr -d '\n' # removes newlines from output (handling Google Chrome JSON parse error caused by "search in page")
