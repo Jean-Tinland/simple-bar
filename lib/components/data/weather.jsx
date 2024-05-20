@@ -51,7 +51,15 @@ export const Widget = React.memo(() => {
     if (!location.current) {
       const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
       if (!position) await getWeather();
-      location.current = position?.address?.city;
+
+      const coordinates = position?.position?.coords;
+      if (!coordinates) return setLoading(false);
+
+      const accuracy = 10 ** 2; // 2 decimal places
+      const latitute = Math.round(coordinates.latitude * accuracy) / accuracy;
+      const longitude = Math.round(coordinates.longitude * accuracy) / accuracy;
+
+      location.current = `${latitute},${longitude}`;
       if (!location.current) return setLoading(false);
     }
     try {
