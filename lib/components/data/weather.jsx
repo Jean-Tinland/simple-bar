@@ -51,15 +51,8 @@ export const Widget = React.memo(() => {
     if (!location.current) {
       const position = await Promise.race([getPosition(), Utils.timeout(5000)]);
       if (!position) await getWeather();
-
-      const coordinates = position?.position?.coords;
-      if (!coordinates) return setLoading(false);
-
-      const accuracy = 10 ** 2; // 2 decimal places
-      const latitute = Math.round(coordinates.latitude * accuracy) / accuracy;
-      const longitude = Math.round(coordinates.longitude * accuracy) / accuracy;
-
-      location.current = `${latitute},${longitude}`;
+      const { city, zip } = position?.address || {};
+      location.current = zip || city;
       if (!location.current) return setLoading(false);
     }
     try {
@@ -119,9 +112,9 @@ export const Widget = React.memo(() => {
   const Icon = getIcon(description, atNight);
   const label = getLabel(state.location, temperature, unit, hideLocation);
 
-  const sunrising =
+  const sunRising =
     sunriseTime >= nowIntervalStart && sunriseTime <= nowIntervalStop;
-  const sunsetting =
+  const sunSetting =
     sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop;
 
   const onRightClick = (e) => {
@@ -132,8 +125,8 @@ export const Widget = React.memo(() => {
   };
 
   const classes = Utils.classNames("weather", {
-    "weather--sunrise": sunrising,
-    "weather--sunset": sunsetting,
+    "weather--sunrise": sunRising,
+    "weather--sunset": sunSetting,
   });
 
   return (
