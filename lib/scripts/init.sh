@@ -22,7 +22,7 @@ if [ -z "$spaces" ]; then
 fi
 
 if [ -z "$windows" ]; then
-    windows=$($yabai_path -m query --windows | sed 's/\\.//g;' | tr -d '\n')
+    windows=$($yabai_path -m query --windows | sed 's/\\.//g;')
 fi
 
 if [ -z "$displays" ]; then
@@ -63,7 +63,7 @@ if [ $display_skhd_mode = "true" ]; then
     skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode.sh --query)")
   else
     skhd_mode=$(cat "$("${SCRIPT_DIR}"/yabai-set-mode-server.sh --query)")
-  fi  
+  fi
 else
   skhd_mode="{}"
 fi
@@ -79,4 +79,4 @@ echo $(cat <<-EOF
     "skhdMode": $skhd_mode
   }
 EOF
-)
+) | tr -d '\n'
