@@ -80,7 +80,7 @@ echo $(cat <<-EOF
   }
 EOF
 ) | \
-  # removes non-printable ASCII characters, https://alvinalexander.com/blog/post/linux-unix/how-remove-non-printable-ascii-characters-file-unix/
-  tr -cd '\11\12\15\40-\176' | \
+  # removes invisible U+200E Left-To-Right Mark character
+  sed "s/\xe2\x80\x8e//g" | \
   # removes newlines from output (handling Google Chrome JSON parse error caused by "search in page")
   tr -d '\n'
