@@ -79,4 +79,8 @@ echo $(cat <<-EOF
     "skhdMode": $skhd_mode
   }
 EOF
-) | tr -d '\n' # removes newlines from output (handling Google Chrome JSON parse error caused by "search in page")
+) | \
+  # removes invisible U+200E Left-To-Right Mark character
+  sed "s/\xe2\x80\x8e//g" | \
+  # removes newlines from output (handling Google Chrome JSON parse error caused by "search in page")
+  tr -d '\n'
