@@ -87,7 +87,8 @@ export const Widget = React.memo(() => {
   const onMouseDown = () => setDragging(true);
   const onMouseUp = () => setDragging(false);
 
-  const fillerWidth = !volume ? volume : volume / 100 + 0.05;
+  const fillerWidth = volume || 0;
+  const formattedVolume = `${volume.toString().padStart(2, "0")}%`;
 
   const classes = Utils.classNames("sound", {
     "sound--dragging": dragging,
@@ -97,7 +98,7 @@ export const Widget = React.memo(() => {
     <DataWidget.Widget classes={classes} disableSlider>
       <div className="sound__display">
         <Icon />
-        <span className="sound__value">{volume}%</span>
+        <span className="sound__value">{formattedVolume}</span>
       </div>
       <div className="sound__slider-container">
         <input
@@ -113,7 +114,7 @@ export const Widget = React.memo(() => {
         />
         <div
           className="sound__slider-filler"
-          style={{ transform: `scaleX(${fillerWidth})` }}
+          style={{ width: `${fillerWidth}%` }}
         />
       </div>
     </DataWidget.Widget>
