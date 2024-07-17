@@ -78,6 +78,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Graph.styles,
   DataWidgetLoader.styles,
   settings.customStyles.styles,
+  SideIcon.styles,
 ]);
 
 function render({ output, error }) {
