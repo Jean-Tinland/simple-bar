@@ -30,7 +30,7 @@ import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx"
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
-import SideIcon from "./lib/components/side-icon.jsx";
+import * as SideIcon from "./lib/components/side-icon.jsx";
 
 const refreshFrequency = false;
 
@@ -129,7 +129,7 @@ function render({ output, error }) {
           windows={windows}
           skhdMode={skhdMode}
         >
-          <SideIcon />
+          <SideIcon.Component />
           <Spaces.Component />
           <Process.Component />
         </YabaiContextProvider>

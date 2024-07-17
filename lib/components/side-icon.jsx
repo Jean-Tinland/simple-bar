@@ -3,8 +3,7 @@ import * as Uebersicht from "uebersicht";
 const { React } = Uebersicht;
 
 export { sideIconStyles as styles } from "../../lib/styles/components/side-icon";
-
-const SideIcon = () => (
+export const Component = () => (
   <svg
     className="side-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -17,4 +16,4 @@ const SideIcon = () => (
   </svg>
 );
 
-export default SideIcon;
+// export default SideIcon;
