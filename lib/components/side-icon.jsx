@@ -2,8 +2,11 @@ import * as Uebersicht from "uebersicht";
 
 const { React } = Uebersicht;
 
+export { sideIconStyles as styles } from "../../lib/styles/components/side-icon";
+
 const SideIcon = () => (
   <svg
+    className="side-icon"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
