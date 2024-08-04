@@ -2,7 +2,7 @@
 
 A [yabai](https://github.com/koekeishiya/yabai) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
 
-[Website](https://www.jeantinland.com/en/toolbox/simple-bar) • [Documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation)
+[Website](https://www.jeantinland.com/toolbox/simple-bar) • [Documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation)
 
 [`simple-bar-server`](https://github.com/Jean-Tinland/simple-bar-server) is available to trigger refresh and toggle widgets more efficiently with `curl` commands.
 
@@ -24,7 +24,7 @@ Among the principal features of `simple-bar`, you'll find:
 - A handfull selection of widgets
 - Other features available only with SIP disabled and yabai scripting addition installed (**navigate to workspace**, **create new workspace on "+" click**, **move or destroy workspace on space hover**)
 
-[See all features in documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/features/).
+[See all features in documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation/features/).
 
 ## Preview
 
@@ -40,7 +40,7 @@ Simply clone this repo in your Übersicht widgets directory with the following c
 git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-You'll find the full installation guide in the [documentation](https://www.jeantinland.com/en/toolbox/simple-bar/documentation/installation/).
+You'll find the full installation guide in the [documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/).
 
 > [!NOTE]\
 > **For users having the latest M1 and M2 mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.
