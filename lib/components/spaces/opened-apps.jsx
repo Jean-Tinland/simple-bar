@@ -1,5 +1,9 @@
+import * as Uebersicht from "uebersicht";
 import * as AppIcons from "../../app-icons";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import * as Utils from "../../utils";
+
+const { React } = Uebersicht;
 
 export default function OpenedApps({ apps }) {
   if (!apps.length) return null;
@@ -28,6 +32,10 @@ export default function OpenedApps({ apps }) {
       "space__icon--topmost": isTopmost,
     });
 
-    return <Icon className={classes} key={i} />;
+    return (
+      <SuspenseIcon key={i}>
+        <Icon className={classes} />
+      </SuspenseIcon>
+    );
   });
 }

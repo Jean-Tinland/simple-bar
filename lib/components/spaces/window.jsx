@@ -1,5 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as AppIcons from "../../app-icons";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
@@ -76,7 +77,9 @@ export default function Window({ window }) {
       onMouseEnter={displayOnlyIcon ? undefined : onMouseEnter}
       onMouseLeave={displayOnlyIcon ? undefined : onMouseLeave}
     >
-      <Icon className="process__icon" />
+      <SuspenseIcon>
+        <Icon className="process__icon" />
+      </SuspenseIcon>
       {!displayOnlyIcon && (
         <span className="process__inner">
           <span className="process__name">{processName}</span>

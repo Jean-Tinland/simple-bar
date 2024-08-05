@@ -1,7 +1,11 @@
-import * as Icons from "../icons.jsx";
+import * as Uebersicht from "uebersicht";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
+
+const { React } = Uebersicht;
 
 export default function SpaceOptions({ index, setHovered }) {
   const { displayIndex } = useSimpleBarContext();
@@ -29,20 +33,26 @@ export default function SpaceOptions({ index, setHovered }) {
         onMouseDown={onMouseDown}
         onClick={onChevronClick("left")}
       >
-        <Icons.ChevronLeft />
+        <SuspenseIcon>
+          <Icons.ChevronLeft />
+        </SuspenseIcon>
       </div>
       <div
         className="space-options__option space-options__option--move-next"
         onMouseDown={onMouseDown}
         onClick={onChevronClick("right")}
       >
-        <Icons.ChevronRight />
+        <SuspenseIcon>
+          <Icons.ChevronRight />
+        </SuspenseIcon>
       </div>
       <div
         className="space-options__option space-options__option--remove"
         onClick={onRemoveClick}
       >
-        <Icons.Remove />
+        <SuspenseIcon>
+          <Icons.Remove />
+        </SuspenseIcon>
       </div>
     </span>
   );

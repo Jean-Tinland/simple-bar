@@ -1,7 +1,8 @@
 import * as Uebersicht from "uebersicht";
 import Space from "./space.jsx";
 import Stickies from "./stickies.jsx";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import { useYabaiContext } from "../yabai-context.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
@@ -79,7 +80,9 @@ export const Component = React.memo(() => {
         })}
         {SIPDisabled && !hideCreateSpaceButton ? (
           <button className="spaces__add" onClick={onClick}>
-            <Icons.Add />
+            <SuspenseIcon>
+              <Icons.Add />
+            </SuspenseIcon>
           </button>
         ) : (
           isProcessVisible && <div className="spaces__end-separator" />

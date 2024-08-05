@@ -1,6 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as Utils from "../../utils";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
 import * as Settings from "../../settings";
 
 const { React } = Uebersicht;

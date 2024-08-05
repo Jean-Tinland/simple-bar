@@ -55,7 +55,7 @@ export function Wrapper() {
   return (
     <React.Fragment>
       {visible && (
-        <React.Suspense fallback={""}>
+        <React.Suspense fallback={<React.Fragment />}>
           <Component visible={visible} closeSettings={closeSettings} />
         </React.Suspense>
       )}

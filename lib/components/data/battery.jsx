@@ -1,7 +1,8 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
@@ -94,7 +95,11 @@ export const Widget = React.memo(() => {
   const Icon = () => (
     <div className="battery__icon">
       <div className="battery__icon-inner">
-        {charging && <Icons.Charging className="battery__charging-icon" />}
+        {charging && (
+          <SuspenseIcon>
+            <Icons.Charging className="battery__charging-icon" />
+          </SuspenseIcon>
+        )}
         <div
           className="battery__icon-filler"
           style={{ transform: transformValue }}
@@ -111,7 +116,9 @@ export const Widget = React.memo(() => {
       {...onClickProp}
     >
       {caffeinate.length > 0 && (
-        <Icons.Coffee className="battery__caffeinate-icon" />
+        <SuspenseIcon>
+          <Icons.Coffee className="battery__caffeinate-icon" />
+        </SuspenseIcon>
       )}
       {percentage}%
     </DataWidget.Widget>
