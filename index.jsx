@@ -28,6 +28,7 @@ import * as Specter from "./lib/components/data/specter.jsx";
 import * as Graph from "./lib/components/data/graph.jsx";
 import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx";
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
+import * as SideIcon from "./lib/components/side-icon.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
 
@@ -77,6 +78,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Graph.styles,
   DataWidgetLoader.styles,
   settings.customStyles.styles,
+  SideIcon.styles,
 ]);
 
 function render({ output, error }) {
@@ -123,6 +125,7 @@ function render({ output, error }) {
       SIPDisabled={SIPDisabled}
     >
       <div className={classes}>
+        <SideIcon.Component />
         <YabaiContextProvider
           spaces={spaces}
           windows={windows}
