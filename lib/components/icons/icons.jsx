@@ -31,6 +31,7 @@ export const Arc = React.lazy(() => import("./library/arc.jsx"));
 export const Atom = React.lazy(() => import("./library/atom.jsx"));
 export const Audacity = React.lazy(() => import("./library/audacity.jsx"));
 export const Bank = React.lazy(() => import("./library/bank.jsx"));
+export const BattleNet = React.lazy(() => import("./library/battle-net.jsx"));
 export const Bear = React.lazy(() => import("./library/bear.jsx"));
 export const Beekeeper = React.lazy(() => import("./library/beekeeper.jsx"));
 export const Bell = React.lazy(() => import("./library/bell.jsx"));
