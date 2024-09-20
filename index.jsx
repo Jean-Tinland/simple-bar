@@ -36,11 +36,15 @@ const refreshFrequency = false;
 
 const settings = Settings.get();
 const {
-  yabaiPath = "/usr/local/bin/yabai",
   shell,
   enableServer,
   yabaiServerRefresh,
 } = settings.global;
+
+
+const yabaiPath = "/usr/local/bin/yabai";
+
+
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
 const disableSignals = enableServer && yabaiServerRefresh;
