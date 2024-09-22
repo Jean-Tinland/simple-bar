@@ -75,6 +75,7 @@ export const Coffee = React.lazy(() => import("./library/coffee.jsx"));
 export const ColorPicker = React.lazy(() =>
   import("./library/color-picker.jsx")
 );
+export const Copilot = React.lazy(() => import("./library/copilot.jsx"));
 export const CPU = React.lazy(() => import("./library/cp-u.jsx"));
 export const DataGrip = React.lazy(() => import("./library/data-grip.jsx"));
 export const Date = React.lazy(() => import("./library/date.jsx"));
