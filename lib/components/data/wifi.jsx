@@ -47,7 +47,7 @@ export const Widget = React.memo(() => {
     const [status, ssid] = await Promise.all([
       Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
       Uebersicht.run(
-        `networksetup -getairportnetwork ${networkDevice} | cut -c 24-`
+        `system_profiler SPAirPortDataType | awk '/Current Network/ {getline;$1=$1;print $0 | "tr -d ':'";exit}'`
       ),
     ]);
     setState({
