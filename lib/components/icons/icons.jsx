@@ -44,6 +44,7 @@ export const Book = React.lazy(() => import("./library/book.jsx"));
 export const BraveBrowser = React.lazy(() =>
   import("./library/brave-browser.jsx")
 );
+export const Bruno = React.lazy(() => import("./library/bruno.jsx"));
 export const CLion = React.lazy(() => import("./library/c-lion.jsx"));
 export const Calendar = React.lazy(() => import("./library/calendar.jsx"));
 export const Camera = React.lazy(() => import("./library/camera.jsx"));
