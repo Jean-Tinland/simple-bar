@@ -19,6 +19,7 @@ import * as Wifi from "./lib/components/data/wifi.jsx";
 import * as ViscosityVPN from "./lib/components/data/viscosity-vpn.jsx";
 import * as Keyboard from "./lib/components/data/keyboard.jsx";
 import * as Spotify from "./lib/components/data/spotify.jsx";
+import * as YouTubeMusic from "./lib/components/data/youtube-music.jsx";
 import * as Crypto from "./lib/components/data/crypto.jsx";
 import * as Stock from "./lib/components/data/stock.jsx";
 import * as Music from "./lib/components/data/music.jsx";
@@ -71,6 +72,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Mic.styles,
   Sound.styles,
   Spotify.styles,
+  YouTubeMusic.styles,
   Music.styles,
   Mpd.styles,
   BrowserTrack.styles,
@@ -140,6 +142,7 @@ function render({ output, error }) {
           <Zoom.Widget />
           <BrowserTrack.Widget />
           <Spotify.Widget />
+          <YouTubeMusic.Widget />
           <Crypto.Widget />
           <Stock.Widget />
           <Music.Widget />

@@ -284,6 +284,9 @@ export const Widget = React.lazy(() => import("./library/widget.jsx"));
 export const Wifi = React.lazy(() => import("./library/wifi.jsx"));
 export const WifiOff = React.lazy(() => import("./library/wifi-off.jsx"));
 export const Xcode = React.lazy(() => import("./library/xcode.jsx"));
+export const YoutubeMusic = React.lazy(() =>
+  import("./library/youtube-music.jsx")
+);
 export const Zed = React.lazy(() => import("./library/zed.jsx"));
 export const Zeplin = React.lazy(() => import("./library/zeplin.jsx"));
 export const Zoom = React.lazy(() => import("./library/zoom.jsx"));
