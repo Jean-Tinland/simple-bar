@@ -36,25 +36,29 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [cachedAccessToken, setCachedAccessToken] = React.useState();
 
+  const apiUrl = `http://localhost:${youtubeMusicPort}`;
+
   const resetWidget = () => {
     setState(undefined);
     setCachedAccessToken(undefined);
   };
 
-  const getAccessToken = async () => {
+  const getAccessToken = React.useCallback(async () => {
     // As of 2024/12/01, the generated access tokens don't expire
     if (cachedAccessToken) return cachedAccessToken;
 
-    const authResp = await fetchRoute("/auth/simple-bar");
-    const auth = await authResp.json();
-    setCachedAccessToken(auth.accessToken);
-    return auth.accessToken;
-  };
+    const response = await fetch(`${apiUrl}/auth/simple-bar`, {
+      method: "POST",
+    });
+    const json = await response.json();
+    setCachedAccessToken(json.accessToken);
+    return json.accessToken;
+  }, [apiUrl, cachedAccessToken]);
 
   const fetchRoute = React.useCallback(
     async (route, method = "POST") => {
       const headers = {};
-      const url = new URL(route, `http://localhost:${youtubeMusicPort}`);
+      const url = new URL(route, apiUrl);
 
       // All routes under /api are protected
       const needsAuthentication = url.pathname.startsWith("/api");
@@ -68,16 +72,16 @@ export const Widget = React.memo(() => {
 
       return await fetch(url, { method, headers });
     },
-    [youtubeMusicPort]
+    [apiUrl, getAccessToken]
   );
 
   const refreshState = React.useCallback(async () => {
     if (!visible) return;
 
     try {
-      const currentStateResp = await fetchRoute("/api/v1/song-info", "GET");
-      const currentState = await currentStateResp.json();
-      setState(currentState);
+      const response = await fetchRoute("/api/v1/song-info", "GET");
+      const json = await response.json();
+      setState(json);
     } catch (e) {
       // most likely due to offline server, reset state
       resetWidget();
