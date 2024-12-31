@@ -4,6 +4,7 @@ import * as Utils from "../utils";
 const message = {
   error: "Something went wrong...",
   yabaiError: "yabai is not running",
+  aerospaceError: "aerospace is not running",
   noOutput: "Loading...",
   noData: "JSON error...",
 };
@@ -17,7 +18,7 @@ export function Component({ type, classes }) {
     setTimeout(Utils.softRefresh, 2000);
   }
 
-  if (type === "yabaiError") {
+  if (type === "yabaiError" || type === "aerospaceError") {
     setTimeout(Utils.softRefresh, 15000);
   }
 

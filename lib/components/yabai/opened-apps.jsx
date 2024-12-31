@@ -1,7 +1,7 @@
 import * as Uebersicht from "uebersicht";
-import * as AppIcons from "../../app-icons";
+import * as AppIcons from "../../app-icons.js";
 import { SuspenseIcon } from "../icons/icon.jsx";
-import * as Utils from "../../utils";
+import * as Utils from "../../utils.js";
 
 const { React } = Uebersicht;
 

@@ -1,9 +1,13 @@
+import * as Uebersicht from "uebersicht";
 import * as Error from "./lib/components/error.jsx";
 import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
 import YabaiContextProvider from "./lib/components/yabai-context.jsx";
+import AerospaceContextProvider from "./lib/components/aerospace-context.jsx";
 import UserWidgets from "./lib/components/data/user-widgets.jsx";
-import * as Spaces from "./lib/components/spaces/spaces.jsx";
-import * as Process from "./lib/components/spaces/process.jsx";
+import * as YabaiSpaces from "./lib/components/yabai/spaces.jsx";
+import * as YabaiProcess from "./lib/components/yabai/process.jsx";
+import * as AerospaceSpaces from "./lib/components/aerospace/spaces.jsx";
+import * as AerospaceProcess from "./lib/components/aerospace/process.jsx";
 import * as Variables from "./lib/styles/core/variables";
 import * as Base from "./lib/styles/core/base";
 import * as Zoom from "./lib/components/data/zoom.jsx";
@@ -33,11 +37,15 @@ import * as SideIcon from "./lib/components/side-icon.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
 
+const { React } = Uebersicht;
+
 const refreshFrequency = false;
 
 const settings = Settings.get();
 const {
+  windowManager,
   yabaiPath = "/usr/local/bin/yabai",
+  aerospacePath = "/opt/homebrew/bin/aerospace",
   shell,
   enableServer,
   yabaiServerRefresh,
@@ -47,14 +55,16 @@ const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 const disableSignals = enableServer && yabaiServerRefresh;
 const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 
-const args = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
-const command = `${shell} simple-bar/lib/scripts/init.sh ${args}`;
+const yabaiArgs = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
+const aerospaceArgs = `${aerospacePath}`;
+const args = windowManager === "yabai" ? yabaiArgs : aerospaceArgs;
+const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
   Variables.styles,
   Base.styles,
-  Spaces.styles,
-  Process.styles,
+  YabaiSpaces.styles,
+  YabaiProcess.styles,
   Settings.styles,
   DataWidget.styles,
   DateDisplay.styles,
@@ -99,12 +109,15 @@ function render({ output, error }) {
 
   if (error) {
     // eslint-disable-next-line no-console
-    console.error("Error in spaces.jsx", error);
+    console.error("Error in index.jsx", error);
     return <Error.Component type="error" classes={baseClasses} />;
   }
   if (!output) return <Error.Component type="noOutput" classes={baseClasses} />;
   if (Utils.cleanupOutput(output) === "yabaiError") {
     return <Error.Component type="yabaiError" classes={baseClasses} />;
+  }
+  if (Utils.cleanupOutput(output) === "aerospaceError") {
+    return <Error.Component type="aerospaceError" classes={baseClasses} />;
   }
 
   const data = Utils.parseJson(output);
@@ -128,14 +141,21 @@ function render({ output, error }) {
     >
       <div className={classes}>
         <SideIcon.Component />
-        <YabaiContextProvider
-          spaces={spaces}
-          windows={windows}
-          skhdMode={skhdMode}
-        >
-          <Spaces.Component />
-          <Process.Component />
-        </YabaiContextProvider>
+        {windowManager === "yabai" ? (
+          <YabaiContextProvider
+            spaces={spaces}
+            windows={windows}
+            skhdMode={skhdMode}
+          >
+            <YabaiSpaces.Component />
+            <YabaiProcess.Component />
+          </YabaiContextProvider>
+        ) : (
+          <AerospaceContextProvider>
+            <AerospaceSpaces.Component />
+            <AerospaceProcess.Component />
+          </AerospaceContextProvider>
+        )}
         <Settings.Wrapper />
         <div className="simple-bar__data">
           <UserWidgets />

@@ -3,8 +3,8 @@ import OpenedApps from "./opened-apps.jsx";
 import SpaceOptions from "./space-options.jsx";
 import { useYabaiContext } from "../yabai-context.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
-import * as Utils from "../../utils";
-import * as Yabai from "../../yabai";
+import * as Utils from "../../utils.js";
+import * as Yabai from "../../yabai.js";
 
 const { React } = Uebersicht;
 
