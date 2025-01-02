@@ -29,11 +29,13 @@ export default function SimpleBarContextProvider({
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
   const currentDisplay =
     currentDisplays?.find((d) => {
-      const id = d["monitor-id"] ?? d.id;
+      const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
       return id === displayId;
     }) || {};
 
-  const displayIndex = currentDisplay.index ?? currentDisplay["monitor-id"];
+  const displayIndex =
+    currentDisplay.index ??
+    currentDisplay["monitor-appkit-nsscreen-screens-id"];
 
   return (
     <SimpleBarContext.Provider

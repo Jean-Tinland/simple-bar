@@ -12,7 +12,7 @@ export const Component = React.memo(() => {
   const { spaces } = useAerospaceContext();
   const { displays, displayIndex, settings } = useSimpleBarContext();
   const { spacesDisplay, process } = settings;
-  const { showOnDisplay } = spacesDisplay;
+  const { displayAllSpacesOnAllScreens, showOnDisplay } = spacesDisplay;
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
@@ -26,26 +26,32 @@ export const Component = React.memo(() => {
   }
 
   const sortedDisplays = displays.sort(
-    (a, b) => parseInt(b["monitor-id"], 10) - parseInt(a["monitor-id"], 10)
+    (a, b) =>
+      parseInt(a["monitor-appkit-nsscreen-screens-id"], 10) -
+      parseInt(b["monitor-appkit-nsscreen-screens-id"], 10)
   );
 
   return sortedDisplays.map((display) => {
-    const displayId = display["monitor-id"];
+    const displayId = display["monitor-appkit-nsscreen-screens-id"];
+    if (displayId !== displayIndex) return null;
+
+    const filteredSpaces = displayAllSpacesOnAllScreens
+      ? spaces
+      : spaces.filter(
+          (space) => space["monitor-appkit-nsscreen-screens-id"] === displayId
+        );
 
     return (
       <div key={displayId} className="spaces">
-        {spaces.map((space, i) => {
+        {filteredSpaces.map((space, i) => {
           const { workspace } = space;
           const lastOfSpace =
-            i !== 0 && space.display !== spaces[i - 1].display;
+            i !== 0 &&
+            space["monitor-appkit-nsscreen-screens-id"] !==
+              spaces[i - 1]["monitor-appkit-nsscreen-screens-id"];
 
           return (
-            <Space
-              key={workspace}
-              display={displayId}
-              space={space}
-              lastOfSpace={lastOfSpace}
-            />
+            <Space key={workspace} space={space} lastOfSpace={lastOfSpace} />
           );
         })}
         {isProcessVisible && <div className="spaces__end-separator" />}

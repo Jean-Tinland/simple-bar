@@ -44,12 +44,7 @@ function AerospaceContextProvider({ children }) {
                   focused,
                 };
               });
-              return {
-                ...space,
-                windows: formatted,
-                focused,
-                "monitor-id": display["monitor-id"],
-              };
+              return { ...space, windows: formatted, focused };
             })
           );
         })

@@ -6,14 +6,16 @@ import * as Aerospace from "../../aerospace.js";
 
 const { React } = Uebersicht;
 
-export default function Space({ space, display, lastOfSpace }) {
+export default function Space({ space, lastOfSpace }) {
   const { windows } = space;
   const { settings } = useSimpleBarContext();
   const { spacesDisplay } = settings;
-  const { exclusionsAsRegex, hideDuplicateAppsInSpaces } = spacesDisplay;
+  const {
+    displayAllSpacesOnAllScreens,
+    exclusionsAsRegex,
+    hideDuplicateAppsInSpaces,
+  } = spacesDisplay;
   const { workspace, focused } = space;
-
-  if (display !== space["monitor-id"]) return null;
 
   const onClick = (e) => {
     if (focused) return;
@@ -50,7 +52,7 @@ export default function Space({ space, display, lastOfSpace }) {
 
   return (
     <React.Fragment>
-      {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && (
+      {displayAllSpacesOnAllScreens && lastOfSpace && (
         <div className="spaces__separator" />
       )}
       <div className={classes}>

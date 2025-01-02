@@ -129,7 +129,7 @@ export default function Space({
 
   return (
     <React.Fragment>
-      {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && (
+      {displayAllSpacesOnAllScreens && lastOfSpace && (
         <div className="spaces__separator" />
       )}
       <div
