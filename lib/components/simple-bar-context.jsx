@@ -27,6 +27,7 @@ export default function SimpleBarContextProvider({
     serverEnabled && windowManager === "yabai" ? _displays : displays;
 
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
+
   const currentDisplay =
     currentDisplays?.find((d) => {
       const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
@@ -34,8 +35,9 @@ export default function SimpleBarContextProvider({
     }) || {};
 
   const displayIndex =
-    currentDisplay.index ??
-    currentDisplay["monitor-appkit-nsscreen-screens-id"];
+    (currentDisplay.index ??
+      currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
+    1;
 
   return (
     <SimpleBarContext.Provider
