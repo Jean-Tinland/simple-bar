@@ -40,14 +40,10 @@ Simply clone this repo in your Übersicht widgets directory with the following c
 git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
-> [!TIP]\
-> `simple-bar` is trying to use yabai by default. If you want to switch to AeroSpace, you'll need to open the settings module (simply click on `simple-bar` then press `cmd` + `,`). You'll find the window manager choice in the "Global" tab.
-
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/).
 
 > [!NOTE]\
-> **For users having the latest M mac variants**, yabai is installed by default in `/opt/homebrew/bin/yabai`. You can set this path in the settings module allowing a custom yabai path. Same if you have installed yabai in a custom path for any reason.\
-> Also the same for AeroSpace, the default path is `/opt/homebrew/bin/aerospace` but you can change it at anytime in `simple-bar` settings.
+> `simple-bar` is trying to use yabai by default. If you want to switch to AeroSpace, you'll need to open the settings module (simply click on `simple-bar` then press `cmd` + `,`). You'll find the window manager choice in the "Global" tab.
 
 > [!TIP]\
 > If you experience some freezing issues with Übersicht or if you simply want to improve `simple-bar` responsiveness & energy consumption, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).\
