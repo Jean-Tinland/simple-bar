@@ -42,15 +42,26 @@ const { React } = Uebersicht;
 const refreshFrequency = false;
 
 const settings = Settings.get();
-const { windowManager, shell, enableServer, yabaiServerRefresh } =
-  settings.global;
+const {
+  // Do not edit the yabaiPath or aerospacePath lines, theses values are simply
+  // a default value used if nothing is defined in settings.
+  // You can setup your custom yabai or AeroSpace path in the settings module (Global tab) :
+  // while on an empty workspace, click on simple-bar then press cmd + , to open it.
+  yabaiPath = "$(which yabai)",
+  aerospacePath = "$(which aerospace)",
+  windowManager,
+  shell,
+  enableServer,
+  yabaiServerRefresh,
+} = settings.global;
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
 const disableSignals = enableServer && yabaiServerRefresh;
 const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 
-const yabaiArgs = `${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
-const args = windowManager === "yabai" ? yabaiArgs : "";
+const yabaiArgs = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
+const aerospaceArgs = `${aerospacePath}`;
+const args = windowManager === "yabai" ? yabaiArgs : aerospaceArgs;
 const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 
 Utils.injectStyles("simple-bar-index-styles", [
