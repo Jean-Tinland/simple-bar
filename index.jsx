@@ -47,8 +47,8 @@ const {
   // a default value used if nothing is defined in settings.
   // You can setup your custom yabai or AeroSpace path in the settings module (Global tab) :
   // while on an empty workspace, click on simple-bar then press cmd + , to open it.
-  yabaiPath = "$(which yabai)",
-  aerospacePath = "$(which aerospace)",
+  yabaiPath = "/opt/homebrew/bin/yabai",
+  aerospacePath = "/opt/homebrew/bin/aerospace",
   windowManager,
   shell,
   enableServer,
