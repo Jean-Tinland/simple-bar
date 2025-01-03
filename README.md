@@ -42,6 +42,10 @@ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ 
 
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/).
 
+> [!WARNING]\
+> If you encounter this error: "simple-bar-index.jsx: Something went wrong…", it may be simply due to the fact that the default value for yabai or AeroSpace path is wrong in simple-bar. You can set this path in the settings module.\
+> The default paths are `/opt/homebrew/bin/yabai` and `/opt/homebrew/bin/aerospace`.
+
 > [!NOTE]\
 > `simple-bar` is trying to use yabai by default. If you want to switch to AeroSpace, you'll need to open the settings module (simply click on `simple-bar` then press `cmd` + `,`). You'll find the window manager choice in the "Global" tab.
 
