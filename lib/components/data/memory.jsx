@@ -45,7 +45,7 @@ export const Widget = () => {
     setLoading(false);
   }, [setLoading, setState]);
 
-  useServerSocket("netstats", visible, getMemory, resetWidget);
+  useServerSocket("memory", visible, getMemory, resetWidget);
   useWidgetRefresh(visible, getMemory, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="memory" />;
