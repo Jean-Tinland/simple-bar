@@ -67,13 +67,15 @@ export const Widget = () => {
       <div
         className="memory__pie"
         style={{
-          backgroundImage: `conic-gradient(var(--red) ${used}%, var(--green) ${used}% 100%)`,
+          backgroundImage: `conic-gradient(var(--pie-color) ${used}%, var(--main-alt) ${used}% 100%)`,
         }}
       />
     );
   };
 
   const classes = Utils.classNames("memory", {
+    "memory--low": used <= 30,
+    "memory--medium": used > 30 && used <= 70,
     "memory--high": used > 70,
   });
 
