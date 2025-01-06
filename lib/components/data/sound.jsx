@@ -1,7 +1,8 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
@@ -87,7 +88,6 @@ export const Widget = React.memo(() => {
   const onMouseDown = () => setDragging(true);
   const onMouseUp = () => setDragging(false);
 
-  const fillerWidth = volume || 0;
   const formattedVolume = `${volume.toString().padStart(2, "0")}%`;
 
   const classes = Utils.classNames("sound", {
@@ -97,7 +97,9 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget classes={classes} disableSlider>
       <div className="sound__display">
-        <Icon />
+        <SuspenseIcon>
+          <Icon />
+        </SuspenseIcon>
         <span className="sound__value">{formattedVolume}</span>
       </div>
       <div className="sound__slider-container">
@@ -111,10 +113,6 @@ export const Widget = React.memo(() => {
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onChange={onChange}
-        />
-        <div
-          className="sound__slider-filler"
-          style={{ width: `${fillerWidth}%` }}
         />
       </div>
     </DataWidget.Widget>

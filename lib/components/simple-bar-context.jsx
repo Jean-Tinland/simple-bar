@@ -18,16 +18,26 @@ export default function SimpleBarContextProvider({
   children,
 }) {
   const [settings, setSettings] = React.useState(initialSettings);
-  const [yabaiDisplays, setYabaiDisplays] = React.useState(displays);
+  const [_displays, setDisplays] = React.useState(displays);
 
-  const { enableServer, yabaiServerRefresh } = settings.global;
+  const { windowManager, enableServer, yabaiServerRefresh } = settings.global;
   const serverEnabled = enableServer && yabaiServerRefresh;
 
-  const currentDisplays = serverEnabled ? yabaiDisplays : displays;
+  const currentDisplays =
+    serverEnabled && windowManager === "yabai" ? _displays : displays;
 
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
-  const { index: displayIndex } =
-    currentDisplays?.find((d) => d.id === displayId) || {};
+
+  const currentDisplay =
+    currentDisplays?.find((d) => {
+      const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
+      return id === displayId;
+    }) || {};
+
+  const displayIndex =
+    (currentDisplay.index ??
+      currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
+    1;
 
   return (
     <SimpleBarContext.Provider
@@ -36,7 +46,8 @@ export default function SimpleBarContextProvider({
         SIPDisabled,
         settings,
         setSettings,
-        setYabaiDisplays,
+        displays: currentDisplays,
+        setDisplays,
       }}
     >
       {children}

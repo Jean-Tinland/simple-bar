@@ -1,5 +1,5 @@
 import * as Uebersicht from "uebersicht";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
 import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 import ColorPicker from "./color-picker.jsx";

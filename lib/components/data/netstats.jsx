@@ -1,11 +1,12 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import Graph from "./graph.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh.js";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
-import * as Icons from "../icons.jsx";
 import * as Utils from "../../utils.js";
 
 export { netstatsStyles as styles } from "../../styles/components/data/netstats";
@@ -89,8 +90,8 @@ export const Widget = React.memo(() => {
     return null;
   }
 
-  const formatedDownload = formatBytes(download);
-  const formatedUpload = formatBytes(upload);
+  const formattedDownload = formatBytes(download);
+  const formattedUpload = formatBytes(upload);
 
   if (displayAsGraph) {
     return (
@@ -99,12 +100,12 @@ export const Widget = React.memo(() => {
           className="netstats__graph"
           caption={{
             download: {
-              value: formatedDownload,
+              value: formattedDownload,
               icon: Icons.Download,
               color: "var(--magenta)",
             },
             upload: {
-              value: formatedUpload,
+              value: formattedUpload,
               icon: Icons.Upload,
               color: "var(--blue)",
             },
@@ -120,19 +121,23 @@ export const Widget = React.memo(() => {
     <React.Fragment>
       <DataWidget.Widget classes="netstats" disableSlider>
         <div className="netstats__item">
-          <Icons.Download className="netstats__icon netstats__icon--download" />
+          <SuspenseIcon>
+            <Icons.Download className="netstats__icon netstats__icon--download" />
+          </SuspenseIcon>
           <span
             className="netstats__value"
-            dangerouslySetInnerHTML={{ __html: formatedDownload }}
+            dangerouslySetInnerHTML={{ __html: formattedDownload }}
           />
         </div>
       </DataWidget.Widget>
       <DataWidget.Widget classes="netstats" disableSlider>
         <div className="netstats__item">
-          <Icons.Upload className="netstats__icon netstats__icon--upload" />
+          <SuspenseIcon>
+            <Icons.Upload className="netstats__icon netstats__icon--upload" />
+          </SuspenseIcon>
           <span
             className="netstats__value"
-            dangerouslySetInnerHTML={{ __html: formatedUpload }}
+            dangerouslySetInnerHTML={{ __html: formattedUpload }}
           />
         </div>
       </DataWidget.Widget>

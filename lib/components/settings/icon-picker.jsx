@@ -1,5 +1,6 @@
 import * as Uebersicht from "uebersicht";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 
 const { React } = Uebersicht;
 
@@ -15,7 +16,9 @@ export default function IconPicker({ callback, index, selectedIcon }) {
   return (
     <div className="icon-picker">
       <button className="icon-picker__button" onClick={onClick}>
-        <Icon />
+        <SuspenseIcon>
+          <Icon />
+        </SuspenseIcon>
       </button>
       {open && (
         <div className="icon-picker__icons" onClick={() => setOpen(false)}>

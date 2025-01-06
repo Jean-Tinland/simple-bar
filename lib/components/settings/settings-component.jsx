@@ -1,6 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as Utils from "../../utils";
-import * as Icons from "../icons.jsx";
+import * as Icons from "../icons/icons.jsx";
 import * as Settings from "../../settings";
 
 const { React } = Uebersicht;
@@ -248,7 +248,7 @@ function Item({
   if (type === "select") {
     return (
       <React.Fragment>
-        <label htmlFor={code}>{label}</label>
+        <label htmlFor={code} dangerouslySetInnerHTML={{ __html: label }} />
         <select
           id={code}
           className="settings__select"
@@ -274,16 +274,17 @@ function Item({
           type="radio"
           defaultChecked={option === defaultValue}
         />
-        <label htmlFor={option}>
-          {option} {label}
-        </label>
+        <label
+          htmlFor={option}
+          dangerouslySetInnerHTML={{ __html: `${option} ${label}` }}
+        />
       </div>
     ));
   }
   if (type === "text") {
     return (
       <React.Fragment>
-        <label htmlFor={code}>{label}</label>
+        <label htmlFor={code} dangerouslySetInnerHTML={{ __html: label }} />
         <input
           id={code}
           type="text"
@@ -301,7 +302,7 @@ function Item({
   if (type === "number") {
     return (
       <React.Fragment>
-        <label htmlFor={code}>{label}</label>
+        <label htmlFor={code} dangerouslySetInnerHTML={{ __html: label }} />
         <input
           id={code}
           type="number"
@@ -316,7 +317,7 @@ function Item({
   if (type === "textarea") {
     return (
       <React.Fragment>
-        <label htmlFor={code}>{label}</label>
+        <label htmlFor={code} dangerouslySetInnerHTML={{ __html: label }} />
         <textarea
           id={code}
           defaultValue={defaultValue}
@@ -340,9 +341,11 @@ function Item({
         onChange={onChange}
         onClick={onClick}
       />
-      <label htmlFor={code} onClick={onClick}>
-        {label}
-      </label>
+      <label
+        htmlFor={code}
+        onClick={onClick}
+        dangerouslySetInnerHTML={{ __html: label }}
+      />
     </React.Fragment>
   );
 }

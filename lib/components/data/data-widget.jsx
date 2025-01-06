@@ -1,7 +1,7 @@
 import * as Uebersicht from "uebersicht";
 import * as Specter from "./specter.jsx";
 import * as Utils from "../../utils";
-
+import { SuspenseIcon } from "../icons/icon.jsx";
 export { dataWidgetStyles as styles } from "../../styles/components/data/data-widget";
 
 const { React } = Uebersicht;
@@ -53,7 +53,11 @@ export function Widget({
       onMouseLeave={!disableSlider ? onMouseLeave : undefined}
       style={style}
     >
-      {Icon && <Icon />}
+      {Icon && (
+        <SuspenseIcon>
+          <Icon />
+        </SuspenseIcon>
+      )}
       {showSpecter && <Specter.Widget />}
       <Inner disableSlider={disableSlider}>{children}</Inner>
     </Tag>

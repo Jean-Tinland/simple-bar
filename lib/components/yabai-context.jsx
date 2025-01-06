@@ -19,7 +19,7 @@ export function useYabaiContext() {
 export default React.memo(YabaiContextProvider);
 
 function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
-  const { settings, setYabaiDisplays } = useSimpleBarContext();
+  const { settings, setDisplays } = useSimpleBarContext();
   const { enableServer, yabaiServerRefresh } = settings.global;
   const { displaySkhdMode } = settings.process;
   const serverEnabled = enableServer && yabaiServerRefresh;
@@ -37,7 +37,7 @@ function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
   };
 
   const resetDisplays = () => {
-    setYabaiDisplays([]);
+    setDisplays([]);
   };
 
   const resetSkhdMode = () => {
@@ -56,7 +56,7 @@ function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
 
   const getDisplays = async () => {
     const newDisplays = await Yabai.getDisplays();
-    setYabaiDisplays(newDisplays);
+    setDisplays(newDisplays);
   };
 
   const getSkhdMode = async () => {

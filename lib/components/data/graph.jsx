@@ -1,4 +1,8 @@
+import * as Uebersicht from "uebersicht";
 import * as Utils from "../../utils.js";
+import { SuspenseIcon } from "../icons/icon.jsx";
+
+const { React } = Uebersicht;
 
 export { graphStyles as styles } from "../../styles/components/data/graph";
 
@@ -46,14 +50,15 @@ export default function Graph({
       <div className="graph__data">
         {captionKeys.map((key) => {
           const { value, icon: Icon, color } = caption[key];
-
           return (
             <div key={key} className="graph__data-item">
               {Icon && (
-                <Icon
-                  className="graph__data-item-icon"
-                  style={{ fill: color }}
-                />
+                <SuspenseIcon>
+                  <Icon
+                    className="graph__data-item-icon"
+                    style={{ fill: color }}
+                  />
+                </SuspenseIcon>
               )}
               <span
                 className="graph__data-item-value"
