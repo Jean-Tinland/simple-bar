@@ -90,8 +90,8 @@ export const Widget = React.memo(() => {
     return null;
   }
 
-  const formattedDownload = formatBytes(download);
-  const formattedUpload = formatBytes(upload);
+  const formattedDownload = Utils.formatBytes(download);
+  const formattedUpload = Utils.formatBytes(upload);
 
   if (displayAsGraph) {
     return (
@@ -146,17 +146,3 @@ export const Widget = React.memo(() => {
 });
 
 Widget.displayName = "Netstats";
-
-function formatBytes(bytes, decimals = 1) {
-  if (!+bytes) return "0b";
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["b", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))}<em>${
-    sizes[i]
-  }</em>`;
-}

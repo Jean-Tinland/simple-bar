@@ -107,8 +107,8 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Cpu";
 
-function openCpuUsageApp(cpuUsageApp) {
-  switch (cpuUsageApp) {
+function openCpuUsageApp(app) {
+  switch (app) {
     case "Activity Monitor":
       Uebersicht.run(`open -a "Activity Monitor"`);
       break;
