@@ -73,9 +73,13 @@ export const Widget = () => {
     );
   };
 
+  const classes = Utils.classNames("memory", {
+    "memory--high": used > 70,
+  });
+
   return (
-    <DataWidget.Widget classes="memory" Icon={Pie} onClick={onClick}>
-      <div className="memory__content">{free}%</div>
+    <DataWidget.Widget classes={classes} Icon={Pie} onClick={onClick}>
+      <div className="memory__content">{used}%</div>
     </DataWidget.Widget>
   );
 };
