@@ -117,7 +117,7 @@ export const Widget = React.memo(() => {
   const stopPropagation = (e) => e.stopPropagation();
 
   const onMouseEnter = () =>
-    Utils.startSliding(ref.current, ".mpd__inner", ".mpd__slider");
+    Utils.startSliding(ref.current, ".mpd__inner", ".mpd__info");
   const onMouseLeave = () => Utils.stopSliding(ref.current, ".mpd__slider");
 
   const classes = Utils.classNames("sound", "mpd", {
