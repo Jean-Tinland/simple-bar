@@ -78,7 +78,6 @@ export const Widget = React.memo(() => {
   const onMouseDown = () => setDragging(true);
   const onMouseUp = () => setDragging(false);
 
-  const fillerWidth = volume || 0;
   const formattedVolume = `${volume.toString().padStart(2, "0")}%`;
 
   const classes = Utils.classNames("mic", {
@@ -104,10 +103,6 @@ export const Widget = React.memo(() => {
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onChange={onChange}
-        />
-        <div
-          className="mic__slider-filler"
-          style={{ width: `${fillerWidth}%` }}
         />
       </div>
     </DataWidget.Widget>
