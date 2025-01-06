@@ -2,61 +2,91 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import useServerSocket from "../../hooks/use-server-socket";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils";
-import * as Settings from "../../settings";
 
 export { memoryStyles as styles } from "../../styles/components/data/memory";
 
-const settings = Settings.get();
-const { widgets, memoryWidgetOptions } = settings;
-const { memoryWidget } = widgets;
-const { refreshFrequency, showOnDisplay } = memoryWidgetOptions;
+const { React } = Uebersicht;
 
-const DEFAULT_REFRESH_FREQUENCY = 5000;
-const REFRESH_FREQUENCY = Utils.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
-);
+const DEFAULT_REFRESH_FREQUENCY = 4000;
 
-export const Widget = ({ display }) => {
+export const Widget = () => {
+  const { displayIndex, settings } = useSimpleBarContext();
+  const { widgets, memoryWidgetOptions } = settings;
+  const { memoryWidget } = widgets;
+  const { refreshFrequency, showOnDisplay, memoryMonitorApp } =
+    memoryWidgetOptions;
+
+  const refresh = React.useMemo(
+    () =>
+      Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
+    [refreshFrequency]
+  );
+
   const visible =
-    Utils.isVisibleOnDisplay(display, showOnDisplay) && memoryWidget;
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && memoryWidget;
 
   const [state, setState] = Uebersicht.React.useState();
   const [loading, setLoading] = Uebersicht.React.useState(visible);
 
-  const getMemory = async () => {
-    const output = await Uebersicht.run(
-      `bash ./simple-bar/lib/scripts/memory.sh 2>&1`
-    );
-    const data = Utils.cleanupOutput(output);
-    const json = JSON.parse(data);
-    setState(json);
+  const resetWidget = () => {
+    setState(undefined);
     setLoading(false);
   };
 
-  useWidgetRefresh(visible, getMemory, REFRESH_FREQUENCY);
+  const getMemory = React.useCallback(async () => {
+    const output = await Uebersicht.run(
+      "memory_pressure | tail -1 | awk '{ print $5 }' | tr -d '%'"
+    );
+    const free = parseInt(Utils.cleanupOutput(output), 10);
+    setState({ free });
+    setLoading(false);
+  }, [setLoading, setState]);
+
+  useServerSocket("netstats", visible, getMemory, resetWidget);
+  useWidgetRefresh(visible, getMemory, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="memory" />;
   if (!state) return null;
 
-  const { used, total, system } = state;
-  const free = total - used;
+  const { free } = state;
+  const used = 100 - free;
 
-  const relativeSystem = (system / total) * 100;
-  const relativeUsed = (used / total) * 100;
-  const relativeFree = (free / total) * 100;
+  const onClick =
+    memoryMonitorApp === "None"
+      ? undefined
+      : (e) => {
+          Utils.clickEffect(e);
+          openMemoryUsageApp(memoryMonitorApp);
+        };
 
   const Pie = () => {
     return (
       <div
         className="memory__pie"
         style={{
-          backgroundImage: `conic-gradient(var(--green) ${relativeSystem}%, var(--red) ${relativeSystem}% ${relativeUsed}%, var(--yellow) ${relativeUsed}% ${relativeFree}%)`,
+          backgroundImage: `conic-gradient(var(--red) ${used}%, var(--green) ${used}% 100%)`,
         }}
       />
     );
   };
 
-  return <DataWidget.Widget classes="memory" Icon={Pie} />;
+  return (
+    <DataWidget.Widget classes="memory" Icon={Pie} onClick={onClick}>
+      <div className="memory__content">{free}%</div>
+    </DataWidget.Widget>
+  );
 };
+
+function openMemoryUsageApp(app) {
+  switch (app) {
+    case "Activity Monitor":
+      Uebersicht.run(`open -a "Activity Monitor"`);
+      break;
+    case "Top":
+      Utils.runInUserTerminal("top");
+      break;
+  }
+}
