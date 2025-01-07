@@ -15,7 +15,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, batteryWidgetOptions } = settings;
   const { batteryWidget } = widgets;
   const {
@@ -86,7 +86,7 @@ export const Widget = React.memo(() => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e);
-    await toggleCaffeinate(system, caffeinate, caffeinateOption);
+    await toggleCaffeinate(system, caffeinate, caffeinateOption, pushMissive);
     getBattery();
   };
 
@@ -95,15 +95,15 @@ export const Widget = React.memo(() => {
   const Icon = () => (
     <div className="battery__icon">
       <div className="battery__icon-inner">
+        <div
+          className="battery__icon-filler"
+          style={{ transform: transformValue }}
+        />
         {charging && (
           <SuspenseIcon>
             <Icons.Charging className="battery__charging-icon" />
           </SuspenseIcon>
         )}
-        <div
-          className="battery__icon-filler"
-          style={{ transform: transformValue }}
-        />
       </div>
     </div>
   );
@@ -134,14 +134,14 @@ function getTransform(value) {
   return `scaleX(${transform})`;
 }
 
-async function toggleCaffeinate(system, caffeinate, option) {
+async function toggleCaffeinate(system, caffeinate, option, pushMissive) {
   const command =
     system === "x86_64" ? "caffeinate" : "arch -arch arm64 caffeinate";
   if (!caffeinate.length) {
     Uebersicht.run(`${command} ${option} &`);
-    Utils.notification("Enabling caffeinate...");
+    Utils.notification("Enabling caffeinate...", pushMissive);
   } else {
     await Uebersicht.run("pkill -f caffeinate");
-    Utils.notification("Disabling caffeinate...");
+    Utils.notification("Disabling caffeinate...", pushMissive);
   }
 }

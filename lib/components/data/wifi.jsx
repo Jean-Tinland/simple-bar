@@ -14,7 +14,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, networkWidgetOptions } = settings;
   const { wifiWidget } = widgets;
   const {
@@ -78,7 +78,7 @@ export const Widget = React.memo(() => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e);
-    await toggleWifi(isActive, networkDevice);
+    await toggleWifi(isActive, networkDevice, pushMissive);
     getWifi();
   };
 
@@ -96,13 +96,13 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Wifi";
 
-async function toggleWifi(isActive, networkDevice) {
+async function toggleWifi(isActive, networkDevice, pushMissive) {
   if (isActive) {
     await Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
-    Utils.notification("Disabling network...");
+    Utils.notification("Disabling network...", pushMissive);
   } else {
     await Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`);
-    Utils.notification("Enabling network...");
+    Utils.notification("Enabling network...", pushMissive);
   }
 }
 

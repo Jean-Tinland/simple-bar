@@ -1,6 +1,7 @@
 import * as Uebersicht from "uebersicht";
 import * as Utils from "../../utils";
 import * as Settings from "../../settings";
+import { useSimpleBarContext } from "../simple-bar-context.jsx";
 
 export { settingsStyles as styles } from "../../styles/components/settings/settings";
 
@@ -9,6 +10,7 @@ const { React } = Uebersicht;
 const Component = React.lazy(() => import("./settings-component.jsx"));
 
 export function Wrapper() {
+  const { pushMissive } = useSimpleBarContext();
   const [visible, setVisible] = React.useState(false);
 
   const closeSettings = () => {
@@ -36,6 +38,7 @@ export function Wrapper() {
       Uebersicht.run(
         `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
       );
+      Utils.notification("Toggling dark theme...", pushMissive);
       if (newValue !== AUTO) {
         const updatedSettings = {
           ...settings,

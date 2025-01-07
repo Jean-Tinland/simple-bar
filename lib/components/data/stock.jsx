@@ -14,7 +14,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000; // 15 min
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, stockWidgetOptions } = settings;
   const { stockWidget } = widgets;
   const {
@@ -62,7 +62,7 @@ export const Widget = React.memo(() => {
     if (response.status === 429) {
       // Exceeded daily quota
     } else if (response.status === 403) {
-      Utils.notification("Invalid Yahoo Finance API key");
+      Utils.notification("Invalid Yahoo Finance API key", pushMissive);
     } else if (response.status === 200) {
       const result = await response.json();
       const symbolQuotes = result.quoteResponse.result;
@@ -83,7 +83,13 @@ export const Widget = React.memo(() => {
     }
 
     setLoading(false);
-  }, [visible, cleanedUpSymbols, enumeratedSymbols, yahooFinanceApiKey]);
+  }, [
+    visible,
+    cleanedUpSymbols,
+    yahooFinanceApiKey,
+    pushMissive,
+    enumeratedSymbols,
+  ]);
 
   useServerSocket("stock", visible, getStocks, resetWidget);
   useWidgetRefresh(visible, getStocks, refresh);

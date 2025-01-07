@@ -19,6 +19,7 @@ export default function SimpleBarContextProvider({
 }) {
   const [settings, setSettings] = React.useState(initialSettings);
   const [_displays, setDisplays] = React.useState(displays);
+  const [missives, setMissives] = React.useState([]);
 
   const { windowManager, enableServer, yabaiServerRefresh } = settings.global;
   const serverEnabled = enableServer && yabaiServerRefresh;
@@ -39,6 +40,18 @@ export default function SimpleBarContextProvider({
       currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
     1;
 
+  const pushMissive = (newMissive) => {
+    const now = Date.now();
+    const timeout = setTimeout(() => {
+      setMissives((current) => {
+        return current.filter((m) => m.id !== now);
+      });
+    }, newMissive.delay);
+    setMissives((current) => {
+      return [...current, { id: now, ...newMissive, timeout }];
+    });
+  };
+
   return (
     <SimpleBarContext.Provider
       value={{
@@ -48,6 +61,9 @@ export default function SimpleBarContextProvider({
         setSettings,
         displays: currentDisplays,
         setDisplays,
+        missives,
+        setMissives,
+        pushMissive,
       }}
     >
       {children}

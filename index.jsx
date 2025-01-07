@@ -35,6 +35,7 @@ import * as Graph from "./lib/components/data/graph.jsx";
 import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx";
 import * as DataWidget from "./lib/components/data/data-widget.jsx";
 import * as SideIcon from "./lib/components/side-icon.jsx";
+import * as Missives from "./lib/components/missives/missives.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
 
@@ -97,6 +98,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   DataWidgetLoader.styles,
   settings.customStyles.styles,
   SideIcon.styles,
+  Missives.styles,
 ]);
 
 function render({ output, error }) {
@@ -186,6 +188,7 @@ function render({ output, error }) {
           <DateDisplay.Widget />
           <Time.Widget />
         </div>
+        <Missives.Component />
       </div>
     </SimpleBarContextProvider>
   );

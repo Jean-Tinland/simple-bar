@@ -14,7 +14,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30;
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, weatherWidgetOptions } = settings;
   const { weatherWidget } = widgets;
   const {
@@ -121,7 +121,7 @@ export const Widget = React.memo(() => {
     Utils.clickEffect(e);
     setLoading(true);
     getWeather();
-    Utils.notification("Refreshing forecast from wttr.in...");
+    Utils.notification("Refreshing forecast from wttr.in...", pushMissive);
   };
 
   const classes = Utils.classNames("weather", {
@@ -134,7 +134,7 @@ export const Widget = React.memo(() => {
       classes={classes}
       Icon={Icon}
       href={`https://wttr.in/${state.location}${wttrUnitParam}`}
-      onClick={openWeather}
+      onClick={(e) => openWeather(e, pushMissive)}
       onRightClick={onRightClick}
       disableSlider
     >
@@ -164,9 +164,9 @@ function getLabel(location, temperature, unit, hideLocation) {
   return `${location}, ${temperature}°${unit}`;
 }
 
-function openWeather(e) {
+function openWeather(e, pushMissive) {
   Utils.clickEffect(e);
-  Utils.notification("Opening forecast from wttr.in...");
+  Utils.notification("Opening forecast from wttr.in...", pushMissive);
 }
 
 async function getPosition() {

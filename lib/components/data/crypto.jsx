@@ -14,7 +14,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 5 * 60 * 1000; // 30 seconds * 1000 milliseconds
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, cryptoWidgetOptions } = settings;
   const { cryptoWidget } = widgets;
   const {
@@ -78,7 +78,7 @@ export const Widget = React.memo(() => {
     Utils.clickEffect(e);
     setLoading(true);
     getCrypto();
-    Utils.notification("Refreshing price from coingecko.com...");
+    Utils.notification("Refreshing price from coingecko.com...", pushMissive);
   };
 
   if (loading) return <DataWidgetLoader.Widget className="crypto" />;
@@ -93,7 +93,7 @@ export const Widget = React.memo(() => {
       ref={ref}
       Icon={getIcon(id)}
       href={`https://coingecko.com/en/coins/${id}`}
-      onClick={openCrypto}
+      onClick={(e) => openCrypto(e, pushMissive)}
       onRightClick={refreshCrypto}
     >
       {state[i]}
@@ -116,7 +116,7 @@ function getDenominatorToken(denomination) {
   return "";
 }
 
-function openCrypto(e) {
+function openCrypto(e, pushMissive) {
   Utils.clickEffect(e);
-  Utils.notification("Opening price chart from coingecko.com...");
+  Utils.notification("Opening price chart from coingecko.com...", pushMissive);
 }

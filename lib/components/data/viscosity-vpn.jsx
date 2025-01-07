@@ -14,7 +14,7 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 8000;
 
 export const Widget = React.memo(() => {
-  const { displayIndex, settings } = useSimpleBarContext();
+  const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, vpnWidgetOptions } = settings;
   const { vpnWidget } = widgets;
   const {
@@ -75,7 +75,7 @@ export const Widget = React.memo(() => {
 
   const clicked = (e) => {
     Utils.clickEffect(e);
-    toggleVPN(isConnected, vpnConnectionName);
+    toggleVPN(isConnected, vpnConnectionName, pushMissive);
     setTimeout(getVPN, refreshFrequency / 2);
   };
 
@@ -88,16 +88,22 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "ViscosityVPN";
 
-function toggleVPN(isConnected, vpnConnectionName) {
+function toggleVPN(isConnected, vpnConnectionName, pushMissive) {
   if (isConnected) {
     Uebersicht.run(
       `osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`
     );
-    Utils.notification(`Disabling Viscosity ${vpnConnectionName} network...`);
+    Utils.notification(
+      `Disabling Viscosity ${vpnConnectionName} network...`,
+      pushMissive
+    );
   } else {
     Uebersicht.run(
       `osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`
     );
-    Utils.notification(`Enabling Viscosity ${vpnConnectionName} network...`);
+    Utils.notification(
+      `Enabling Viscosity ${vpnConnectionName} network...`,
+      pushMissive
+    );
   }
 }
