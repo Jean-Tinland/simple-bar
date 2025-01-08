@@ -18,7 +18,9 @@ export default function Missive({ id, side, content, timeout }) {
     setMissives((current) => {
       return current.filter((m) => m.id !== id);
     });
-    clearTimeout(timeout);
+    if (timeout) {
+      clearTimeout(timeout);
+    }
   };
 
   return (

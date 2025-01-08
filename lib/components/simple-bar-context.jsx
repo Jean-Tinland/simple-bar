@@ -42,13 +42,17 @@ export default function SimpleBarContextProvider({
 
   const pushMissive = (newMissive) => {
     const now = Date.now();
-    const timeout = setTimeout(() => {
-      setMissives((current) => {
-        return current.filter((m) => m.id !== now);
-      });
-    }, newMissive.delay);
+    const { content, side = "right", delay = 5000 } = newMissive;
+    const timeout =
+      typeof delay === "number" && delay !== 0
+        ? setTimeout(() => {
+            setMissives((current) => {
+              return current.filter((m) => m.id !== now);
+            });
+          }, delay)
+        : undefined;
     setMissives((current) => {
-      return [...current, { id: now, ...newMissive, timeout }];
+      return [...current, { id: now, content, side, timeout }];
     });
   };
 
