@@ -23,7 +23,7 @@ export default function Space({ space, lastOfSpace }) {
     Utils.clickEffect(e);
   };
 
-  const hidden = !windows.length && spacesDisplay.hideEmptySpaces;
+  const hidden = !focused && !windows.length && spacesDisplay.hideEmptySpaces;
 
   if (hidden) return null;
 
