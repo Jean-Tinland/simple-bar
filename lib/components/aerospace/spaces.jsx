@@ -25,30 +25,19 @@ export const Component = React.memo(() => {
     return <div className="spaces spaces--empty" />;
   }
 
-  const sortedDisplays = displays.sort(
-    (a, b) =>
-      parseInt(a["monitor-appkit-nsscreen-screens-id"], 10) -
-      parseInt(b["monitor-appkit-nsscreen-screens-id"], 10)
-  );
-
-  return sortedDisplays.map((display) => {
-    const displayId = display["monitor-appkit-nsscreen-screens-id"];
-    if (displayId !== displayIndex) return null;
+  return displays.map((display) => {
+    if (display !== displayIndex) return null;
 
     const filteredSpaces = displayAllSpacesOnAllScreens
       ? spaces
-      : spaces.filter(
-          (space) => space["monitor-appkit-nsscreen-screens-id"] === displayId
-        );
+      : spaces.filter((space) => space.monitor === display);
 
     return (
-      <div key={displayId} className="spaces">
+      <div key={display} className="spaces">
         {filteredSpaces.map((space, i) => {
           const { workspace } = space;
           const lastOfSpace =
-            i !== 0 &&
-            space["monitor-appkit-nsscreen-screens-id"] !==
-              spaces[i - 1]["monitor-appkit-nsscreen-screens-id"];
+            i !== 0 && space.monitor !== spaces[i - 1].monitor;
 
           return (
             <Space key={workspace} space={space} lastOfSpace={lastOfSpace} />

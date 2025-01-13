@@ -23,7 +23,9 @@ export const Component = React.memo(() => {
 
   if (!visible) return null;
 
-  const { windows } = spaces.find((space) => space.focused);
+  const { windows = [] } =
+    spaces.find((space) => space.focused && space.monitor === displayIndex) ||
+    {};
 
   if (!windows.length) return null;
 

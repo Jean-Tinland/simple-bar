@@ -23,22 +23,20 @@ export default function SimpleBarContextProvider({
 
   const { windowManager, enableServer, yabaiServerRefresh } = settings.global;
   const serverEnabled = enableServer && yabaiServerRefresh;
+  const isYabai = windowManager === "yabai";
 
-  const currentDisplays =
-    serverEnabled && windowManager === "yabai" ? _displays : displays;
+  const currentDisplays = serverEnabled && isYabai ? _displays : displays;
 
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
 
-  const currentDisplay =
-    currentDisplays?.find((d) => {
-      const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
-      return id === displayId;
-    }) || {};
+  const formattedDisplays = currentDisplays.map((display) => {
+    return display.index ?? display["monitor-appkit-nsscreen-screens-id"];
+  });
 
-  const displayIndex =
-    (currentDisplay.index ??
-      currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
-    1;
+  const currentDisplay =
+    formattedDisplays?.find((id) => id === displayId) || undefined;
+
+  const displayIndex = currentDisplay || 1;
 
   const pushMissive = (newMissive) => {
     const now = Date.now();
@@ -63,7 +61,7 @@ export default function SimpleBarContextProvider({
         SIPDisabled,
         settings,
         setSettings,
-        displays: currentDisplays,
+        displays: formattedDisplays,
         setDisplays,
         missives,
         setMissives,
