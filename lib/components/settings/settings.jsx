@@ -7,6 +7,8 @@ export { settingsStyles as styles } from "../../styles/components/settings/setti
 
 const { React } = Uebersicht;
 
+// Settings component is lazy loaded. That way, it isn't loaded everytime simple-bar
+// is refreshed
 const Component = React.lazy(() => import("./settings-component.jsx"));
 
 export function Wrapper() {
@@ -17,44 +19,62 @@ export function Wrapper() {
     setVisible(false);
     Utils.blurBar();
   };
-  const onKeydown = (e) => {
-    const { ctrlKey, keyCode, metaKey, which } = e;
-    if ((ctrlKey || metaKey) && (which === 188 || keyCode === 188)) {
-      e.preventDefault();
-      setVisible(true);
-    }
-    if ((ctrlKey || metaKey) && (which === 84 || keyCode === 84)) {
-      const settings = Settings.get();
-      e.preventDefault();
-      const AUTO = "auto";
-      const DARK = "dark";
-      const LIGHT = "light";
-      const newValue =
-        settings.global.theme === AUTO
-          ? AUTO
-          : settings.global.theme === LIGHT
-          ? DARK
-          : LIGHT;
-      Uebersicht.run(
-        `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
-      );
-      Utils.notification("Toggling dark theme...", pushMissive);
-      if (newValue !== AUTO) {
-        const updatedSettings = {
-          ...settings,
-          global: { ...settings.global, theme: newValue },
-        };
-        Settings.set(updatedSettings);
+
+  // Actions handled by this function are
+  // > Hard refresh simple-bar with cmd/ctrl + r
+  // > Open settings with cmd/ctrl + ,
+  // > Toggle dark theme with cmd/ctrl + t
+  const handleKeydown = React.useCallback(
+    (e) => {
+      const { ctrlKey, key, metaKey } = e;
+      if ((ctrlKey || metaKey) && key === "r") {
+        e.preventDefault();
         Utils.hardRefresh();
       }
-    }
-  };
+      if ((ctrlKey || metaKey) && key === ",") {
+        e.preventDefault();
+        setVisible(true);
+      }
+      if ((ctrlKey || metaKey) && key === "t") {
+        e.preventDefault();
+        // We retrieve the latest version of settings
+        const settings = Settings.get();
+        const AUTO = "auto";
+        // If current value is auto, it is stored as is
+        // otherwise, it is toggled
+        let newValue = AUTO;
+        if (settings.global.theme !== AUTO) {
+          newValue = settings.global.theme;
+        }
+        // OS is instructed to toggle dark theme
+        Uebersicht.run(
+          `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
+        );
+        // A notification is pushed either in Macos notification center or via internal missives system
+        Utils.notification("Toggling dark theme...", pushMissive);
+        if (newValue !== AUTO) {
+          // Only theme value is updated
+          const updatedSettings = {
+            ...settings,
+            global: { ...settings.global, theme: newValue },
+          };
+          // Settings are updated and simple-bar is hard refreshed
+          Settings.set(updatedSettings);
+          Utils.hardRefresh();
+        }
+      }
+    },
+    [pushMissive]
+  );
 
   React.useEffect(() => {
-    document.addEventListener("keydown", onKeydown);
-    return () => document.removeEventListener("keydown", onKeydown);
-  }, []);
+    // We bind keydown event on Übersicht document when <Settings /> component is mounted
+    // Event listener is removed on unmount
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
+  }, [handleKeydown]);
 
+  // Only a fragment is returned if <Settings /> component is not visible
   return (
     <React.Fragment>
       {visible && (
