@@ -51,7 +51,6 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 
 > [!TIP]\
 > If you experience some freezing issues with Übersicht or if you simply want to improve `simple-bar` responsiveness & energy consumption, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).\
-> **Only working with yabai for now.**
 
 ## Special thanks
 
