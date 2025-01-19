@@ -96,14 +96,12 @@ function UserWidgetCreator({
     });
   };
 
-  const onChange =
-    (field, chexbox = false) =>
-    (e) =>
-      onWidgetChange(
-        index,
-        field,
-        (chexbox ? e?.target?.checked : e?.target?.value) || ""
-      );
+  const onChange = (field, chexbox = false) => {
+    return (e) => {
+      const value = (chexbox ? e?.target?.checked : e?.target?.value) ?? "";
+      onWidgetChange(index, field, value);
+    };
+  };
 
   const onBeforeClick = () => {
     setWidgets((widgets) => {
