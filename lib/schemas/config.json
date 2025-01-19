@@ -1,0 +1,823 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "config.json",
+  "title": "simple-bar config JSON schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "global": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["auto", "dark", "light"],
+          "description": "Theme to use"
+        },
+        "floatingBar": {
+          "type": "boolean",
+          "description": "Make simple-bar floating by adding padding around it"
+        },
+        "noBarBg": {
+          "type": "boolean",
+          "description": "Remove the background of the bar"
+        },
+        "noColorInData": {
+          "type": "boolean",
+          "description": "Remove colors from all data widgets"
+        },
+        "bottomBar": {
+          "type": "boolean",
+          "description": "Place simple-bar at the bottom of the screen"
+        },
+        "sideDecoration": {
+          "type": "boolean",
+          "description": "Add an Apple logo on the left side of simple-bar"
+        },
+        "inlineSpacesOptions": {
+          "type": "boolean",
+          "description": "Show spaces options inline"
+        },
+        "disableNotifications": {
+          "type": "boolean",
+          "description": "Disable notifications"
+        },
+        "enableMissives": {
+          "type": "boolean",
+          "description": "Enable missives (internal notification system)"
+        },
+        "compactMode": {
+          "type": "boolean",
+          "description": "Enable compact mode"
+        },
+        "widgetMaxWidth": {
+          "type": "string",
+          "description": "Max width for widgets. Overflowing text while be shown with a sliding effect"
+        },
+        "spacesBackgroundColorAsForeground": {
+          "type": "boolean",
+          "description": "Use spaces background color as foreground color"
+        },
+        "widgetsBackgroundColorAsForeground": {
+          "type": "boolean",
+          "description": "Use widgets background color as foreground color"
+        },
+        "font": {
+          "type": "string",
+          "description": "Define the font used by simple-bar"
+        },
+        "fontSize": {
+          "type": "string",
+          "description": "Define the font size for all the widgets. You can use any css unit. It can particulary be usefull if you have displays with different pixel density and different scaling factor in which case you can set a value with a relative viewport unit like 1vh. Be careful to not set a value too high as it could break all simple-bar interface as this setting is used for every texts"
+        },
+        "yabaiPath": {
+          "type": "string",
+          "description": "Determine the path to the yabai binary"
+        },
+        "aerospacePath": {
+          "type": "string",
+          "description": "Determine the path to the aerospace binary"
+        },
+        "windowManager": {
+          "type": "string",
+          "enum": ["yabai", "aerospaced"],
+          "description": "Determine the window manager used by simple-bar to display spaces & processes: yabai or aerospace"
+        },
+        "shell": {
+          "type": "string",
+          "enum": ["sh", "bash", "dash"],
+          "description": "Depending on your preference you can choose between these 3 shell for all simple-bar scripts execution: sh, bash, dash"
+        },
+        "terminal": {
+          "type": "string",
+          "enum": ["terminal", "iTerm2"],
+          "description": "Define the terminal used by simple-bar to run commands"
+        },
+        "slidingAnimationPace": {
+          "type": "number",
+          "description": "Determine the speed of the sliding animation for widgets with overflowing text. Default is \"4\". The higher slidingAnimationPace value, the faster the texts slides (must be > 0)"
+        },
+        "enableServer": {
+          "type": "boolean",
+          "description": "Enable websocket connection to the server in each data widget. You must install and launch simple-bar-server before activating this setting"
+        },
+        "serverSocketPort": {
+          "type": "number",
+          "description": "Determine the port on which the websockets will be opened. Check you simple-bar-server config file to get the right port if you changed it"
+        },
+        "yabaiServerRefresh": {
+          "type": "boolean",
+          "description": "Enable websocket connection to the server in yabai spaces & process widgets. You must install and launch simple-bar-server before activating this setting"
+        },
+        "aerospaceServerRefresh": {
+          "type": "boolean",
+          "description": "Enable websocket connection to the server in AeroSpace spaces widgets. You must install and launch simple-bar-server before activating this setting"
+        }
+      }
+    },
+    "themes": {
+      "type": "object",
+      "properties": {
+        "lightTheme": {
+          "type": "string",
+          "description": "Light theme to use"
+        },
+        "darkTheme": {
+          "type": "string",
+          "description": "Dark theme to use"
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "properties": {
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "displayOnlyCurrent": {
+          "type": "boolean",
+          "description": "Insead of showing all processes of the current space, simple-bar will only show the current one"
+        },
+        "centered": {
+          "type": "boolean",
+          "description": "The process widget will be centered. Do not activate it if you run simple-bar on a mac with a notch"
+        },
+        "showCurrentSpaceMode": {
+          "type": "boolean",
+          "description": "[yabai] Show the current space yabai mode on the left of the processes"
+        },
+        "hideWindowTitle": {
+          "type": "boolean",
+          "description": "Hide window titles"
+        },
+        "displayOnlyIcon": {
+          "type": "boolean",
+          "description": "Show only the process icon"
+        },
+        "expandAllProcesses": {
+          "type": "boolean",
+          "description": "All processes are revealed"
+        },
+        "displaySkhdMode": {
+          "type": "boolean",
+          "description": "[yabai] If the current space is in stack mode, each process will have its stack index displayed"
+        },
+        "displayStackIndex": {
+          "type": "boolean",
+          "description": "[yabai] Show stack index only on focused process"
+        },
+        "displayOnlyCurrentStack": {
+          "type": "boolean",
+          "description": "[yabai] Show stack-index only for focused process"
+        }
+      }
+    },
+    "spacesDisplay": {
+      "type": "object",
+      "properties": {
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "exclusions": {
+          "type": "string",
+          "description": "You can exclude some process with their app name. Simply add the wanted app name and separate multiple app names with a comma"
+        },
+        "titleExclusions": {
+          "type": "string",
+          "description": "Same as previous settings but with the window title name"
+        },
+        "spacesExclusions": {
+          "type": "string",
+          "description": "Whole space(s) can be excluded for the spaces display by their name here separated by a comma"
+        },
+        "exclusionsAsRegex": {
+          "type": "boolean",
+          "description": "Instead of using comma in the exclusions fields, you can use the regex syntax"
+        },
+        "displayAllSpacesOnAllScreens": {
+          "type": "boolean",
+          "description": "By default, only spaces attached to the current display are displayed on all displays. This can be changed with this setting"
+        },
+        "hideDuplicateAppsInSpaces": {
+          "type": "boolean",
+          "description": "Each instance of an app is displayed separately in their respective space. You can merge all duplicates with this setting"
+        },
+        "displayStickyWindowsSeparately": {
+          "type": "boolean",
+          "description": "[yabai] Sticky windows are displayed on each screens by default. You can choose to displayed only in one place thanks to this settings (at the left of all the spaces)"
+        },
+        "hideCreateSpaceButton": {
+          "type": "boolean",
+          "description": "[yabai] Simply hide the \"+\" button (which is only visible if you have SIP disabled)"
+        },
+        "hideEmptySpaces": {
+          "type": "boolean",
+          "description": "Hide spaces with no opened apps"
+        },
+        "showOptionsOnHover": {
+          "type": "boolean",
+          "description": "Space options are opened on right click if this setting is set to false"
+        },
+        "switchSpacesWithoutYabai": {
+          "type": "boolean",
+          "description": "Instead of relying on yabai to switch to a specific space (on space click), simple-bar will trigger the \"switch to prev/next\" space shortcut which need to be enabled in macos settings to be working"
+        }
+      }
+    },
+    "widgets": {
+      "type": "object",
+      "properties": {
+        "processWidget": {
+          "type": "boolean",
+          "description": "Hide or show the process widget"
+        },
+        "weatherWidget": {
+          "type": "boolean",
+          "description": "Hide or show the weather widget"
+        },
+        "netstatsWidget": {
+          "type": "boolean",
+          "description": "Hide or show the netstats widget"
+        },
+        "cpuWidget": {
+          "type": "boolean",
+          "description": "Hide or show the cpu widget"
+        },
+        "memoryWidget": {
+          "type": "boolean",
+          "description": "Hide or show the memory widget"
+        },
+        "batteryWidget": {
+          "type": "boolean",
+          "description": "Hide or show the battery widget"
+        },
+        "wifiWidget": {
+          "type": "boolean",
+          "description": "Hide or show the wifi widget"
+        },
+        "vpnWidget": {
+          "type": "boolean",
+          "description": "Hide or show the VPN widget"
+        },
+        "zoomWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Zoom widget"
+        },
+        "soundWidget": {
+          "type": "boolean",
+          "description": "Hide or show the sound widget"
+        },
+        "micWidget": {
+          "type": "boolean",
+          "description": "Hide or show the microphone widget"
+        },
+        "dateWidget": {
+          "type": "boolean",
+          "description": "Hide or show the date widget"
+        },
+        "timeWidget": {
+          "type": "boolean",
+          "description": "Hide or show the time widget"
+        },
+        "keyboardWidget": {
+          "type": "boolean",
+          "description": "Hide or show the keyboard widget"
+        },
+        "spotifyWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Spotify widget"
+        },
+        "cryptoWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Crypto widget"
+        },
+        "stockWidget": {
+          "type": "boolean",
+          "description": "Hide or show the stocks widget"
+        },
+        "youtubeMusicWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Youtube widget"
+        },
+        "musicWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Music widget"
+        },
+        "mpdWidget": {
+          "type": "boolean",
+          "description": "Hide or show the MPD widget"
+        },
+        "browserTrackWidget": {
+          "type": "boolean",
+          "description": "Hide or show the browser track widget"
+        }
+      }
+    },
+    "weatherWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["C", "F"],
+          "description": "The temperature unit to use (C or F)"
+        },
+        "hideLocation": {
+          "type": "boolean",
+          "description": "Hide the location in the widget"
+        },
+        "hideGradient": {
+          "type": "boolean",
+          "description": "Hide the sunset/sunrise gradient in the widget"
+        },
+        "customLocation": {
+          "type": "string",
+          "description": "Set your location. If empty, the location is determined by the location API"
+        }
+      }
+    },
+    "netstatsWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "displayAsGraph": {
+          "type": "boolean",
+          "description": "Instead of show current network information, the widget will display a graphic showing the latest 60 seconds (it can change depending of the refresh frequency of the widget) of network activity. All drawn points are relative to the highest value"
+        }
+      }
+    },
+    "cpuWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "displayAsGraph": {
+          "type": "boolean",
+          "description": "Instead of show current CPU information, the widget will display a graphic showing the latest 100 seconds (it can change depending of the refresh frequency of the widget) of CPU activity. All drawn points are relative to the highest value"
+        },
+        "cpuMonitorApp": {
+          "type": "string",
+          "enum": ["Activity Monitor", "Top", "None"],
+          "description": "Define the opened app on widget click: Activity Monitor, Top or None"
+        }
+      }
+    },
+    "memoryWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": { "type": "string" },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "memoryMonitorApp": {
+          "type": "string",
+          "enum": ["Activity Monitor", "Top", "None"],
+          "description": "Define the opened app on widget click: Activity Monitor, Top or None"
+        }
+      }
+    },
+    "batteryWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "toggleCaffeinateOnClick": {
+          "type": "boolean",
+          "description": "Enable the toggle of caffeinate mode on click"
+        },
+        "caffeinateOption": {
+          "type": "string",
+          "description": "The options to pass to caffeinate when toggling it"
+        }
+      }
+    },
+    "networkWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "networkDevice": {
+          "type": "string",
+          "description": "The network device source name"
+        },
+        "hideWifiIfDisabled": {
+          "type": "boolean",
+          "description": "Hide the widget if the network is disabled"
+        },
+        "toggleWifiOnClick": {
+          "type": "boolean",
+          "description": "Toggle wifi on click"
+        },
+        "hideNetworkName": {
+          "type": "boolean",
+          "description": "Hide the network name"
+        }
+      }
+    },
+    "vpnWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "vpnConnectionName": {
+          "type": "string",
+          "description": "The name of the connection you want to display"
+        },
+        "vpnShowConnectionName": {
+          "type": "boolean",
+          "description": "Display the connection name in the widget"
+        }
+      }
+    },
+    "zoomWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showVideo": {
+          "type": "boolean",
+          "description": "Displays your current call video status"
+        },
+        "showMic": {
+          "type": "boolean",
+          "description": "Displays your current call microphone status"
+        }
+      }
+    },
+    "soundWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        }
+      }
+    },
+    "micWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        }
+      }
+    },
+    "dateWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "shortDateFormat": {
+          "type": "boolean",
+          "description": "If true, the date will be displayed in short format"
+        },
+        "locale": {
+          "type": "string",
+          "description": "The locale to use for the date"
+        },
+        "calendarApp": {
+          "type": "string",
+          "description": "The calendar app to open when clicking on the date"
+        }
+      }
+    },
+    "timeWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "hour12": {
+          "type": "boolean",
+          "description": "Display time in 12h format"
+        },
+        "dayProgress": {
+          "type": "boolean",
+          "description": "Display day progress"
+        },
+        "showSeconds": {
+          "type": "boolean",
+          "description": "Display seconds"
+        }
+      }
+    },
+    "keyboardWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        }
+      }
+    },
+    "cryptoWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "denomination": {
+          "type": "string",
+          "enum": ["usd", "eur"],
+          "description": "The displayed denomination, usd or eur"
+        },
+        "identifiers": {
+          "type": "string",
+          "description": "You can set a list of denomination Default is \"bitcoin,ethereum,celo\". Only theses 3 identifiers have a personalized icon"
+        },
+        "precision": {
+          "type": "number",
+          "description": "The number of decimals to display"
+        }
+      }
+    },
+    "stockWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "yahooFinanceApiKey": {
+          "type": "string",
+          "description": "Your API key for Yahoo Finance"
+        },
+        "symbols": {
+          "type": "string",
+          "description": "The symbols for your stocks, ETFs, mutual funds,..."
+        },
+        "showSymbol": {
+          "type": "boolean",
+          "description": "Show the symbol of the currency"
+        },
+        "showCurrency": {
+          "type": "boolean",
+          "description": "Show the currency of the currency"
+        },
+        "showMarketPrice": {
+          "type": "boolean",
+          "description": "Show the market price of the currency"
+        },
+        "showMarketChange": {
+          "type": "boolean",
+          "description": "Show the change of the currency"
+        },
+        "showMarketPercent": {
+          "type": "boolean",
+          "description": "Show the change of the currency percent"
+        },
+        "showColor": {
+          "type": "boolean",
+          "description": "Show the market change in red or green"
+        }
+      }
+    },
+    "spotifyWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showSpecter": {
+          "type": "boolean",
+          "description": "Show the specter animation when a song is playing"
+        }
+      }
+    },
+    "youtubeMusicWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showSpecter": {
+          "type": "boolean",
+          "description": "Show the specter animation when a song is playing"
+        },
+        "youtubeMusicPort": {
+          "type": "number",
+          "description": "The port on which the YoutubeMusic server is running"
+        }
+      }
+    },
+    "musicWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showSpecter": {
+          "type": "boolean",
+          "description": "Show the specter animation when a song is playing"
+        }
+      }
+    },
+    "mpdWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showSpecter": {
+          "type": "boolean",
+          "description": "Show the specter animation when a song is playing"
+        },
+        "mpdBinaryPath": {
+          "type": "string",
+          "description": "The binary path required to run mpc commands from the widget"
+        },
+        "mpdPort": { "type": "string", "description": "The port used by MPD" },
+        "mpdHost": { "type": "string", "description": "The host used by MPD" },
+        "mpdFormatString": {
+          "type": "string",
+          "description": "The format string used by MPC"
+        }
+      }
+    },
+    "browserTrackWidgetOptions": {
+      "type": "object",
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showSpecter": {
+          "type": "boolean",
+          "description": "Show the specter animation when a song is playing"
+        }
+      }
+    },
+    "userWidgets": {
+      "type": "object",
+      "properties": {
+        "userWidgetsList": {
+          "type": "object",
+          "description": "List of your custom widgets",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "The title of the widget"
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "The icon of the widget"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "description": "Any valid CSS color"
+                },
+                "output": {
+                  "type": "string",
+                  "description": "The command to get the output, can be a shell script"
+                },
+                "onClickAction": {
+                  "type": "string",
+                  "description": "The action on click, can be a shell script"
+                },
+                "onRightClickAction": {
+                  "type": "string",
+                  "description": "The action on right click, can be a shell script"
+                },
+                "onMiddleClickAction": {
+                  "type": "string",
+                  "description": "The action on middle click, can be a shell script"
+                },
+                "showOnDisplay": {
+                  "type": "string",
+                  "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+                },
+                "refreshFrequency": {
+                  "type": "number",
+                  "description": "The refresh frequency of this widget in milliseconds"
+                },
+                "active": {
+                  "type": "boolean",
+                  "description": "Enable or disable this specific user widget"
+                },
+                "noIcon": {
+                  "type": "boolean",
+                  "description": "Hide the icon"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "customStyles": {
+      "type": "object",
+      "properties": {
+        "styles": {
+          "type": "string",
+          "description": "Your custom css styles here"
+        }
+      }
+    }
+  }
+}
