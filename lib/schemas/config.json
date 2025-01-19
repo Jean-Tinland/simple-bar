@@ -80,7 +80,7 @@
         },
         "windowManager": {
           "type": "string",
-          "enum": ["yabai", "aerospaced"],
+          "enum": ["yabai", "aerospace"],
           "description": "Determine the window manager used by simple-bar to display spaces & processes: yabai or aerospace"
         },
         "shell": {
@@ -90,7 +90,7 @@
         },
         "terminal": {
           "type": "string",
-          "enum": ["terminal", "iTerm2"],
+          "enum": ["Terminal", "iTerm2"],
           "description": "Define the terminal used by simple-bar to run commands"
         },
         "slidingAnimationPace": {
@@ -804,7 +804,20 @@
                   "type": "boolean",
                   "description": "Hide the icon"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "icon",
+                "backgroundColor",
+                "output",
+                "onClickAction",
+                "onRightClickAction",
+                "onMiddleClickAction",
+                "showOnDisplay",
+                "refreshFrequency",
+                "active",
+                "noIcon"
+              ]
             }
           }
         }
