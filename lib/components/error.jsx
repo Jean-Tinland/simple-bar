@@ -4,7 +4,7 @@ import * as Utils from "../utils";
 const message = {
   error: "Something went wrong…",
   yabaiError: "yabai is not running",
-  aerospaceError: "aerospace is not running",
+  aerospaceError: "AeroSpace is either not running or outdated",
   noOutput: "Loading…",
   noData: "JSON error…",
 };
