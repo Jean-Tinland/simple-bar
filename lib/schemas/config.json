@@ -8,6 +8,7 @@
     "$schema": { "type": "string" },
     "global": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "theme": {
           "type": "string",
@@ -117,6 +118,7 @@
     },
     "themes": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "lightTheme": {
           "type": "string",
@@ -130,6 +132,7 @@
     },
     "process": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "showOnDisplay": {
           "type": "string",
@@ -175,6 +178,7 @@
     },
     "spacesDisplay": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "showOnDisplay": {
           "type": "string",
@@ -228,6 +232,7 @@
     },
     "widgets": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "processWidget": {
           "type": "boolean",
@@ -317,6 +322,7 @@
     },
     "weatherWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -347,6 +353,7 @@
     },
     "netstatsWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -364,6 +371,7 @@
     },
     "cpuWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -386,6 +394,7 @@
     },
     "memoryWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": { "type": "string" },
         "showOnDisplay": {
@@ -401,6 +410,7 @@
     },
     "batteryWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -422,6 +432,7 @@
     },
     "networkWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -451,6 +462,7 @@
     },
     "vpnWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -472,6 +484,7 @@
     },
     "zoomWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -493,6 +506,7 @@
     },
     "soundWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -506,6 +520,7 @@
     },
     "micWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -519,6 +534,7 @@
     },
     "dateWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -544,6 +560,7 @@
     },
     "timeWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -569,6 +586,7 @@
     },
     "keyboardWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -582,6 +600,7 @@
     },
     "cryptoWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -608,6 +627,7 @@
     },
     "stockWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -653,6 +673,7 @@
     },
     "spotifyWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -670,6 +691,7 @@
     },
     "youtubeMusicWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -691,6 +713,7 @@
     },
     "musicWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -708,6 +731,7 @@
     },
     "mpdWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -735,6 +759,7 @@
     },
     "browserTrackWidgetOptions": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "refreshFrequency": {
           "type": "number",
@@ -756,6 +781,7 @@
         "userWidgetsList": {
           "type": "object",
           "description": "List of your custom widgets",
+          "additionalProperties": false,
           "patternProperties": {
             "^[0-9]+$": {
               "type": "object",
@@ -805,6 +831,7 @@
                   "description": "Hide the icon"
                 }
               },
+              "additionalProperties": false,
               "required": [
                 "title",
                 "icon",
@@ -825,6 +852,7 @@
     },
     "customStyles": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "styles": {
           "type": "string",
