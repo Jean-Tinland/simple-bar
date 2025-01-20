@@ -248,7 +248,11 @@
         },
         "cpuWidget": {
           "type": "boolean",
-          "description": "Hide or show the cpu widget"
+          "description": "Hide or show the CPU widget"
+        },
+        "gpuWidget": {
+          "type": "boolean",
+          "description": "Hide or show the GPU widget"
         },
         "memoryWidget": {
           "type": "boolean",
@@ -389,6 +393,28 @@
           "type": "string",
           "enum": ["Activity Monitor", "Top", "None"],
           "description": "Define the opened app on widget click: Activity Monitor, Top or None"
+        }
+      }
+    },
+    "gpuWidgetOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "displayAsGraph": {
+          "type": "boolean",
+          "description": "Instead of show current CPU information, the widget will display a graphic showing the latest 100 seconds (it can change depending of the refresh frequency of the widget) of CPU activity. All drawn points are relative to the highest value"
+        },
+        "gpuMacmonBinaryPath": {
+          "type": "string",
+          "description": "The binary path required to get GPU usage in the widget"
         }
       }
     },
