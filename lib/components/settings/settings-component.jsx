@@ -87,7 +87,10 @@ export default function Component({ closeSettings }) {
                     type,
                     minHeight,
                   } = subSetting;
+
+                  const code = key + subKey;
                   const defaultValue = newSettings[key][subKey];
+
                   const classes = Utils.classNames("settings__item", {
                     "settings__item--radio": type === "radio",
                     "settings__item--text":
@@ -98,6 +101,7 @@ export default function Component({ closeSettings }) {
                   const onChange = (e) => {
                     const value =
                       type === "checkbox" ? e.target.checked : e.target.value;
+
                     const updatedSettings = {
                       ...newSettings,
                       [key]: { ...newSettings[key], [subKey]: value },
@@ -106,17 +110,16 @@ export default function Component({ closeSettings }) {
                   };
 
                   return (
-                    <React.Fragment key={subKey}>
+                    <React.Fragment key={code}>
                       {title && (
                         <div className="settings__item-title">{title}</div>
                       )}
                       <div
-                        key={subKey}
                         className={classes}
                         onChange={type === "radio" ? onChange : undefined}
                       >
                         <Item
-                          code={subKey}
+                          code={code}
                           Component={Component}
                           defaultValue={defaultValue}
                           label={label}
