@@ -26,14 +26,16 @@ export const Widget = React.memo(() => {
     gpuMacmonBinaryPath,
   } = gpuWidgetOptions;
 
-  const visible =
-    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && gpuWidget;
+  const isDisabled = React.useRef(false);
 
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
+
+  const visible =
+    Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && gpuWidget;
 
   const [graph, setGraph] = React.useState([]);
   const [state, setState] = React.useState();
@@ -49,6 +51,9 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const result = await Uebersicht.run(`${gpuMacmonBinaryPath} pipe -s 1`);
+      if (!visible || isDisabled.current) {
+        return;
+      }
       const json = JSON.parse(result);
       const { gpu_usage } = json;
       const formattedUsage = { usage: Math.round(gpu_usage[1] * 100) };
@@ -61,6 +66,10 @@ export const Widget = React.memo(() => {
       setTimeout(getGpu, 1000);
     }
   }, [displayAsGraph, gpuMacmonBinaryPath, visible]);
+
+  React.useEffect(() => {
+    isDisabled.current = !visible;
+  }, [visible]);
 
   useServerSocket("gpu", visible, getGpu, resetWidget);
   useWidgetRefresh(visible, getGpu, refresh);
