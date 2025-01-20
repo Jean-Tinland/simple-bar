@@ -49,10 +49,7 @@ export default function SimpleBarContextProvider({
     return display.index ?? display["monitor-appkit-nsscreen-screens-id"];
   });
 
-  const currentDisplay =
-    formattedDisplays?.find((id) => id === displayId) || undefined;
-
-  const displayIndex = currentDisplay || 1;
+  const currentDisplay = formattedDisplays?.find((id) => id === displayId) || 1;
 
   const pushMissive = (newMissive) => {
     const now = Date.now();
@@ -73,7 +70,7 @@ export default function SimpleBarContextProvider({
   return (
     <SimpleBarContext.Provider
       value={{
-        displayIndex,
+        displayIndex: currentDisplay,
         SIPDisabled,
         settings,
         setSettings,

@@ -37,6 +37,7 @@ function AerospaceContextProvider({ children }) {
         return Promise.all(
           result.map(async (space) => {
             const focused = space.workspace === focusedSpace.workspace;
+            const monitor = space["monitor-appkit-nsscreen-screens-id"];
             const windows = await Aerospace.getWindows(space.workspace);
             const formatted = windows.map((window) => {
               const focused =
@@ -46,7 +47,7 @@ function AerospaceContextProvider({ children }) {
                 focused,
               };
             });
-            return { ...space, windows: formatted, focused, monitor: display };
+            return { ...space, windows: formatted, focused, monitor };
           })
         );
       })
