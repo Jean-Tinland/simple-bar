@@ -16,6 +16,7 @@ import * as DateDisplay from "./lib/components/data/date-display.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
 import * as Netstats from "./lib/components/data/netstats.jsx";
 import * as Cpu from "./lib/components/data/cpu.jsx";
+import * as Gpu from "./lib/components/data/gpu.jsx";
 import * as Memory from "./lib/components/data/memory.jsx";
 import * as Battery from "./lib/components/data/battery.jsx";
 import * as Sound from "./lib/components/data/sound.jsx";
@@ -79,6 +80,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Weather.styles,
   Netstats.styles,
   Cpu.styles,
+  Gpu.styles,
   Memory.styles,
   Crypto.styles,
   Stock.styles,
@@ -178,6 +180,7 @@ function render({ output, error }) {
           <Weather.Widget />
           <Netstats.Widget />
           <Cpu.Widget />
+          <Gpu.Widget />
           <Memory.Widget />
           <Battery.Widget />
           <Mic.Widget />
