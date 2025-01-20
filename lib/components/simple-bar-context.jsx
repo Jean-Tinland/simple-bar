@@ -1,5 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as Settings from "../settings";
+import * as Utils from "../utils";
 
 const { React } = Uebersicht;
 
@@ -28,7 +29,8 @@ export default function SimpleBarContextProvider({
       if (!configFileExists) return;
       try {
         const config = JSON.parse(await Uebersicht.run(`cat ~/.simplebarrc`));
-        setSettings(config);
+        const settings = Utils.mergeDeep(Settings.defaultSettings, config);
+        setSettings(settings);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error loading external config:", e);
