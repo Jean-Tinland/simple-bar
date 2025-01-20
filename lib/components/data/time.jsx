@@ -1,7 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-import * as Icons from "../icons/icons.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
@@ -69,8 +68,12 @@ export const Widget = React.memo(() => {
   const diff = Math.max(0, dayEnd - new Date());
   const fillerWidth = (100 - (100 * diff) / range) / 100;
 
+  const TimeIcon = () => {
+    return <Icon time={time} />;
+  };
+
   return (
-    <DataWidget.Widget classes="time" Icon={Icons.Clock} disableSlider>
+    <DataWidget.Widget classes="time" Icon={TimeIcon} disableSlider>
       {time}
       {dayProgress && (
         <div
@@ -83,3 +86,23 @@ export const Widget = React.memo(() => {
 });
 
 Widget.displayName = "Time";
+
+function Icon({ time }) {
+  const [hours, minutes] = time.split(":");
+
+  const hoursInDegree = ((parseInt(hours, 10) % 12) / 12) * 360;
+  const minutesInDegree = (parseInt(minutes, 10) / 60) * 360;
+
+  return (
+    <div className="time__icon">
+      <div
+        className="time__hours"
+        style={{ transform: `rotate(${hoursInDegree}deg)` }}
+      />
+      <div
+        className="time__minutes"
+        style={{ transform: `rotate(${minutesInDegree}deg)` }}
+      />
+    </div>
+  );
+}
