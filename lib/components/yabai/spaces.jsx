@@ -14,7 +14,8 @@ const { React } = Uebersicht;
 
 export const Component = React.memo(() => {
   const { spaces, windows } = useYabaiContext();
-  const { SIPDisabled, displayIndex, settings } = useSimpleBarContext();
+  const { SIPDisabled, displayIndex, displays, settings } =
+    useSimpleBarContext();
   const { spacesDisplay, process } = settings;
   const {
     displayStickyWindowsSeparately,
@@ -34,8 +35,6 @@ export const Component = React.memo(() => {
   if (!spaces && !windows) {
     return <div className="spaces spaces--empty" />;
   }
-
-  const displays = [...new Set(spaces.map((space) => space.display))];
 
   const { index: currentSpaceIndex } =
     spaces.find((space) => {
