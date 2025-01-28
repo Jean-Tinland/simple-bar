@@ -58,7 +58,7 @@ export const Widget = React.memo(() => {
     }
   }, [displayAsGraph, setGraph, visible]);
 
-  useServerSocket("cpu", visible, getCpu, resetWidget);
+  useServerSocket("cpu", visible, getCpu, resetWidget, setLoading);
   useWidgetRefresh(visible, getCpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;

@@ -49,7 +49,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("mic", visible, getMic, resetWidget);
+  useServerSocket("mic", visible, getMic, resetWidget, setLoading);
   useWidgetRefresh(visible, getMic, refresh);
 
   React.useEffect(() => {

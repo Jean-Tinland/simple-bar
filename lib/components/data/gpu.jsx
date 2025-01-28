@@ -71,7 +71,7 @@ export const Widget = React.memo(() => {
     isDisabled.current = !visible;
   }, [visible]);
 
-  useServerSocket("gpu", visible, getGpu, resetWidget);
+  useServerSocket("gpu", visible, getGpu, resetWidget, setLoading);
   useWidgetRefresh(visible, getGpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;

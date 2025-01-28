@@ -1,5 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
+import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
@@ -35,12 +36,14 @@ export const Widget = React.memo(() => {
 
   const [state, setState] = React.useState();
   const [cachedAccessToken, setCachedAccessToken] = React.useState();
+  const [loading, setLoading] = React.useState(visible);
 
   const apiUrl = `http://localhost:${youtubeMusicPort}`;
 
   const resetWidget = () => {
     setState(undefined);
     setCachedAccessToken(undefined);
+    setLoading(false);
   };
 
   const getAccessToken = React.useCallback(async () => {
@@ -88,8 +91,16 @@ export const Widget = React.memo(() => {
     }
   }, [visible, fetchRoute]);
 
-  useServerSocket("youtube-music", visible, refreshState, resetWidget);
+  useServerSocket(
+    "youtube-music",
+    visible,
+    refreshState,
+    resetWidget,
+    setLoading
+  );
   useWidgetRefresh(visible, refreshState, refresh);
+
+  if (loading) return <DataWidgetLoader.Widget className="youtube-music" />;
 
   const onClick = async (e) => {
     Utils.clickEffect(e);

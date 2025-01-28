@@ -61,7 +61,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [_locale, options, visible]);
 
-  useServerSocket("date-display", visible, getDate, resetWidget);
+  useServerSocket("date-display", visible, getDate, resetWidget, setLoading);
   useWidgetRefresh(visible, getDate, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="date-display" />;

@@ -68,7 +68,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("music", visible, getMusic, resetWidget);
+  useServerSocket("music", visible, getMusic, resetWidget, setLoading);
   useWidgetRefresh(visible, getMusic, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="music" />;

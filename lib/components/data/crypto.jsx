@@ -71,7 +71,7 @@ export const Widget = React.memo(() => {
     denominatorToken,
   ]);
 
-  useServerSocket("crypto", visible, getCrypto, resetWidget);
+  useServerSocket("crypto", visible, getCrypto, resetWidget, setLoading);
   useWidgetRefresh(visible, getCrypto, refresh);
 
   const refreshCrypto = (e) => {

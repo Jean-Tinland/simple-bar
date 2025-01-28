@@ -57,7 +57,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [networkDevice, visible]);
 
-  useServerSocket("wifi", visible, getWifi, resetWidget);
+  useServerSocket("wifi", visible, getWifi, resetWidget, setLoading);
   useWidgetRefresh(visible, getWifi, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="wifi" />;

@@ -54,7 +54,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("zoom", visible, getZoom, resetWidget);
+  useServerSocket("zoom", visible, getZoom, resetWidget, setLoading);
   useWidgetRefresh(visible, getZoom, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="zoom" />;

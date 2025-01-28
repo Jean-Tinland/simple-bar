@@ -53,7 +53,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible, options]);
 
-  useServerSocket("time", visible, getTime, resetWidget);
+  useServerSocket("time", visible, getTime, resetWidget, setLoading);
   useWidgetRefresh(visible, getTime, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="time" />;

@@ -67,7 +67,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("battery", visible, getBattery, resetWidget);
+  useServerSocket("battery", visible, getBattery, resetWidget, setLoading);
   useWidgetRefresh(visible, getBattery, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />;

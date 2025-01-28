@@ -91,7 +91,7 @@ export const Widget = React.memo(() => {
     enumeratedSymbols,
   ]);
 
-  useServerSocket("stock", visible, getStocks, resetWidget);
+  useServerSocket("stock", visible, getStocks, resetWidget, setLoading);
   useWidgetRefresh(visible, getStocks, refresh);
 
   const refreshStocks = (e) => {

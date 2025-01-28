@@ -58,7 +58,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible, vpnConnectionName]);
 
-  useServerSocket("viscosity-vpn", visible, getVPN, resetWidget);
+  useServerSocket("viscosity-vpn", visible, getVPN, resetWidget, setLoading);
   useWidgetRefresh(visible, getVPN, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />;

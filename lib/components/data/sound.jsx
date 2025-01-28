@@ -57,7 +57,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("sound", visible, getSound, resetWidget);
+  useServerSocket("sound", visible, getSound, resetWidget, setLoading);
   useWidgetRefresh(visible, getSound, refresh);
 
   React.useEffect(() => {

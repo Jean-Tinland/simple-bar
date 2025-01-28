@@ -69,7 +69,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("spotify", visible, getSpotify, resetWidget);
+  useServerSocket("spotify", visible, getSpotify, resetWidget, setLoading);
   useWidgetRefresh(visible, getSpotify, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="spotify" />;

@@ -69,7 +69,7 @@ export const Widget = React.memo(() => {
     isDisabled.current = !visible;
   }, [visible]);
 
-  useServerSocket("netstats", visible, getNetstats, resetWidget);
+  useServerSocket("netstats", visible, getNetstats, resetWidget, setLoading);
   useWidgetRefresh(visible, getNetstats, refresh);
 
   if (loading)

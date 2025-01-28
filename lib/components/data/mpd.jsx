@@ -87,7 +87,7 @@ export const Widget = React.memo(() => {
     if (!dragging) setVolume(volume);
   }, [dragging, volume]);
 
-  useServerSocket("mpd", visible, getMpd, resetWidget);
+  useServerSocket("mpd", visible, getMpd, resetWidget, setLoading);
   useWidgetRefresh(visible, getMpd, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="mpd" />;

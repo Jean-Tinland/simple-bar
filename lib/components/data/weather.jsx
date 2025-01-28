@@ -67,7 +67,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible, location]);
 
-  useServerSocket("weather", visible, getWeather, resetWidget);
+  useServerSocket("weather", visible, getWeather, resetWidget, setLoading);
   useWidgetRefresh(visible, getWeather, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="weather" />;

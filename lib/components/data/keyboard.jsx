@@ -63,7 +63,7 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("keyboard", visible, getKeyboard, resetWidget);
+  useServerSocket("keyboard", visible, getKeyboard, resetWidget, setLoading);
   useWidgetRefresh(visible, getKeyboard, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />;

@@ -60,7 +60,14 @@ const UserWidget = React.memo(({ index, widget }) => {
     setLoading(false);
   }, [visible, output]);
 
-  useServerSocket("user-widget", visible, getUserWidget, resetWidget, index);
+  useServerSocket(
+    "user-widget",
+    visible,
+    getUserWidget,
+    resetWidget,
+    setLoading,
+    index
+  );
   useWidgetRefresh(visible, getUserWidget, refreshFrequency);
 
   if (!visible) return null;

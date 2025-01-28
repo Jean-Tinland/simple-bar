@@ -74,7 +74,13 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
-  useServerSocket("browser-track", visible, getBrowserTrack, resetWidget);
+  useServerSocket(
+    "browser-track",
+    visible,
+    getBrowserTrack,
+    resetWidget,
+    setLoading
+  );
   useWidgetRefresh(visible, getBrowserTrack, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="browser-track" />;
