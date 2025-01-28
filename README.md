@@ -51,6 +51,17 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 > [!TIP]\
 > If you experience some freezing issues with Übersicht or if you simply want to improve `simple-bar` responsiveness & energy consumption, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).\
 
+## Roadmap
+
+Here are the features I'm planning to add in the future:
+
+- Theme colors override GUI [#429](https://github.com/Jean-Tinland/simple-bar/issues/429)
+- Bars configurator (spawn multiple bars, place widgets anywhere…) [#380](https://github.com/Jean-Tinland/simple-bar/issues/380)
+- More accessibility settings like reading direction (LTR or RTL)
+- Explanatory comments in each source code files
+
+Feel free to open an issue if you have any feature request or if you want me to prioritize one of these features.
+
 ## Special thanks
 
 I started this project with a simple idea and inspired by similar projects but over the year it has become a real community project. I want to thank everyone who contributed to this project, whether it's by opening issues, suggesting features, or even making pull requests. Furthermore, I also want to thank everyone who is using this project, I'm glad to see that it can be useful to others.
