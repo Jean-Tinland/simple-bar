@@ -4,6 +4,8 @@ import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
 import YabaiContextProvider from "./lib/components/yabai-context.jsx";
 import AerospaceContextProvider from "./lib/components/aerospace-context.jsx";
 import UserWidgets from "./lib/components/data/user-widgets.jsx";
+// Each simple-bar widgets exports both a "Component" or "Widget" render function
+// and a "styles" string containing its own CSS
 import * as YabaiSpaces from "./lib/components/yabai/spaces.jsx";
 import * as YabaiProcess from "./lib/components/yabai/process.jsx";
 import * as AerospaceSpaces from "./lib/components/aerospace/spaces.jsx";
@@ -40,10 +42,16 @@ import * as Missives from "./lib/components/missives/missives.jsx";
 import * as Utils from "./lib/utils";
 import * as Settings from "./lib/settings";
 
+// Destructure React from Uebersicht in order to make eslint catch hook rules for example
 const { React } = Uebersicht;
 
+// Set refresh frequency to false
+// Übersicht auto-refresh system is not required as simple-bar works in sync with
+// yabai or AeroSpaces for spaces & process widgets and data widgets are refresh with
+// their local refresh functions
 const refreshFrequency = false;
 
+// Get settings from the Settings module
 const settings = Settings.get();
 const {
   // Do not edit the yabaiPath or aerospacePath lines, theses values are simply
@@ -52,21 +60,25 @@ const {
   // while on an empty workspace, click on simple-bar then press cmd + , to open it.
   yabaiPath = "/opt/homebrew/bin/yabai",
   aerospacePath = "/opt/homebrew/bin/aerospace",
-  windowManager,
-  shell,
-  enableServer,
-  yabaiServerRefresh,
+  windowManager, // Window manager type (yabai or aerospace)
+  shell, // Shell to use for commands
+  enableServer, // Enable server mode
+  yabaiServerRefresh, // Refresh rate for yabai server
 } = settings.global;
 const { hideWindowTitle, displayOnlyIcon, displaySkhdMode } = settings.process;
 
+// Determine if signals should be disabled based on settings
 const disableSignals = enableServer && yabaiServerRefresh;
 const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 
+// Construct command arguments based on window manager type
 const yabaiArgs = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const aerospaceArgs = `${aerospacePath}`;
 const args = windowManager === "yabai" ? yabaiArgs : aerospaceArgs;
 const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 
+// Inject global styles into the document.
+// I prefer using native CSS instead of Emotion bundled by default in Übersicht
 Utils.injectStyles("simple-bar-index-styles", [
   Variables.styles,
   Base.styles,
@@ -103,7 +115,9 @@ Utils.injectStyles("simple-bar-index-styles", [
   Missives.styles,
 ]);
 
+// Render function to display the bar
 function render({ output, error }) {
+  // Define base classes for the bar based on settings
   const baseClasses = Utils.classNames("simple-bar", {
     "simple-bar--floating": settings.global.floatingBar,
     "simple-bar--no-bar-background": settings.global.noBarBg,
@@ -117,12 +131,15 @@ function render({ output, error }) {
     "simple-bar--process-aligned-to-left": !settings.global.centered,
   });
 
+  // Handle errors
   if (error) {
     // eslint-disable-next-line no-console
     console.error("Error in index.jsx", error);
     return <Error.Component type="error" classes={baseClasses} />;
   }
-  if (!output) return <Error.Component type="noOutput" classes={baseClasses} />;
+  if (!output) {
+    return <Error.Component type="noOutput" classes={baseClasses} />;
+  }
   if (Utils.cleanupOutput(output) === "yabaiError") {
     return <Error.Component type="yabaiError" classes={baseClasses} />;
   }
@@ -130,19 +147,24 @@ function render({ output, error }) {
     return <Error.Component type="aerospaceError" classes={baseClasses} />;
   }
 
+  // Parse the output data
   const data = Utils.parseJson(output);
   if (!data) return <Error.Component type="noData" classes={baseClasses} />;
 
   const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
+  // Check if SIP (System Integrity Protection) is disabled
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
 
+  // Define additional classes based on data
   const classes = Utils.classNames(baseClasses, {
     "simple-bar--no-shadow": shadow !== "on",
   });
 
+  // Handle bar focus ring on click
   Utils.handleBarFocus();
 
+  // Render the bar with appropriate components and data
   return (
     <SimpleBarContextProvider
       initialSettings={settings}
