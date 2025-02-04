@@ -6,6 +6,17 @@ const { React } = Uebersicht;
 
 export { graphStyles as styles } from "../../styles/components/data/graph";
 
+/**
+ * Graph component to display a bar graph with captions and values.
+ *
+ * @param {Object} props - The properties object.
+ * @param {string} props.className - Additional class names for the graph container.
+ * @param {Object} props.caption - Caption data containing value, icon, and color for each key.
+ * @param {Array} props.values - Array of value objects to be displayed as bars.
+ * @param {number} props.maxLength - Maximum length of the graph.
+ * @param {number} [props.maxValue] - Maximum value for scaling the bars.
+ * @returns {JSX.Element|null} The rendered graph component or null if no caption is provided.
+ */
 export default function Graph({
   className,
   caption,
@@ -13,11 +24,14 @@ export default function Graph({
   maxLength,
   maxValue,
 }) {
+  // Return null if no caption is provided
   if (!caption) {
     return null;
   }
 
   const captionKeys = Object.keys(caption);
+
+  // Calculate maxValue if not provided
   if (maxValue === undefined) {
     const allValues = values.map((value) => Object.values(value)).flat();
     maxValue = Math.max(...allValues);

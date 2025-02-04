@@ -13,6 +13,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
+/**
+ * MPD Widget component
+ * @returns {JSX.Element|null} The MPD widget
+ */
 export const Widget = React.memo(() => {
   const ref = React.useRef();
   const { displayIndex, settings } = useSimpleBarContext();
@@ -28,12 +32,14 @@ export const Widget = React.memo(() => {
     showOnDisplay,
   } = mpdWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible on the current display
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && mpdWidget;
 
@@ -44,11 +50,17 @@ export const Widget = React.memo(() => {
   const [volume, setVolume] = React.useState(defaultVolume);
   const [dragging, setDragging] = React.useState(false);
 
+  /**
+   * Reset the widget state
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch MPD data
+   */
   const getMpd = React.useCallback(async () => {
     if (!visible) return;
 
@@ -79,10 +91,12 @@ export const Widget = React.memo(() => {
     }
   }, [visible, mpdBinaryPath, mpdHost, mpdPort, mpdFormatString]);
 
+  // Update the volume when dragging ends
   React.useEffect(() => {
     if (!dragging) setSound(mpdBinaryPath, mpdHost, mpdPort, volume);
   }, [dragging, mpdBinaryPath, mpdHost, mpdPort, volume]);
 
+  // Set the volume state when dragging ends
   React.useEffect(() => {
     if (!dragging) setVolume(volume);
   }, [dragging, volume]);
@@ -99,12 +113,20 @@ export const Widget = React.memo(() => {
   const isPlaying = playerState === "playing";
   const Icon = isPlaying ? Icons.Playing : Icons.Paused;
 
+  /**
+   * Handle click event to toggle play/pause
+   * @param {React.MouseEvent} e - The click event
+   */
   const onClick = async (e) => {
     Utils.clickEffect(e);
     await togglePlay(mpdBinaryPath, mpdHost, mpdPort);
     await getMpd();
   };
 
+  /**
+   * Handle volume change event
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event
+   */
   const onChange = (e) => {
     const value = parseInt(e.target.value);
     setVolume(value);
@@ -162,10 +184,24 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Mpd";
 
+/**
+ * Toggle play/pause state of MPD
+ * @param {string} path - The path to the MPD binary
+ * @param {string} host - The MPD host
+ * @param {string} port - The MPD port
+ * @returns {Promise<void>}
+ */
 async function togglePlay(path, host, port) {
   return Uebersicht.run(`${path} --host ${host} --port ${port} toggle`);
 }
 
+/**
+ * Set the volume of MPD
+ * @param {string} path - The path to the MPD binary
+ * @param {string} host - The MPD host
+ * @param {string} port - The MPD port
+ * @param {number} volume - The volume level to set
+ */
 function setSound(path, host, port, volume) {
   if (!volume) return;
   Uebersicht.run(`${path} --host ${host} --port ${port} volume ${volume}`);

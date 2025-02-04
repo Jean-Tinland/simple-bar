@@ -8,6 +8,15 @@ import * as Yabai from "../../yabai.js";
 
 const { React } = Uebersicht;
 
+/**
+ * Component representing a space in yabai window manager.
+ * @param {Object} props - The component props.
+ * @param {Object} props.space - The space object.
+ * @param {number} props.display - The display index.
+ * @param {number} props.currentSpaceIndex - The current space index.
+ * @param {boolean} props.lastOfSpace - Whether this is the last space.
+ * @returns {JSX.Element|null} The rendered component.
+ */
 export default function Space({
   space,
   display,
@@ -44,6 +53,7 @@ export default function Space({
     label?.length ? label : index
   );
 
+  // Return null if the space should not be displayed on the current screen
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null;
 
   const exclusions = exclusionsAsRegex
@@ -53,6 +63,10 @@ export default function Space({
     ? spacesDisplay.titleExclusions
     : spacesDisplay.titleExclusions.split(", ");
 
+  /**
+   * Handle mouse enter event.
+   * @param {MouseEvent} e - The mouse event.
+   */
   const onMouseEnter = (e) => {
     if (!showOptionsOnHover) return;
     const { altKey, metaKey } = e;
@@ -60,12 +74,21 @@ export default function Space({
     setHovered(true);
     if (metaKey) setNoDelay(true);
   };
+
+  /**
+   * Handle mouse leave event.
+   */
   const onMouseLeave = () => {
     setHovered(false);
     setNoDelay(false);
     setEditable(false);
     window.getSelection().removeAllRanges();
   };
+
+  /**
+   * Handle click event.
+   * @param {MouseEvent} e - The mouse event.
+   */
   const onClick = (e) => {
     onMouseLeave(e);
     if (e.altKey) {
@@ -82,10 +105,19 @@ export default function Space({
     Utils.switchSpace(currentSpaceIndex, index);
     Utils.clickEffect(e);
   };
+
+  /**
+   * Handle right-click event.
+   */
   const onRightClick = () => {
     setHovered(true);
     setNoDelay(true);
   };
+
+  /**
+   * Handle change event for the space label input.
+   * @param {Event} e - The change event.
+   */
   const onChange = (e) => {
     if (!editable) return;
     const newLabel = e.target.value;
@@ -105,6 +137,7 @@ export default function Space({
     });
   const allApps = [...apps, ...stickyWindows];
 
+  // Determine if the space should be hidden
   const hidden =
     !(hasFocus ?? __legacyHasFocus) &&
     !(isVisible ?? __legacyHasFocus) &&

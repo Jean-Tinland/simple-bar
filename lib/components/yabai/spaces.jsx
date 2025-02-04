@@ -12,8 +12,14 @@ export { spacesStyles as styles } from "../../styles/components/spaces/spaces";
 
 const { React } = Uebersicht;
 
+/**
+ * Spaces component to display spaces and manage space-related actions.
+ * @returns {JSX.Element|null} The rendered component.
+ */
 export const Component = React.memo(() => {
+  // Get spaces and windows data from Yabai context
   const { spaces, windows } = useYabaiContext();
+  // Get various settings and display information from simple-bar context
   const { SIPDisabled, displayIndex, displays, settings } =
     useSimpleBarContext();
   const { spacesDisplay, process } = settings;
@@ -24,6 +30,7 @@ export const Component = React.memo(() => {
     hideCreateSpaceButton,
     showOnDisplay,
   } = spacesDisplay;
+  // Determine if the component should be visible on the current display
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
@@ -36,6 +43,7 @@ export const Component = React.memo(() => {
     return <div className="spaces spaces--empty" />;
   }
 
+  // Find the current space index
   const { index: currentSpaceIndex } =
     spaces.find((space) => {
       const { "has-focus": hasFocus, focused: __legacyHasFocus } = space;
@@ -45,6 +53,10 @@ export const Component = React.memo(() => {
   return displays.map((display, i) => {
     if (display !== displayIndex) return null;
 
+    /**
+     * Handle click event to create a new space.
+     * @param {Event} e - The click event.
+     */
     const onClick = async (e) => {
       Utils.clickEffect(e);
       await Yabai.createSpace(displayIndex);

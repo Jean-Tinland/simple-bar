@@ -15,6 +15,10 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const GRAPH_LENGTH = 40;
 
+/**
+ * GPU Widget component
+ * @returns {JSX.Element|null} The GPU widget component
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, gpuWidgetOptions } = settings;
@@ -28,12 +32,14 @@ export const Widget = React.memo(() => {
 
   const isDisabled = React.useRef(false);
 
+  // Calculate the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && gpuWidget;
 
@@ -41,12 +47,18 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Reset the widget state
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
     setGraph([]);
   };
 
+  /**
+   * Fetch GPU data and update the widget state
+   */
   const getGpu = React.useCallback(async () => {
     if (!visible) return;
     try {
@@ -67,11 +79,14 @@ export const Widget = React.memo(() => {
     }
   }, [displayAsGraph, gpuMacmonBinaryPath, visible]);
 
+  // Update the disabled state based on visibility
   React.useEffect(() => {
     isDisabled.current = !visible;
   }, [visible]);
 
+  // Use server socket to fetch GPU data
   useServerSocket("gpu", visible, getGpu, resetWidget, setLoading);
+  // Use widget refresh hook to periodically refresh the widget
   useWidgetRefresh(visible, getGpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;

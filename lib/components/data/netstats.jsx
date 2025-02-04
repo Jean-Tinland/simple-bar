@@ -16,6 +16,10 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const GRAPH_LENGTH = 30;
 
+/**
+ * Netstats widget component.
+ * @returns {JSX.Element|null} The rendered component.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, netstatsWidgetOptions } = settings;
@@ -25,12 +29,14 @@ export const Widget = React.memo(() => {
 
   const isDisabled = React.useRef(false);
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && netstatsWidget;
 
@@ -38,12 +44,18 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Resets the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
     setGraph([]);
   };
 
+  /**
+   * Fetches network statistics.
+   */
   const getNetstats = React.useCallback(async () => {
     if (!visible) return;
     try {
@@ -65,10 +77,12 @@ export const Widget = React.memo(() => {
     }
   }, [displayAsGraph, setGraph, visible]);
 
+  // Update the disabled state based on visibility
   React.useEffect(() => {
     isDisabled.current = !visible;
   }, [visible]);
 
+  // Set up server socket and widget refresh hooks
   useServerSocket("netstats", visible, getNetstats, resetWidget, setLoading);
   useWidgetRefresh(visible, getNetstats, refresh);
 

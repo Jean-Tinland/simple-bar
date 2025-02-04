@@ -7,17 +7,34 @@ const { React } = Uebersicht;
 
 const LAST_CURRENT_TAB = "simple-bar-last-current-settings-tab";
 
+/**
+ * Main settings component.
+ * @param {Object} props - Component properties.
+ * @param {Function} props.closeSettings - Function to close the settings.
+ */
 export default function Component({ closeSettings }) {
+  // State to keep track of the current tab
   const [currentTab, setCurrentTab] = React.useState(getLastCurrentTab());
+  // State to keep track of pending changes
   const [pendingChanges, setPendingChanges] = React.useState(0);
+  // Get current settings
   const settings = Settings.get();
+  // State to keep track of new settings
   const [newSettings, setNewSettings] = React.useState(settings);
 
+  /**
+   * Update the current tab and store it in session storage.
+   * @param {number} tab - The index of the tab to switch to.
+   */
   const updateTab = (tab) => {
     setCurrentTab(tab);
     window.sessionStorage.setItem(LAST_CURRENT_TAB, tab);
   };
 
+  /**
+   * Refresh the simple-bar with new settings.
+   * @param {Event} e - The event object.
+   */
   const refreshSimpleBar = async (e) => {
     Utils.clickEffect(e);
     setPendingChanges(0);
@@ -25,6 +42,7 @@ export default function Component({ closeSettings }) {
     Utils.hardRefresh();
   };
 
+  // Effect to calculate the number of pending changes
   React.useEffect(() => {
     const diffs = Utils.compareObjects(settings, newSettings);
     const deepDiffs = Object.keys(diffs).reduce(
@@ -182,6 +200,19 @@ export default function Component({ closeSettings }) {
   );
 }
 
+/**
+ * Item component to render different types of settings inputs.
+ * @param {Object} props - Component properties.
+ * @param {string} props.code - Unique code for the setting.
+ * @param {React.Component} props.Component - Custom component for the setting.
+ * @param {any} props.defaultValue - Default value of the setting.
+ * @param {string} props.label - Label for the setting.
+ * @param {string} props.type - Type of the setting input.
+ * @param {Array} [props.options] - Options for select or radio inputs.
+ * @param {string} [props.placeholder] - Placeholder for text inputs.
+ * @param {number} [props.minHeight] - Minimum height for textarea inputs.
+ * @param {Function} props.onChange - Change handler for the setting input.
+ */
 function Item({
   code,
   Component,
@@ -302,6 +333,10 @@ function Item({
   );
 }
 
+/**
+ * Get the last current tab from session storage.
+ * @returns {number} The index of the last current tab.
+ */
 function getLastCurrentTab() {
   const storedLastCurrentTab = window.sessionStorage.getItem(LAST_CURRENT_TAB);
   if (storedLastCurrentTab) return parseInt(storedLastCurrentTab, 10);

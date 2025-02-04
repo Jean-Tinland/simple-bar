@@ -14,6 +14,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
+/**
+ * Battery widget component
+ * @returns {JSX.Element|null} The battery widget component
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, batteryWidgetOptions } = settings;
@@ -25,9 +29,11 @@ export const Widget = React.memo(() => {
     showOnDisplay,
   } = batteryWidgetOptions;
 
+  // Determine if the widget should be visible based on display settings
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && batteryWidget;
 
+  // Calculate the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
@@ -37,14 +43,18 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  // Reset the widget state
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch battery information and update the state
+   */
   const getBattery = React.useCallback(async () => {
     if (!visible) return;
-    // TODO: merge these into one call and parse result
+    // Fetch battery information and parse the results
     const [system, percentage, status, caffeinate, lowPowerMode] =
       await Promise.all([
         Utils.getSystem(),
@@ -67,7 +77,9 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
+  // Use server socket to fetch battery data
   useServerSocket("battery", visible, getBattery, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getBattery, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="battery" />;
@@ -84,6 +96,10 @@ export const Widget = React.memo(() => {
 
   const transformValue = getTransform(percentage);
 
+  /**
+   * Handle click event to toggle caffeinate mode
+   * @param {React.MouseEvent} e - The click event
+   */
   const onClick = async (e) => {
     Utils.clickEffect(e);
     await toggleCaffeinate(system, caffeinate, caffeinateOption, pushMissive);
@@ -127,6 +143,11 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Battery";
 
+/**
+ * Get the transform value for the battery icon based on the percentage
+ * @param {number} value - The battery percentage
+ * @returns {string} The transform value
+ */
 function getTransform(value) {
   let transform = `0.${value}`;
   if (value === 100) transform = "1";
@@ -134,6 +155,13 @@ function getTransform(value) {
   return `scaleX(${transform})`;
 }
 
+/**
+ * Toggle caffeinate mode on or off
+ * @param {string} system - The system architecture
+ * @param {string} caffeinate - The current caffeinate state
+ * @param {string} option - The caffeinate option
+ * @param {function} pushMissive - Function to push notifications
+ */
 async function toggleCaffeinate(system, caffeinate, option, pushMissive) {
   const command =
     system === "x86_64" ? "caffeinate" : "arch -arch arm64 caffeinate";

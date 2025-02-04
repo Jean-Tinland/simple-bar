@@ -5,8 +5,17 @@ import * as Utils from "../../utils.js";
 
 const { React } = Uebersicht;
 
+/**
+ * OpenedApps component to display a list of opened applications.
+ * @param {Object} props - Component properties.
+ * @param {Array} props.apps - The list of opened applications.
+ * @returns {JSX.Element|null} The rendered component or null if no applications are present.
+ */
 export default function OpenedApps({ apps }) {
+  // Return null if no applications are present
   if (!apps.length) return null;
+
+  // Sort and map the applications to JSX elements
   return Utils.sortWindows(apps).map((app, i) => {
     const {
       "is-minimized": isMinimized,
@@ -20,10 +29,14 @@ export default function OpenedApps({ apps }) {
       "zoom-fullscreen": __legacyHasFullscreenZoom,
       "is-topmost": isTopmost,
     } = app;
+
+    // Skip minimized applications
     if (isMinimized ?? __legacyIsMinimized) return null;
 
+    // Get the application icon or default icon
     const Icon = AppIcons.apps[appName] || AppIcons.apps.Default;
 
+    // Determine the CSS classes for the icon
     const classes = Utils.classNames("space__icon", {
       "space__icon--focused": hasFocus ?? __legacyHasFocus,
       "space__icon--fullscreen":
@@ -32,6 +45,7 @@ export default function OpenedApps({ apps }) {
       "space__icon--topmost": isTopmost,
     });
 
+    // Render the application icon
     return (
       <SuspenseIcon key={i}>
         <Icon className={classes} />

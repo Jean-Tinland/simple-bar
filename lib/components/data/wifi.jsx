@@ -13,6 +13,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
+/**
+ * Wifi widget component.
+ * @returns {JSX.Element|null} The Wifi widget.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, networkWidgetOptions } = settings;
@@ -37,11 +41,17 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Resets the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetches the wifi status and SSID.
+   */
   const getWifi = React.useCallback(async () => {
     if (!visible) return;
     const [status, ssid] = await Promise.all([
@@ -76,6 +86,10 @@ export const Widget = React.memo(() => {
 
   const Icon = isActive ? Icons.Wifi : Icons.WifiOff;
 
+  /**
+   * Handles the click event to toggle wifi.
+   * @param {React.MouseEvent} e - The click event.
+   */
   const onClick = async (e) => {
     Utils.clickEffect(e);
     await toggleWifi(isActive, networkDevice, pushMissive);
@@ -96,6 +110,12 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Wifi";
 
+/**
+ * Toggles the wifi on or off.
+ * @param {boolean} isActive - Whether the wifi is currently active.
+ * @param {string} networkDevice - The network device name.
+ * @param {function} pushMissive - Function to push notifications.
+ */
 async function toggleWifi(isActive, networkDevice, pushMissive) {
   if (isActive) {
     await Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`);
@@ -106,11 +126,21 @@ async function toggleWifi(isActive, networkDevice, pushMissive) {
   }
 }
 
+/**
+ * Opens the wifi preferences pane.
+ * @param {React.MouseEvent} e - The click event.
+ */
 function openWifiPreferences(e) {
   Utils.clickEffect(e);
   Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`);
 }
 
+/**
+ * Renders the wifi network name.
+ * @param {string} name - The network name.
+ * @param {boolean} hideNetworkName - Whether to hide the network name.
+ * @returns {string} The rendered network name.
+ */
 function renderName(name, hideNetworkName) {
   if (!name || hideNetworkName) return "";
   if (name === "with an AirPort network.y off.") return "Disabled";

@@ -14,6 +14,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
+/**
+ * BrowserTrack Widget component
+ * @returns {JSX.Element|null} The BrowserTrack widget
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, browserTrackWidgetOptions } = settings;
@@ -34,11 +38,17 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Resets the widget state
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetches the current browser track information
+   */
   const getBrowserTrack = React.useCallback(async () => {
     if (!visible) return;
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
@@ -89,6 +99,10 @@ export const Widget = React.memo(() => {
 
   if (!browser?.length || !title?.length || isSpotifyRunning) return null;
 
+  /**
+   * Icon component for displaying browser and playing icons
+   * @returns {JSX.Element} The icon component
+   */
   const Icon = () => {
     const BrowserIcon = getIcon(browser);
     return (
@@ -115,6 +129,11 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "BrowserTrack";
 
+/**
+ * Returns the appropriate icon component based on the browser name
+ * @param {string} browser - The name of the browser
+ * @returns {JSX.Element} The icon component for the browser
+ */
 function getIcon(browser) {
   if (browser === "chrome") return Icons.GoogleChrome;
   if (browser === "brave") return Icons.BraveBrowser;

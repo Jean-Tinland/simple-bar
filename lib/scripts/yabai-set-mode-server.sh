@@ -15,7 +15,7 @@ CACHE_FILE="$HOME/Library/Caches/uebersicht-simple-bar-index/yabai-mode"
 mkdir -p "$(dirname "$CACHE_FILE")"
 touch "$CACHE_FILE"
 
-main () {
+main() {
     # optional second argument color
     color="$2"
     if [ -z "$color" ]; then

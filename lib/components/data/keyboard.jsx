@@ -13,29 +13,41 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
+/**
+ * Keyboard widget component.
+ * @returns {JSX.Element|null} The rendered widget or null if not visible.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, keyboardWidgetOptions } = settings;
   const { keyboardWidget } = widgets;
   const { refreshFrequency, showOnDisplay } = keyboardWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible based on display settings
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && keyboardWidget;
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Resets the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetches the current keyboard layout or input mode.
+   */
   const getKeyboard = React.useCallback(async () => {
     if (!visible) return;
     const keyboard = await Uebersicht.run(
@@ -63,7 +75,9 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
+  // Use server socket to listen for keyboard events
   useServerSocket("keyboard", visible, getKeyboard, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getKeyboard, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="keyboard" />;

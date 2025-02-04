@@ -7,10 +7,17 @@ export { settingsStyles as styles } from "../../styles/components/settings/setti
 
 const { React } = Uebersicht;
 
-// Settings component is lazy loaded. That way, it isn't loaded everytime simple-bar
-// is refreshed
+// Settings component is lazy loaded. That way,
+// it isn't loaded everytime simple-bar is refreshed
 const Component = React.lazy(() => import("./settings-component.jsx"));
 
+/**
+ * Wrapper component that handles keyboard shortcuts for various actions
+ * and manages the visibility of the settings component.
+ *
+ * @component
+ * @returns {React.Fragment} A fragment containing the settings component if visible.
+ */
 export function Wrapper() {
   const { pushMissive } = useSimpleBarContext();
   const [visible, setVisible] = React.useState(false);

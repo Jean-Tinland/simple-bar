@@ -13,6 +13,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 8000;
 
+/**
+ * Viscosity VPN Widget component.
+ * @returns {JSX.Element|null} The Viscosity VPN widget.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, vpnWidgetOptions } = settings;
@@ -24,23 +28,29 @@ export const Widget = React.memo(() => {
     showOnDisplay,
   } = vpnWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible on the current display
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && vpnWidget;
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  // Reset the widget state
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch the VPN status.
+   */
   const getVPN = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Uebersicht.run(
@@ -58,7 +68,9 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible, vpnConnectionName]);
 
+  // Use server socket to listen for VPN status updates
   useServerSocket("viscosity-vpn", visible, getVPN, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getVPN, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />;
@@ -73,6 +85,10 @@ export const Widget = React.memo(() => {
 
   const Icon = isConnected ? Icons.VPN : Icons.VPNOff;
 
+  /**
+   * Handle click event to toggle VPN connection.
+   * @param {Event} e - The click event.
+   */
   const clicked = (e) => {
     Utils.clickEffect(e);
     toggleVPN(isConnected, vpnConnectionName, pushMissive);
@@ -88,6 +104,12 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "ViscosityVPN";
 
+/**
+ * Toggle the VPN connection.
+ * @param {boolean} isConnected - Whether the VPN is currently connected.
+ * @param {string} vpnConnectionName - The name of the VPN connection.
+ * @param {function} pushMissive - Function to push notifications.
+ */
 function toggleVPN(isConnected, vpnConnectionName, pushMissive) {
   if (isConnected) {
     Uebersicht.run(

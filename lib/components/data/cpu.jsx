@@ -15,6 +15,10 @@ const { React } = Uebersicht;
 const DEFAULT_REFRESH_FREQUENCY = 2000;
 const GRAPH_LENGTH = 50;
 
+/**
+ * CPU Widget component
+ * @returns {JSX.Element|null} The CPU widget
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cpuWidgetOptions } = settings;
@@ -22,9 +26,11 @@ export const Widget = React.memo(() => {
   const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp } =
     cpuWidgetOptions;
 
+  // Determine if the widget should be visible based on display settings
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && cpuWidget;
 
+  // Set the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
@@ -35,12 +41,18 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Reset the widget state
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
     setGraph([]);
   };
 
+  /**
+   * Fetch CPU usage data
+   */
   const getCpu = React.useCallback(async () => {
     if (!visible) return;
     try {
@@ -58,7 +70,9 @@ export const Widget = React.memo(() => {
     }
   }, [displayAsGraph, setGraph, visible]);
 
+  // Use server socket to fetch CPU data
   useServerSocket("cpu", visible, getCpu, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getCpu, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="cpu" />;
@@ -66,6 +80,7 @@ export const Widget = React.memo(() => {
 
   const { usage } = state;
 
+  // Handle click event to open CPU monitor app
   const onClick =
     cpuMonitorApp === "None"
       ? undefined
@@ -107,6 +122,10 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Cpu";
 
+/**
+ * Open the specified CPU usage monitoring application
+ * @param {string} app - The name of the application to open
+ */
 function openCpuUsageApp(app) {
   switch (app) {
     case "Activity Monitor":

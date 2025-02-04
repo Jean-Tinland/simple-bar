@@ -4,6 +4,7 @@ import * as Utils from "../utils";
 
 const { React } = Uebersicht;
 
+// Create a context with default values
 const SimpleBarContext = React.createContext({
   display: 1,
   SIPDisabled: false,
@@ -11,8 +12,25 @@ const SimpleBarContext = React.createContext({
   setSettings: () => {},
 });
 
-export const useSimpleBarContext = () => React.useContext(SimpleBarContext);
+/**
+ * Custom hook to use the SimpleBarContext
+ * @returns {Object} The context value
+ */
+export function useSimpleBarContext() {
+  return React.useContext(SimpleBarContext);
+}
 
+/**
+ * Provides context for simple-bar.
+ *
+ * @param {Object} props - The properties object.
+ * @param {Object} props.initialSettings - The initial settings for the application.
+ * @param {Array} props.displays - The initial displays configuration.
+ * @param {boolean} props.SIPDisabled - Indicates if SIP (System Integrity Protection) is disabled.
+ * @param {React.ReactNode} props.children - The child components to be wrapped by the provider.
+ *
+ * @returns {JSX.Element} The context provider component.
+ */
 export default function SimpleBarContextProvider({
   initialSettings,
   displays,

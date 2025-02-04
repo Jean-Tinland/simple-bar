@@ -11,8 +11,11 @@ export { weatherStyles as styles } from "../../styles/components/data/weather";
 
 const { React } = Uebersicht;
 
-const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30;
+const DEFAULT_REFRESH_FREQUENCY = 1000 * 60 * 30; // Default refresh frequency set to 30 minutes
 
+/**
+ * Weather widget component
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, weatherWidgetOptions } = settings;
@@ -41,11 +44,17 @@ export const Widget = React.memo(() => {
     visible && customLocation.length ? customLocation : undefined
   );
 
+  /**
+   * Resets the widget state and loading status
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetches weather data from wttr.in
+   */
   const getWeather = React.useCallback(async () => {
     if (!visible) return;
     if (!location.current) {
@@ -117,6 +126,10 @@ export const Widget = React.memo(() => {
   const sunSetting =
     sunsetTime >= nowIntervalStart && sunsetTime <= nowIntervalStop;
 
+  /**
+   * Handles right-click event to refresh weather data
+   * @param {Event} e - The event object
+   */
   const onRightClick = (e) => {
     Utils.clickEffect(e);
     setLoading(true);
@@ -146,6 +159,12 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Weather";
 
+/**
+ * Returns the appropriate weather icon based on the description and time of day
+ * @param {string} description - Weather description
+ * @param {boolean} atNight - Whether it is currently night time
+ * @returns {JSX.Element} - The weather icon component
+ */
 function getIcon(description, atNight) {
   if (description.includes("fog") || description.includes("mist")) {
     return Icons.Fog;
@@ -158,17 +177,34 @@ function getIcon(description, atNight) {
   return Icons.Sun;
 }
 
+/**
+ * Returns the label for the weather widget
+ * @param {string} location - The location name
+ * @param {string} temperature - The temperature value
+ * @param {string} unit - The temperature unit (C or F)
+ * @param {boolean} hideLocation - Whether to hide the location name
+ * @returns {string} - The label text
+ */
 function getLabel(location, temperature, unit, hideLocation) {
   if (!location) return "Fetching...";
   if (hideLocation) return `${temperature}°${unit}`;
   return `${location}, ${temperature}°${unit}`;
 }
 
+/**
+ * Opens the weather forecast in a new tab
+ * @param {Event} e - The event object
+ * @param {Function} pushMissive - Function to push notifications
+ */
 function openWeather(e, pushMissive) {
   Utils.clickEffect(e);
   Utils.notification("Opening forecast from wttr.in...", pushMissive);
 }
 
+/**
+ * Gets the current geographical position of the user
+ * @returns {Promise<GeolocationPosition>} - The position object
+ */
 async function getPosition() {
   return new Promise((resolve) =>
     navigator.geolocation.getCurrentPosition(resolve)

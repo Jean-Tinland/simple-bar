@@ -13,29 +13,41 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 10000;
 
+/**
+ * Music widget component.
+ * @returns {JSX.Element|null} The music widget.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, musicWidgetOptions } = settings;
   const { musicWidget } = widgets;
   const { refreshFrequency, showSpecter, showOnDisplay } = musicWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible on the current display
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && musicWidget;
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Resets the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetches the current music information.
+   */
   const getMusic = React.useCallback(async () => {
     if (!visible) return;
     const osVersion = await Uebersicht.run(`sw_vers -productVersion`);
@@ -68,7 +80,9 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
+  // Use server socket to listen for music events
   useServerSocket("music", visible, getMusic, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getMusic, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="music" />;
@@ -80,11 +94,20 @@ export const Widget = React.memo(() => {
   const isPlaying = playerState === "playing";
   const Icon = isPlaying ? Icons.Playing : Icons.Paused;
 
+  /**
+   * Handles click event to toggle play/pause.
+   * @param {React.MouseEvent} e - The click event.
+   */
   const onClick = (e) => {
     Utils.clickEffect(e);
     togglePlay(!isPlaying, processName);
     getMusic();
   };
+
+  /**
+   * Handles right-click event to skip to the next track.
+   * @param {React.MouseEvent} e - The right-click event.
+   */
   const onRightClick = (e) => {
     Utils.clickEffect(e);
     Uebersicht.run(
@@ -92,6 +115,11 @@ export const Widget = React.memo(() => {
     );
     getMusic();
   };
+
+  /**
+   * Handles middle-click event to open the music application.
+   * @param {React.MouseEvent} e - The middle-click event.
+   */
   const onMiddleClick = (e) => {
     Utils.clickEffect(e);
     Uebersicht.run(`open -a '${processName}'`);
@@ -118,6 +146,11 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Music";
 
+/**
+ * Toggles play/pause state of the music application.
+ * @param {boolean} isPaused - Whether the music is paused.
+ * @param {string} processName - The name of the music application process.
+ */
 function togglePlay(isPaused, processName) {
   if (isPaused) {
     Uebersicht.run(`osascript -e 'tell application "${processName}" to play'`);

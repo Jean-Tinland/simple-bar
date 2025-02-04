@@ -6,6 +6,21 @@ export { dataWidgetStyles as styles } from "../../styles/components/data/data-wi
 
 const { React } = Uebersicht;
 
+/**
+ * Widget component that renders a clickable data widget with optional icon and specter.
+ * @param {Object} props - The properties object.
+ * @param {React.Component} props.Icon - The icon component to display.
+ * @param {string} props.classes - Additional classes for the widget.
+ * @param {string} props.href - The URL to link to.
+ * @param {function} props.onClick - The click event handler.
+ * @param {function} props.onRightClick - The right-click event handler.
+ * @param {function} props.onMiddleClick - The middle-click event handler.
+ * @param {Object} props.style - The style object.
+ * @param {boolean} props.disableSlider - Flag to disable the slider effect.
+ * @param {boolean} props.showSpecter - Flag to show the specter widget.
+ * @param {React.ReactNode} props.children - The child elements to render inside the widget.
+ * @returns {React.ReactElement} The rendered widget component.
+ */
 export function Widget({
   Icon,
   classes,
@@ -24,12 +39,19 @@ export function Widget({
     "data-widget--clickable": onClick,
   });
 
+  /**
+   * Handles the click event, determining the appropriate action based on the event.
+   * @param {MouseEvent} e - The mouse event.
+   */
   const onClickProp = (e) => {
     const { metaKey } = e;
     const action = metaKey || isMiddleClick(e) ? onMiddleClick : onClick;
     if (action) action(e);
   };
 
+  /**
+   * Handles the mouse enter event to start the sliding effect.
+   */
   const onMouseEnter = () => {
     Utils.startSliding(
       ref.current,
@@ -38,6 +60,9 @@ export function Widget({
     );
   };
 
+  /**
+   * Handles the mouse leave event to stop the sliding effect.
+   */
   const onMouseLeave = () => {
     Utils.stopSliding(ref.current, ".data-widget__slider");
   };
@@ -64,6 +89,13 @@ export function Widget({
   );
 }
 
+/**
+ * Inner component that optionally wraps children with sliding effect elements.
+ * @param {Object} props - The properties object.
+ * @param {boolean} props.disableSlider - Flag to disable the slider effect.
+ * @param {React.ReactNode} props.children - The child elements to render inside the inner component.
+ * @returns {React.ReactElement} The rendered inner component.
+ */
 function Inner({ disableSlider, children }) {
   if (disableSlider) return children;
   return (
@@ -73,12 +105,23 @@ function Inner({ disableSlider, children }) {
   );
 }
 
+/**
+ * Determines the appropriate HTML tag to use based on the presence of click or href properties.
+ * @param {function} onClick - The click event handler.
+ * @param {string} href - The URL to link to.
+ * @returns {string} The HTML tag to use.
+ */
 function getTag(onClick, href) {
   if (href) return "a";
   if (onClick) return "button";
   return "div";
 }
 
+/**
+ * Checks if the event is a middle-click.
+ * @param {MouseEvent} e - The mouse event.
+ * @returns {boolean} True if the event is a middle-click, false otherwise.
+ */
 function isMiddleClick(e) {
   return e.button === 1 || e["button&2"] === 1;
 }

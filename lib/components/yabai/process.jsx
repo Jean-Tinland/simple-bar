@@ -8,7 +8,12 @@ export { processStyles as styles } from "../../styles/components/process";
 
 const { React } = Uebersicht;
 
+/**
+ * Process component that displays the current windows and spaces information.
+ * @returns {JSX.Element|null} The rendered component or null if not visible.
+ */
 export const Component = React.memo(() => {
+  // Get context values from yabai and simple-bar
   const { spaces, windows, skhdMode } = useYabaiContext();
   const { displayIndex, settings } = useSimpleBarContext();
   const { process, spacesDisplay, widgets } = settings;
@@ -17,6 +22,7 @@ export const Component = React.memo(() => {
   const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
     process;
 
+  // Determine if the process widget should be visible
   const visible =
     processWidget &&
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) &&
@@ -24,6 +30,7 @@ export const Component = React.memo(() => {
 
   if (!visible) return null;
 
+  // Parse exclusions based on settings
   const exclusions = exclusionsAsRegex
     ? spacesDisplay.exclusions
     : spacesDisplay.exclusions.split(", ");
@@ -32,6 +39,7 @@ export const Component = React.memo(() => {
     ? spacesDisplay.titleExclusions
     : spacesDisplay.titleExclusions.split(", ");
 
+  // Find the current space based on visibility and display index
   const currentSpace = spaces.find((space) => {
     const {
       "is-visible": isVisible,
@@ -41,6 +49,7 @@ export const Component = React.memo(() => {
     return (isVisible ?? __legacyIsVisible) && display === displayIndex;
   });
 
+  // Get sticky and non-sticky windows using a utility function
   const { stickyWindows, nonStickyWindows } = Utils.stickyWindowWorkaround({
     windows,
     uniqueApps: false,
@@ -51,12 +60,15 @@ export const Component = React.memo(() => {
     exclusionsAsRegex,
   });
 
+  // Combine sticky and non-sticky windows
   const apps = [...stickyWindows, ...nonStickyWindows];
 
+  // Determine CSS classes for the component
   const classes = Utils.classNames("process", {
     "process--centered": centered,
   });
 
+  // Determine the current skhd mode and its color
   const currentSkhdMode = skhdMode.mode === "default" ? null : skhdMode.mode;
   const skhdModeColor = "var(--" + skhdMode.color + ")";
 

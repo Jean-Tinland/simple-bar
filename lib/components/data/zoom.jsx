@@ -13,6 +13,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 5000;
 
+/**
+ * Zoom widget component.
+ * @returns {JSX.Element|null} The Zoom widget.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, zoomWidgetOptions } = settings;
@@ -20,23 +24,31 @@ export const Widget = React.memo(() => {
   const { refreshFrequency, showVideo, showMic, showOnDisplay } =
     zoomWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && zoomWidget;
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Reset the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch the Zoom status for mic and video.
+   */
   const getZoom = React.useCallback(async () => {
     if (!visible) return;
     const [mic, video] = await Promise.all([
@@ -54,7 +66,9 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
+  // Use server socket to listen for Zoom events
   useServerSocket("zoom", visible, getZoom, resetWidget, setLoading);
+  // Refresh the widget at the specified interval
   useWidgetRefresh(visible, getZoom, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="zoom" />;

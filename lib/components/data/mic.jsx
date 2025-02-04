@@ -14,18 +14,24 @@ export { micStyles as styles } from "../../styles/components/data/mic";
 
 const DEFAULT_REFRESH_FREQUENCY = 20000;
 
+/**
+ * Mic widget component.
+ * @returns {JSX.Element} The rendered mic widget.
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, micWidgetOptions } = settings;
   const { micWidget } = widgets;
   const { refreshFrequency, showOnDisplay } = micWidgetOptions;
 
+  // Determine the refresh frequency for the widget.
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Determine if the widget should be visible.
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && micWidget;
 
@@ -35,11 +41,17 @@ export const Widget = React.memo(() => {
   const [volume, setVolume] = React.useState(_volume && parseInt(_volume, 10));
   const [dragging, setDragging] = React.useState(false);
 
+  /**
+   * Reset the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch the current microphone volume.
+   */
   const getMic = React.useCallback(async () => {
     if (!visible) return;
     const volume = await Uebersicht.run(
@@ -49,13 +61,17 @@ export const Widget = React.memo(() => {
     setLoading(false);
   }, [visible]);
 
+  // Use server socket to get mic data.
   useServerSocket("mic", visible, getMic, resetWidget, setLoading);
+  // Refresh the widget periodically.
   useWidgetRefresh(visible, getMic, refresh);
 
+  // Update the mic volume when dragging state changes.
   React.useEffect(() => {
     if (!dragging) setMic(volume);
   }, [dragging, volume]);
 
+  // Update the volume state when the fetched volume changes.
   React.useEffect(() => {
     setVolume((currentVolume) => {
       if (_volume && currentVolume !== parseInt(_volume, 10)) {
@@ -71,11 +87,23 @@ export const Widget = React.memo(() => {
 
   const Icon = !volume ? Icons.MicOff : Icons.MicOn;
 
+  /**
+   * Handle volume change event.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
+   */
   const onChange = (e) => {
     const value = parseInt(e.target.value, 10);
     setVolume(value);
   };
+
+  /**
+   * Handle mouse down event on the slider.
+   */
   const onMouseDown = () => setDragging(true);
+
+  /**
+   * Handle mouse up event on the slider.
+   */
   const onMouseUp = () => setDragging(false);
 
   const formattedVolume = `${volume.toString().padStart(2, "0")}%`;
@@ -111,6 +139,10 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Mic";
 
+/**
+ * Set the microphone volume.
+ * @param {number} volume - The volume level to set.
+ */
 function setMic(volume) {
   if (volume === undefined) return;
   Uebersicht.run(`osascript -e 'set volume input volume ${volume}'`);

@@ -13,6 +13,10 @@ const { React } = Uebersicht;
 
 const DEFAULT_REFRESH_FREQUENCY = 15 * 60 * 1000; // 15 min
 
+/**
+ * Stock widget component
+ * @returns {JSX.Element|null} The stock widget
+ */
 export const Widget = React.memo(() => {
   const { displayIndex, settings, pushMissive } = useSimpleBarContext();
   const { widgets, stockWidgetOptions } = settings;
@@ -30,12 +34,14 @@ export const Widget = React.memo(() => {
     showOnDisplay,
   } = stockWidgetOptions;
 
+  // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
     [refreshFrequency]
   );
 
+  // Check if the widget should be visible on the current display
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && stockWidget;
 
@@ -46,11 +52,17 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
 
+  /**
+   * Reset the widget state
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
   };
 
+  /**
+   * Fetch stock data from Yahoo Finance API
+   */
   const getStocks = React.useCallback(async () => {
     if (!visible) return;
     const response = await fetch(
@@ -91,9 +103,15 @@ export const Widget = React.memo(() => {
     enumeratedSymbols,
   ]);
 
+  // Use server socket to fetch stock data
   useServerSocket("stock", visible, getStocks, resetWidget, setLoading);
+  // Refresh widget data periodically
   useWidgetRefresh(visible, getStocks, refresh);
 
+  /**
+   * Refresh stock data on user interaction
+   * @param {Event} e - The event object
+   */
   const refreshStocks = (e) => {
     Utils.clickEffect(e);
     setLoading(true);
@@ -149,10 +167,19 @@ export const Widget = React.memo(() => {
 
 Widget.displayName = "Stock";
 
+/**
+ * Handle click event to open stock details
+ * @param {Event} e - The event object
+ */
 function openStock(e) {
   Utils.clickEffect(e);
 }
 
+/**
+ * Get the currency symbol for a given currency code
+ * @param {string} currency - The currency code
+ * @returns {string} The currency symbol
+ */
 function getCurrencySymbol(currency) {
   if (currency === "EUR") return "€";
   if (currency === "USD") return "$";
@@ -162,6 +189,11 @@ function getCurrencySymbol(currency) {
   return `${currency} `;
 }
 
+/**
+ * Format the price change with a '+' for positive changes
+ * @param {string} priceChange - The price change
+ * @returns {string} The formatted price change
+ */
 function formatPriceChange(priceChange) {
   // Add a '+' for positive changes
   return (priceChange.startsWith("-") ? "" : "+") + priceChange;

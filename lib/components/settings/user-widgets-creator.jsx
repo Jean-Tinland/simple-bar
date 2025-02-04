@@ -7,21 +7,32 @@ import IconPicker from "./icon-picker.jsx";
 
 const { React } = Uebersicht;
 
+/**
+ * UserWidgetsCreator component allows users to create and manage custom widgets.
+ * @param {Object} props - The component props.
+ * @param {Object} props.defaultValue - The default value for the widgets.
+ * @param {Function} props.onChange - The function to call when the widgets change.
+ * @returns {JSX.Element} The UserWidgetsCreator component.
+ */
 export default function UserWidgetsCreator({ defaultValue, onChange }) {
   const [widgets, setWidgets] = React.useState(defaultValue || {});
   const keys = Object.keys(widgets);
 
+  // Determine the highest widget ID and calculate the new ID for a new widget
   const highestId = keys.reduce((acc, key) => {
     const keyAsNumber = parseInt(key, 10);
     return keyAsNumber > acc ? keyAsNumber : acc;
   }, 1);
   const newId = highestId + 1;
 
+  // Function to add a new widget
   const onClick = () =>
     setWidgets((widgets) => ({
       ...widgets,
       [newId]: { ...Settings.userWidgetDefault },
     }));
+
+  // Function to handle changes to a widget
   const onWidgetChange = (index, field, value) => {
     const newWidgets = { ...widgets };
     const newKeys = Object.keys(newWidgets);
@@ -35,6 +46,7 @@ export default function UserWidgetsCreator({ defaultValue, onChange }) {
     setWidgets(updatedWidgets);
   };
 
+  // Effect to detect changes in widgets and call onChange prop
   React.useEffect(() => {
     const diffs = Utils.compareObjects(defaultValue, widgets);
     const hasDiffs = Object.keys(diffs).length > 0;
@@ -62,6 +74,17 @@ export default function UserWidgetsCreator({ defaultValue, onChange }) {
   );
 }
 
+/**
+ * UserWidgetCreator component allows users to configure individual widgets.
+ * @param {Object} props - The component props.
+ * @param {string} props.index - The index of the widget.
+ * @param {boolean} props.isFirst - Whether the widget is the first in the list.
+ * @param {boolean} props.isLast - Whether the widget is the last in the list.
+ * @param {Function} props.onWidgetChange - The function to call when the widget changes.
+ * @param {Function} props.setWidgets - The function to set the widgets state.
+ * @param {Object} props.widget - The widget data.
+ * @returns {JSX.Element} The UserWidgetCreator component.
+ */
 function UserWidgetCreator({
   index,
   isFirst,
@@ -86,6 +109,7 @@ function UserWidgetCreator({
 
   const indexAsNumber = parseInt(index, 10);
 
+  // Function to remove a widget
   const onRemoveClick = () => {
     setWidgets((widgets) => {
       const keys = Object.keys(widgets);
@@ -96,6 +120,7 @@ function UserWidgetCreator({
     });
   };
 
+  // Function to handle changes to widget fields
   const onChange = (field, chexbox = false) => {
     return (e) => {
       const value = (chexbox ? e?.target?.checked : e?.target?.value) ?? "";
@@ -103,6 +128,7 @@ function UserWidgetCreator({
     };
   };
 
+  // Function to move the widget up in the list
   const onBeforeClick = () => {
     setWidgets((widgets) => {
       const swapedWidget = widgets[indexAsNumber - 1];
@@ -114,6 +140,7 @@ function UserWidgetCreator({
     });
   };
 
+  // Function to move the widget down in the list
   const onAfterClick = () => {
     setWidgets((widgets) => {
       const swapedWidget = widgets[indexAsNumber + 1];

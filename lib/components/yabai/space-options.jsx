@@ -7,23 +7,48 @@ import * as Yabai from "../../yabai.js";
 
 const { React } = Uebersicht;
 
+/**
+ * SpaceOptions component provides options to manipulate spaces (move left, move right, remove).
+ * @param {Object} props - The component props.
+ * @param {number} props.index - The index of the space.
+ * @param {Function} props.setHovered - Function to set the hovered state.
+ * @returns {JSX.Element} The SpaceOptions component.
+ */
 export default function SpaceOptions({ index, setHovered }) {
+  // Get displayIndex from the context
   const { displayIndex } = useSimpleBarContext();
 
-  const onRemoveClick = async (e) => {
+  /**
+   * Handles the click event to remove a space.
+   * @param {Event} e - The click event.
+   */
+  const remove = async (e) => {
     e.stopPropagation();
     Utils.clickEffect(e);
     setHovered(false);
     await Yabai.removeSpace(index, displayIndex);
   };
 
-  const onChevronClick = (direction) => async (e) => {
+  /**
+   * Returns a function to handle the click event to swap a space.
+   * @param {string} direction - The direction to swap the space ("left" or "right").
+   * @returns {Function} The click event handler.
+   */
+  const moveTo = (direction) => async (e) => {
     Utils.clickEffect(e);
     setHovered(false);
     await Yabai.swapSpace(index, direction);
   };
 
+  /**
+   * Prevents the default behavior of the mouse down event.
+   * @param {Event} e - The mouse down event.
+   */
   const onMouseDown = (e) => e.preventDefault();
+
+  /**
+   * Handles the mouse leave event to unset the hovered state.
+   */
   const onMouseLeave = () => setHovered(false);
 
   return (
@@ -31,7 +56,7 @@ export default function SpaceOptions({ index, setHovered }) {
       <div
         className="space-options__option space-options__option--move-prev"
         onMouseDown={onMouseDown}
-        onClick={onChevronClick("left")}
+        onClick={moveTo("left")}
       >
         <SuspenseIcon>
           <Icons.ChevronLeft />
@@ -40,7 +65,7 @@ export default function SpaceOptions({ index, setHovered }) {
       <div
         className="space-options__option space-options__option--move-next"
         onMouseDown={onMouseDown}
-        onClick={onChevronClick("right")}
+        onClick={moveTo("right")}
       >
         <SuspenseIcon>
           <Icons.ChevronRight />
@@ -48,7 +73,7 @@ export default function SpaceOptions({ index, setHovered }) {
       </div>
       <div
         className="space-options__option space-options__option--remove"
-        onClick={onRemoveClick}
+        onClick={remove}
       >
         <SuspenseIcon>
           <Icons.Remove />

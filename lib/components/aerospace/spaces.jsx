@@ -8,26 +8,37 @@ export { spacesStyles as styles } from "../../styles/components/spaces/spaces.js
 
 const { React } = Uebersicht;
 
+/**
+ * Spaces component to display spaces on the screen.
+ * @returns {JSX.Element|null} The rendered component.
+ */
 export const Component = React.memo(() => {
+  // Get spaces from aerospace context
   const { spaces } = useAerospaceContext();
+  // Get displays, displayIndex, and settings from simple bar context
   const { displays, displayIndex, settings } = useSimpleBarContext();
   const { spacesDisplay, process } = settings;
   const { displayAllSpacesOnAllScreens, showOnDisplay } = spacesDisplay;
+  // Determine if the component should be visible on the current display
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
     process.showOnDisplay
   );
 
+  // If not visible, return null
   if (!visible) return null;
 
+  // If there are no spaces, return an empty div
   if (!spaces?.length) {
     return <div className="spaces spaces--empty" />;
   }
 
+  // Map through displays and render spaces for the current display
   return displays.map((display) => {
     if (display !== displayIndex) return null;
 
+    // Filter spaces based on display settings
     const filteredSpaces = displayAllSpacesOnAllScreens
       ? spaces
       : spaces.filter((space) => space.monitor === display);
