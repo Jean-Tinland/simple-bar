@@ -47,7 +47,7 @@ const { React } = Uebersicht;
 
 // Set refresh frequency to false
 // Übersicht auto-refresh system is not required as simple-bar works in sync with
-// yabai or AeroSpaces for spaces & process widgets and data widgets are refresh with
+// yabai or AeroSpaces for spaces & process widgets and data widgets are refreshed with
 // their local refresh functions
 const refreshFrequency = false;
 
