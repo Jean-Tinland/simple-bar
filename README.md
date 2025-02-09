@@ -55,7 +55,6 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 
 Here are the features I'm planning to add in the future:
 
-- Theme colors override GUI [#429](https://github.com/Jean-Tinland/simple-bar/issues/429)
 - Bars configurator (spawn multiple bars, place widgets anywhere…) [#380](https://github.com/Jean-Tinland/simple-bar/issues/380)
 - More accessibility settings like reading direction (LTR or RTL)
 
