@@ -112,8 +112,9 @@ export default function Component({ closeSettings }) {
                   const classes = Utils.classNames("settings__item", {
                     "settings__item--radio": type === "radio",
                     "settings__item--text":
-                      type === "text" || type === "number",
+                      type === "text" || type === "number" || type === "color",
                     "settings__item--textarea": type === "textarea",
+                    "settings__item--color": type === "color",
                     "settings__item--full-width": fullWidth,
                   });
                   const onChange = (e) => {
@@ -264,10 +265,16 @@ function Item({
       </div>
     ));
   }
-  if (type === "text") {
+  if (type === "text" || type === "color") {
     return (
       <React.Fragment>
         <label htmlFor={code} dangerouslySetInnerHTML={{ __html: label }} />
+        {type === "color" && (
+          <div
+            className="settings__item-color-pill"
+            style={{ backgroundColor: defaultValue || "transparent" }}
+          />
+        )}
         <input
           id={code}
           type="text"

@@ -127,6 +127,66 @@
         "darkTheme": {
           "type": "string",
           "description": "Dark theme to use"
+        },
+        "colorMain": {
+          "type": "string",
+          "description": "Override the main color of the theme. Must be a valid CSS color."
+        },
+        "colorMainAlt": {
+          "type": "string",
+          "description": "Override the main alternative color of the theme. Must be a valid CSS color."
+        },
+        "colorMinor": {
+          "type": "string",
+          "description": "Override the minor color of the theme. Must be a valid CSS color."
+        },
+        "colorAccent": {
+          "type": "string",
+          "description": "Override the accent color of the theme. Must be a valid CSS color."
+        },
+        "colorRed": {
+          "type": "string",
+          "description": "Override the red color of the theme. Must be a valid CSS color."
+        },
+        "colorGreen": {
+          "type": "string",
+          "description": "Override the green color of the theme. Must be a valid CSS color."
+        },
+        "colorYellow": {
+          "type": "string",
+          "description": "Override the yellow color of the theme. Must be a valid CSS color."
+        },
+        "colorOrange": {
+          "type": "string",
+          "description": "Override the orange color of the theme. Must be a valid CSS color."
+        },
+        "colorBlue": {
+          "type": "string",
+          "description": "Override the blue color of the theme. Must be a valid CSS color."
+        },
+        "colorMagenta": {
+          "type": "string",
+          "description": "Override the magenta color of the theme. Must be a valid CSS color."
+        },
+        "colorCyan": {
+          "type": "string",
+          "description": "Override the cya color of the theme. Must be a valid CSS color."
+        },
+        "colorBlack": {
+          "type": "string",
+          "description": "Override the black color of the theme. Must be a valid CSS color."
+        },
+        "colorWhite": {
+          "type": "string",
+          "description": "Override the white color of the theme. Must be a valid CSS color."
+        },
+        "colorForeground": {
+          "type": "string",
+          "description": "Override the foreground color of the theme. Must be a valid CSS color."
+        },
+        "colorBackground": {
+          "type": "string",
+          "description": "Override the background color of the theme. Must be a valid CSS color."
         }
       }
     },
