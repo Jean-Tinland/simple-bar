@@ -32,6 +32,7 @@ import * as Crypto from "./lib/components/data/crypto.jsx";
 import * as Stock from "./lib/components/data/stock.jsx";
 import * as Music from "./lib/components/data/music.jsx";
 import * as Mpd from "./lib/components/data/mpd.jsx";
+import * as Mpv from "./lib/components/data/mpv.jsx";
 import * as BrowserTrack from "./lib/components/data/browser-track.jsx";
 import * as Specter from "./lib/components/data/specter.jsx";
 import * as Graph from "./lib/components/data/graph.jsx";
@@ -106,6 +107,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   YouTubeMusic.styles,
   Music.styles,
   Mpd.styles,
+  Mpv.styles,
   BrowserTrack.styles,
   Specter.styles,
   Graph.styles,
@@ -199,6 +201,7 @@ function render({ output, error }) {
           <Stock.Widget />
           <Music.Widget />
           <Mpd.Widget />
+          <Mpv.Widget />
           <Weather.Widget />
           <Netstats.Widget />
           <Cpu.Widget />
