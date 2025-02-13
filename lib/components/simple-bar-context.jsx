@@ -65,11 +65,16 @@ export default function SimpleBarContextProvider({
 
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
 
-  const formattedDisplays = currentDisplays.map((display) => {
-    return display.index ?? display["monitor-appkit-nsscreen-screens-id"];
-  });
+  const currentDisplay =
+    currentDisplays?.find((d) => {
+      const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
+      return id === displayId;
+    }) || {};
 
-  const currentDisplay = formattedDisplays?.find((id) => id === displayId) || 1;
+  const displayIndex =
+    (currentDisplay.index ??
+      currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
+    1;
 
   const pushMissive = (newMissive) => {
     const now = Date.now();
@@ -90,11 +95,11 @@ export default function SimpleBarContextProvider({
   return (
     <SimpleBarContext.Provider
       value={{
-        displayIndex: currentDisplay,
+        displayIndex,
         SIPDisabled,
         settings,
         setSettings,
-        displays: formattedDisplays,
+        displays: currentDisplays,
         setDisplays,
         missives,
         setMissives,

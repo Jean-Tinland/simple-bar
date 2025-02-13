@@ -48,7 +48,8 @@ function AerospaceContextProvider({ children }) {
     } catch (e) {}
     const spaces = await Promise.all(
       displays.map(async (display) => {
-        const result = await Aerospace.getSpaces(display);
+        const id = display["monitor-id"];
+        const result = await Aerospace.getSpaces(id);
         return Promise.all(
           result.map(async (space) => {
             const focused = space.workspace === focusedSpace.workspace;

@@ -36,15 +36,16 @@ export const Component = React.memo(() => {
 
   // Map through displays and render spaces for the current display
   return displays.map((display) => {
-    if (display !== displayIndex) return null;
+    const displayId = display["monitor-appkit-nsscreen-screens-id"];
+    if (displayId !== displayIndex) return null;
 
     // Filter spaces based on display settings
     const filteredSpaces = displayAllSpacesOnAllScreens
       ? spaces
-      : spaces.filter((space) => space.monitor === display);
+      : spaces.filter((space) => space.monitor === displayId);
 
     return (
-      <div key={display} className="spaces">
+      <div key={displayId} className="spaces">
         {filteredSpaces.map((space, i) => {
           const { workspace } = space;
           const lastOfSpace =

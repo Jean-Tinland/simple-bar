@@ -51,7 +51,7 @@ export const Component = React.memo(() => {
     }) || {};
 
   return displays.map((display, i) => {
-    if (display !== displayIndex) return null;
+    if (display.index !== displayIndex) return null;
 
     /**
      * Handle click event to create a new space.

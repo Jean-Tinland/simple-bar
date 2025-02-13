@@ -54,7 +54,8 @@ export default function Space({
   );
 
   // Return null if the space should not be displayed on the current screen
-  if (!displayAllSpacesOnAllScreens && display !== space.display) return null;
+  if (!displayAllSpacesOnAllScreens && display.index !== space.display)
+    return null;
 
   const exclusions = exclusionsAsRegex
     ? spacesDisplay.exclusions
