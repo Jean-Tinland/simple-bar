@@ -16,7 +16,7 @@ const { React } = Uebersicht;
  * Spaces component to display spaces and manage space-related actions.
  * @returns {JSX.Element|null} The rendered component.
  */
-export const Component = React.memo(() => {
+const Component = React.memo(() => {
   // Get spaces and windows data from Yabai context
   const { spaces, windows } = useYabaiContext();
   // Get various settings and display information from simple-bar context
@@ -104,3 +104,5 @@ export const Component = React.memo(() => {
 });
 
 Component.displayName = "Spaces";
+
+export default Component;

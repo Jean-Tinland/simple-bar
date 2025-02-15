@@ -1,17 +1,13 @@
 import * as Uebersicht from "uebersicht";
 import * as Error from "./lib/components/error.jsx";
 import SimpleBarContextProvider from "./lib/components/simple-bar-context.jsx";
-import YabaiContextProvider from "./lib/components/yabai-context.jsx";
-import AerospaceContextProvider from "./lib/components/aerospace-context.jsx";
 import UserWidgets from "./lib/components/data/user-widgets.jsx";
 // Each simple-bar widgets exports both a "Component" or "Widget" render function
 // and a "styles" string containing its own CSS
-import * as YabaiSpaces from "./lib/components/yabai/spaces.jsx";
-import * as YabaiProcess from "./lib/components/yabai/process.jsx";
-import * as AerospaceSpaces from "./lib/components/aerospace/spaces.jsx";
-import * as AerospaceProcess from "./lib/components/aerospace/process.jsx";
 import * as Variables from "./lib/styles/core/variables";
 import * as Base from "./lib/styles/core/base";
+import * as Spaces from "./lib/styles/components/spaces/spaces";
+import * as Process from "./lib/styles/components/process";
 import * as Zoom from "./lib/components/data/zoom.jsx";
 import * as Time from "./lib/components/data/time.jsx";
 import * as DateDisplay from "./lib/components/data/date-display.jsx";
@@ -45,6 +41,32 @@ import * as Settings from "./lib/settings";
 // Destructure React from Uebersicht in order to make eslint catch hook rules for example
 const { React } = Uebersicht;
 
+// Spaces & process components are lazy loaded to avoid loading them when not needed
+const YabaiContextProvider = React.lazy(() =>
+  import("./lib/components/yabai-context.jsx")
+);
+const AerospaceContextProvider = React.lazy(() =>
+  import("./lib/components/aerospace-context.jsx")
+);
+const FlashspaceContextProvider = React.lazy(() =>
+  import("./lib/components/flashspace-context.jsx")
+);
+const YabaiSpaces = React.lazy(() =>
+  import("./lib/components/yabai/spaces.jsx")
+);
+const YabaiProcess = React.lazy(() =>
+  import("./lib/components/yabai/process.jsx")
+);
+const AerospaceSpaces = React.lazy(() =>
+  import("./lib/components/aerospace/spaces.jsx")
+);
+const AerospaceProcess = React.lazy(() =>
+  import("./lib/components/aerospace/process.jsx")
+);
+const FlashspaceSpaces = React.lazy(() =>
+  import("./lib/components/flashspace/spaces.jsx")
+);
+
 // Set refresh frequency to false
 // Übersicht auto-refresh system is not required as simple-bar works in sync with
 // yabai or AeroSpaces for spaces & process widgets and data widgets are refreshed with
@@ -74,16 +96,16 @@ const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 // Construct command arguments based on window manager type
 const yabaiArgs = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const aerospaceArgs = `${aerospacePath}`;
-const args = windowManager === "yabai" ? yabaiArgs : aerospaceArgs;
+const args = getArguments(windowManager, yabaiArgs, aerospaceArgs);
 const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 
-// Inject global styles into the document.
+// Inject global styles into the document
 // I prefer using native CSS instead of Emotion bundled by default in Übersicht
 Utils.injectStyles("simple-bar-index-styles", [
   Variables.styles,
   Base.styles,
-  YabaiSpaces.styles,
-  YabaiProcess.styles,
+  Spaces.styles,
+  Process.styles,
   Settings.styles,
   DataWidget.styles,
   DateDisplay.styles,
@@ -140,18 +162,30 @@ function render({ output, error }) {
   if (!output) {
     return <Error.Component type="noOutput" classes={baseClasses} />;
   }
-  if (Utils.cleanupOutput(output) === "yabaiError") {
-    return <Error.Component type="yabaiError" classes={baseClasses} />;
-  }
-  if (Utils.cleanupOutput(output) === "aerospaceError") {
-    return <Error.Component type="aerospaceError" classes={baseClasses} />;
+
+  // Cleanup the output data
+  const cleanedUpOutput = Utils.cleanupOutput(output);
+
+  // Handle specific errors related to yabai, AeroSpace or FlashSpace
+  const errors = ["yabaiError", "aerospaceError", "flashspaceError"];
+  if (errors.includes(cleanedUpOutput)) {
+    return <Error.Component type={cleanedUpOutput} classes={baseClasses} />;
   }
 
   // Parse the output data
-  const data = Utils.parseJson(output);
+  const data = Utils.parseJson(cleanedUpOutput);
   if (!data) return <Error.Component type="noData" classes={baseClasses} />;
 
-  const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
+  const {
+    displays,
+    shadow,
+    skhdMode,
+    SIP,
+    spaces,
+    windows,
+    config,
+    currentWorkspace,
+  } = data;
 
   // Check if SIP (System Integrity Protection) is disabled
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
@@ -173,21 +207,32 @@ function render({ output, error }) {
     >
       <div className={classes}>
         <SideIcon.Component />
-        {windowManager === "yabai" ? (
-          <YabaiContextProvider
-            spaces={spaces}
-            windows={windows}
-            skhdMode={skhdMode}
-          >
-            <YabaiSpaces.Component />
-            <YabaiProcess.Component />
-          </YabaiContextProvider>
-        ) : (
-          <AerospaceContextProvider>
-            <AerospaceSpaces.Component />
-            <AerospaceProcess.Component />
-          </AerospaceContextProvider>
-        )}
+        <React.Suspense fallback={<React.Fragment />}>
+          {windowManager === "yabai" && (
+            <YabaiContextProvider
+              spaces={spaces}
+              windows={windows}
+              skhdMode={skhdMode}
+            >
+              <YabaiSpaces />
+              <YabaiProcess />
+            </YabaiContextProvider>
+          )}
+          {windowManager === "aerospace" && (
+            <AerospaceContextProvider>
+              <AerospaceSpaces />
+              <AerospaceProcess />
+            </AerospaceContextProvider>
+          )}
+          {windowManager === "flashspace" && (
+            <FlashspaceContextProvider
+              config={config}
+              currentWorkspace={currentWorkspace}
+            >
+              <FlashspaceSpaces />
+            </FlashspaceContextProvider>
+          )}
+        </React.Suspense>
         <Settings.Wrapper />
         <div className="simple-bar__data">
           <UserWidgets />
@@ -220,3 +265,13 @@ function render({ output, error }) {
 }
 
 export { command, refreshFrequency, render };
+
+function getArguments(windowManager, yabaiArgs, aerospaceArgs) {
+  if (windowManager === "yabai") {
+    return yabaiArgs;
+  }
+  if (windowManager === "aerospace") {
+    return aerospaceArgs;
+  }
+  return "";
+}

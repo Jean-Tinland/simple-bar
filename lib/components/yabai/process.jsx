@@ -12,7 +12,7 @@ const { React } = Uebersicht;
  * Process component that displays the current windows and spaces information.
  * @returns {JSX.Element|null} The rendered component or null if not visible.
  */
-export const Component = React.memo(() => {
+const Component = React.memo(() => {
   // Get context values from yabai and simple-bar
   const { spaces, windows, skhdMode } = useYabaiContext();
   const { displayIndex, settings } = useSimpleBarContext();
@@ -97,3 +97,5 @@ export const Component = React.memo(() => {
 });
 
 Component.displayName = "Process";
+
+export default Component;

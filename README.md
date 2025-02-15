@@ -1,6 +1,6 @@
 # <img src="./images/logo-simple-bar.png" width="200" alt="simple-bar" />
 
-A [yabai](https://github.com/koekeishiya/yabai) and [AeroSpace](https://github.com/nikitabobko/AeroSpace) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
+A [yabai](https://github.com/koekeishiya/yabai), [AeroSpace](https://github.com/nikitabobko/AeroSpace) or [FlashSpace](https://github.com/wojciech-kulik/FlashSpace) status bar widget for [Übersicht](https://github.com/felixhageloh/uebersicht) inspired by [nibar](https://github.com/kkga/nibar), [yabar](https://github.com/AlexNaga/yabar) and [this reddit post](https://www.reddit.com/r/unixporn/comments/chwk89/yabai_yabai_and_gruvbox_with_custom_ubersicht_bar/).
 
 [Website](https://www.jeantinland.com/toolbox/simple-bar) • [Documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation)
 
@@ -46,7 +46,7 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 > The default paths are `/opt/homebrew/bin/yabai` and `/opt/homebrew/bin/aerospace`.
 
 > [!NOTE]\
-> `simple-bar` is trying to use yabai by default. If you want to switch to AeroSpace, you'll need to open the settings module (simply click on `simple-bar` then press `cmd` + `,`). You'll find the window manager choice in the "Global" tab.
+> `simple-bar` is trying to use yabai by default. If you want to switch to AeroSpace, you'll need to open the settings module (simply click on `simple-bar` then press `cmd` + `,`). Same if you are using FlashSpace. You'll find the window manager choice in the "Global" tab.
 
 > [!TIP]\
 > If you experience some freezing issues with Übersicht or if you simply want to improve `simple-bar` responsiveness & energy consumption, please try to switch to `simple-bar-server` in order to trigger refresh with `curl` commands. You'll find more information about it in the repo [here](https://github.com/Jean-Tinland/simple-bar-server).\
@@ -55,7 +55,6 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 
 Here are the features I'm planning to add in the future:
 
-- [FlashSpace](https://github.com/wojciech-kulik/FlashSpace) integration
 - Bars configurator (spawn multiple bars, place widgets anywhere…) [#380](https://github.com/Jean-Tinland/simple-bar/issues/380)
 - More accessibility settings like reading direction (LTR or RTL)
 

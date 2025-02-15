@@ -12,7 +12,7 @@ const { React } = Uebersicht;
  * Process component to display windows in the current space.
  * @returns {JSX.Element|null} The rendered component or null if not visible.
  */
-export const Component = React.memo(() => {
+const Component = React.memo(() => {
   // Get spaces from aerospace context
   const { spaces } = useAerospaceContext();
   // Get settings and display index from simple bar context
@@ -68,3 +68,5 @@ export const Component = React.memo(() => {
 });
 
 Component.displayName = "Process";
+
+export default Component;

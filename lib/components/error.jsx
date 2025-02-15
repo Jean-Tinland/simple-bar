@@ -6,6 +6,7 @@ const message = {
   error: "Something went wrong…",
   yabaiError: "yabai is not running",
   aerospaceError: "AeroSpace is either not running or outdated",
+  flashspaceError: "Flashspace is not installed or missconfigured",
   noOutput: "Loading…",
   noData: "JSON error…",
 };
@@ -29,7 +30,11 @@ export function Component({ type, classes }) {
   }
 
   // Refresh the component after 15 seconds for yabai and aerospace errors
-  if (type === "yabaiError" || type === "aerospaceError") {
+  if (
+    type === "yabaiError" ||
+    type === "aerospaceError" ||
+    type === "flashspaceError"
+  ) {
     setTimeout(Utils.softRefresh, 15000);
   }
 

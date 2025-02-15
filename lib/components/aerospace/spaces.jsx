@@ -12,7 +12,7 @@ const { React } = Uebersicht;
  * Spaces component to display spaces on the screen.
  * @returns {JSX.Element|null} The rendered component.
  */
-export const Component = React.memo(() => {
+const Component = React.memo(() => {
   // Get spaces from aerospace context
   const { spaces } = useAerospaceContext();
   // Get displays, displayIndex, and settings from simple bar context
@@ -62,3 +62,5 @@ export const Component = React.memo(() => {
 });
 
 Component.displayName = "Spaces";
+
+export default Component;
