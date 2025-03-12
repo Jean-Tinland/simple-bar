@@ -55,6 +55,7 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 
 Here are the features I'm planning to add in the future:
 
+- Improve FlashSpace compatibility by using its [new CLI interface](https://github.com/wojciech-kulik/FlashSpace?tab=readme-ov-file#-command-line-interface)
 - Bars configurator (spawn multiple bars, place widgets anywhere…) [#380](https://github.com/Jean-Tinland/simple-bar/issues/380)
 - More accessibility settings like reading direction (LTR or RTL)
 
