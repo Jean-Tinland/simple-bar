@@ -113,6 +113,10 @@
         "aerospaceServerRefresh": {
           "type": "boolean",
           "description": "Enable websocket connection to the server in AeroSpace spaces widgets. You must install and launch simple-bar-server before activating this setting"
+        },
+        "flashspaceServerRefresh": {
+          "type": "boolean",
+          "description": "Enable websocket connection to the server in FlashSpace spaces widgets. You must install and launch simple-bar-server before activating this setting"
         }
       }
     },
@@ -287,6 +291,14 @@
         "switchSpacesWithoutYabai": {
           "type": "boolean",
           "description": "Instead of relying on yabai to switch to a specific space (on space click), simple-bar will trigger the \"switch to prev/next\" space shortcut which need to be enabled in macos settings to be working"
+        },
+        "showOnlyFlashspaceSpaceIndex": {
+          "type": "boolean",
+          "description": "[FlashSpace] Show only the space index for each space"
+        },
+        "hideFlashspaceAppIcons": {
+          "type": "boolean",
+          "description": "[FlashSpace] Hide the app icons in the spaces display"
         }
       }
     },
@@ -482,7 +494,7 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "refreshFrequency": { "type": "string" },
+        "refreshFrequency": { "type": "number" },
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
