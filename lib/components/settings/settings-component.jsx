@@ -117,9 +117,18 @@ export default function Component({ closeSettings }) {
                     "settings__item--color": type === "color",
                     "settings__item--full-width": fullWidth,
                   });
+
                   const onChange = (e) => {
-                    const value =
-                      type === "checkbox" ? e.target.checked : e.target.value;
+                    let value = e.target.value;
+                    if (type === "checkbox") {
+                      value = e.target.checked;
+                    }
+                    if (type === "number") {
+                      value = parseFloat(value);
+                      if (isNaN(value)) {
+                        value = 0;
+                      }
+                    }
 
                     const updatedSettings = {
                       ...newSettings,
