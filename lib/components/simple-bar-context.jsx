@@ -1,6 +1,4 @@
 import * as Uebersicht from "uebersicht";
-import * as Settings from "../settings";
-import * as Utils from "../utils";
 
 const { React } = Uebersicht;
 
@@ -40,22 +38,6 @@ export default function SimpleBarContextProvider({
   const [settings, setSettings] = React.useState(initialSettings);
   const [_displays, setDisplays] = React.useState(displays);
   const [missives, setMissives] = React.useState([]);
-
-  React.useEffect(() => {
-    const loadExternalConfig = async () => {
-      const configFileExists = await Settings.checkIfConfigFileExists();
-      if (!configFileExists) return;
-      try {
-        const config = JSON.parse(await Uebersicht.run(`cat ~/.simplebarrc`));
-        const settings = Utils.mergeDeep(Settings.defaultSettings, config);
-        setSettings(settings);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Error loading external config:", e);
-      }
-    };
-    loadExternalConfig();
-  }, []);
 
   const { windowManager, enableServer, yabaiServerRefresh } = settings.global;
   const serverEnabled = enableServer && yabaiServerRefresh;

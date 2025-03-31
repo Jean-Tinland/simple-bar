@@ -73,6 +73,9 @@ const FlashspaceSpaces = React.lazy(() =>
 // their local refresh functions
 const refreshFrequency = false;
 
+// Init settings from file if existing
+Settings.init();
+
 // Get settings from the Settings module
 const settings = Settings.get();
 const {
@@ -82,7 +85,7 @@ const {
   // while on an empty workspace, click on simple-bar then press cmd + , to open it.
   yabaiPath = "/opt/homebrew/bin/yabai",
   aerospacePath = "/opt/homebrew/bin/aerospace",
-  windowManager, // Window manager type (yabai or aerospace)
+  windowManager, // Window manager type (yabai, aerospace or flashspace)
   shell, // Shell to use for commands
   enableServer, // Enable server mode
   yabaiServerRefresh, // Refresh rate for yabai server
