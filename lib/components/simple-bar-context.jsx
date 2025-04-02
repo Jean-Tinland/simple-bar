@@ -49,8 +49,8 @@ export default function SimpleBarContextProvider({
   const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
 
   // Check if the built-in Retina Display is present in the current displays
-  const hasBuiltInRetina = currentDisplays.some(
-    (d) => d["monitor-name"] === "Built-in Retina Display"
+  const hasBuiltInRetina = currentDisplays?.some(
+    (d) => d["monitor-name"] === "Built-in Retina Display",
   );
 
   // Adjust displayId if the Retina screen is missing when using AeroSpace

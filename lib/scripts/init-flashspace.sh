@@ -1,3 +1,6 @@
+# Store the first argument passed to the script in the variable flashspace_path
+flashspace_path=$1
+
 # Get the status of System Integrity Protection (SIP) and store it in the variable SIP
 SIP=$(csrutil status)
 
@@ -12,7 +15,7 @@ if [ $? -eq 1 ]; then
   exit 0
 fi
 
-current_workspace=$(osascript ./simple-bar/lib/scripts/get-flashspace-space.applescript)
+current_workspace=$($flashspace_path get-workspace)
 
 # Print a JSON object containing the , SIP status, and a shadow property set to true
 echo $(cat <<-EOF

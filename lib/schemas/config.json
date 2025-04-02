@@ -79,9 +79,13 @@
           "type": "string",
           "description": "Determine the path to the aerospace binary"
         },
+        "flashspacePath": {
+          "type": "string",
+          "description": "Determine the path to the flashspace binary"
+        },
         "windowManager": {
           "type": "string",
-          "enum": ["yabai", "aerospace"],
+          "enum": ["yabai", "aerospace", "flashspace"],
           "description": "Determine the window manager used by simple-bar to display spaces & processes: yabai or aerospace"
         },
         "shell": {

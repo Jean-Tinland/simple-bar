@@ -2,6 +2,7 @@ import * as Uebersicht from "uebersicht";
 import OpenedApps from "./opened-apps.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils.js";
+import * as Flashspace from "../../flashspace.js";
 
 const { React } = Uebersicht;
 
@@ -19,18 +20,29 @@ export default function Space({ index, workspace, currentWorkspace }) {
   const { showOnlyFlashspaceSpaceIndex, hideFlashspaceAppIcons } =
     settings.spacesDisplay;
   const { name, apps } = workspace;
+  const focused = name === currentWorkspace;
 
-  // Determine the CSS classes for the space
-  const classes = Utils.classNames("space", {
-    "space--focused": name === currentWorkspace,
-    "space--empty": apps.length,
-  });
+  /**
+   * Handle click event to switch to the clicked space.
+   * @param {Event} e - The click event.
+   */
+  const onClick = (e) => {
+    if (focused) return;
+    Flashspace.goToSpace(name);
+    Utils.clickEffect(e);
+  };
 
   const label = showOnlyFlashspaceSpaceIndex ? index : name;
 
+  // Determine the CSS classes for the space
+  const classes = Utils.classNames("space", {
+    "space--focused": focused,
+    "space--empty": apps.length,
+  });
+
   return (
     <div className={classes}>
-      <button className="space__inner" disabled>
+      <button className="space__inner" onClick={onClick}>
         {label}
         {!hideFlashspaceAppIcons && <OpenedApps apps={apps} />}
       </button>
