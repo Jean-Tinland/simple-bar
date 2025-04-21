@@ -25,6 +25,9 @@ export const AndroidStudio = React.lazy(
 );
 export const Anki = React.lazy(() => import("./library/anki.jsx"));
 export const Anytype = React.lazy(() => import("./library/anytype.jsx"));
+export const AppleSimulator = React.lazy(
+  () => import("./library/apple-simulator.jsx"),
+);
 export const AppStore = React.lazy(() => import("./library/app-store.jsx"));
 export const Apple = React.lazy(() => import("./library/apple.jsx"));
 export const Arc = React.lazy(() => import("./library/arc.jsx"));
