@@ -49,13 +49,15 @@ export default function Space({ space, lastOfSpace }) {
 
   // Filter windows based on exclusions
   const filteredWindows = windows.filter((window) =>
-    Utils.filterApps(window, exclusions, titleExclusions, exclusionsAsRegex)
+    Utils.filterApps(window, exclusions, titleExclusions, exclusionsAsRegex),
   );
 
   // Remove duplicate apps if the setting is enabled
   const displayedWindows = hideDuplicateAppsInSpaces
     ? filteredWindows.reduce((acc, window) => {
-        const isDuplicate = acc.find((w) => w.app === window.app);
+        const isDuplicate = acc.find(
+          (w) => w["app-name"] === window["app-name"],
+        );
         return isDuplicate ? acc : [...acc, window];
       }, [])
     : filteredWindows;
