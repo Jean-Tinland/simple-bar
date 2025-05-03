@@ -156,6 +156,7 @@ function render({ output, error }) {
     "simple-bar--no-color-in-data": settings.global.noColorInData,
     "simple-bar--on-bottom": settings.global.bottomBar,
     "simple-bar--inline-spaces-options": settings.global.inlineSpacesOptions,
+    "simple-bar--animations-disabled": settings.global.disableAnimations,
     "simple-bar--spaces-background-color-as-foreground":
       settings.global.spacesBackgroundColorAsForeground,
     "simple-bar--widgets-background-color-as-foreground":
