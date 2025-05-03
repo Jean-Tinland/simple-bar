@@ -65,7 +65,9 @@ export const Widget = React.memo(() => {
           `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`
         ),
         Uebersicht.run(`pgrep caffeinate`),
-        Uebersicht.run(`pmset -g | grep lowpowermode | awk '{print $2}'`),
+        Uebersicht.run(
+          `pmset -g | grep -E 'lowpowermode|powermode' | awk '{print $2}'`
+        ),
       ]);
     setState({
       system,
