@@ -47,7 +47,7 @@ export default function AerospaceDisplayManager({ defaultValue, onChange }) {
   return (
     <div className="aerospace-display-manager">
       <div className="aerospace-display-manager__label">
-        <em>AeroSpaces</em> Assign custom index to spaces
+        <em>AeroSpaces</em> Custom AeroSpace display indexes
       </div>
       <div className="aerospace-display-manager__displays">
         {displays.map((display) => {
