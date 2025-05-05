@@ -303,6 +303,16 @@
         "hideFlashspaceAppIcons": {
           "type": "boolean",
           "description": "[FlashSpace] Hide the app icons in the spaces display"
+        },
+        "customAeroSpaceDisplayIndexes": {
+          "type": "object",
+          "description": "[AeroSpace] Allow display numbering override in case of monitor numbering mismatch between AeroSpace and Übersicht",
+          "patternProperties": {
+            "^\\d+$": {
+              "type": "number",
+              "description": "Override the display index for the monitor with the given ID"
+            }
+          }
         }
       }
     },

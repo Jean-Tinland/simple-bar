@@ -1,4 +1,5 @@
 import * as Uebersicht from "uebersicht";
+import * as Aerospace from "../aerospace.js";
 
 const { React } = Uebersicht;
 
@@ -61,13 +62,12 @@ export default function SimpleBarContextProvider({
 
   const currentDisplay =
     currentDisplays?.find((d) => {
-      const id = d["monitor-appkit-nsscreen-screens-id"] ?? d.id;
+      const id = Aerospace.getCustomDisplayIndex(d) ?? d.id;
       return id === adjustedDisplayId;
     }) || {};
 
   const displayIndex =
-    (currentDisplay.index ??
-      currentDisplay["monitor-appkit-nsscreen-screens-id"]) ||
+    (currentDisplay.index ?? Aerospace.getCustomDisplayIndex(currentDisplay)) ||
     1;
 
   const pushMissive = (newMissive) => {

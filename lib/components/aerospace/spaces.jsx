@@ -3,6 +3,7 @@ import Space from "./space.jsx";
 import { useAerospaceContext } from "../aerospace-context.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
 import * as Utils from "../../utils.js";
+import * as AeroSpace from "../../aerospace.js";
 
 export { spacesStyles as styles } from "../../styles/components/spaces/spaces.js";
 
@@ -36,7 +37,7 @@ const Component = React.memo(() => {
 
   // Map through displays and render spaces for the current display
   return displays.map((display) => {
-    const displayId = display["monitor-appkit-nsscreen-screens-id"];
+    const displayId = AeroSpace.getCustomDisplayIndex(display);
     if (displayId !== displayIndex) return null;
 
     // Filter spaces based on display settings
