@@ -292,6 +292,7 @@ export const WhatsApp = React.lazy(() => import("./library/whats-app.jsx"));
 export const Widget = React.lazy(() => import("./library/widget.jsx"));
 export const Wifi = React.lazy(() => import("./library/wifi.jsx"));
 export const WifiOff = React.lazy(() => import("./library/wifi-off.jsx"));
+export const Windows = React.lazy(() => import("./library/windows.jsx"));
 export const Xcode = React.lazy(() => import("./library/xcode.jsx"));
 export const YoutubeMusic = React.lazy(
   () => import("./library/youtube-music.jsx"),
