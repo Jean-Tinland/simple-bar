@@ -36,6 +36,7 @@ export const Audacity = React.lazy(() => import("./library/audacity.jsx"));
 export const Aqua = React.lazy(() => import("./library/aqua.jsx"));
 export const Bank = React.lazy(() => import("./library/bank.jsx"));
 export const BattleNet = React.lazy(() => import("./library/battle-net.jsx"));
+export const BambuStudio = React.lazy(() => import("./library/bambu-studio.jsx"));
 export const Bear = React.lazy(() => import("./library/bear.jsx"));
 export const Beekeeper = React.lazy(() => import("./library/beekeeper.jsx"));
 export const Bell = React.lazy(() => import("./library/bell.jsx"));
@@ -90,6 +91,7 @@ export const DEVONthink3 = React.lazy(
   () => import("./library/de-v-o-nthink3.jsx"),
 );
 export const Discord = React.lazy(() => import("./library/discord.jsx"));
+export const Docker = React.lazy(() => import("./library/docker.jsx"));
 export const Dollar = React.lazy(() => import("./library/dollar.jsx"));
 export const DownArrow = React.lazy(() => import("./library/down-arrow.jsx"));
 export const Download = React.lazy(() => import("./library/download.jsx"));
@@ -291,6 +293,7 @@ export const WhatsApp = React.lazy(() => import("./library/whats-app.jsx"));
 export const Widget = React.lazy(() => import("./library/widget.jsx"));
 export const Wifi = React.lazy(() => import("./library/wifi.jsx"));
 export const WifiOff = React.lazy(() => import("./library/wifi-off.jsx"));
+export const Windows = React.lazy(() => import("./library/windows.jsx"));
 export const Xcode = React.lazy(() => import("./library/xcode.jsx"));
 export const YoutubeMusic = React.lazy(
   () => import("./library/youtube-music.jsx"),
