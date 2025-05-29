@@ -90,6 +90,7 @@ export const DEVONthink3 = React.lazy(
   () => import("./library/de-v-o-nthink3.jsx"),
 );
 export const Discord = React.lazy(() => import("./library/discord.jsx"));
+export const Docker = React.lazy(() => import("./library/docker.jsx"));
 export const Dollar = React.lazy(() => import("./library/dollar.jsx"));
 export const DownArrow = React.lazy(() => import("./library/down-arrow.jsx"));
 export const Download = React.lazy(() => import("./library/download.jsx"));
