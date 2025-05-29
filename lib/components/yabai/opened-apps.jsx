@@ -22,13 +22,13 @@ export default function OpenedApps({ apps }) {
       minimized: __legacyIsMinimized,
       "has-focus": hasFocus,
       focused: __legacyHasFocus,
-      app: appName,
       "has-parent-zoom": hasParentZoom,
       "zoom-parent": __legacyHasParentZoom,
       "has-fullscreen-zoom": hasFullscreenZoom,
       "zoom-fullscreen": __legacyHasFullscreenZoom,
       "is-topmost": isTopmost,
     } = app;
+    const appName = app.app.replace(/[\u200E]/g, "");
 
     // Skip minimized applications
     if (isMinimized ?? __legacyIsMinimized) return null;
