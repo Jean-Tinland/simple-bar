@@ -53,6 +53,7 @@ const UserWidget = React.memo(({ index, widget }) => {
     refreshFrequency,
     active,
     noIcon,
+    hideWhenNoOutput = true,
     showOnDisplay = "",
   } = widget;
 
@@ -77,8 +78,8 @@ const UserWidget = React.memo(({ index, widget }) => {
     const widgetOutput = await Uebersicht.run(output);
     const cleanedOutput = Utils.cleanupOutput(widgetOutput);
     
-    // Hide widget if script returns empty output or undefined
-    if (!cleanedOutput.length || cleanedOutput.trim() === "") {
+    // Hide widget if script returns empty output and hideWhenNoOutput is enabled
+    if (hideWhenNoOutput && (!cleanedOutput.length || cleanedOutput.trim() === "")) {
       setLoading(false);
       setIsWidgetActive(false);
       setState(undefined);
@@ -88,7 +89,7 @@ const UserWidget = React.memo(({ index, widget }) => {
     setState(widgetOutput);
     setIsWidgetActive(true);
     setLoading(false);
-  }, [visible, output]);
+  }, [visible, output, hideWhenNoOutput]);
 
   // Use server socket to listen for widget updates
   useServerSocket(
@@ -103,7 +104,8 @@ const UserWidget = React.memo(({ index, widget }) => {
   // Refresh the widget at the specified frequency
   useWidgetRefresh(visible, getUserWidget, refreshFrequency);
 
-  if (!visible || !isWidgetActive) return null;
+  // Hide widget if not visible or if script indicates it should be inactive (only when hideWhenNoOutput is enabled)
+  if (!visible || (hideWhenNoOutput && !isWidgetActive)) return null;
 
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor);
 
