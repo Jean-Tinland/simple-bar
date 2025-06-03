@@ -42,6 +42,7 @@ const UserWidget = React.memo(({ index, widget }) => {
   const { displayIndex, settings } = useSimpleBarContext();
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(true);
+  const [isWidgetActive, setIsWidgetActive] = React.useState(true);
   const {
     icon,
     backgroundColor,
@@ -65,6 +66,7 @@ const UserWidget = React.memo(({ index, widget }) => {
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
+    setIsWidgetActive(true);
   };
 
   /**
@@ -73,11 +75,18 @@ const UserWidget = React.memo(({ index, widget }) => {
   const getUserWidget = React.useCallback(async () => {
     if (!visible) return;
     const widgetOutput = await Uebersicht.run(output);
-    if (!Utils.cleanupOutput(widgetOutput).length) {
+    const cleanedOutput = Utils.cleanupOutput(widgetOutput);
+    
+    // Hide widget if script returns empty output or undefined
+    if (!cleanedOutput.length || cleanedOutput.trim() === "") {
       setLoading(false);
+      setIsWidgetActive(false);
+      setState(undefined);
       return;
     }
+    
     setState(widgetOutput);
+    setIsWidgetActive(true);
     setLoading(false);
   }, [visible, output]);
 
@@ -94,7 +103,7 @@ const UserWidget = React.memo(({ index, widget }) => {
   // Refresh the widget at the specified frequency
   useWidgetRefresh(visible, getUserWidget, refreshFrequency);
 
-  if (!visible) return null;
+  if (!visible || !isWidgetActive) return null;
 
   const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor);
 
