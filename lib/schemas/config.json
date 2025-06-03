@@ -941,6 +941,10 @@
                 "noIcon": {
                   "type": "boolean",
                   "description": "Hide the icon"
+                },
+                "hideWhenNoOutput": {
+                  "type": "boolean",
+                  "description": "Hide the widget when script returns empty output"
                 }
               },
               "additionalProperties": false,
@@ -955,7 +959,8 @@
                 "showOnDisplay",
                 "refreshFrequency",
                 "active",
-                "noIcon"
+                "noIcon",
+                "hideWhenNoOutput"
               ]
             }
           }

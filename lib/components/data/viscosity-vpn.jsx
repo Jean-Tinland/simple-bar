@@ -35,21 +35,25 @@ export const Widget = React.memo(() => {
     [refreshFrequency]
   );
 
-  // Determine if the widget should be visible on the current display
+  // Determine if the widget should be visible
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && vpnWidget;
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
+  const [isViscosityActive, setIsViscosityActive] = React.useState(false);
 
-  // Reset the widget state
+  /**
+   * Reset the widget state.
+   */
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
+    setIsViscosityActive(false);
   };
 
   /**
-   * Fetch the VPN status.
+   * Fetch the current VPN status.
    */
   const getVPN = React.useCallback(async () => {
     if (!visible) return;
@@ -58,6 +62,7 @@ export const Widget = React.memo(() => {
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
+      setIsViscosityActive(false);
       return;
     }
     const status = await Uebersicht.run(
@@ -65,6 +70,7 @@ export const Widget = React.memo(() => {
     );
     if (!status.length) return;
     setState({ status: Utils.cleanupOutput(status) });
+    setIsViscosityActive(true);
     setLoading(false);
   }, [visible, vpnConnectionName]);
 
@@ -74,7 +80,7 @@ export const Widget = React.memo(() => {
   useWidgetRefresh(visible, getVPN, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="viscosity-vpn" />;
-  if (!state || !vpnConnectionName.length) return null;
+  if (!state || !vpnConnectionName.length || !isViscosityActive) return null;
 
   const { status } = state;
   const isConnected = status === "Connected";

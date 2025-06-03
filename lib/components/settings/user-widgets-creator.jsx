@@ -104,6 +104,7 @@ function UserWidgetCreator({
     refreshFrequency,
     active = true,
     noIcon = false,
+    hideWhenNoOutput = true,
     showOnDisplay = "",
   } = widget;
 
@@ -280,6 +281,13 @@ function UserWidgetCreator({
             onChange={onChange("noIcon", true)}
           />
           <label htmlFor={`no-icon-${index}`}>No icon</label>
+          <input
+            id={`hide-when-no-output-${index}`}
+            type="checkbox"
+            defaultChecked={hideWhenNoOutput}
+            onChange={onChange("hideWhenNoOutput", true)}
+          />
+          <label htmlFor={`hide-when-no-output-${index}`}>Hide when no script output</label>
         </div>
       </div>
     </div>

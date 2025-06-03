@@ -36,6 +36,7 @@ export const Widget = React.memo(() => {
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
+  const [isMusicActive, setIsMusicActive] = React.useState(false);
 
   /**
    * Resets the widget state.
@@ -43,6 +44,7 @@ export const Widget = React.memo(() => {
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
+    setIsMusicActive(false);
   };
 
   /**
@@ -58,6 +60,7 @@ export const Widget = React.memo(() => {
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
+      setIsMusicActive(false);
       return;
     }
     const [playerState, trackName, artistName] = await Promise.all([
@@ -77,6 +80,7 @@ export const Widget = React.memo(() => {
       artistName: Utils.cleanupOutput(artistName),
       processName: Utils.cleanupOutput(processName),
     });
+    setIsMusicActive(true);
     setLoading(false);
   }, [visible]);
 
@@ -86,7 +90,7 @@ export const Widget = React.memo(() => {
   useWidgetRefresh(visible, getMusic, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="music" />;
-  if (!state) return null;
+  if (!state || !isMusicActive) return null;
   const { processName, playerState, trackName, artistName } = state;
 
   if (!trackName.length) return null;

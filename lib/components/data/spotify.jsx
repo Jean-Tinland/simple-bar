@@ -36,6 +36,7 @@ export const Widget = React.memo(() => {
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
+  const [isSpotifyActive, setIsSpotifyActive] = React.useState(false);
 
   /**
    * Resets the widget state.
@@ -43,6 +44,7 @@ export const Widget = React.memo(() => {
   const resetWidget = () => {
     setState(undefined);
     setLoading(false);
+    setIsSpotifyActive(false);
   };
 
   /**
@@ -55,6 +57,7 @@ export const Widget = React.memo(() => {
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
+      setIsSpotifyActive(false);
       setState({
         playerState: "",
         trackName: "",
@@ -78,6 +81,7 @@ export const Widget = React.memo(() => {
       trackName: Utils.cleanupOutput(trackName),
       artistName: Utils.cleanupOutput(artistName),
     });
+    setIsSpotifyActive(true);
     setLoading(false);
   }, [visible]);
 
@@ -86,7 +90,7 @@ export const Widget = React.memo(() => {
   useWidgetRefresh(visible, getSpotify, refresh);
 
   if (loading) return <DataWidgetLoader.Widget className="spotify" />;
-  if (!state) return null;
+  if (!state || !isSpotifyActive) return null;
   const { playerState, trackName, artistName } = state;
 
   if (!trackName.length) return null;
