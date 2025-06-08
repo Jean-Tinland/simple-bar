@@ -2,6 +2,7 @@ import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as Icons from "../icons/icons.jsx";
+import { SuspenseIcon } from "../icons/icon.jsx";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 import useServerSocket from "../../hooks/use-server-socket";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
@@ -41,29 +42,34 @@ export const Widget = React.memo(() => {
   /**
    * Reset the widget state.
    */
-  const resetWidget = () => {
+  const resetWidget = React.useCallback(() => {
     setState(undefined);
     setLoading(false);
-  };
+  }, []);
 
   /**
    * Fetch the Zoom status for mic and video.
    */
   const getZoom = React.useCallback(async () => {
     if (!visible) return;
-    const [mic, video] = await Promise.all([
-      Uebersicht.run(
-        `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`
-      ),
-      Uebersicht.run(
-        `osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`
-      ),
-    ]);
-    setState({
-      mic: Utils.cleanupOutput(mic),
-      video: Utils.cleanupOutput(video),
-    });
-    setLoading(false);
+    try {
+      const [mic, video] = await Promise.all([
+        Uebersicht.run(
+          `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`
+        ),
+        Uebersicht.run(
+          `osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`
+        ),
+      ]);
+      setState({
+        mic: Utils.cleanupOutput(mic),
+        video: Utils.cleanupOutput(video),
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Zoom status:", error);
+      setLoading(false);
+    }
   }, [visible]);
 
   // Use server socket to listen for Zoom events
@@ -81,8 +87,16 @@ export const Widget = React.memo(() => {
 
   return (
     <DataWidget.Widget classes="zoom">
-      {showVideo && <VideoIcon className={`zoom__icon zoom__icon--${video}`} />}
-      {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
+      {showVideo && (
+        <SuspenseIcon>
+          <VideoIcon className={`zoom__icon zoom__icon--${video}`} />
+        </SuspenseIcon>
+      )}
+      {showMic && (
+        <SuspenseIcon>
+          <MicIcon className={`zoom__icon zoom__icon--${mic}`} />
+        </SuspenseIcon>
+      )}
     </DataWidget.Widget>
   );
 });
