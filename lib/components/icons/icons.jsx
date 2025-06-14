@@ -36,7 +36,9 @@ export const Audacity = React.lazy(() => import("./library/audacity.jsx"));
 export const Aqua = React.lazy(() => import("./library/aqua.jsx"));
 export const Bank = React.lazy(() => import("./library/bank.jsx"));
 export const BattleNet = React.lazy(() => import("./library/battle-net.jsx"));
-export const BambuStudio = React.lazy(() => import("./library/bambu-studio.jsx"));
+export const BambuStudio = React.lazy(
+  () => import("./library/bambu-studio.jsx"),
+);
 export const Bear = React.lazy(() => import("./library/bear.jsx"));
 export const Beekeeper = React.lazy(() => import("./library/beekeeper.jsx"));
 export const Bell = React.lazy(() => import("./library/bell.jsx"));
@@ -299,6 +301,7 @@ export const YoutubeMusic = React.lazy(
   () => import("./library/youtube-music.jsx"),
 );
 export const Zed = React.lazy(() => import("./library/zed.jsx"));
+export const ZenBrowser = React.lazy(() => import("./library/zen-browser.jsx"));
 export const Zeplin = React.lazy(() => import("./library/zeplin.jsx"));
 export const Zoom = React.lazy(() => import("./library/zoom.jsx"));
 export const Zotero = React.lazy(() => import("./library/zotero.jsx"));
