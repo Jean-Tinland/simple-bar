@@ -120,6 +120,7 @@ export const Fog = React.lazy(() => import("./library/fog.jsx"));
 export const Folx = React.lazy(() => import("./library/folx.jsx"));
 export const FreeTube = React.lazy(() => import("./library/free-tube.jsx"));
 export const Gear = React.lazy(() => import("./library/gear.jsx"));
+export const Ghostty = React.lazy(() => import("./library/ghostty.jsx"));
 export const GitHub = React.lazy(() => import("./library/git-hub.jsx"));
 export const GoodNotes = React.lazy(() => import("./library/good-notes.jsx"));
 export const GoogleChrome = React.lazy(
