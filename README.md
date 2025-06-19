@@ -36,7 +36,7 @@ Among the principal features of `simple-bar`, you'll find:
 Simply clone this repo in your Übersicht widgets directory with the following command.
 
 ```bash
-git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+git clone --depth 1 https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 ```
 
 You'll find the full installation guide in the [documentation](https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/).
