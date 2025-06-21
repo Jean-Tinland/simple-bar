@@ -27,6 +27,7 @@ export const Widget = React.memo(() => {
     toggleCaffeinateOnClick,
     caffeinateOption,
     showOnDisplay,
+    showIcon,
   } = batteryWidgetOptions;
 
   // Determine if the widget should be visible based on display settings
@@ -129,7 +130,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       disableSlider
       {...onClickProp}
     >

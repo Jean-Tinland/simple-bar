@@ -24,7 +24,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, netstatsWidgetOptions } = settings;
   const { netstatsWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, displayAsGraph } =
+  const { refreshFrequency, showOnDisplay, displayAsGraph, showIcon } =
     netstatsWidgetOptions;
 
   const isDisabled = React.useRef(false);
@@ -115,12 +115,12 @@ export const Widget = React.memo(() => {
           caption={{
             download: {
               value: formattedDownload,
-              icon: Icons.Download,
+              icon: showIcon ? Icons.Download : null,
               color: "var(--magenta)",
             },
             upload: {
               value: formattedUpload,
-              icon: Icons.Upload,
+              icon: showIcon ? Icons.Upload : null,
               color: "var(--blue)",
             },
           }}
@@ -135,9 +135,11 @@ export const Widget = React.memo(() => {
     <React.Fragment>
       <DataWidget.Widget classes="netstats" disableSlider>
         <div className="netstats__item">
-          <SuspenseIcon>
-            <Icons.Download className="netstats__icon netstats__icon--download" />
-          </SuspenseIcon>
+          {showIcon && (
+            <SuspenseIcon>
+              <Icons.Download className="netstats__icon netstats__icon--download" />
+            </SuspenseIcon>
+          )}
           <span
             className="netstats__value"
             dangerouslySetInnerHTML={{ __html: formattedDownload }}
@@ -146,9 +148,11 @@ export const Widget = React.memo(() => {
       </DataWidget.Widget>
       <DataWidget.Widget classes="netstats" disableSlider>
         <div className="netstats__item">
-          <SuspenseIcon>
-            <Icons.Upload className="netstats__icon netstats__icon--upload" />
-          </SuspenseIcon>
+          {showIcon && (
+            <SuspenseIcon>
+              <Icons.Upload className="netstats__icon netstats__icon--upload" />
+            </SuspenseIcon>
+          )}
           <span
             className="netstats__value"
             dangerouslySetInnerHTML={{ __html: formattedUpload }}

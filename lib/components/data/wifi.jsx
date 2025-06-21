@@ -28,6 +28,7 @@ export const Widget = React.memo(() => {
     networkDevice,
     hideNetworkName,
     showOnDisplay,
+    showIcon,
   } = networkWidgetOptions;
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && wifiWidget;
@@ -99,7 +100,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       onClick={toggleWifiOnClick ? onClick : undefined}
       onRightClick={openWifiPreferences}
     >

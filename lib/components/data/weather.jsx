@@ -27,6 +27,7 @@ export const Widget = React.memo(() => {
     hideLocation,
     hideGradient,
     showOnDisplay,
+    showIcon,
   } = weatherWidgetOptions;
 
   const refresh = React.useMemo(
@@ -145,7 +146,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       href={`https://wttr.in/${state.location}${wttrUnitParam}`}
       onClick={(e) => openWeather(e, pushMissive)}
       onRightClick={onRightClick}

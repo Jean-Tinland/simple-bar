@@ -22,7 +22,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, browserTrackWidgetOptions } = settings;
   const { browserTrackWidget } = widgets;
-  const { refreshFrequency, showSpecter, showOnDisplay } =
+  const { refreshFrequency, showSpecter, showOnDisplay, showIcon } =
     browserTrackWidgetOptions;
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && browserTrackWidget;
@@ -119,7 +119,7 @@ export const Widget = React.memo(() => {
     <DataWidget.Widget
       ref={ref}
       classes="browser-track"
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       showSpecter={showSpecter}
     >
       {title}

@@ -26,6 +26,7 @@ export const Widget = React.memo(() => {
       showSpecter,
       showOnDisplay,
       youtubeMusicPort,
+      showIcon,
     },
   } = settings;
 
@@ -167,7 +168,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       onClick={onClick}
       onRightClick={onRightClick}
       onMiddleClick={onMiddleClick}

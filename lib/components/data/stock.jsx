@@ -32,6 +32,7 @@ export const Widget = React.memo(() => {
     showMarketPercent,
     showColor,
     showOnDisplay,
+    showIcon,
   } = stockWidgetOptions;
 
   // Determine the refresh frequency for the widget
@@ -137,7 +138,7 @@ export const Widget = React.memo(() => {
         key={symbolName}
         classes="stock"
         ref={ref}
-        Icon={stockUp ? Icons.UpArrow : Icons.DownArrow}
+        Icon={showIcon ? (stockUp ? Icons.UpArrow : Icons.DownArrow) : null}
         href={`https://finance.yahoo.com/quote/${symbolName}`}
         onClick={openStock}
         onRightClick={refreshStocks}

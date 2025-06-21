@@ -27,6 +27,7 @@ export const Widget = React.memo(() => {
     locale,
     calendarApp,
     showOnDisplay,
+    showIcon,
   } = dateWidgetOptions;
 
   // Determine if the widget should be visible based on display settings
@@ -97,7 +98,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes="date-display"
-      Icon={Icons.Date}
+      Icon={showIcon ? Icons.Date : null}
       onClick={onClick}
     >
       {now}
