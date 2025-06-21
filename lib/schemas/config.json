@@ -422,6 +422,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "unit": {
           "type": "string",
           "enum": ["C", "F"],
@@ -453,6 +457,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "displayAsGraph": {
           "type": "boolean",
           "description": "Instead of show current network information, the widget will display a graphic showing the latest 60 seconds (it can change depending of the refresh frequency of the widget) of network activity. All drawn points are relative to the highest value"
@@ -470,6 +478,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "displayAsGraph": {
           "type": "boolean",
@@ -494,6 +506,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "displayAsGraph": {
           "type": "boolean",
           "description": "Instead of show current CPU information, the widget will display a graphic showing the latest 100 seconds (it can change depending of the refresh frequency of the widget) of CPU activity. All drawn points are relative to the highest value"
@@ -513,6 +529,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "memoryMonitorApp": {
           "type": "string",
           "enum": ["Activity Monitor", "Top", "None"],
@@ -531,6 +551,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "toggleCaffeinateOnClick": {
           "type": "boolean",
@@ -553,6 +577,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "networkDevice": {
           "type": "string",
@@ -584,6 +612,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "vpnConnectionName": {
           "type": "string",
           "description": "The name of the connection you want to display"
@@ -606,6 +638,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "showVideo": {
           "type": "boolean",
           "description": "Displays your current call video status"
@@ -627,6 +663,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         }
       }
     },
@@ -641,6 +681,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         }
       }
     },
@@ -655,6 +699,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "shortDateFormat": {
           "type": "boolean",
@@ -682,6 +730,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "hour12": {
           "type": "boolean",
           "description": "Display time in 12h format"
@@ -707,6 +759,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         }
       }
     },
@@ -721,6 +777,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "denomination": {
           "type": "string",
@@ -748,6 +808,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "yahooFinanceApiKey": {
           "type": "string",
@@ -795,6 +859,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "showSpecter": {
           "type": "boolean",
           "description": "Show the specter animation when a song is playing"
@@ -812,6 +880,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "showSpecter": {
           "type": "boolean",
@@ -835,6 +907,10 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
         "showSpecter": {
           "type": "boolean",
           "description": "Show the specter animation when a song is playing"
@@ -852,6 +928,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "showSpecter": {
           "type": "boolean",
@@ -880,6 +960,10 @@
         "showOnDisplay": {
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
         },
         "showSpecter": {
           "type": "boolean",

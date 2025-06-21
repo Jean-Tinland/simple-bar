@@ -21,7 +21,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, spotifyWidgetOptions } = settings;
   const { spotifyWidget } = widgets;
-  const { refreshFrequency, showSpecter, showOnDisplay } = spotifyWidgetOptions;
+  const { refreshFrequency, showSpecter, showOnDisplay, showIcon } = spotifyWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
@@ -136,7 +136,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       onClick={onClick}
       onRightClick={onRightClick}
       onMiddleClick={onMiddleClick}

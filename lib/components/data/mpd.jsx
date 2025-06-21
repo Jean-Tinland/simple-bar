@@ -30,6 +30,7 @@ export const Widget = React.memo(() => {
     mpdPort,
     mpdFormatString,
     showOnDisplay,
+    showIcon,
   } = mpdWidgetOptions;
 
   // Determine the refresh frequency for the widget
@@ -165,7 +166,7 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget
       classes={classes}
-      Icon={Icon}
+      Icon={showIcon ? Icon : null}
       onClick={onClick}
       showSpecter={showSpecter && isPlaying}
       disableSlider

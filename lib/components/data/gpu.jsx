@@ -28,6 +28,7 @@ export const Widget = React.memo(() => {
     showOnDisplay,
     displayAsGraph,
     gpuMacmonBinaryPath,
+    showIcon,
   } = gpuWidgetOptions;
 
   const isDisabled = React.useRef(false);
@@ -102,7 +103,7 @@ export const Widget = React.memo(() => {
           caption={{
             usage: {
               value: `${usage}%`,
-              icon: Icons.CPU,
+              icon: showIcon ? Icons.CPU : null,
               color: "var(--cyan)",
             },
           }}
@@ -115,7 +116,7 @@ export const Widget = React.memo(() => {
   }
 
   return (
-    <DataWidget.Widget classes="cpu" Icon={Icons.CPU}>
+    <DataWidget.Widget classes="cpu" Icon={showIcon ? Icons.CPU : null}>
       <span className="cpu__usage">{usage}%</span>
     </DataWidget.Widget>
   );

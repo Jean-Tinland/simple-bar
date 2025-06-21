@@ -22,7 +22,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, soundWidgetOptions } = settings;
   const { soundWidget } = widgets;
-  const { refreshFrequency, showOnDisplay } = soundWidgetOptions;
+  const { refreshFrequency, showOnDisplay, showIcon } = soundWidgetOptions;
 
   // Determine the refresh frequency for the widget.
   const refresh = React.useMemo(
@@ -118,9 +118,11 @@ export const Widget = React.memo(() => {
   return (
     <DataWidget.Widget classes={classes} disableSlider>
       <div className="sound__display">
-        <SuspenseIcon>
-          <Icon />
-        </SuspenseIcon>
+        {showIcon && (
+          <SuspenseIcon>
+            <Icon />
+          </SuspenseIcon>
+        )}
         <span className="sound__value">{formattedVolume}</span>
       </div>
       <div className="sound__slider-container">

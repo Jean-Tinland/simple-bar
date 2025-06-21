@@ -26,6 +26,7 @@ export const Widget = React.memo(() => {
     vpnConnectionName,
     vpnShowConnectionName,
     showOnDisplay,
+    showIcon,
   } = vpnWidgetOptions;
 
   // Determine the refresh frequency for the widget
@@ -102,7 +103,7 @@ export const Widget = React.memo(() => {
   };
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={clicked}>
+    <DataWidget.Widget classes={classes} Icon={showIcon ? Icon : null} onClick={clicked}>
       {vpnShowConnectionName ? vpnConnectionName : status}
     </DataWidget.Widget>
   );

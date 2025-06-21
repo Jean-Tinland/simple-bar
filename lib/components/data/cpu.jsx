@@ -23,7 +23,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cpuWidgetOptions } = settings;
   const { cpuWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp } =
+  const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp, showIcon } =
     cpuWidgetOptions;
 
   // Determine if the widget should be visible based on display settings
@@ -101,7 +101,7 @@ export const Widget = React.memo(() => {
           caption={{
             usage: {
               value: `${usage}%`,
-              icon: Icons.CPU,
+              icon: showIcon ? Icons.CPU : null,
               color: "var(--yellow)",
             },
           }}
@@ -114,7 +114,7 @@ export const Widget = React.memo(() => {
   }
 
   return (
-    <DataWidget.Widget classes="cpu" Icon={Icons.CPU} onClick={onClick}>
+    <DataWidget.Widget classes="cpu" Icon={showIcon ? Icons.CPU : null} onClick={onClick}>
       <span className="cpu__usage">{usage}%</span>
     </DataWidget.Widget>
   );

@@ -20,7 +20,7 @@ export const Widget = () => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, memoryWidgetOptions } = settings;
   const { memoryWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, memoryMonitorApp } =
+  const { refreshFrequency, showOnDisplay, memoryMonitorApp, showIcon } =
     memoryWidgetOptions;
 
   // Determine the refresh frequency for the widget
@@ -99,7 +99,7 @@ export const Widget = () => {
   });
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Pie} onClick={onClick}>
+    <DataWidget.Widget classes={classes} Icon={showIcon ? Pie : null} onClick={onClick}>
       <div className="memory__content">{used}%</div>
     </DataWidget.Widget>
   );
