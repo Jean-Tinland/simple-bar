@@ -42,10 +42,15 @@ export const Widget = React.memo(() => {
 
   const ref = React.useRef();
   const denominatorToken = getDenominatorToken(denomination);
-  const cleanedUpIdentifiers = identifiers.replace(/ /g, "");
-  const enumeratedIdentifiers = cleanedUpIdentifiers
-    .replace(/ /g, "")
-    .split(",");
+
+  // Memoize cleanedUpIdentifiers to prevent recreation on every render
+  const cleanedUpIdentifiers = React.useMemo(() => identifiers.replace(/ /g, ""), [identifiers]);
+
+  // Memoize enumeratedIdentifiers to prevent recreation on every render
+  const enumeratedIdentifiers = React.useMemo(() =>
+    cleanedUpIdentifiers.replace(/ /g, "").split(","),
+    [cleanedUpIdentifiers]
+  );
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);

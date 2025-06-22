@@ -46,8 +46,15 @@ export const Widget = React.memo(() => {
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && stockWidget;
 
   const ref = React.useRef();
-  const cleanedUpSymbols = symbols.replace(/ /g, "");
-  const enumeratedSymbols = cleanedUpSymbols.replace(/ /g, "").split(",");
+
+  // Memoize cleanedUpSymbols to prevent recreation on every render
+  const cleanedUpSymbols = React.useMemo(() => symbols.replace(/ /g, ""), [symbols]);
+
+  // Memoize enumeratedSymbols to prevent recreation on every render
+  const enumeratedSymbols = React.useMemo(() =>
+    cleanedUpSymbols.replace(/ /g, "").split(","),
+    [cleanedUpSymbols]
+  );
 
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
