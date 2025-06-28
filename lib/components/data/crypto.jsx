@@ -27,6 +27,7 @@ export const Widget = React.memo(() => {
     identifiers,
     precision,
     showOnDisplay,
+    showIcon,
   } = cryptoWidgetOptions;
 
   // Calculate the refresh frequency using the provided or default value
@@ -110,7 +111,7 @@ export const Widget = React.memo(() => {
       key={id}
       classes={classes}
       ref={ref}
-      Icon={getIcon(id)}
+      Icon={showIcon ? getIcon(id) : null}
       href={`https://coingecko.com/en/coins/${id}`}
       onClick={(e) => openCrypto(e, pushMissive)}
       onRightClick={refreshCrypto}

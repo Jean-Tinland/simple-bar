@@ -22,7 +22,7 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, zoomWidgetOptions } = settings;
   const { zoomWidget } = widgets;
-  const { refreshFrequency, showVideo, showMic, showOnDisplay } =
+  const { refreshFrequency, showVideo, showMic, showOnDisplay, showIcon } =
     zoomWidgetOptions;
 
   // Determine the refresh frequency for the widget
@@ -87,12 +87,12 @@ export const Widget = React.memo(() => {
 
   return (
     <DataWidget.Widget classes="zoom">
-      {showVideo && (
+      {showIcon && showVideo && (
         <SuspenseIcon>
           <VideoIcon className={`zoom__icon zoom__icon--${video}`} />
         </SuspenseIcon>
       )}
-      {showMic && (
+      {showIcon && showMic && (
         <SuspenseIcon>
           <MicIcon className={`zoom__icon zoom__icon--${mic}`} />
         </SuspenseIcon>
