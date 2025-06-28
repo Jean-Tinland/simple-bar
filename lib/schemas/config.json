@@ -638,10 +638,6 @@
           "type": "string",
           "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
         },
-        "showIcon": {
-          "type": "boolean",
-          "description": "Show or hide the widget icon"
-        },
         "showVideo": {
           "type": "boolean",
           "description": "Displays your current call video status"

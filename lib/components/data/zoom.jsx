@@ -22,14 +22,14 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, zoomWidgetOptions } = settings;
   const { zoomWidget } = widgets;
-  const { refreshFrequency, showVideo, showMic, showOnDisplay, showIcon } =
+  const { refreshFrequency, showVideo, showMic, showOnDisplay } =
     zoomWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible
@@ -55,10 +55,10 @@ export const Widget = React.memo(() => {
     try {
       const [mic, video] = await Promise.all([
         Uebersicht.run(
-          `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`
+          `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`,
         ),
         Uebersicht.run(
-          `osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`
+          `osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`,
         ),
       ]);
       setState({
@@ -87,12 +87,12 @@ export const Widget = React.memo(() => {
 
   return (
     <DataWidget.Widget classes="zoom">
-      {showIcon && showVideo && (
+      {showVideo && (
         <SuspenseIcon>
           <VideoIcon className={`zoom__icon zoom__icon--${video}`} />
         </SuspenseIcon>
       )}
-      {showIcon && showMic && (
+      {showMic && (
         <SuspenseIcon>
           <MicIcon className={`zoom__icon zoom__icon--${mic}`} />
         </SuspenseIcon>
