@@ -84,7 +84,7 @@ const {
   // You can setup your custom yabai or AeroSpace path in the settings module (Global tab) :
   // while on an empty workspace, click on simple-bar then press cmd + , to open it.
   yabaiPath = "/opt/homebrew/bin/yabai",
-  aerospacePath = "/opt/homebrew/bin/aerospace",
+  aerospacePath = "$(which aerospace)",
   flashspacePath = "/usr/local/bin/flashspace",
   windowManager, // Window manager type (yabai, aerospace or flashspace)
   shell, // Shell to use for commands
