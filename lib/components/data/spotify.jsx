@@ -21,7 +21,13 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, spotifyWidgetOptions } = settings;
   const { spotifyWidget } = widgets;
-  const { refreshFrequency, showSpecter, showOnDisplay, showIcon } = spotifyWidgetOptions;
+  const {
+    refreshFrequency,
+    showSpecter,
+    showOnDisplay,
+    showIcon,
+    showSpotifyMetadata,
+  } = spotifyWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
@@ -67,14 +73,18 @@ export const Widget = React.memo(() => {
     }
     const [playerState, trackName, artistName] = await Promise.all([
       Uebersicht.run(
-        `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`
+        `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`,
       ),
-      Uebersicht.run(
-        `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo "unknown track"`
-      ),
-      Uebersicht.run(
-        `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo "unknown artist"`
-      ),
+      showSpotifyMetadata
+        ? Uebersicht.run(
+            `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo "unknown track"`,
+          )
+        : new Promise((resolve) => resolve("")),
+      showSpotifyMetadata
+        ? Uebersicht.run(
+            `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo "unknown artist"`,
+          )
+        : new Promise((resolve) => resolve("")),
     ]);
     setState({
       playerState: Utils.cleanupOutput(playerState),
@@ -83,7 +93,7 @@ export const Widget = React.memo(() => {
     });
     setIsSpotifyActive(true);
     setLoading(false);
-  }, [visible]);
+  }, [visible, showSpotifyMetadata]);
 
   // Set up server socket and widget refresh hooks
   useServerSocket("spotify", visible, getSpotify, resetWidget, setLoading);
@@ -93,7 +103,7 @@ export const Widget = React.memo(() => {
   if (!state || !isSpotifyActive) return null;
   const { playerState, trackName, artistName } = state;
 
-  if (!trackName.length) return null;
+  if (!trackName.length && showSpotifyMetadata) return null;
 
   const label = artistName.length ? `${trackName} - ${artistName}` : trackName;
   const isPlaying = playerState === "playing";
@@ -130,6 +140,7 @@ export const Widget = React.memo(() => {
   };
 
   const classes = Utils.classNames("spotify", {
+    "spotify--hidden-metadata": !showSpotifyMetadata,
     "spotify--playing": isPlaying,
   });
 
@@ -141,8 +152,9 @@ export const Widget = React.memo(() => {
       onRightClick={onRightClick}
       onMiddleClick={onMiddleClick}
       showSpecter={showSpecter && isPlaying}
+      disableSlider={!showSpotifyMetadata}
     >
-      {label}
+      {showSpotifyMetadata && label}
     </DataWidget.Widget>
   );
 });
