@@ -28,7 +28,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible.
@@ -55,7 +55,7 @@ export const Widget = React.memo(() => {
   const getMic = React.useCallback(async () => {
     if (!visible) return;
     const volume = await Uebersicht.run(
-      `osascript -e 'set ovol to input volume of (get volume settings)'`
+      `osascript -e 'set ovol to input volume of (get volume settings)'`,
     );
     setState({ volume: Utils.cleanupOutput(volume) });
     setLoading(false);

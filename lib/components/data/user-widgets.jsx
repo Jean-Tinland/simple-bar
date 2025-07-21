@@ -77,15 +77,18 @@ const UserWidget = React.memo(({ index, widget }) => {
     if (!visible) return;
     const widgetOutput = await Uebersicht.run(output);
     const cleanedOutput = Utils.cleanupOutput(widgetOutput);
-    
+
     // Hide widget if script returns empty output and hideWhenNoOutput is enabled
-    if (hideWhenNoOutput && (!cleanedOutput.length || cleanedOutput.trim() === "")) {
+    if (
+      hideWhenNoOutput &&
+      (!cleanedOutput.length || cleanedOutput.trim() === "")
+    ) {
       setLoading(false);
       setIsWidgetActive(false);
       setState(undefined);
       return;
     }
-    
+
     setState(widgetOutput);
     setIsWidgetActive(true);
     setLoading(false);
@@ -98,7 +101,7 @@ const UserWidget = React.memo(({ index, widget }) => {
     getUserWidget,
     resetWidget,
     setLoading,
-    index
+    index,
   );
 
   // Refresh the widget at the specified frequency

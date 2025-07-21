@@ -33,7 +33,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible
@@ -59,7 +59,7 @@ export const Widget = React.memo(() => {
   const getVPN = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Uebersicht.run(
-      `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`
+      `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
@@ -67,7 +67,7 @@ export const Widget = React.memo(() => {
       return;
     }
     const status = await Uebersicht.run(
-      `osascript -e "tell application \\"Viscosity\\" to return state of the first connection where name is equal to \\"${vpnConnectionName}\\"" 2>/dev/null`
+      `osascript -e "tell application \\"Viscosity\\" to return state of the first connection where name is equal to \\"${vpnConnectionName}\\"" 2>/dev/null`,
     );
     if (!status.length) return;
     setState({ status: Utils.cleanupOutput(status) });
@@ -103,7 +103,11 @@ export const Widget = React.memo(() => {
   };
 
   return (
-    <DataWidget.Widget classes={classes} Icon={showIcon ? Icon : null} onClick={clicked}>
+    <DataWidget.Widget
+      classes={classes}
+      Icon={showIcon ? Icon : null}
+      onClick={clicked}
+    >
       {vpnShowConnectionName ? vpnConnectionName : status}
     </DataWidget.Widget>
   );
@@ -120,19 +124,19 @@ Widget.displayName = "ViscosityVPN";
 function toggleVPN(isConnected, vpnConnectionName, pushMissive) {
   if (isConnected) {
     Uebersicht.run(
-      `osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`
+      `osascript -e 'tell application "Viscosity" to disconnect "${vpnConnectionName}"'`,
     );
     Utils.notification(
       `Disabling Viscosity ${vpnConnectionName} network...`,
-      pushMissive
+      pushMissive,
     );
   } else {
     Uebersicht.run(
-      `osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`
+      `osascript -e 'tell application "Viscosity" to connect "${vpnConnectionName}"'`,
     );
     Utils.notification(
       `Enabling Viscosity ${vpnConnectionName} network...`,
-      pushMissive
+      pushMissive,
     );
   }
 }

@@ -33,7 +33,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const visible =
@@ -42,7 +42,7 @@ export const Widget = React.memo(() => {
   const [state, setState] = React.useState();
   const [loading, setLoading] = React.useState(visible);
   const location = React.useRef(
-    visible && customLocation.length ? customLocation : undefined
+    visible && customLocation.length ? customLocation : undefined,
   );
 
   /**
@@ -67,7 +67,7 @@ export const Widget = React.memo(() => {
     }
     try {
       const result = await fetch(
-        `https://wttr.in/${location.current}?format=j1`
+        `https://wttr.in/${location.current}?format=j1`,
       );
       const data = await result.json();
       setState({ location: location.current, data });
@@ -107,14 +107,14 @@ export const Widget = React.memo(() => {
     parseInt(sunriseData[0], 10),
     parseInt(sunriseData[1], 10),
     0,
-    0
+    0,
   );
   const sunsetTime = new Date();
   sunsetTime.setHours(
     parseInt(sunsetData[0], 10) + 12,
     parseInt(sunsetData[1], 10),
     0,
-    0
+    0,
   );
 
   const atNight = sunriseTime >= now || now >= sunsetTime;
@@ -208,6 +208,6 @@ function openWeather(e, pushMissive) {
  */
 async function getPosition() {
   return new Promise((resolve) =>
-    navigator.geolocation.getCurrentPosition(resolve)
+    navigator.geolocation.getCurrentPosition(resolve),
   );
 }

@@ -50,7 +50,7 @@ export default function Space({
     type,
   } = space;
   const [spaceLabel, setSpaceLabel] = React.useState(
-    label?.length ? label : index
+    label?.length ? label : index,
   );
 
   // Return null if the space should not be displayed on the current screen

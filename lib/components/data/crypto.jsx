@@ -34,7 +34,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible on the current display
@@ -45,12 +45,15 @@ export const Widget = React.memo(() => {
   const denominatorToken = getDenominatorToken(denomination);
 
   // Memoize cleanedUpIdentifiers to prevent recreation on every render
-  const cleanedUpIdentifiers = React.useMemo(() => identifiers.replace(/ /g, ""), [identifiers]);
+  const cleanedUpIdentifiers = React.useMemo(
+    () => identifiers.replace(/ /g, ""),
+    [identifiers],
+  );
 
   // Memoize enumeratedIdentifiers to prevent recreation on every render
-  const enumeratedIdentifiers = React.useMemo(() =>
-    cleanedUpIdentifiers.replace(/ /g, "").split(","),
-    [cleanedUpIdentifiers]
+  const enumeratedIdentifiers = React.useMemo(
+    () => cleanedUpIdentifiers.replace(/ /g, "").split(","),
+    [cleanedUpIdentifiers],
   );
 
   const [state, setState] = React.useState();
@@ -68,7 +71,7 @@ export const Widget = React.memo(() => {
   const getCrypto = React.useCallback(async () => {
     if (!visible) return;
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`
+      `https://api.coingecko.com/api/v3/simple/price?ids=${cleanedUpIdentifiers}&vs_currencies=${denomination}`,
     );
     const result = await response.json();
 

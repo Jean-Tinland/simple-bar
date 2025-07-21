@@ -116,7 +116,7 @@ function UserWidgetCreator({
       const keys = Object.keys(widgets);
       return keys.reduce(
         (acc, key) => (key === index ? acc : { ...acc, [key]: widgets[key] }),
-        {}
+        {},
       );
     });
   };
@@ -287,7 +287,9 @@ function UserWidgetCreator({
             defaultChecked={hideWhenNoOutput}
             onChange={onChange("hideWhenNoOutput", true)}
           />
-          <label htmlFor={`hide-when-no-output-${index}`}>Hide when no script output</label>
+          <label htmlFor={`hide-when-no-output-${index}`}>
+            Hide when no script output
+          </label>
         </div>
       </div>
     </div>

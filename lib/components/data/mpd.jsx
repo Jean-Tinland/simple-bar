@@ -37,7 +37,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible on the current display
@@ -69,9 +69,9 @@ export const Widget = React.memo(() => {
 
     try {
       const mpdProcess = await Uebersicht.run(
-        `pgrep -x mpd > /dev/null && echo "true" || echo "false"`
+        `pgrep -x mpd > /dev/null && echo "true" || echo "false"`,
       );
-      
+
       if (Utils.cleanupOutput(mpdProcess) === "false") {
         setLoading(false);
         setIsMpdActive(false);
@@ -80,13 +80,13 @@ export const Widget = React.memo(() => {
 
       const [playerState, trackInfo, volumeState] = await Promise.all([
         Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`,
         ),
         Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`,
         ),
         Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} volume | sed -e 's/volume:[ ]*//g' -e 's/%//g'`
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} volume | sed -e 's/volume:[ ]*//g' -e 's/%//g'`,
         ),
       ]);
       if (Utils.cleanupOutput(trackInfo) === "") {

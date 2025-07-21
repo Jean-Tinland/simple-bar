@@ -36,7 +36,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [state, setState] = React.useState();
@@ -58,7 +58,7 @@ export const Widget = React.memo(() => {
     const [status, ssid] = await Promise.all([
       Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
       Uebersicht.run(
-        `system_profiler SPAirPortDataType | awk '/Current Network/ {getline;$1=$1;print $0 | "tr -d ':'";exit}'`
+        `system_profiler SPAirPortDataType | awk '/Current Network/ {getline;$1=$1;print $0 | "tr -d ':'";exit}'`,
       ),
     ]);
     setState({

@@ -43,28 +43,28 @@ const { React } = Uebersicht;
 
 // Spaces & process components are lazy loaded to avoid loading them when not needed
 const YabaiContextProvider = React.lazy(
-  () => import("./lib/components/yabai-context.jsx")
+  () => import("./lib/components/yabai-context.jsx"),
 );
 const AerospaceContextProvider = React.lazy(
-  () => import("./lib/components/aerospace-context.jsx")
+  () => import("./lib/components/aerospace-context.jsx"),
 );
 const FlashspaceContextProvider = React.lazy(
-  () => import("./lib/components/flashspace-context.jsx")
+  () => import("./lib/components/flashspace-context.jsx"),
 );
 const YabaiSpaces = React.lazy(
-  () => import("./lib/components/yabai/spaces.jsx")
+  () => import("./lib/components/yabai/spaces.jsx"),
 );
 const YabaiProcess = React.lazy(
-  () => import("./lib/components/yabai/process.jsx")
+  () => import("./lib/components/yabai/process.jsx"),
 );
 const AerospaceSpaces = React.lazy(
-  () => import("./lib/components/aerospace/spaces.jsx")
+  () => import("./lib/components/aerospace/spaces.jsx"),
 );
 const AerospaceProcess = React.lazy(
-  () => import("./lib/components/aerospace/process.jsx")
+  () => import("./lib/components/aerospace/process.jsx"),
 );
 const FlashspaceSpaces = React.lazy(
-  () => import("./lib/components/flashspace/spaces.jsx")
+  () => import("./lib/components/flashspace/spaces.jsx"),
 );
 
 // Set refresh frequency to false
@@ -105,7 +105,7 @@ const args = getArguments(
   windowManager,
   yabaiArgs,
   aerospaceArgs,
-  flashspaceArgs
+  flashspaceArgs,
 );
 const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 

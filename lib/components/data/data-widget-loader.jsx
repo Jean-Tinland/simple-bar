@@ -31,7 +31,7 @@ export const Widget = React.memo(
         />
       </div>
     );
-  }
+  },
 );
 
 Widget.displayName = "DataWidgetLoader";

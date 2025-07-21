@@ -24,7 +24,7 @@ const Component = React.memo(() => {
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
-    process.showOnDisplay
+    process.showOnDisplay,
   );
 
   // If not visible, return null

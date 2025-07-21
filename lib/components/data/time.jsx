@@ -20,8 +20,14 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, timeWidgetOptions } = settings;
   const { timeWidget } = widgets;
-  const { refreshFrequency, hour12, dayProgress, showSeconds, showOnDisplay, showIcon } =
-    timeWidgetOptions;
+  const {
+    refreshFrequency,
+    hour12,
+    dayProgress,
+    showSeconds,
+    showOnDisplay,
+    showIcon,
+  } = timeWidgetOptions;
 
   // Determine if the widget should be visible on the current display
   const visible =
@@ -31,7 +37,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [state, setState] = React.useState();
@@ -45,7 +51,7 @@ export const Widget = React.memo(() => {
       second: showSeconds ? "numeric" : undefined,
       hour12,
     }),
-    [hour12, showSeconds]
+    [hour12, showSeconds],
   );
 
   /**
@@ -93,7 +99,11 @@ export const Widget = React.memo(() => {
   };
 
   return (
-    <DataWidget.Widget classes="time" Icon={showIcon ? TimeIcon : null} disableSlider>
+    <DataWidget.Widget
+      classes="time"
+      Icon={showIcon ? TimeIcon : null}
+      disableSlider
+    >
       {time}
       {dayProgress && (
         <div

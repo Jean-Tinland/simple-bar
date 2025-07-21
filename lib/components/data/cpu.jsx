@@ -23,8 +23,13 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, cpuWidgetOptions } = settings;
   const { cpuWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, displayAsGraph, cpuMonitorApp, showIcon } =
-    cpuWidgetOptions;
+  const {
+    refreshFrequency,
+    showOnDisplay,
+    displayAsGraph,
+    cpuMonitorApp,
+    showIcon,
+  } = cpuWidgetOptions;
 
   // Determine if the widget should be visible based on display settings
   const visible =
@@ -34,7 +39,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [graph, setGraph] = React.useState([]);
@@ -57,7 +62,7 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const usage = await Uebersicht.run(
-        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
+        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`,
       );
       const formattedUsage = { usage: parseInt(usage, 10).toFixed(0) };
       setState(formattedUsage);
@@ -114,7 +119,11 @@ export const Widget = React.memo(() => {
   }
 
   return (
-    <DataWidget.Widget classes="cpu" Icon={showIcon ? Icons.CPU : null} onClick={onClick}>
+    <DataWidget.Widget
+      classes="cpu"
+      Icon={showIcon ? Icons.CPU : null}
+      onClick={onClick}
+    >
       <span className="cpu__usage">{usage}%</span>
     </DataWidget.Widget>
   );

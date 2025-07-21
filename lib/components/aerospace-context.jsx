@@ -64,9 +64,9 @@ function AerospaceContextProvider({ children }) {
               };
             });
             return { ...space, windows: formatted, focused, monitor };
-          })
+          }),
         );
-      })
+      }),
     );
     setAerospaceSpaces(spaces.flat());
   }, [displays]);

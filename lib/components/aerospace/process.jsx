@@ -53,7 +53,7 @@ const Component = React.memo(() => {
 
   // Filter windows based on exclusions
   const filteredWindows = windows.filter((window) =>
-    Utils.filterApps(window, exclusions, titleExclusions, exclusionsAsRegex)
+    Utils.filterApps(window, exclusions, titleExclusions, exclusionsAsRegex),
   );
 
   return (

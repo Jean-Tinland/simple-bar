@@ -20,7 +20,7 @@ export default function ColorPicker({ callback, index, selectedColor }) {
   const [selected, setSelected] = React.useState(selectedColor);
   // State to manage the custom color input
   const [customColor, setCustomColor] = React.useState(
-    isSelectedCustom ? selectedColor : undefined
+    isSelectedCustom ? selectedColor : undefined,
   );
 
   // Toggle the color picker open/close status

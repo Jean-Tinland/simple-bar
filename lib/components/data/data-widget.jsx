@@ -56,7 +56,7 @@ export function Widget({
     Utils.startSliding(
       ref.current,
       ".data-widget__inner",
-      ".data-widget__slider"
+      ".data-widget__slider",
     );
   };
 

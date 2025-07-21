@@ -33,7 +33,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible
@@ -59,7 +59,7 @@ export const Widget = React.memo(() => {
   const getSpotify = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Uebersicht.run(
-      `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`
+      `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);

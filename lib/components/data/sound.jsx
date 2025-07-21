@@ -28,7 +28,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible on the current display.
@@ -56,10 +56,10 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     const [volume, muted] = await Promise.all([
       Uebersicht.run(
-        `osascript -e 'set ovol to output volume of (get volume settings)'`
+        `osascript -e 'set ovol to output volume of (get volume settings)'`,
       ),
       Uebersicht.run(
-        `osascript -e 'set ovol to output muted of (get volume settings)'`
+        `osascript -e 'set ovol to output muted of (get volume settings)'`,
       ),
     ]);
     setState({

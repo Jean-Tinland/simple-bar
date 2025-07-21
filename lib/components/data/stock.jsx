@@ -39,7 +39,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Check if the widget should be visible on the current display
@@ -49,12 +49,15 @@ export const Widget = React.memo(() => {
   const ref = React.useRef();
 
   // Memoize cleanedUpSymbols to prevent recreation on every render
-  const cleanedUpSymbols = React.useMemo(() => symbols.replace(/ /g, ""), [symbols]);
+  const cleanedUpSymbols = React.useMemo(
+    () => symbols.replace(/ /g, ""),
+    [symbols],
+  );
 
   // Memoize enumeratedSymbols to prevent recreation on every render
-  const enumeratedSymbols = React.useMemo(() =>
-    cleanedUpSymbols.replace(/ /g, "").split(","),
-    [cleanedUpSymbols]
+  const enumeratedSymbols = React.useMemo(
+    () => cleanedUpSymbols.replace(/ /g, "").split(","),
+    [cleanedUpSymbols],
   );
 
   const [state, setState] = React.useState();
@@ -77,7 +80,7 @@ export const Widget = React.memo(() => {
       `https://yfapi.net/v6/finance/quote?symbols=${cleanedUpSymbols}`,
       {
         headers: new Headers({ "x-api-key": yahooFinanceApiKey }),
-      }
+      },
     );
     if (response.status === 429) {
       // Exceeded daily quota
@@ -91,7 +94,7 @@ export const Widget = React.memo(() => {
         // One or more symbols is invalid
         const receivedSymbols = symbolQuotes.map((s) => s.symbol.toLowerCase());
         const invalidSymbols = enumeratedSymbols.filter(
-          (s) => !receivedSymbols.includes(s)
+          (s) => !receivedSymbols.includes(s),
         );
         Utils.notification("Invalid stock symbol(s): " + invalidSymbols);
       } else {
@@ -136,7 +139,7 @@ export const Widget = React.memo(() => {
     const marketPrice = Number(symbolQuote.regularMarketPrice).toFixed(2);
     const marketChange = Number(symbolQuote.regularMarketChange).toFixed(2);
     const marketPercentChange = Number(
-      symbolQuote.regularMarketChangePercent
+      symbolQuote.regularMarketChangePercent,
     ).toFixed(2);
     const stockUp = !marketChange.startsWith("-");
 

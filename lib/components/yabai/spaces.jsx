@@ -34,7 +34,7 @@ const Component = React.memo(() => {
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
-    process.showOnDisplay
+    process.showOnDisplay,
   );
 
   if (!visible) return null;
@@ -74,7 +74,7 @@ const Component = React.memo(() => {
           const isExcluded = Utils.isSpaceExcluded(
             key,
             spacesExclusions,
-            exclusionsAsRegex
+            exclusionsAsRegex,
           );
 
           if (isExcluded) return null;

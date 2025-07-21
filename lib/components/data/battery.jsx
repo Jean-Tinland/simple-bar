@@ -38,7 +38,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [state, setState] = React.useState();
@@ -60,14 +60,14 @@ export const Widget = React.memo(() => {
       await Promise.all([
         Utils.getSystem(),
         Uebersicht.run(
-          `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`
+          `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`,
         ),
         Uebersicht.run(
-          `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`
+          `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`,
         ),
         Uebersicht.run(`pgrep caffeinate`),
         Uebersicht.run(
-          `pmset -g | grep -E 'lowpowermode|powermode' | awk '{print $2}'`
+          `pmset -g | grep -E 'lowpowermode|powermode' | awk '{print $2}'`,
         ),
       ]);
     setState({

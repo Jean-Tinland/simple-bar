@@ -33,7 +33,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible
@@ -60,7 +60,7 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const output = await Uebersicht.run(
-        `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`
+        `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`,
       );
       if (!visible || isDisabled.current) {
         return;

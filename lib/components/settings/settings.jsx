@@ -55,7 +55,7 @@ export function Wrapper() {
         }
         // OS is instructed to toggle dark theme
         Uebersicht.run(
-          `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`
+          `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'`,
         );
         // A notification is pushed either in Macos notification center or via internal missives system
         Utils.notification("Toggling dark theme...", pushMissive);
@@ -71,7 +71,7 @@ export function Wrapper() {
         }
       }
     },
-    [pushMissive]
+    [pushMissive],
   );
 
   React.useEffect(() => {

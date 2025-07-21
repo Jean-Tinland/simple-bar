@@ -38,7 +38,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [state, setState] = React.useState();
@@ -53,7 +53,7 @@ export const Widget = React.memo(() => {
       month: formatOptions,
       day: "numeric",
     }),
-    [formatOptions]
+    [formatOptions],
   );
 
   // Ensure locale is valid, default to "en-UK" if not
