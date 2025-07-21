@@ -71,26 +71,36 @@ export const Widget = React.memo(() => {
       });
       return;
     }
-    const [playerState, trackName, artistName] = await Promise.all([
-      Uebersicht.run(
+    // if showSpotifyMetadata is enabled, retrieves all information
+    if (showSpotifyMetadata) {
+      const [playerState, trackName, artistName] = await Promise.all([
+        Uebersicht.run(
+          `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`,
+        ),
+        Uebersicht.run(
+          `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo ""`,
+        ),
+        Uebersicht.run(
+          `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo ""`,
+        ),
+      ]);
+      setState({
+        playerState: Utils.cleanupOutput(playerState),
+        trackName: Utils.cleanupOutput(trackName),
+        artistName: Utils.cleanupOutput(artistName),
+      });
+      // else, only playerState
+    } else {
+      const playerState = await Uebersicht.run(
         `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`,
-      ),
-      showSpotifyMetadata
-        ? Uebersicht.run(
-            `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo "unknown track"`,
-          )
-        : new Promise((resolve) => resolve("")),
-      showSpotifyMetadata
-        ? Uebersicht.run(
-            `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo "unknown artist"`,
-          )
-        : new Promise((resolve) => resolve("")),
-    ]);
-    setState({
-      playerState: Utils.cleanupOutput(playerState),
-      trackName: Utils.cleanupOutput(trackName),
-      artistName: Utils.cleanupOutput(artistName),
-    });
+      );
+      setState({
+        playerState: Utils.cleanupOutput(playerState),
+        trackName: "",
+        artistName: "",
+      });
+    }
+
     setIsSpotifyActive(true);
     setLoading(false);
   }, [visible, showSpotifyMetadata]);
