@@ -859,6 +859,10 @@
           "type": "boolean",
           "description": "Show or hide the widget icon"
         },
+        "showSpotifyMetadata": {
+          "type": "boolean",
+          "description": "Show or hide Spotify metadata (author name, song name)."
+        },
         "showSpecter": {
           "type": "boolean",
           "description": "Show the specter animation when a song is playing"
