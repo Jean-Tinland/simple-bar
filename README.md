@@ -55,8 +55,11 @@ You'll find the full installation guide in the [documentation](https://www.jeant
 
 Here are the features I'm planning to add in the future:
 
+- A timer widget ([#474](https://github.com/Jean-Tinland/simple-bar/issues/474))
+- A GitHub notifications widget ([#480](https://github.com/Jean-Tinland/simple-bar/issues/480))
 - Bars configurator (spawn multiple bars, place widgets anywhere…) [#380](https://github.com/Jean-Tinland/simple-bar/issues/380)
 - More accessibility settings like reading direction (LTR or RTL)
+- More default themes
 
 Feel free to open an issue if you have any feature request or if you want me to prioritize one of these features.
 
