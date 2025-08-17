@@ -39,6 +39,10 @@
           "type": "boolean",
           "description": "Show spaces options inline"
         },
+        "disableAnimations": {
+          "type": "boolean",
+          "description": "Disable all persistent animations in simple-bar"
+        },
         "disableNotifications": {
           "type": "boolean",
           "description": "Disable notifications"
