@@ -36,7 +36,7 @@ export function Widget({
   const ref = React.useRef();
   const Tag = getTag(onClick, href);
   const dataWidgetClasses = Utils.classNames("data-widget", classes, {
-    "data-widget--clickable": onClick,
+    "data-widget--clickable": href || onClick,
   });
 
   /**
