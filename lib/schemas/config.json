@@ -328,6 +328,10 @@
           "type": "boolean",
           "description": "Hide or show the process widget"
         },
+        "githubWidget": {
+          "type": "boolean",
+          "description": "Hide or show the GitHub widget"
+        },
         "weatherWidget": {
           "type": "boolean",
           "description": "Hide or show the weather widget"
@@ -411,6 +415,36 @@
         "browserTrackWidget": {
           "type": "boolean",
           "description": "Hide or show the browser track widget"
+        }
+      }
+    },
+    "githubWidgetOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The refresh frequency of this widget in milliseconds"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
+        "hideWhenNoNotification": {
+          "type": "boolean",
+          "description": "Hide the widget when there is no notification"
+        },
+        "notificationUrl": {
+          "type": "string",
+          "description": "The URL opened on click. Default is \"https://github.com/notifications\""
+        },
+        "ghBinaryPath": {
+          "type": "string",
+          "description": "The binary path required to get GitHub notifications count in the widget"
         }
       }
     },

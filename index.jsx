@@ -11,6 +11,7 @@ import * as Process from "./lib/styles/components/process";
 import * as Zoom from "./lib/components/data/zoom.jsx";
 import * as Time from "./lib/components/data/time.jsx";
 import * as DateDisplay from "./lib/components/data/date-display.jsx";
+import * as GitHub from "./lib/components/data/github.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
 import * as Netstats from "./lib/components/data/netstats.jsx";
 import * as Cpu from "./lib/components/data/cpu.jsx";
@@ -121,6 +122,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   DateDisplay.styles,
   Zoom.styles,
   Time.styles,
+  GitHub.styles,
   Weather.styles,
   Netstats.styles,
   Cpu.styles,
@@ -255,6 +257,7 @@ function render({ output, error }) {
           <Stock.Widget />
           <Music.Widget />
           <Mpd.Widget />
+          <GitHub.Widget />
           <Weather.Widget />
           <Netstats.Widget />
           <Cpu.Widget />

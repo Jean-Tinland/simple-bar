@@ -24,6 +24,7 @@ const settingsKeys = {
   stockWidget: "stockWidgetOptions",
   timeWidget: "timeWidgetOptions",
   vpnWidget: "vpnWidgetOptions",
+  githubWidget: "githubWidgetOptions",
   weatherWidget: "weatherWidgetOptions",
   wifiWidget: "networkWidgetOptions",
   youtubeMusicWidget: "youtubeMusicWidgetOptions",
