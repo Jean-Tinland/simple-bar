@@ -19,7 +19,7 @@ const Component = React.memo(() => {
   const { process, spacesDisplay, widgets } = settings;
   const { processWidget } = widgets;
   const { exclusionsAsRegex } = spacesDisplay;
-  const { centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
+  const { displayForFocusedSpace, centered, showCurrentSpaceMode, displaySkhdMode, showOnDisplay } =
     process;
 
   // Determine if the process widget should be visible
@@ -43,10 +43,11 @@ const Component = React.memo(() => {
   const currentSpace = spaces.find((space) => {
     const {
       "is-visible": isVisible,
+      "has-focus" : hasFocus,
       visible: __legacyIsVisible,
       display,
     } = space;
-    return (isVisible ?? __legacyIsVisible) && display === displayIndex;
+    return (isVisible ?? __legacyIsVisible) && (displayForFocusedSpace ? hasFocus : display === displayIndex);
   });
 
   // Get sticky and non-sticky windows using a utility function
