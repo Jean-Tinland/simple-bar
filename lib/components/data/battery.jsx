@@ -26,6 +26,7 @@ export const Widget = React.memo(() => {
     refreshFrequency,
     toggleCaffeinateOnClick,
     caffeinateOption,
+    disableCaffeinateInvertedBackground,
     showOnDisplay,
     showIcon,
   } = batteryWidgetOptions;
@@ -94,7 +95,7 @@ export const Widget = React.memo(() => {
   const classes = Utils.classNames("battery", {
     "battery--low": isLowBattery,
     "battery--low-power-mode": lowPowerMode,
-    "battery--caffeinate": caffeinate.length,
+    "battery--caffeinate": !disableCaffeinateInvertedBackground && caffeinate.length,
   });
 
   const transformValue = getTransform(percentage);
