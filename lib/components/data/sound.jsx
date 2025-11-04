@@ -28,7 +28,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency],
+    [refreshFrequency]
   );
 
   // Determine if the widget should be visible on the current display.
@@ -56,10 +56,10 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     const [volume, muted] = await Promise.all([
       Uebersicht.run(
-        `osascript -e 'set ovol to output volume of (get volume settings)'`,
+        `osascript -e 'set ovol to output volume of (get volume settings)'`
       ),
       Uebersicht.run(
-        `osascript -e 'set ovol to output muted of (get volume settings)'`,
+        `osascript -e 'set ovol to output muted of (get volume settings)'`
       ),
     ]);
     setState({
@@ -95,7 +95,10 @@ export const Widget = React.memo(() => {
   const { muted } = state;
   if (_volume === "missing value" || muted === "missing value") return null;
 
-  const Icon = getIcon(volume, muted);
+  let Icon = Icons.VolumeHigh;
+  if (volume < 50) Icon = Icons.VolumeLow;
+  if (volume < 20) Icon = Icons.NoVolume;
+  if (muted === "true" || !volume) Icon = Icons.VolumeMuted;
 
   /**
    * Handle volume change event.
@@ -143,19 +146,6 @@ export const Widget = React.memo(() => {
 });
 
 Widget.displayName = "Sound";
-
-/**
- * Get the appropriate icon based on volume and mute status.
- * @param {number} volume - The current volume.
- * @param {string} muted - The mute status.
- * @returns {JSX.Element} The icon component.
- */
-function getIcon(volume, muted) {
-  if (muted === "true" || !volume) return Icons.VolumeMuted;
-  if (volume < 20) return Icons.NoVolume;
-  if (volume < 50) return Icons.VolumeLow;
-  return Icons.VolumeHigh;
-}
 
 /**
  * Set the system volume.

@@ -108,7 +108,7 @@ export const Widget = React.memo(() => {
       const response = await fetchRoute("/api/v1/song-info", "GET");
       const json = await response.json();
       setState(json);
-    } catch (e) {
+    } catch {
       // most likely due to offline server, reset state
       resetWidget();
     }

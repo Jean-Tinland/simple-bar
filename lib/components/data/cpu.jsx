@@ -39,7 +39,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency],
+    [refreshFrequency]
   );
 
   const [graph, setGraph] = React.useState([]);
@@ -62,7 +62,7 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const usage = await Uebersicht.run(
-        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`,
+        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
       );
       const formattedUsage = { usage: parseInt(usage, 10).toFixed(0) };
       setState(formattedUsage);
@@ -70,7 +70,7 @@ export const Widget = React.memo(() => {
         Utils.addToGraphHistory(formattedUsage, setGraph, GRAPH_LENGTH);
       }
       setLoading(false);
-    } catch (e) {
+    } catch {
       setTimeout(getCpu, 1000);
     }
   }, [displayAsGraph, setGraph, visible]);

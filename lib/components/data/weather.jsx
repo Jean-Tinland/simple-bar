@@ -71,8 +71,9 @@ export const Widget = React.memo(() => {
       );
       const data = await result.json();
       setState({ location: location.current, data });
-    } catch (e) {
-      //
+    } catch  {
+      // eslint-disable-next-line no-console
+      console.error("Error while fetching weather")
     }
     setLoading(false);
   }, [visible, location]);

@@ -72,7 +72,7 @@ export const Widget = React.memo(() => {
         Utils.addToGraphHistory(json, setGraph, GRAPH_LENGTH);
       }
       setLoading(false);
-    } catch (e) {
+    } catch {
       setTimeout(getNetstats, 1000);
     }
   }, [displayAsGraph, setGraph, visible]);

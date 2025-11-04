@@ -37,7 +37,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency],
+    [refreshFrequency]
   );
 
   // Determine if the widget should be visible
@@ -75,7 +75,7 @@ export const Widget = React.memo(() => {
         Utils.addToGraphHistory(formattedUsage, setGraph, GRAPH_LENGTH);
       }
       setLoading(false);
-    } catch (e) {
+    } catch {
       setTimeout(getGpu, 1000);
     }
   }, [displayAsGraph, gpuMacmonBinaryPath, visible]);

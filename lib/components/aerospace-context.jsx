@@ -45,7 +45,7 @@ function AerospaceContextProvider({ children }) {
     try {
       [focusedWindow] = await Aerospace.getFocusedWindow();
       // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch {}
     const spaces = await Promise.all(
       displays.map(async (display) => {
         const id = display["monitor-id"];
@@ -64,9 +64,9 @@ function AerospaceContextProvider({ children }) {
               };
             });
             return { ...space, windows: formatted, focused, monitor };
-          }),
+          })
         );
-      }),
+      })
     );
     setAerospaceSpaces(spaces.flat());
   }, [displays]);
@@ -86,7 +86,7 @@ function AerospaceContextProvider({ children }) {
         await getSpaces();
       }
     },
-    [getSpaces],
+    [getSpaces]
   );
 
   // Resets the aerospace spaces state

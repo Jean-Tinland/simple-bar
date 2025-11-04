@@ -34,7 +34,11 @@ export function Widget({
   children,
 }) {
   const ref = React.useRef();
-  const Tag = getTag(onClick, href);
+
+  let Tag = "div";
+  if (onClick) Tag = "button";
+  if (href) Tag = "a";
+
   const dataWidgetClasses = Utils.classNames("data-widget", classes, {
     "data-widget--clickable": href || onClick,
   });
@@ -56,7 +60,7 @@ export function Widget({
     Utils.startSliding(
       ref.current,
       ".data-widget__inner",
-      ".data-widget__slider",
+      ".data-widget__slider"
     );
   };
 
@@ -103,18 +107,6 @@ function Inner({ disableSlider, children }) {
       <div className="data-widget__slider">{children}</div>
     </div>
   );
-}
-
-/**
- * Determines the appropriate HTML tag to use based on the presence of click or href properties.
- * @param {function} onClick - The click event handler.
- * @param {string} href - The URL to link to.
- * @returns {string} The HTML tag to use.
- */
-function getTag(onClick, href) {
-  if (href) return "a";
-  if (onClick) return "button";
-  return "div";
 }
 
 /**
