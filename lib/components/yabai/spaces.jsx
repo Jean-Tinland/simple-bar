@@ -71,9 +71,10 @@ const Component = React.memo(() => {
             i !== 0 && space.display !== spaces[i - 1].display;
 
           const key = label?.length ? label : index;
+          const spacesExclusionsList =  spacesExclusions.replace(/ /g, "").split(",");
           const isExcluded = Utils.isSpaceExcluded(
             key,
-            spacesExclusions,
+            spacesExclusionsList,
             exclusionsAsRegex,
           );
 
