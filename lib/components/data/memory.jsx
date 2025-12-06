@@ -20,8 +20,13 @@ export const Widget = () => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, memoryWidgetOptions } = settings;
   const { memoryWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, memoryMonitorApp, showIcon } =
-    memoryWidgetOptions;
+  const {
+    refreshFrequency,
+    showOnDisplay,
+    memoryMonitorApp,
+    showIcon,
+    memoryUsageThreshold,
+  } = memoryWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
@@ -67,6 +72,9 @@ export const Widget = () => {
 
   const { free } = state;
   const used = 100 - free;
+  const threshold = Number(memoryUsageThreshold) || 0;
+
+  if (threshold > 0 && used < threshold) return null;
 
   // Handle click event to open memory usage app
   const onClick =
