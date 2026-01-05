@@ -129,6 +129,7 @@ export const GoogleChrome = React.lazy(
 export const GnuCash = React.lazy(() => import("./library/gnu-cash.jsx"));
 export const GoLand = React.lazy(() => import("./library/go-land.jsx"));
 export const Grammarly = React.lazy(() => import("./library/grammarly.jsx"));
+export const Helium = React.lazy(() => import("./library/helium.jsx"));
 export const HomeAssistant = React.lazy(
   () => import("./library/home-assistant.jsx"),
 );
