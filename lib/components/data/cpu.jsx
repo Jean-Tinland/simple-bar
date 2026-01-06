@@ -29,6 +29,7 @@ export const Widget = React.memo(() => {
     displayAsGraph,
     cpuMonitorApp,
     showIcon,
+    cpuUsageThreshold,
   } = cpuWidgetOptions;
 
   // Determine if the widget should be visible based on display settings
@@ -64,7 +65,7 @@ export const Widget = React.memo(() => {
       const usage = await Uebersicht.run(
         `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
       );
-      const formattedUsage = { usage: parseInt(usage, 10).toFixed(0) };
+      const formattedUsage = { usage: parseInt(usage, 10) };
       setState(formattedUsage);
       if (displayAsGraph) {
         Utils.addToGraphHistory(formattedUsage, setGraph, GRAPH_LENGTH);
@@ -84,6 +85,10 @@ export const Widget = React.memo(() => {
   if (!state) return null;
 
   const { usage } = state;
+  const threshold = Number(cpuUsageThreshold) || 0;
+  const usageValue = Number(usage) || 0;
+
+  if (threshold > 0 && usageValue < threshold) return null;
 
   // Handle click event to open CPU monitor app
   const onClick =

@@ -21,7 +21,12 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, keyboardWidgetOptions } = settings;
   const { keyboardWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, showIcon } = keyboardWidgetOptions;
+  const {
+    refreshFrequency,
+    showOnDisplay,
+    showIcon,
+    keyboardMaxLength,
+  } = keyboardWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
@@ -86,14 +91,18 @@ export const Widget = React.memo(() => {
   if (!state) return null;
   const { keyboard } = state;
 
-  if (!keyboard?.length) return null;
+  const maxLength = Number(keyboardMaxLength) || 0;
+  const displayKeyboard =
+    maxLength > 0 ? keyboard.slice(0, maxLength) : keyboard;
+
+  if (!displayKeyboard?.length) return null;
 
   return (
     <DataWidget.Widget
       classes="keyboard"
       Icon={showIcon ? Icons.Keyboard : null}
     >
-      {keyboard}
+      {displayKeyboard}
     </DataWidget.Widget>
   );
 });
