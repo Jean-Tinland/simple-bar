@@ -51,7 +51,7 @@ export default function SimpleBarContextProvider({
 
   // Check if the built-in Retina Display is present in the current displays
   const hasBuiltInRetina = currentDisplays?.some(
-    (d) => d["monitor-name"] === "Built-in Retina Display",
+    (d) => d["monitor-name"] === "Built-in Retina Display"
   );
 
   // Adjust displayId if the Retina screen is missing when using AeroSpace
@@ -60,14 +60,23 @@ export default function SimpleBarContextProvider({
   const adjustedDisplayId =
     isAeroSpace && !hasBuiltInRetina ? displayId - 1 : displayId;
 
+  // Find the current display based on the adjusted display ID
+  // Use Aerospace's custom display index if available
+  // Fallback to standard id or monitor-id
   const currentDisplay =
     currentDisplays?.find((d) => {
-      const id = Aerospace.getCustomDisplayIndex(d) ?? d.id;
+      const id = Aerospace.getCustomDisplayIndex(d) ?? d.id ?? d["monitor-id"];
       return id === adjustedDisplayId;
     }) || {};
 
+  // Determine the display index for context value
+  // currentDisplay.index is from yabai
+  // Aerospace.getCustomDisplayIndex is from Aerospace with custom logic
+  // Fallback to Aerospace monitor-id or default to 1
   const displayIndex =
-    (currentDisplay.index ?? Aerospace.getCustomDisplayIndex(currentDisplay)) ||
+    (currentDisplay.index ??
+      Aerospace.getCustomDisplayIndex(currentDisplay) ??
+      currentDisplay["monitor-id"]) ||
     1;
 
   const pushMissive = (newMissive) => {
