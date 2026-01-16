@@ -24,7 +24,7 @@ const Component = React.memo(() => {
   const visible = Utils.isVisibleOnDisplay(displayIndex, showOnDisplay);
   const isProcessVisible = Utils.isVisibleOnDisplay(
     displayIndex,
-    process.showOnDisplay,
+    process.showOnDisplay
   );
 
   // If not visible, return null
@@ -37,7 +37,7 @@ const Component = React.memo(() => {
 
   // Map through displays and render spaces for the current display
   return displays.map((display) => {
-    const displayId = AeroSpace.getCustomDisplayIndex(display);
+    const displayId = AeroSpace.getDisplayIndex(display);
     if (displayId !== displayIndex) return null;
 
     // Filter spaces based on display settings

@@ -53,7 +53,7 @@ function AerospaceContextProvider({ children }) {
         return Promise.all(
           result.map(async (space) => {
             const focused = space.workspace === focusedSpace.workspace;
-            const monitor = Aerospace.getCustomDisplayIndex(space);
+            const monitor = Aerospace.getDisplayIndex(space);
             const windows = await Aerospace.getWindows(space.workspace);
             const formatted = windows.map((window) => {
               const focused =

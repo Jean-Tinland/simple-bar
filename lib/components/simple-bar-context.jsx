@@ -47,7 +47,10 @@ export default function SimpleBarContextProvider({
 
   const currentDisplays = serverEnabled && isYabai ? _displays : displays;
 
-  const displayId = parseInt(window.location.pathname.replace("/", ""), 10);
+  const ubersichtDisplayId = parseInt(
+    window.location.pathname.replace("/", ""),
+    10
+  );
 
   // Check if the built-in Retina Display is present in the current displays
   const hasBuiltInRetina = currentDisplays?.some(
@@ -57,27 +60,26 @@ export default function SimpleBarContextProvider({
   // Adjust displayId if the Retina screen is missing when using AeroSpace
   // This prevents mismatch between Übersicht and AeroSpace display numbering
   // as Übersicht still count closed built in screen in the display count
-  const adjustedDisplayId =
-    isAeroSpace && !hasBuiltInRetina ? displayId - 1 : displayId;
+  const adjustedUbersichtDisplayId =
+    isAeroSpace && !hasBuiltInRetina
+      ? ubersichtDisplayId - 1
+      : ubersichtDisplayId;
 
   // Find the current display based on the adjusted display ID
-  // Use Aerospace's custom display index if available
-  // Fallback to standard id or monitor-id
+  // Use Aerospace's display index if available (check for custom logic)
+  // Fallback to yabai id otherwise
   const currentDisplay =
     currentDisplays?.find((d) => {
-      const id = Aerospace.getCustomDisplayIndex(d) ?? d.id ?? d["monitor-id"];
-      return id === adjustedDisplayId;
+      const id = Aerospace.getDisplayIndex(d) ?? d.id;
+      return id === adjustedUbersichtDisplayId;
     }) || {};
 
   // Determine the display index for context value
   // currentDisplay.index is from yabai
-  // Aerospace.getCustomDisplayIndex is from Aerospace with custom logic
+  // Aerospace.getDisplayIndex is from Aerospace with custom logic
   // Fallback to Aerospace monitor-id or default to 1
   const displayIndex =
-    (currentDisplay.index ??
-      Aerospace.getCustomDisplayIndex(currentDisplay) ??
-      currentDisplay["monitor-id"]) ||
-    1;
+    (currentDisplay.index ?? Aerospace.getDisplayIndex(currentDisplay)) || 1;
 
   const pushMissive = (newMissive) => {
     const now = Date.now();
