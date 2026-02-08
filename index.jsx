@@ -49,9 +49,6 @@ const YabaiContextProvider = React.lazy(
 const AerospaceContextProvider = React.lazy(
   () => import("./lib/components/aerospace-context.jsx"),
 );
-const FlashspaceContextProvider = React.lazy(
-  () => import("./lib/components/flashspace-context.jsx"),
-);
 const YabaiSpaces = React.lazy(
   () => import("./lib/components/yabai/spaces.jsx"),
 );
@@ -63,9 +60,6 @@ const AerospaceSpaces = React.lazy(
 );
 const AerospaceProcess = React.lazy(
   () => import("./lib/components/aerospace/process.jsx"),
-);
-const FlashspaceSpaces = React.lazy(
-  () => import("./lib/components/flashspace/spaces.jsx"),
 );
 
 // Set refresh frequency to false
@@ -86,8 +80,7 @@ const {
   // while on an empty workspace, click on simple-bar then press cmd + , to open it.
   yabaiPath = "/opt/homebrew/bin/yabai",
   aerospacePath = "/opt/homebrew/bin/aerospace",
-  flashspacePath = "/usr/local/bin/flashspace",
-  windowManager, // Window manager type (yabai, aerospace or flashspace)
+  windowManager, // Window manager type (yabai or aerospace)
   shell, // Shell to use for commands
   enableServer, // Enable server mode
   yabaiServerRefresh, // Refresh rate for yabai server
@@ -101,13 +94,7 @@ const enableTitleChangedSignal = !hideWindowTitle && !displayOnlyIcon;
 // Construct command arguments based on window manager type
 const yabaiArgs = `${yabaiPath} ${displaySkhdMode} ${disableSignals} ${enableTitleChangedSignal}`;
 const aerospaceArgs = `${aerospacePath}`;
-const flashspaceArgs = `${flashspacePath}`;
-const args = getArguments(
-  windowManager,
-  yabaiArgs,
-  aerospaceArgs,
-  flashspaceArgs,
-);
+const args = getArguments(windowManager, yabaiArgs, aerospaceArgs);
 const command = `${shell} simple-bar/lib/scripts/init-${windowManager}.sh ${args}`;
 
 // Inject global styles into the document
@@ -179,8 +166,8 @@ function render({ output, error }) {
   // Cleanup the output data
   const cleanedUpOutput = Utils.cleanupOutput(output);
 
-  // Handle specific errors related to yabai, AeroSpace or FlashSpace
-  const errors = ["yabaiError", "aerospaceError", "flashspaceError"];
+  // Handle specific errors related to yabai or AeroSpace
+  const errors = ["yabaiError", "aerospaceError"];
   if (errors.includes(cleanedUpOutput)) {
     return <Error.Component type={cleanedUpOutput} classes={baseClasses} />;
   }
@@ -189,16 +176,7 @@ function render({ output, error }) {
   const data = Utils.parseJson(cleanedUpOutput);
   if (!data) return <Error.Component type="noData" classes={baseClasses} />;
 
-  const {
-    displays,
-    shadow,
-    skhdMode,
-    SIP,
-    spaces,
-    windows,
-    config,
-    currentWorkspace,
-  } = data;
+  const { displays, shadow, skhdMode, SIP, spaces, windows } = data;
 
   // Check if SIP (System Integrity Protection) is disabled
   const SIPDisabled = SIP !== "System Integrity Protection status: enabled.";
@@ -237,14 +215,6 @@ function render({ output, error }) {
               <AerospaceProcess />
             </AerospaceContextProvider>
           )}
-          {windowManager === "flashspace" && (
-            <FlashspaceContextProvider
-              config={config}
-              currentWorkspace={currentWorkspace}
-            >
-              <FlashspaceSpaces />
-            </FlashspaceContextProvider>
-          )}
         </React.Suspense>
         <Settings.Wrapper />
         <div className="simple-bar__data">
@@ -280,15 +250,12 @@ function render({ output, error }) {
 
 export { command, refreshFrequency, render };
 
-function getArguments(windowManager, yabaiArgs, aerospaceArgs, flashspaceArgs) {
+function getArguments(windowManager, yabaiArgs, aerospaceArgs) {
   if (windowManager === "yabai") {
     return yabaiArgs;
   }
   if (windowManager === "aerospace") {
     return aerospaceArgs;
-  }
-  if (windowManager === "flashspace") {
-    return flashspaceArgs;
   }
   return "";
 }

@@ -83,13 +83,9 @@
           "type": "string",
           "description": "Determine the path to the aerospace binary"
         },
-        "flashspacePath": {
-          "type": "string",
-          "description": "Determine the path to the flashspace binary"
-        },
         "windowManager": {
           "type": "string",
-          "enum": ["yabai", "aerospace", "flashspace"],
+          "enum": ["yabai", "aerospace"],
           "description": "Determine the window manager used by simple-bar to display spaces & processes: yabai or aerospace"
         },
         "shell": {
@@ -121,10 +117,6 @@
         "aerospaceServerRefresh": {
           "type": "boolean",
           "description": "Enable websocket connection to the server in AeroSpace spaces widgets. You must install and launch simple-bar-server before activating this setting"
-        },
-        "flashspaceServerRefresh": {
-          "type": "boolean",
-          "description": "Enable websocket connection to the server in FlashSpace spaces widgets. You must install and launch simple-bar-server before activating this setting"
         }
       }
     },
@@ -299,14 +291,6 @@
         "switchSpacesWithoutYabai": {
           "type": "boolean",
           "description": "Instead of relying on yabai to switch to a specific space (on space click), simple-bar will trigger the \"switch to prev/next\" space shortcut which need to be enabled in macos settings to be working"
-        },
-        "showOnlyFlashspaceSpaceIndex": {
-          "type": "boolean",
-          "description": "[FlashSpace] Show only the space index for each space"
-        },
-        "hideFlashspaceAppIcons": {
-          "type": "boolean",
-          "description": "[FlashSpace] Hide the app icons in the spaces display"
         },
         "customAeroSpaceDisplayIndexes": {
           "type": "object",
