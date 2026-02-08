@@ -486,6 +486,10 @@
         "displayAsGraph": {
           "type": "boolean",
           "description": "Instead of show current network information, the widget will display a graphic showing the latest 60 seconds (it can change depending of the refresh frequency of the widget) of network activity. All drawn points are relative to the highest value"
+        },
+        "netstatsThreshold": {
+          "type": "number",
+          "description": "Hide the widget when download and upload are below this value in kb/s (0 to always show)"
         }
       }
     },
@@ -508,6 +512,10 @@
         "displayAsGraph": {
           "type": "boolean",
           "description": "Instead of show current CPU information, the widget will display a graphic showing the latest 100 seconds (it can change depending of the refresh frequency of the widget) of CPU activity. All drawn points are relative to the highest value"
+        },
+        "cpuUsageThreshold": {
+          "type": "number",
+          "description": "Hide the widget when CPU usage is below this percentage (0 to always show)"
         },
         "cpuMonitorApp": {
           "type": "string",
@@ -554,6 +562,10 @@
         "showIcon": {
           "type": "boolean",
           "description": "Show or hide the widget icon"
+        },
+        "memoryUsageThreshold": {
+          "type": "number",
+          "description": "Hide the widget when used memory is below this percentage (0 to always show)"
         },
         "memoryMonitorApp": {
           "type": "string",
@@ -685,6 +697,10 @@
         "showIcon": {
           "type": "boolean",
           "description": "Show or hide the widget icon"
+        },
+        "keyboardMaxLength": {
+          "type": "number",
+          "description": "Maximum number of characters to display for the keyboard layout (0 to show full name)"
         }
       }
     },

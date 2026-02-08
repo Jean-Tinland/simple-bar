@@ -24,8 +24,13 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, netstatsWidgetOptions } = settings;
   const { netstatsWidget } = widgets;
-  const { refreshFrequency, showOnDisplay, displayAsGraph, showIcon } =
-    netstatsWidgetOptions;
+  const {
+    refreshFrequency,
+    showOnDisplay,
+    displayAsGraph,
+    showIcon,
+    netstatsThreshold,
+  } = netstatsWidgetOptions;
 
   const isDisabled = React.useRef(false);
 
@@ -101,6 +106,16 @@ export const Widget = React.memo(() => {
   const { download, upload } = state;
 
   if (download === undefined || upload === undefined) {
+    return null;
+  }
+
+  const threshold = (Number(netstatsThreshold) || 0) * 1024;
+  const isBelowThreshold =
+    threshold > 0 &&
+    Math.abs(download) < threshold &&
+    Math.abs(upload) < threshold;
+
+  if (isBelowThreshold) {
     return null;
   }
 
