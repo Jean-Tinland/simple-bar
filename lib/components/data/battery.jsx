@@ -61,16 +61,16 @@ export const Widget = React.memo(() => {
       await Promise.all([
         Utils.getSystem(),
         Utils.cachedRun(
-          `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`,
+          `pmset -g batt | grep -Eo '[0-9]+%' | head -1 | tr -d '%'`,
           refresh,
         ),
         Utils.cachedRun(
-          `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`,
+          `pmset -g batt | head -1 | grep -q 'AC Power' && echo 'AC' || echo 'Batt'`,
           refresh,
         ),
-        Utils.cachedRun(`pgrep caffeinate`, refresh),
+        Uebersicht.run(`pgrep caffeinate`),
         Utils.cachedRun(
-          `pmset -g | grep -E 'lowpowermode|powermode' | awk '{print $2}'`,
+          `pmset -g | awk '/lowpowermode|powermode/ {print $2; exit}'`,
           refresh,
         ),
       ]);
@@ -99,7 +99,7 @@ export const Widget = React.memo(() => {
     "battery--low": isLowBattery,
     "battery--low-power-mode": lowPowerMode,
     "battery--caffeinate":
-      !disableCaffeinateInvertedBackground && caffeinate.length,
+      !disableCaffeinateInvertedBackground && caffeinate.length > 0,
   });
 
   const transformValue = getTransform(percentage);
@@ -173,7 +173,7 @@ function getTransform(value) {
 async function toggleCaffeinate(system, caffeinate, option, pushMissive) {
   const command =
     system === "x86_64" ? "caffeinate" : "arch -arch arm64 caffeinate";
-  if (!caffeinate.length) {
+  if (caffeinate.length === 0) {
     Uebersicht.run(`${command} ${option} &`);
     Utils.notification("Enabling caffeinate...", pushMissive);
   } else {
