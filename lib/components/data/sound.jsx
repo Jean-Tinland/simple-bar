@@ -54,19 +54,14 @@ export const Widget = React.memo(() => {
    */
   const getSound = React.useCallback(async () => {
     if (!visible) return;
-    const [volume, muted] = await Promise.all([
-      Utils.cachedRun(
-        `osascript -e 'set ovol to output volume of (get volume settings)'`,
-        refresh,
-      ),
-      Utils.cachedRun(
-        `osascript -e 'set ovol to output muted of (get volume settings)'`,
-        refresh,
-      ),
-    ]);
+    const output = await Utils.cachedRun(
+      `osascript -e 'set v to get volume settings' -e 'output volume of v & "," & output muted of v'`,
+      refresh,
+    );
+    const parts = Utils.cleanupOutput(output).split(",");
     setState({
-      volume: Utils.cleanupOutput(volume),
-      muted: Utils.cleanupOutput(muted),
+      volume: parts[0],
+      muted: parts[1],
     });
     setLoading(false);
   }, [visible, refresh]);
