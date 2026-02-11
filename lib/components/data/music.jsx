@@ -57,7 +57,7 @@ export const Widget = React.memo(() => {
     const processName =
       Utils.cleanupOutput(osVersion) === "10.15" ? "iTunes" : "Music";
     const isRunning = await Utils.cachedRun(
-      `osascript -e 'tell application "System Events" to (name of processes) contains "${processName}"' 2>&1`,
+      `pgrep -xq "${processName}" && echo "true" || echo "false"`,
       refresh,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
@@ -65,24 +65,16 @@ export const Widget = React.memo(() => {
       setIsMusicActive(false);
       return;
     }
-    const [playerState, trackName, artistName] = await Promise.all([
-      Utils.cachedRun(
-        `osascript -e 'tell application "${processName}" to player state as string' 2>/dev/null || echo "stopped"`,
-        refresh,
-      ),
-      Utils.cachedRun(
-        `osascript -e 'tell application "${processName}" to name of current track as string' 2>/dev/null || echo "unknown track"`,
-        refresh,
-      ),
-      Utils.cachedRun(
-        `osascript -e 'tell application "${processName}" to artist of current track as string' 2>/dev/null || echo "unknown artist"`,
-        refresh,
-      ),
-    ]);
+    const output = await Utils.cachedRun(
+      `osascript -e 'tell application "${processName}"' -e 'set output to (player state as string) & "|" & (name of current track as string) & "|" & (artist of current track as string)' -e 'end tell' 2>/dev/null || echo "stopped|unknown track|unknown artist"`,
+      refresh,
+    );
+    const [playerState, trackName, artistName] =
+      Utils.cleanupOutput(output).split("|");
     setState({
-      playerState: Utils.cleanupOutput(playerState),
-      trackName: Utils.cleanupOutput(trackName),
-      artistName: Utils.cleanupOutput(artistName),
+      playerState,
+      trackName,
+      artistName,
       processName: Utils.cleanupOutput(processName),
     });
     setIsMusicActive(true);
