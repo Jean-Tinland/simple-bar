@@ -64,8 +64,9 @@ export const Widget = React.memo(() => {
   const getNetstats = React.useCallback(async () => {
     if (!visible) return;
     try {
-      const output = await Uebersicht.run(
+      const output = await Utils.cachedRun(
         `bash ./simple-bar/lib/scripts/netstats.sh 2>&1`,
+        refresh,
       );
       if (!visible || isDisabled.current) {
         return;
@@ -80,7 +81,7 @@ export const Widget = React.memo(() => {
     } catch {
       setTimeout(getNetstats, 1000);
     }
-  }, [displayAsGraph, setGraph, visible]);
+  }, [displayAsGraph, setGraph, visible, refresh]);
 
   // Update the disabled state based on visibility
   React.useEffect(() => {

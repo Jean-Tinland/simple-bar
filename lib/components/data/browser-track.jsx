@@ -52,11 +52,13 @@ export const Widget = React.memo(() => {
   const getBrowserTrack = React.useCallback(async () => {
     if (!visible) return;
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
-      Uebersicht.run(
+      Utils.cachedRun(
         `ps aux | grep -v 'grep' | grep -q 'Firefox' && echo "true" || echo "false"`,
+        refresh,
       ),
-      Uebersicht.run(
+      Utils.cachedRun(
         `ps aux | grep -v 'grep' | grep -q 'Firefox Developer Edition' && echo "true" || echo "false"`,
+        refresh,
       ),
     ]);
     const isFirefoxDevRunning =
@@ -69,11 +71,13 @@ export const Widget = React.memo(() => {
         : "browser";
 
     const [browserTrackOutput, spotifyStatus] = await Promise.all([
-      Uebersicht.run(
+      Utils.cachedRun(
         `osascript ./simple-bar/lib/scripts/${scriptNamePrefix}-audio.applescript 2>&1`,
+        refresh,
       ),
-      Uebersicht.run(
+      Utils.cachedRun(
         `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`,
+        refresh,
       ),
     ]);
     const browserTrack = JSON.parse(browserTrackOutput);
@@ -82,7 +86,7 @@ export const Widget = React.memo(() => {
       isSpotifyRunning: Utils.cleanupOutput(spotifyStatus) === "true",
     });
     setLoading(false);
-  }, [visible]);
+  }, [visible, refresh]);
 
   useServerSocket(
     "browser-track",

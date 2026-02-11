@@ -60,7 +60,10 @@ export const Widget = React.memo(() => {
   const getGitHub = React.useCallback(async () => {
     if (!visible) return;
     setLoading(true);
-    const result = await Uebersicht.run(`${ghBinaryPath} api notifications`);
+    const result = await Utils.cachedRun(
+      `${ghBinaryPath} api notifications`,
+      refresh,
+    );
     if (!visible || isDisabled.current) {
       return setLoading(false);
     }
@@ -68,7 +71,7 @@ export const Widget = React.memo(() => {
     const count = json.length;
     setState({ count: count > 99 ? "99+" : count });
     setLoading(false);
-  }, [ghBinaryPath, visible]);
+  }, [ghBinaryPath, visible, refresh]);
 
   // Update the disabled state based on visibility
   React.useEffect(() => {

@@ -75,7 +75,7 @@ const UserWidget = React.memo(({ index, widget }) => {
    */
   const getUserWidget = React.useCallback(async () => {
     if (!visible) return;
-    const widgetOutput = await Uebersicht.run(output);
+    const widgetOutput = await Utils.cachedRun(output, refreshFrequency);
     const cleanedOutput = Utils.cleanupOutput(widgetOutput);
 
     // Hide widget if script returns empty output and hideWhenNoOutput is enabled
@@ -92,7 +92,7 @@ const UserWidget = React.memo(({ index, widget }) => {
     setState(widgetOutput);
     setIsWidgetActive(true);
     setLoading(false);
-  }, [visible, output, hideWhenNoOutput]);
+  }, [visible, output, hideWhenNoOutput, refreshFrequency]);
 
   // Use server socket to listen for widget updates
   useServerSocket(

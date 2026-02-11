@@ -56,9 +56,13 @@ export const Widget = React.memo(() => {
   const getWifi = React.useCallback(async () => {
     if (!visible) return;
     const [status, ssid] = await Promise.all([
-      Uebersicht.run(`ifconfig ${networkDevice} | grep status | cut -c 10-`),
-      Uebersicht.run(
+      Utils.cachedRun(
+        `ifconfig ${networkDevice} | grep status | cut -c 10-`,
+        refresh,
+      ),
+      Utils.cachedRun(
         `system_profiler SPAirPortDataType | awk '/Current Network/ {getline;$1=$1;print $0 | "tr -d ':'";exit}'`,
+        refresh,
       ),
     ]);
     setState({
@@ -66,7 +70,7 @@ export const Widget = React.memo(() => {
       ssid: Utils.cleanupOutput(ssid),
     });
     setLoading(false);
-  }, [networkDevice, visible]);
+  }, [networkDevice, visible, refresh]);
 
   useServerSocket("wifi", visible, getWifi, resetWidget, setLoading);
   useWidgetRefresh(visible, getWifi, refresh);

@@ -58,22 +58,24 @@ export const Widget = React.memo(() => {
    */
   const getVPN = React.useCallback(async () => {
     if (!visible) return;
-    const isRunning = await Uebersicht.run(
+    const isRunning = await Utils.cachedRun(
       `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`,
+      refresh,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
       setIsViscosityActive(false);
       return;
     }
-    const status = await Uebersicht.run(
+    const status = await Utils.cachedRun(
       `osascript -e "tell application \\"Viscosity\\" to return state of the first connection where name is equal to \\"${vpnConnectionName}\\"" 2>/dev/null`,
+      refresh,
     );
     if (!status.length) return;
     setState({ status: Utils.cleanupOutput(status) });
     setIsViscosityActive(true);
     setLoading(false);
-  }, [visible, vpnConnectionName]);
+  }, [visible, vpnConnectionName, refresh]);
 
   // Use server socket to listen for VPN status updates
   useServerSocket("viscosity-vpn", visible, getVPN, resetWidget, setLoading);

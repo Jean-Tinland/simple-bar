@@ -40,7 +40,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [graph, setGraph] = React.useState([]);
@@ -62,8 +62,9 @@ export const Widget = React.memo(() => {
   const getCpu = React.useCallback(async () => {
     if (!visible) return;
     try {
-      const usage = await Uebersicht.run(
-        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`
+      const usage = await Utils.cachedRun(
+        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`,
+        refresh,
       );
       const formattedUsage = { usage: parseInt(usage, 10) };
       setState(formattedUsage);
@@ -74,7 +75,7 @@ export const Widget = React.memo(() => {
     } catch {
       setTimeout(getCpu, 1000);
     }
-  }, [displayAsGraph, setGraph, visible]);
+  }, [displayAsGraph, setGraph, visible, refresh]);
 
   // Use server socket to fetch CPU data
   useServerSocket("cpu", visible, getCpu, resetWidget, setLoading);

@@ -60,15 +60,18 @@ export const Widget = React.memo(() => {
     const [system, percentage, status, caffeinate, lowPowerMode] =
       await Promise.all([
         Utils.getSystem(),
-        Uebersicht.run(
+        Utils.cachedRun(
           `pmset -g batt | egrep '([0-9]+%).*' -o --colour=auto | cut -f1 -d'%'`,
+          refresh,
         ),
-        Uebersicht.run(
+        Utils.cachedRun(
           `pmset -g batt | grep "'.*'" | sed "s/'//g" | cut -c 18-19`,
+          refresh,
         ),
-        Uebersicht.run(`pgrep caffeinate`),
-        Uebersicht.run(
+        Utils.cachedRun(`pgrep caffeinate`, refresh),
+        Utils.cachedRun(
           `pmset -g | grep -E 'lowpowermode|powermode' | awk '{print $2}'`,
+          refresh,
         ),
       ]);
     setState({
@@ -79,7 +82,7 @@ export const Widget = React.memo(() => {
       lowPowerMode: Utils.cleanupOutput(lowPowerMode) === "1",
     });
     setLoading(false);
-  }, [visible]);
+  }, [visible, refresh]);
 
   // Use server socket to fetch battery data
   useServerSocket("battery", visible, getBattery, resetWidget, setLoading);
@@ -95,7 +98,8 @@ export const Widget = React.memo(() => {
   const classes = Utils.classNames("battery", {
     "battery--low": isLowBattery,
     "battery--low-power-mode": lowPowerMode,
-    "battery--caffeinate": !disableCaffeinateInvertedBackground && caffeinate.length,
+    "battery--caffeinate":
+      !disableCaffeinateInvertedBackground && caffeinate.length,
   });
 
   const transformValue = getTransform(percentage);

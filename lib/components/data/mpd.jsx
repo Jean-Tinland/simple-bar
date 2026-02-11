@@ -37,7 +37,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible on the current display
@@ -68,8 +68,9 @@ export const Widget = React.memo(() => {
     if (!visible) return;
 
     try {
-      const mpdProcess = await Uebersicht.run(
-        `pgrep -x mpd > /dev/null && echo "true" || echo "false"`
+      const mpdProcess = await Utils.cachedRun(
+        `pgrep -x mpd > /dev/null && echo "true" || echo "false"`,
+        refresh,
       );
 
       if (Utils.cleanupOutput(mpdProcess) === "false") {
@@ -79,14 +80,17 @@ export const Widget = React.memo(() => {
       }
 
       const [playerState, trackInfo, volumeState] = await Promise.all([
-        Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`
+        Utils.cachedRun(
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} | head -n 2 | tail -n 1 | awk '{print substr($1,2,length($1)-2)}' 2>/dev/null || echo "stopped"`,
+          refresh,
         ),
-        Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`
+        Utils.cachedRun(
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} --format "${mpdFormatString}" | head -n 1`,
+          refresh,
         ),
-        Uebersicht.run(
-          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} volume | sed -e 's/volume:[ ]*//g' -e 's/%//g'`
+        Utils.cachedRun(
+          `${mpdBinaryPath} --host ${mpdHost} --port ${mpdPort} volume | sed -e 's/volume:[ ]*//g' -e 's/%//g'`,
+          refresh,
         ),
       ]);
       if (Utils.cleanupOutput(trackInfo) === "") {
@@ -105,7 +109,7 @@ export const Widget = React.memo(() => {
       setLoading(false);
       setIsMpdActive(false);
     }
-  }, [visible, mpdBinaryPath, mpdHost, mpdPort, mpdFormatString]);
+  }, [visible, mpdBinaryPath, mpdHost, mpdPort, mpdFormatString, refresh]);
 
   // Update the volume when dragging ends
   React.useEffect(() => {

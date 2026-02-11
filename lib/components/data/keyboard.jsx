@@ -21,12 +21,8 @@ export const Widget = React.memo(() => {
   const { displayIndex, settings } = useSimpleBarContext();
   const { widgets, keyboardWidgetOptions } = settings;
   const { keyboardWidget } = widgets;
-  const {
-    refreshFrequency,
-    showOnDisplay,
-    showIcon,
-    keyboardMaxLength,
-  } = keyboardWidgetOptions;
+  const { refreshFrequency, showOnDisplay, showIcon, keyboardMaxLength } =
+    keyboardWidgetOptions;
 
   // Determine the refresh frequency for the widget
   const refresh = React.useMemo(
@@ -55,8 +51,9 @@ export const Widget = React.memo(() => {
    */
   const getKeyboard = React.useCallback(async () => {
     if (!visible) return;
-    const keyboard = await Uebersicht.run(
+    const keyboard = await Utils.cachedRun(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {$1=$2=$3=""; print $0}'`,
+      refresh,
     );
     const layout = Utils.cleanupOutput(keyboard)
       .replace(";", "")
@@ -67,8 +64,9 @@ export const Widget = React.memo(() => {
       return;
     }
 
-    const inputMode = await Uebersicht.run(
+    const inputMode = await Utils.cachedRun(
       `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/"Input Mode" =/ {$1=$2=$3=""; print $0}'`,
+      refresh,
     );
     const cleanedInputMode = Utils.cleanupOutput(inputMode)
       .replace(/"com.apple.inputmethod.(.*)"/, "$1")
@@ -80,7 +78,7 @@ export const Widget = React.memo(() => {
     const inputModeName = splitedInputMode[splitedInputMode.length - 1];
     setState({ keyboard: inputModeName });
     setLoading(false);
-  }, [visible]);
+  }, [visible, refresh]);
 
   // Use server socket to listen for keyboard events
   useServerSocket("keyboard", visible, getKeyboard, resetWidget, setLoading);

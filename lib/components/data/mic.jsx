@@ -54,12 +54,13 @@ export const Widget = React.memo(() => {
    */
   const getMic = React.useCallback(async () => {
     if (!visible) return;
-    const volume = await Uebersicht.run(
+    const volume = await Utils.cachedRun(
       `osascript -e 'set ovol to input volume of (get volume settings)'`,
+      refresh,
     );
     setState({ volume: Utils.cleanupOutput(volume) });
     setLoading(false);
-  }, [visible]);
+  }, [visible, refresh]);
 
   // Use server socket to get mic data.
   useServerSocket("mic", visible, getMic, resetWidget, setLoading);

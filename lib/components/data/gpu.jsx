@@ -37,7 +37,7 @@ export const Widget = React.memo(() => {
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   // Determine if the widget should be visible
@@ -63,7 +63,10 @@ export const Widget = React.memo(() => {
   const getGpu = React.useCallback(async () => {
     if (!visible) return;
     try {
-      const result = await Uebersicht.run(`${gpuMacmonBinaryPath} pipe -s 1`);
+      const result = await Utils.cachedRun(
+        `${gpuMacmonBinaryPath} pipe -s 1`,
+        refresh,
+      );
       if (!visible || isDisabled.current) {
         return;
       }
@@ -78,7 +81,7 @@ export const Widget = React.memo(() => {
     } catch {
       setTimeout(getGpu, 1000);
     }
-  }, [displayAsGraph, gpuMacmonBinaryPath, visible]);
+  }, [displayAsGraph, gpuMacmonBinaryPath, visible, refresh]);
 
   // Update the disabled state based on visibility
   React.useEffect(() => {

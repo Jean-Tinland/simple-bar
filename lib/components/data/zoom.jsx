@@ -54,11 +54,13 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const [mic, video] = await Promise.all([
-        Uebersicht.run(
+        Utils.cachedRun(
           `osascript ./simple-bar/lib/scripts/zoom-mute-status.applescript`,
+          refresh,
         ),
-        Uebersicht.run(
+        Utils.cachedRun(
           `osascript ./simple-bar/lib/scripts/zoom-video-status.applescript`,
+          refresh,
         ),
       ]);
       setState({
@@ -71,7 +73,7 @@ export const Widget = React.memo(() => {
       console.error("Error fetching Zoom status:", error);
       setLoading(false);
     }
-  }, [visible]);
+  }, [visible, refresh]);
 
   // Use server socket to listen for Zoom events
   useServerSocket("zoom", visible, getZoom, resetWidget, setLoading);

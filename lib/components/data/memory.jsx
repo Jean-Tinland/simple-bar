@@ -54,13 +54,14 @@ export const Widget = () => {
    * Fetch memory usage data
    */
   const getMemory = React.useCallback(async () => {
-    const output = await Uebersicht.run(
+    const output = await Utils.cachedRun(
       "memory_pressure | tail -1 | awk '{ print $5 }' | tr -d '%'",
+      refresh,
     );
     const free = parseInt(Utils.cleanupOutput(output), 10);
     setState({ free });
     setLoading(false);
-  }, [setLoading, setState]);
+  }, [setLoading, setState, refresh]);
 
   // Use server socket to get memory data
   useServerSocket("memory", visible, getMemory, resetWidget, setLoading);

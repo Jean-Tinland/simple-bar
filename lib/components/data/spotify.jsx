@@ -58,8 +58,9 @@ export const Widget = React.memo(() => {
    */
   const getSpotify = React.useCallback(async () => {
     if (!visible) return;
-    const isRunning = await Uebersicht.run(
+    const isRunning = await Utils.cachedRun(
       `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`,
+      refresh,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
@@ -74,14 +75,17 @@ export const Widget = React.memo(() => {
     // if showSpotifyMetadata is enabled, retrieves all information
     if (showSpotifyMetadata) {
       const [playerState, trackName, artistName] = await Promise.all([
-        Uebersicht.run(
+        Utils.cachedRun(
           `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`,
+          refresh,
         ),
-        Uebersicht.run(
+        Utils.cachedRun(
           `osascript -e 'tell application "Spotify" to name of current track as string' 2>/dev/null || echo ""`,
+          refresh,
         ),
-        Uebersicht.run(
+        Utils.cachedRun(
           `osascript -e 'tell application "Spotify" to artist of current track as string' 2>/dev/null || echo ""`,
+          refresh,
         ),
       ]);
       setState({
@@ -91,8 +95,9 @@ export const Widget = React.memo(() => {
       });
       // else, only playerState
     } else {
-      const playerState = await Uebersicht.run(
+      const playerState = await Utils.cachedRun(
         `osascript -e 'tell application "Spotify" to player state as string' 2>/dev/null || echo "stopped"`,
+        refresh,
       );
       setState({
         playerState: Utils.cleanupOutput(playerState),
@@ -103,7 +108,7 @@ export const Widget = React.memo(() => {
 
     setIsSpotifyActive(true);
     setLoading(false);
-  }, [visible, showSpotifyMetadata]);
+  }, [visible, showSpotifyMetadata, refresh]);
 
   // Set up server socket and widget refresh hooks
   useServerSocket("spotify", visible, getSpotify, resetWidget, setLoading);

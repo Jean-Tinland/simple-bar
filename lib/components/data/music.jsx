@@ -53,11 +53,12 @@ export const Widget = React.memo(() => {
    */
   const getMusic = React.useCallback(async () => {
     if (!visible) return;
-    const osVersion = await Uebersicht.run(`sw_vers -productVersion`);
+    const osVersion = await Utils.cachedRun(`sw_vers -productVersion`, refresh);
     const processName =
       Utils.cleanupOutput(osVersion) === "10.15" ? "iTunes" : "Music";
-    const isRunning = await Uebersicht.run(
+    const isRunning = await Utils.cachedRun(
       `osascript -e 'tell application "System Events" to (name of processes) contains "${processName}"' 2>&1`,
+      refresh,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
       setLoading(false);
@@ -65,14 +66,17 @@ export const Widget = React.memo(() => {
       return;
     }
     const [playerState, trackName, artistName] = await Promise.all([
-      Uebersicht.run(
+      Utils.cachedRun(
         `osascript -e 'tell application "${processName}" to player state as string' 2>/dev/null || echo "stopped"`,
+        refresh,
       ),
-      Uebersicht.run(
+      Utils.cachedRun(
         `osascript -e 'tell application "${processName}" to name of current track as string' 2>/dev/null || echo "unknown track"`,
+        refresh,
       ),
-      Uebersicht.run(
+      Utils.cachedRun(
         `osascript -e 'tell application "${processName}" to artist of current track as string' 2>/dev/null || echo "unknown artist"`,
+        refresh,
       ),
     ]);
     setState({
@@ -83,7 +87,7 @@ export const Widget = React.memo(() => {
     });
     setIsMusicActive(true);
     setLoading(false);
-  }, [visible]);
+  }, [visible, refresh]);
 
   // Use server socket to listen for music events
   useServerSocket("music", visible, getMusic, resetWidget, setLoading);
