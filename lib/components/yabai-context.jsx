@@ -93,11 +93,16 @@ function YabaiContextProvider({ spaces, windows, skhdMode, children }) {
   useServerSocket("displays", serverEnabled, getDisplays, resetDisplays);
   useServerSocket("mode", displaySkhdMode, getSkhdMode, resetSkhdMode);
 
+  const usedWindows = serverEnabled ? yabaiWindows : windows;
+  // Windows with an empty subrole should not be displayed in the UI
+  // See https://github.com/Jean-Tinland/simple-bar/issues/495 for reference
+  const filteredWindows = usedWindows.filter((window) => window.subrole);
+
   return (
     <YabaiContext.Provider
       value={{
         spaces: serverEnabled ? yabaiSpaces : spaces,
-        windows: serverEnabled ? yabaiWindows : windows,
+        windows: filteredWindows,
         skhdMode: serverEnabled ? currentSkhdMode : skhdMode,
       }}
     >
