@@ -55,7 +55,7 @@ export const Widget = React.memo(() => {
   const getMic = React.useCallback(async () => {
     if (!visible) return;
     const volume = await Utils.cachedRun(
-      `osascript -e 'set ovol to input volume of (get volume settings)'`,
+      `osascript -e 'input volume of (get volume settings)'`,
       refresh,
     );
     setState({ volume: Utils.cleanupOutput(volume) });
