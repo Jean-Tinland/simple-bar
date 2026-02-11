@@ -59,7 +59,7 @@ export const Widget = React.memo(() => {
   const getVPN = React.useCallback(async () => {
     if (!visible) return;
     const isRunning = await Utils.cachedRun(
-      `osascript -e 'tell application "System Events" to (name of processes) contains "Viscosity"' 2>&1`,
+      `pgrep -xq 'Viscosity' && echo "true" || echo "false"`,
       refresh,
     );
     if (Utils.cleanupOutput(isRunning) === "false") {
