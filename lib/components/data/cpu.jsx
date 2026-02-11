@@ -63,7 +63,7 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     try {
       const usage = await Utils.cachedRun(
-        `top -l 1 | grep -E "^CPU" | grep -Eo '[^[:space:]]+%' | head -1 | sed s/%//`,
+        `top -l 2 | awk '/CPU usage/ && NR > 10 {gsub(/%/, "", $7); print int(100 - $7); exit}'`,
         refresh,
       );
       const formattedUsage = { usage: parseInt(usage, 10) };
