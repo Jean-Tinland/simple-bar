@@ -53,11 +53,11 @@ export const Widget = React.memo(() => {
     if (!visible) return;
     const [firefoxStatus, firefoxDevStatus] = await Promise.all([
       Utils.cachedRun(
-        `ps aux | grep -v 'grep' | grep -q 'Firefox' && echo "true" || echo "false"`,
+        `pgrep -xq 'Firefox' && echo "true" || echo "false"`,
         refresh,
       ),
       Utils.cachedRun(
-        `ps aux | grep -v 'grep' | grep -q 'Firefox Developer Edition' && echo "true" || echo "false"`,
+        `pgrep -xq 'Firefox Developer Edition' && echo "true" || echo "false"`,
         refresh,
       ),
     ]);
@@ -76,7 +76,7 @@ export const Widget = React.memo(() => {
         refresh,
       ),
       Utils.cachedRun(
-        `ps aux | grep -v 'grep' | grep -q '[S]potify Helper' && echo "true" || echo "false"`,
+        `pgrep -fq '[S]potify Helper' && echo "true" || echo "false"`,
         refresh,
       ),
     ]);
