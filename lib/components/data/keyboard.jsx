@@ -52,12 +52,10 @@ export const Widget = React.memo(() => {
   const getKeyboard = React.useCallback(async () => {
     if (!visible) return;
     const keyboard = await Utils.cachedRun(
-      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/KeyboardLayout Name/ {$1=$2=$3=""; print $0}'`,
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk -F'"' '/KeyboardLayout Name/ {print $4}'`,
       refresh,
     );
-    const layout = Utils.cleanupOutput(keyboard)
-      .replace(";", "")
-      .replaceAll('"', "");
+    const layout = Utils.cleanupOutput(keyboard);
     if (layout.length) {
       setState({ keyboard: layout });
       setLoading(false);
@@ -65,12 +63,13 @@ export const Widget = React.memo(() => {
     }
 
     const inputMode = await Utils.cachedRun(
-      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk '/"Input Mode" =/ {$1=$2=$3=""; print $0}'`,
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | awk -F'"' '/"Input Mode"/ {print $4}'`,
       refresh,
     );
-    const cleanedInputMode = Utils.cleanupOutput(inputMode)
-      .replace(/"com.apple.inputmethod.(.*)"/, "$1")
-      .replace(";", "");
+    const cleanedInputMode = Utils.cleanupOutput(inputMode).replace(
+      /"com.apple.inputmethod.(.*)"/,
+      "$1",
+    );
 
     if (!cleanedInputMode.length) return setLoading(false);
 
