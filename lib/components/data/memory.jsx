@@ -55,7 +55,7 @@ export const Widget = () => {
    */
   const getMemory = React.useCallback(async () => {
     const output = await Utils.cachedRun(
-      "memory_pressure | tail -1 | awk '{ print $5 }' | tr -d '%'",
+      'vm_stat | awk \'BEGIN {page_size=4096} /page size of/ {page_size=$8} /Pages free/ {free=$3} /Pages inactive/ {inactive=$3} /Pages speculative/ {spec=$4} /Pages active/ {active=$3} /Pages wired/ {wired=$4} END {gsub(/\\./, "", free); gsub(/\\./, "", inactive); gsub(/\\./, "", spec); gsub(/\\./, "", active); gsub(/\\./, "", wired); available=free+inactive+spec; total=available+active+wired; printf "%.0f", (available/total)*100}\'',
       refresh,
     );
     const free = parseInt(Utils.cleanupOutput(output), 10);
