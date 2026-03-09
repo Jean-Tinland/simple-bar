@@ -194,6 +194,7 @@ export const NoVolume = React.lazy(() => import("./library/no-volume.jsx"));
 export const Numbers = React.lazy(() => import("./library/numbers.jsx"));
 export const Obsidian = React.lazy(() => import("./library/obsidian.jsx"));
 export const OBSStudio = React.lazy(() => import("./library/ob-s-studio.jsx"));
+export const Ollama = React.lazy(() => import("./library/ollama.jsx"));
 export const OmniFocus = React.lazy(() => import("./library/omni-focus.jsx"));
 export const OnePassword = React.lazy(
   () => import("./library/one-password.jsx"),
