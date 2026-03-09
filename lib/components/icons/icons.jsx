@@ -214,6 +214,7 @@ export const Plex = React.lazy(() => import("./library/plex.jsx"));
 export const Podcasts = React.lazy(() => import("./library/podcasts.jsx"));
 export const Pomodone = React.lazy(() => import("./library/pomodone.jsx"));
 export const Postman = React.lazy(() => import("./library/postman.jsx"));
+export const ProtonMail = React.lazy(() => import("./library/proton-mail.jsx"));
 export const PyCharm = React.lazy(() => import("./library/py-charm.jsx"));
 export const Quip = React.lazy(() => import("./library/quip.jsx"));
 export const QuteBrowser = React.lazy(
