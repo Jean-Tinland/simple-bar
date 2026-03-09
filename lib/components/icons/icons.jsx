@@ -194,6 +194,7 @@ export const NoVolume = React.lazy(() => import("./library/no-volume.jsx"));
 export const Numbers = React.lazy(() => import("./library/numbers.jsx"));
 export const Obsidian = React.lazy(() => import("./library/obsidian.jsx"));
 export const OBSStudio = React.lazy(() => import("./library/ob-s-studio.jsx"));
+export const Ollama = React.lazy(() => import("./library/ollama.jsx"));
 export const OmniFocus = React.lazy(() => import("./library/omni-focus.jsx"));
 export const OnePassword = React.lazy(
   () => import("./library/one-password.jsx"),
@@ -213,6 +214,7 @@ export const Plex = React.lazy(() => import("./library/plex.jsx"));
 export const Podcasts = React.lazy(() => import("./library/podcasts.jsx"));
 export const Pomodone = React.lazy(() => import("./library/pomodone.jsx"));
 export const Postman = React.lazy(() => import("./library/postman.jsx"));
+export const ProtonMail = React.lazy(() => import("./library/proton-mail.jsx"));
 export const PyCharm = React.lazy(() => import("./library/py-charm.jsx"));
 export const Quip = React.lazy(() => import("./library/quip.jsx"));
 export const QuteBrowser = React.lazy(
