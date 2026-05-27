@@ -8,6 +8,8 @@ A [yabai](https://github.com/koekeishiya/yabai) or [AeroSpace](https://github.co
 
 A more "lite" & basic version is available [here](https://github.com/Jean-Tinland/simple-bar-lite).
 
+**Notice: As I am working simultaneously on a lot of projects, things here may seem to move slowly but they are still in progress. I'm always monitoring my notifications and messages, so if you have any questions or want to chat about anything, feel free [to reach out](https://www.jeantinland.com/contact/)!**
+
 ## Features
 
 Among the principal features of `simple-bar`, you'll find:
