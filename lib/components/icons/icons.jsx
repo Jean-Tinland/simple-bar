@@ -259,6 +259,7 @@ export const SuperProductivity = React.lazy(
   () => import("./library/super-productivity.jsx"),
 );
 export const TablePlus = React.lazy(() => import("./library/table-plus.jsx"));
+export const Tailscale = React.lazy(() => import("./library/tailscale.jsx"));
 export const Teams = React.lazy(() => import("./library/teams.jsx"));
 export const TeamSpeak = React.lazy(() => import("./library/team-speak.jsx"));
 export const Telegram = React.lazy(() => import("./library/telegram.jsx"));
