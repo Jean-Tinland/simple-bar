@@ -188,6 +188,7 @@ export const MicrosoftWord = React.lazy(
 export const Mimestream = React.lazy(() => import("./library/mimestream.jsx"));
 export const MinBrowser = React.lazy(() => import("./library/min-browser.jsx"));
 export const Miro = React.lazy(() => import("./library/miro.jsx"));
+export const MoneroGUI = React.lazy(() => import("./library/monero-gui.jsx"));
 export const MongoDB = React.lazy(() => import("./library/mongo-db.jsx"));
 export const Moon = React.lazy(() => import("./library/moon.jsx"));
 export const Mpv = React.lazy(() => import("./library/mpv.jsx"));
