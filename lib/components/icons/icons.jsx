@@ -245,6 +245,9 @@ export const Redis = React.lazy(() => import("./library/redis.jsx"));
 export const Reeder5 = React.lazy(() => import("./library/reeder5.jsx"));
 export const Reminders = React.lazy(() => import("./library/reminders.jsx"));
 export const Remnote = React.lazy(() => import("./library/remnote.jsx"));
+export const RemoteDesktop = React.lazy(
+  () => import("./library/remote-desktop.jsx"),
+);
 export const Remove = React.lazy(() => import("./library/remove.jsx"));
 export const Replit = React.lazy(() => import("./library/replit.jsx"));
 export const Rider = React.lazy(() => import("./library/rider.jsx"));
