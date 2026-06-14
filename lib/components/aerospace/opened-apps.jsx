@@ -15,7 +15,8 @@ export default function OpenedApps({ apps }) {
   if (!apps.length) return null;
 
   return apps.map((app, i) => {
-    const { focused, "app-name": appName } = app;
+    const { focused } = app;
+    const appName = Utils.normalizeAppName(app["app-name"]);
     const Icon = AppIcons.apps[appName] || AppIcons.apps.Default;
 
     // Generate class names for the app icon

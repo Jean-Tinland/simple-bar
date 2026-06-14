@@ -28,7 +28,7 @@ export default function OpenedApps({ apps }) {
       "zoom-fullscreen": __legacyHasFullscreenZoom,
       "is-topmost": isTopmost,
     } = app;
-    const appName = app.app.replace(/[\u200E]/g, "");
+    const appName = Utils.normalizeAppName(app.app);
 
     // Skip minimized applications
     if (isMinimized ?? __legacyIsMinimized) return null;
