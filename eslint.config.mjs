@@ -6,6 +6,10 @@ import reactHooks from "eslint-plugin-react-hooks";
 
 export default [
   {
+    files: ["tests/**/*.js"],
+    languageOptions: { globals: globals.node },
+  },
+  {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: 12,
