@@ -407,6 +407,10 @@
         "nextMeetingWidget": {
           "type": "boolean",
           "description": "Hide or show the next meeting widget"
+        },
+        "pomodoroWidget": {
+          "type": "boolean",
+          "description": "Hide or show the Pomodoro widget"
         }
       }
     },
@@ -1062,6 +1066,60 @@
         "lookAheadHours": {
           "type": "number",
           "description": "Number of hours to look ahead for upcoming meetings"
+        }
+      }
+    },
+    "pomodoroWidgetOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "focusDuration": {
+          "type": "number",
+          "description": "Focus phase duration in minutes"
+        },
+        "restDuration": {
+          "type": "number",
+          "description": "Rest phase duration in minutes"
+        },
+        "longRestEvery": {
+          "type": "number",
+          "description": "Number of focus sessions before a long rest. Set 0 to disable long rests"
+        },
+        "longRestDuration": {
+          "type": "number",
+          "description": "Long rest duration in minutes"
+        },
+        "autoStartNext": {
+          "type": "boolean",
+          "description": "Start the next phase automatically when a phase ends"
+        },
+        "playSound": {
+          "type": "boolean",
+          "description": "Play a sound when a phase ends"
+        },
+        "showNotification": {
+          "type": "boolean",
+          "description": "Show a notification when a phase ends"
+        },
+        "showPhaseLabel": {
+          "type": "boolean",
+          "description": "Show the current phase name next to the countdown"
+        },
+        "showSessionDots": {
+          "type": "boolean",
+          "description": "Show completed focus sessions as dots"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "description": "Show or hide the widget icon"
+        },
+        "showOnDisplay": {
+          "type": "string",
+          "description": "The displays on which the process will be displayed. Add a list of indexes (for example: \"1,2\"). Leave blank to display the widget on every spaces"
+        },
+        "refreshFrequency": {
+          "type": "number",
+          "description": "The countdown tick of this widget in milliseconds"
         }
       }
     },

@@ -21,6 +21,7 @@ const settingsKeys = {
   netstatsWidget: "netstatsWidgetOptions",
   nextMeetingWidget: "nextMeetingWidgetOptions",
   notificationsWidget: "notificationsWidgetOptions",
+  pomodoroWidget: "pomodoroWidgetOptions",
   soundWidget: "soundWidgetOptions",
   spotifyWidget: "spotifyWidgetOptions",
   stockWidget: "stockWidgetOptions",
