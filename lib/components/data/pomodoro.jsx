@@ -144,12 +144,13 @@ function getNextPhase(phase, completed, durations, countFocus) {
 }
 
 /**
- * Formats a duration as MM:SS.
+ * Formats a duration as MM:SS, rounding up so a phase displays its full length
+ * until the first second has actually elapsed.
  * @param {number} milliseconds - Duration in milliseconds.
  * @returns {string} The formatted duration.
  */
 function formatTime(milliseconds) {
-  const total = Math.max(0, Math.round(milliseconds / 1000));
+  const total = Math.max(0, Math.ceil(milliseconds / 1000));
   const minutes = Math.floor(total / 60);
   const seconds = total % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
@@ -638,10 +639,15 @@ export const Widget = React.memo(() => {
   if (!visible) return null;
 
   const duration = getPhaseDuration(session.phase, durations);
-  const remaining =
+  // now is only refreshed on the tick, so a phase that just started can compute a
+  // remaining time slightly longer than its own duration: clamp it, otherwise the
+  // countdown opens on 25:01 / 05:01
+  const remaining = Math.min(
+    duration,
     session.running && session.endsAt
       ? Math.max(0, session.endsAt - now)
-      : session.pausedMs || 0;
+      : session.pausedMs || 0,
+  );
   const progress = session.started
     ? Math.min(1, Math.max(0, 1 - remaining / duration))
     : 0;
