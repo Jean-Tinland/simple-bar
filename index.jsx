@@ -32,6 +32,7 @@ import * as Mpd from "./lib/components/data/mpd.jsx";
 import * as BrowserTrack from "./lib/components/data/browser-track.jsx";
 import * as Notifications from "./lib/components/data/notifications.jsx";
 import * as NextMeeting from "./lib/components/data/next-meeting.jsx";
+import * as Pomodoro from "./lib/components/data/pomodoro.jsx";
 import * as Specter from "./lib/components/data/specter.jsx";
 import * as Graph from "./lib/components/data/graph.jsx";
 import * as DataWidgetLoader from "./lib/components/data/data-widget-loader.jsx";
@@ -132,6 +133,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   BrowserTrack.styles,
   Notifications.styles,
   NextMeeting.styles,
+  Pomodoro.styles,
   Specter.styles,
   Graph.styles,
   DataWidgetLoader.styles,
@@ -240,6 +242,7 @@ function render({ output, error }) {
           <Battery.Widget />
           <Notifications.Widget />
           <NextMeeting.Widget />
+          <Pomodoro.Widget />
           <Mic.Widget />
           <Sound.Widget />
           <ViscosityVPN.Widget />
