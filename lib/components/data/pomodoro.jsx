@@ -24,6 +24,7 @@ import * as DataWidget from "./data-widget.jsx";
 import { SuspenseIcon } from "../icons/icon.jsx";
 import * as Icons from "../icons/icons.jsx";
 import { useSimpleBarContext } from "../simple-bar-context.jsx";
+import useServerSocket from "../../hooks/use-server-socket";
 import * as Utils from "../../utils";
 
 export { pomodoroStyles as styles } from "../../styles/components/data/pomodoro";
@@ -362,6 +363,17 @@ export const Widget = React.memo(() => {
       cancelled = true;
     };
   }, [visible, playSound]);
+
+  /**
+   * Reloads the session from storage. Used by the simple-bar-server "refresh"
+   * action: it resyncs a bar with the session shared between displays.
+   */
+  const syncSession = React.useCallback(() => {
+    setSession(createSession(durations));
+    setNow(Date.now());
+  }, [durations]);
+
+  useServerSocket("pomodoro", visible, syncSession);
 
   /**
    * Plays the phase end sound, falling back to the system beep.
